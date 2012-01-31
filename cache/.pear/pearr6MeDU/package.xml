@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.9.0" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0    http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0    http://pear.php.net/dtd/package-2.0.xsd">
+ <name>sfMondongoPlugin</name>
+ <channel>pear.pablodip.com</channel>
+ <summary>Plugin for using Mondongo with Symfony.</summary>
+ <description>Plugin for using Mondongo with Symfony.</description>
+ <lead>
+  <name>Pablo Díez</name>
+  <user>pablodip</user>
+  <email>pablodip@gmail.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2010-08-03</date>
+ <time>16:40:56</time>
+ <version>
+  <release>0.9.0</release>
+  <api>0.9.0</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
+ <notes>
+-
+ </notes>
+ <contents>
+  <dir name="/">
+   <file md5sum="ebc4154cf65c8b68f4531951e911cbf6" name="web/images/web_debug/sf_mondongo.png" role="data"/>
+   <file md5sum="f876ea58598a6b8f60eae1cb51aa5e88" name="data/generator/sfMondongoForm/default/template/FormPlugin.php" role="data"/>
+   <file md5sum="63fb3f591b609a383f9e561c35f6561a" name="data/generator/sfMondongoForm/default/template/Form.php" role="data"/>
+   <file md5sum="b3613772b4d9c759d029d84eec50a7c0" name="data/generator/sfMondongoForm/default/template/PluginForm.php" role="data"/>
+   <file md5sum="275e996886f5c9484d864a69d990b94c" name="data/generator/sfMondongoForm/default/template/BaseForm.php" role="data"/>
+   <file md5sum="9b075458fb2ed905299de82a8a14f683" name="data/generator/sfMondongoForm/default/template/BaseFormMondongo.php" role="data"/>
+   <file md5sum="b0b93ea9a77b6634ea70a4ac55afbbe2" name="data/generator/sfMondongoModel/default/template/RepositoryPlugin.php" role="data"/>
+   <file md5sum="667c35862982474e997b92597d72649c" name="data/generator/sfMondongoModel/default/template/Document.php" role="data"/>
+   <file md5sum="667c35862982474e997b92597d72649c" name="data/generator/sfMondongoModel/default/template/DocumentEmbed.php" role="data"/>
+   <file md5sum="298d4c569eac4b607c3234ed5065dec1" name="data/generator/sfMondongoModel/default/template/PluginDocumentEmbed.php" role="data"/>
+   <file md5sum="8cc46362a87c0caa1c3ba4d646e94eaf" name="data/generator/sfMondongoModel/default/template/PluginRepository.php" role="data"/>
+   <file md5sum="076c8dce7219bc601b63b1a543284c4b" name="data/generator/sfMondongoModel/default/template/BaseDocument.php" role="data"/>
+   <file md5sum="124f7117cc8bfd7688c68a3667c6f77c" name="data/generator/sfMondongoModel/default/template/DocumentEmbedPlugin.php" role="data"/>
+   <file md5sum="298d4c569eac4b607c3234ed5065dec1" name="data/generator/sfMondongoModel/default/template/PluginDocument.php" role="data"/>
+   <file md5sum="ed28f86082288d2e0d1fe34c625ece01" name="data/generator/sfMondongoModel/default/template/BaseDocumentEmbed.php" role="data"/>
+   <file md5sum="124f7117cc8bfd7688c68a3667c6f77c" name="data/generator/sfMondongoModel/default/template/DocumentPlugin.php" role="data"/>
+   <file md5sum="7382bcd667db65f48d44d3d72aaccc21" name="data/generator/sfMondongoModel/default/template/Repository.php" role="data"/>
+   <file md5sum="6e7df411b1e13058ca8ecadd32e1dac3" name="config/sfMondongoPluginConfiguration.class.php" role="data"/>
+   <file md5sum="93ebe636c0f573a09d167258c18d14c4" name="lib/task/sfMondongoBuildTask.class.php" role="data"/>
+   <file md5sum="53dcbcbc2396fb8b2c00f5d0514f7483" name="lib/task/sfMondongoDataLoadTask.class.php" role="data"/>
+   <file md5sum="e8aa60734401f8caae5a6e4175eeef01" name="lib/task/sfMondongoTask.class.php" role="data"/>
+   <file md5sum="70c34a12ec2d52582138ef62300df6f6" name="lib/task/sfMondongoBuildModelTask.class.php" role="data"/>
+   <file md5sum="7853de71b517fc506dd5dd17b472c65d" name="lib/task/sfMondongoBuildFormsTask.class.php" role="data"/>
+   <file md5sum="72b7b356d7591e1a3ade99051474c22c" name="lib/task/sfMondongoEnsureIndexesTask.class.php" role="data"/>
+   <file md5sum="68f30638cdf37e81b5741885330fd79f" name="lib/generator/sfMondongoFormGenerator.class.php" role="data"/>
+   <file md5sum="c52181548d56cb3e1119d43c4b540628" name="lib/generator/sfMondongoModelGenerator.class.php" role="data"/>
+   <file md5sum="b7d5d91968d629187c965d9146e1866f" name="lib/vendor/mondongo/definition/MondongoDefinition.php" role="data"/>
+   <file md5sum="084b23dd8eb6b941b299bb4e023561cc" name="lib/vendor/mondongo/definition/MondongoDefinitionDocumentEmbed.php" role="data"/>
+   <file md5sum="7c389386106b85d8a2df5fd2b5014201" name="lib/vendor/mondongo/definition/MondongoDefinitionDocument.php" role="data"/>
+   <file md5sum="7ca23c8c95711f2a2850192e3293ffa9" name="lib/vendor/mondongo/type/MondongoTypeArray.php" role="data"/>
+   <file md5sum="feac58cf31f851e2983fbf487f0a4b68" name="lib/vendor/mondongo/type/MondongoTypeInteger.php" role="data"/>
+   <file md5sum="24224c052f221eb7a393e6fbff111bd0" name="lib/vendor/mondongo/type/MondongoTypeId.php" role="data"/>
+   <file md5sum="bf6e24099b6b4dec0f06cd46d997420f" name="lib/vendor/mondongo/type/MondongoTypeString.php" role="data"/>
+   <file md5sum="d6dfb5a461370d75235e5c2c42af9d86" name="lib/vendor/mondongo/type/MondongoTypeBoolean.php" role="data"/>
+   <file md5sum="756ac44d4fd1dd3c4084b5abebc85f68" name="lib/vendor/mondongo/type/MondongoTypeDate.php" role="data"/>
+   <file md5sum="5ae15b92a76ae1cacf8ed48c2f0a3ed6" name="lib/vendor/mondongo/type/MondongoTypeBinData.php" role="data"/>
+   <file md5sum="5f9509bf42ff03d0638ea63aa36d6470" name="lib/vendor/mondongo/type/MondongoTypeContainer.php" role="data"/>
+   <file md5sum="b8ffd57b2c66f2ea88c6e4c3d39ab012" name="lib/vendor/mondongo/type/MondongoTypeFile.php" role="data"/>
+   <file md5sum="6f1c08a3ff7ac13fc9839aa654dc5d3f" name="lib/vendor/mondongo/type/MondongoTypeFloat.php" role="data"/>
+   <file md5sum="9067a675a18067ebccb115f93d2af477" name="lib/vendor/mondongo/type/MondongoTypeRaw.php" role="data"/>
+   <file md5sum="d9a1558a0d62db51ce1a9cc81dd82f5a" name="lib/vendor/mondongo/type/MondongoType.php" role="data"/>
+   <file md5sum="e7c75b739cac62f5eb1a466cb6790a89" name="lib/vendor/mondongo/mondongo/MondongoContainer.php" role="data"/>
+   <file md5sum="c10d278e4822478d89c56c7e12dc2ed7" name="lib/vendor/mondongo/mondongo/Mondongo.php" role="data"/>
+   <file md5sum="5d4f00e13f562d878b8e7ebf2b8c4660" name="lib/vendor/mondongo/connection/MondongoConnection.php" role="data"/>
+   <file md5sum="a0a9d8799de218ab3f790ebcd9fd87b2" name="lib/vendor/mondongo/util/MondongoInflector.php" role="data"/>
+   <file md5sum="aa408a18a8d257f8bc2dc559e9b4dde3" name="lib/vendor/mondongo/repository/MondongoRepository.php" role="data"/>
+   <file md5sum="5ab68bec1443cfe79647a30a61c33f43" name="lib/vendor/mondongo/extension/MondongoExtension.php" role="data"/>
+   <file md5sum="989d80f935f2c3abe3a3a90b1a59cc0b" name="lib/vendor/mondongo/document/MondongoDocumentBaseSpeed.php" role="data"/>
+   <file md5sum="e68c2053aec783eccb1b1e39b5b29b30" name="lib/vendor/mondongo/document/MondongoDocument.php" role="data"/>
+   <file md5sum="4a60e4aeddee35295d247cf109c52cd4" name="lib/vendor/mondongo/document/MondongoDocumentBase.php" role="data"/>
+   <file md5sum="7f58ee30875eb3426c73fde8f69ce1ee" name="lib/vendor/mondongo/document/MondongoDocumentEmbed.php" role="data"/>
+   <file md5sum="e48c371192ef2656df9886d1e263de0a" name="lib/vendor/mondongo/document/MondongoDocumentSpeed.php" role="data"/>
+   <file md5sum="3f07c823817358c30ede8c19451bc984" name="lib/vendor/mondongo/document/MondongoDocumentEmbedSpeed.php" role="data"/>
+   <file md5sum="2e3aa7139ff5d1f077c55735be02efa5" name="lib/vendor/mondongo/autoload/MondongoAutoload.php" role="data"/>
+   <file md5sum="6514ed220ddc082631eda50804ca7f7c" name="lib/vendor/mondongo/collection/MondongoCollection.php" role="data"/>
+   <file md5sum="4027ca4ea6a9f6dfa0a9f99dddaa22dd" name="lib/vendor/mondongo/collection/MondongoCollectionGridFS.php" role="data"/>
+   <file md5sum="5132112692689fd2ccaa20b138a03bba" name="lib/vendor/mondongo/group/MondongoGroupArray.php" role="data"/>
+   <file md5sum="a1134dfce55de933ee987f4aafb34656" name="lib/vendor/mondongo/group/MondongoGroup.php" role="data"/>
+   <file md5sum="8fc1d7b25070d25f559c207dc2422bd1" name="lib/form/sfMondongoForm.class.php" role="data"/>
+   <file md5sum="69eef1e68f9fe2bf214ece5f04d19045" name="lib/validator/sfValidatorMondongoChoice.class.php" role="data"/>
+   <file md5sum="f2af3f699c1030b610861acfe2185582" name="lib/debug/sfMondongoWebDebugPanel.class.php" role="data"/>
+   <file md5sum="870ed662251c7663b1229dec1d2de878" name="lib/database/sfMondongoDatabase.class.php" role="data"/>
+   <file md5sum="8ccad70454d29241f4f7827155b564aa" name="lib/widget/sfWidgetFormMondongoChoice.class.php" role="data"/>
+   <file md5sum="ff6e32d36a26ebdb0e86abc626c6b9a0" name="sfMondongoPlugin-0.9.0.tgz" role="data"/>
+   <file md5sum="e6a600fd5e1d9cbde2d983680233ad02" name="LICENSE" role="data"/>
+   <file md5sum="e898ee901ee82799dbf9df1693b4cf19" name="README" role="data"/>
+   <file md5sum="f8fb741d567d2f711371f6445b1c32c3" name="CHANGELOG" role="data"/>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.3.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.1</min>
+   </pearinstaller>
+   
+  </required>
+ </dependencies>
+ <phprelease/>
+ <changelog/>
+</package>

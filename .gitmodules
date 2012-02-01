@@ -1,3 +1,3 @@
 [submodule "lib/vendor/symfony"]
 	path = lib/vendor/symfony
-	url = /home/madesst/Dropbox/Projects/bare/symfony
+	url = gituser@vidii.com:/var/www/git/framework.git

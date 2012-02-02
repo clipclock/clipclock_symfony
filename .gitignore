@@ -11,7 +11,6 @@ data/sql
 /plugins/sfGuardPlugin/lib/model/map/*
 /plugins/sfGuardPlugin/lib/model/om/*
 /plugins/sfGuardPlugin/lib/filter/base/*
-/plugins/**
 /plugins/\.registry/\.channel\.pear\.symfony-project\.com/*
 lib/vendor/symfony/test/functional/fixtures/cache/*
 web/uploads/*

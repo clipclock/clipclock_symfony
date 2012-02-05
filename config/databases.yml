@@ -12,8 +12,8 @@ all:
     class: sfPropelDatabase
     param:
       classname: PropelPDO
-      dsn: 'pgsql:host=localhost;port=5432;dbname=videopin'
-      username: root
+      dsn: 'pgsql:host=localhost;port=5432;dbname=viddii'
+      username: viddii
       password: '111'
       encoding: utf8
       persistent: true

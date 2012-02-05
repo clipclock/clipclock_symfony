@@ -1,4 +1,53 @@
 propel:
-  video:
+  _attributes:
+    package: lib.model
+    defaultIdMethod: native
+  board:
+    id: ~
+    is_public: { type: BOOLEAN, required: true }
+    name: { type: VARCHAR, size: '128', required: true }
+    sf_guard_user_id: { type: INTEGER, required: true, foreignTable: sf_guard_user, foreignReference: id }
+    category_id: { type: INTEGER, required: true, foreignTable: category, foreignReference: id }
+  category:
+    id: ~
+    name: { type: VARCHAR, size: '128', required: true }
+  clip:
+    id: ~
+    source_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: source, foreignReference: id }
+    name: { type: VARCHAR, size: '128', required: true }
+    url: { type: VARCHAR, required: true }
+  follower:
+    left_sf_guard_user_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user, foreignReference: id }
+    right_sf_guard_user_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user, foreignReference: id }
+  scene:
     id: ~
     created_at: ~
+    clip_id: { type: INTEGER, autoIncrement: true, required: true }
+    sf_guard_user_id: { type: INTEGER, autoIncrement: true, required: true, foreignTable: sf_guard_user, foreignReference: id }
+    scene_time: { type: INTEGER, required: true }
+    origin_board_id: { type: INTEGER, required: true, foreignTable: board, foreignReference: id }
+    has_images: { type: BOOLEAN, required: true }
+  scene_like:
+    like_sf_guard_user_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user, foreignReference: id }
+    scene_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: scene, foreignReference: id }
+  scene_repost:
+    scene_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: scene, foreignReference: id }
+    board_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: board, foreignReference: id }
+  source:
+    id: ~
+    name: {type: VARCHAR, size: '128', required: false }
+  comment:
+    _attributes: {phpName: ClipComment}
+    id: ~
+    sf_guard_user_id: { type: INTEGER, required: true, foreignTable: sf_guard_user, foreignReference: id }
+    scene_id: { type: INTEGER, required: true, foreignTable: scene, foreignReference: id }
+    text: { type: LONGVARCHAR, required: true }
+  history:
+    id: ~
+    created_at: ~
+    sf_guard_user_id: { type: INTEGER, required: true, foreignTable: sf_guard_user, foreignReference: id }
+    scene_id: { type: INTEGER, required: false, foreignTable: scene, foreignReference: id }
+    board_id: { type: INTEGER, required: false, foreignTable: board, foreignReference: id }
+    comment_id: { type: INTEGER, required: false, foreignTable: comment, foreignReference: id }
+    follower_sf_guard_user_id: { type: INTEGER, required: false, foreignTable: sf_guard_user, foreignReference: id }
+    follow_sf_guard_user_id: { type: INTEGER, required: false, foreignTable: sf_guard_user, foreignReference: id }

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Video form.
+ * Board filter form.
  *
  * @package    videopin
- * @subpackage form
+ * @subpackage filter
  * @author     Your name here
  */
-class VideoForm extends BaseVideoForm
+class BoardFormFilter extends BaseBoardFormFilter
 {
   public function configure()
   {

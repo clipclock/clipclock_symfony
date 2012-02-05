@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Video filter form.
+ * ClipComment filter form.
  *
  * @package    videopin
  * @subpackage filter
  * @author     Your name here
  */
-class VideoFormFilter extends BaseVideoFormFilter
+class ClipCommentFormFilter extends BaseClipCommentFormFilter
 {
   public function configure()
   {

@@ -1,5 +1,6 @@
 *.log
 *.reg
+.gitmodules
 /cache/*
 /log/*
 data/sql

@@ -29,15 +29,14 @@ sudo php symfony propel:migrate
 sudo php symfony propel:build --all-classes
 
 sudo php symfony log:rotate frontend prod --period=7 --history=10
-sudo php symfony log:rotate agregator prod --period=7 --history=10
-sudo php symfony log:rotate backend prod --period=7 --history=10
+#sudo php symfony log:rotate backend prod --period=7 --history=10
 sudo php symfony cc
 
 toogle_checklock off
 
 sudo git stash apply
-find /var/www/dev/web/css -type f -exec chown xzwiex {} \;
 sudo chown www-data:www-data -R ./*
+sudo chmod 777 log
 
 echo "*********** Fuck Yea! All Done! **************"
 

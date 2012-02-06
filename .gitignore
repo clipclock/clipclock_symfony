@@ -27,3 +27,6 @@ web/uploads/*
 .idea
 /nbproject
 /nbproject/private/
+config/databases.yml
+config/propel.ini
+config/properties.ini

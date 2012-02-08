@@ -9,6 +9,7 @@ all:
    profile_field_name: sf_guard_user_id
   melody:
     create_user: true               # to create a user for all melodies
+    use_profile: true
     facebook:
       key: 365665100128423
       secret: 222bb675913bc944dc8a56252bc415ac
@@ -31,3 +32,12 @@ all:
         last_name:
           call: me
           path: last_name
+        nick:
+          call: me
+          path: username
+        ext_id:
+          call: me
+          path: id
+        ext_link:
+          call: me
+          path: link

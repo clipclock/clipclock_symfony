@@ -24,17 +24,6 @@ class userActions extends sfActions
 
 	public function executeFacebook(sfWebRequest $request)
 	{
-		$profile_info = $this->getUser()->getMelody('facebook')->getMe();
-
-		$profile = new sfGuardUserProfile();
-		$profile->setSfGuardUserId($this->getUser()->getId());
-		$profile->setFirstName($profile_info->first_name);
-		$profile->setLastName($profile_info->last_name);
-		$profile->setNick($profile_info->username);
-		$profile->setExtId($profile_info->id);
-		$profile->setExtLink($profile_info->link);
-
-		$profile->save();
 		$this->redirect('@homepage');
 	}
 }

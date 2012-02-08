@@ -4,13 +4,20 @@
 # default rules
 homepage:
   url:   /
-  param: { module: default, action: index }
+  param: { module: home, action: index }
 
-# generic rules
-# please, remove them by adding more specific rules
-default_index:
-  url:   /:module
-  param: { action: index }
+connect_fb:
+  url:   /connect_fb
+  param: { module: user, action: connect }
 
-default:
-  url:   /:module/:action/*
+callback_fb:
+  url:   /callback_fb
+  param: { module: user, action: facebook}
+
+register_fb:
+  url:   /register_fb
+  param: { module: user, action: registerFb}
+
+sf_guard_signout:
+  url:   /logout
+  param: { module: sfGuardAuth, action: signout }

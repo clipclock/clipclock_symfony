@@ -3,3 +3,31 @@
 
 # default values
 #all:
+all:
+  sf_guard_plugin:
+   profile_class:      sfGuardUserProfile
+   profile_field_name: sf_guard_user_id
+  melody:
+    create_user: true               # to create a user for all melodies
+    facebook:
+      key: 365665100128423
+      secret: 222bb675913bc944dc8a56252bc415ac
+      callback: @callback_fb
+      #redirect_register: @register_fb
+      scope: [email]                #optionnal - http://developers.facebook.com/docs/authentication/permissions
+                                        # needed to create an user based on his email_address
+      user:
+        username:                   # the name of a field of sfGuardUser
+          call: me                  # api call
+          path: id                  # path could be user.object.email for example to retrieve the right inforamtion
+          prefix: Facebook_
+        email:
+          call: me
+          path: email
+          key: true                 # it's a key to retrieve user from other services based on this information# if no field is a key all are keys by default.
+        first_name:
+          call: me
+          path: first_name
+        last_name:
+          call: me
+          path: last_name

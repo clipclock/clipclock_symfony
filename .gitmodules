@@ -4,3 +4,9 @@
 [submodule "plugins/sfPropelORMPlugin"]
 	path = plugins/sfPropelORMPlugin
 	url = git://github.com/propelorm/sfPropelORMPlugin.git
+[submodule "plugins/sfMelodyPlugin"]
+	path = plugins/sfMelodyPlugin
+	url = git://github.com/madesst/sfMelodyPlugin.git
+[submodule "plugins/sfPropelOAuthPlugin"]
+	path = plugins/sfPropelOAuthPlugin
+	url = git://github.com/madesst/sfPropelOAuthPlugin.git

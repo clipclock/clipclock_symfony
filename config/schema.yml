@@ -2,6 +2,13 @@ propel:
   _attributes:
     package: lib.model
     defaultIdMethod: native
+  sf_guard_user_profile:
+    sf_guard_user_id: { type: INTEGER, required: true, foreignTable: sf_guard_user, primaryKey: true, sequence: sf_guard_user_id_seq, foreignReference: id }
+    first_name: { type: VARCHAR, size: '128', required: false }
+    last_name: { type: VARCHAR, size: '128', required: false }
+    nick: { type: VARCHAR, size: '64', required: true }
+    ext_id: { type: VARCHAR, size: '64', required: true }
+    ext_link: { type: VARCHAR, size: '128', required: true }
   board:
     id: ~
     is_public: { type: BOOLEAN, required: true }
@@ -22,8 +29,8 @@ propel:
   scene:
     id: ~
     created_at: ~
-    clip_id: { type: INTEGER, autoIncrement: true, required: true }
-    sf_guard_user_id: { type: INTEGER, autoIncrement: true, required: true, foreignTable: sf_guard_user, foreignReference: id }
+    clip_id: { type: INTEGER, required: true }
+    sf_guard_user_id: { type: INTEGER, required: true, foreignTable: sf_guard_user, foreignReference: id }
     scene_time: { type: INTEGER, required: true }
     origin_board_id: { type: INTEGER, required: true, foreignTable: board, foreignReference: id }
     has_images: { type: BOOLEAN, required: true }

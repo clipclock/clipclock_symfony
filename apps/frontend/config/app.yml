@@ -15,8 +15,8 @@ all:
     create_user: true               # to create a user for all melodies
     use_profile: true
     remember_user: true
-    #redirect_register: @user_register
-    facebook:                       #http://viddii.dev/
+    redirect_register: @user_register
+    facebook:                       #http://viddii.dev/frontend_dev.php/access/facebook
       key: 365665100128423
       secret: 222bb675913bc944dc8a56252bc415ac
       callback: @homepage
@@ -49,6 +49,6 @@ all:
 
 test:
   melody:
-    facebook:                       #http://viddii.dev/frontend_dev.php/access/facebook
+    facebook:                       #http://dev.viddii.com/frontend_dev.php/access/facebook
       key: 155216501261576
       secret: c4d5235b7adf041d2fa63e2885539f42

@@ -46,6 +46,8 @@ all:
         ext_link:
           call: me
           path: link
+      aliases:
+        nickname: 'me?fields=name'
 
 test:
   melody:

@@ -53,6 +53,11 @@ class userActions extends sfActions
 		$melody = unserialize($this->getUser()->getAttribute('melody'));
 
 		$user_profile->setSfGuardUser($user);
+		if(!$user_profile->getNick())
+		{
+			$user_profile->setNick($melody->getNickname()->name);
+		}
+
 
 		$user->save();
 		$access_token = $melody->getToken();

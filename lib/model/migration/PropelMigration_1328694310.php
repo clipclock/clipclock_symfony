@@ -55,6 +55,9 @@ ALTER TABLE sf_guard_user_profile ADD CONSTRAINT sf_guard_user_profile_FK_1
 
 ALTER TABLE sf_guard_user ADD COLUMN email varchar(128) not null;
 
+ALTER TABLE sf_guard_user DROP COLUMN salt;
+ALTER TABLE sf_guard_user DROP COLUMN password;
+
 CREATE UNIQUE INDEX sf_guard_user_email_idx ON sf_guard_user (email);
 ',
 );
@@ -73,6 +76,8 @@ CREATE UNIQUE INDEX sf_guard_user_email_idx ON sf_guard_user (email);
 DROP TABLE sf_guard_user_profile;
 DROP INDEX sf_guard_user_email_idx;
 ALTER TABLE sf_guard_user DROP COLUMN email;
+ALTER TABLE sf_guard_user ADD COLUMN salt varchar(128) not null;
+ALTER TABLE sf_guard_user ADD COLUMN password varchar(128) not null;
 ',
 );
 	}

@@ -53,6 +53,8 @@ ALTER TABLE sf_guard_user_profile ADD CONSTRAINT sf_guard_user_profile_FK_1
 	FOREIGN KEY (sf_guard_user_id)
 	REFERENCES sf_guard_user (id);
 
+ALTER TABLE sf_guard_user ADD COLUMN email varchar(128) not null;
+
 CREATE UNIQUE INDEX sf_guard_user_email_idx ON sf_guard_user (email);
 ',
 );
@@ -70,6 +72,7 @@ CREATE UNIQUE INDEX sf_guard_user_email_idx ON sf_guard_user (email);
   'propel' => '
 DROP TABLE sf_guard_user_profile;
 DROP INDEX sf_guard_user_email_idx;
+ALTER TABLE sf_guard_user DROP COLUMN email;
 ',
 );
 	}

@@ -22,8 +22,49 @@ class userActions extends sfActions
 		return sfView::NONE;
 	}
 
-	public function executeFacebook(sfWebRequest $request)
+	public function executeWelcome(sfWebRequest $request)
 	{
-		$this->redirect('@homepage');
+		if(!$this->getUser()->getAttribute('melody'))
+		{
+			$this->redirect('@homepage');
+		}
+
+		$this->getUser()->getAttributeHolder()->remove('melody');
+		$this->getUser()->getAttributeHolder()->remove('melody_user');
+		$this->getUser()->getAttributeHolder()->remove('melody_user_profile');
+
+		if(sfConfig::get('app_registration_confirm', 'false'))
+		{
+			$mailer = new Mailer($this->getContext()->getInstance());
+			$mailer->send(
+				$this->getUser()->getEmail(),
+				Mailer::REG_USER_WELCOME,
+				array(
+					 'name' => $this->getUser()->getFirstName() ? $this->getUser()->getFirstName() : $this->getUser()->getNick(),
+				)
+			);
+		}
+	}
+
+	public function executeRegister(sfWebRequest $request)
+	{
+		$user_profile = unserialize($this->getUser()->getAttribute('melody_user_profile'));
+		$user = unserialize($this->getUser()->getAttribute('melody_user'));
+		$melody = unserialize($this->getUser()->getAttribute('melody'));
+
+		$user_profile->setSfGuardUser($user);
+
+		$user->save();
+		$access_token = $melody->getToken();
+		$access_token->setUserId($user->getId());
+
+		if(!$this->getUser()->isAuthenticated() && $user->getIsActive())
+		{
+			$this->getUser()->signin($user, sfConfig::get('app_melody_remember_user', true));
+		}
+
+		$this->getUser()->addToken($access_token);
+
+		$this->redirect('@user_register_welcome');
 	}
 }

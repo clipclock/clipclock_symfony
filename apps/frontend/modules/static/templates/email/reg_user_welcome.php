@@ -1,0 +1,1 @@
+Hey <?php echo $name?>, welcome to Viddii!

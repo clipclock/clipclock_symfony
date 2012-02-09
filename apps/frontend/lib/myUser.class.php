@@ -12,4 +12,9 @@ class myUser extends sfMelodyUser
 	{
 		return $this->getProfile()->getNick();
 	}
+
+	public function getFirstName()
+	{
+		return $this->getProfile()->getFirstName();
+	}
 }

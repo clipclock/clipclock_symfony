@@ -6,6 +6,14 @@ homepage:
   url:   /
   param: { module: home, action: index }
 
+user_register:
+  url:   /user/register
+  param: { module: user, action: register }
+
+user_register_welcome:
+  url:   /user/welcome
+  param: { module: user, action: welcome }
+
 connect_fb:
   url:   /connect_fb
   param: { module: user, action: connect }
@@ -13,10 +21,6 @@ connect_fb:
 callback_fb:
   url:   /callback_fb
   param: { module: user, action: facebook}
-
-register_fb:
-  url:   /register_fb
-  param: { module: user, action: registerFb}
 
 sf_guard_signout:
   url:   /logout

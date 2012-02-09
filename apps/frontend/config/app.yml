@@ -4,17 +4,22 @@
 # default values
 #all:
 all:
+  registration:
+    confirm: true
+    robot_email:           "no-reply@viddii.com"
+    robot_name:            "Viddii.com"
   sf_guard_plugin:
    profile_class:      sfGuardUserProfile
    profile_field_name: sf_guard_user_id
   melody:
     create_user: true               # to create a user for all melodies
     use_profile: true
-    facebook:
+    remember_user: true
+    #redirect_register: @user_register
+    facebook:                       #http://viddii.dev/
       key: 365665100128423
       secret: 222bb675913bc944dc8a56252bc415ac
-      callback: @callback_fb
-      #redirect_register: @register_fb
+      callback: @homepage
       scope: [email]                #optionnal - http://developers.facebook.com/docs/authentication/permissions
                                         # needed to create an user based on his email_address
       user:
@@ -41,3 +46,9 @@ all:
         ext_link:
           call: me
           path: link
+
+test:
+  melody:
+    facebook:                       #http://viddii.dev/frontend_dev.php/access/facebook
+      key: 155216501261576
+      secret: c4d5235b7adf041d2fa63e2885539f42

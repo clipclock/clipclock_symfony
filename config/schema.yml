@@ -25,7 +25,7 @@ propel:
     name: { type: VARCHAR, size: '128', required: true }
   clip:
     id: ~
-    source_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: source, foreignReference: id }
+    source_id: { type: INTEGER, required: true, foreignTable: source, foreignReference: id }
     name: { type: VARCHAR, size: '128', required: true }
     url: { type: VARCHAR, required: true }
   follower:
@@ -34,10 +34,10 @@ propel:
   scene:
     id: ~
     created_at: ~
-    clip_id: { type: INTEGER, required: true }
+    clip_id: { type: INTEGER, required: true, foreignTable: clip, foreignReference: id }
     sf_guard_user_profile_id: { type: INTEGER, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     scene_time: { type: INTEGER, required: true }
-    origin_board_id: { type: INTEGER, required: true, foreignTable: board, foreignReference: id }
+    board_id: { type: INTEGER, required: true, foreignTable: board, foreignReference: id }
     has_images: { type: BOOLEAN, required: true }
   scene_like:
     like_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }

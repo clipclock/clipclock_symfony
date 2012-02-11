@@ -40,14 +40,10 @@ all:
         nick:
           call: me
           path: username
-        ext_id:
-          call: me
-          path: id
-        ext_link:
-          call: me
-          path: link
       aliases:
         nickname: 'me?fields=name'
+        id: 'me?fields=id'
+        link: 'me?fields=link'
 
 test:
   melody:

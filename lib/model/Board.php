@@ -19,4 +19,8 @@
  */
 class Board extends BaseBoard {
 
+	public function getUsernameSlug()
+	{
+		return slugify($this->getSfGuardUserProfile()->getNick());
+	}
 } // Board

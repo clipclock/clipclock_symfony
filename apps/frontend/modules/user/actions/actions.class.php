@@ -52,22 +52,6 @@ class userActions extends sfActions
 		$user = unserialize($this->getUser()->getAttribute('melody_user'));
 		$melody = unserialize($this->getUser()->getAttribute('melody'));
 
-		/*$user_profile->setSfGuardUser($user);
-		if(!$user_profile->getNick())
-		{
-			$user_profile->setNick($melody->getNickname()->name);
-		}
-
-		var_dump($melody->getName());
-		die();
-
-		$user_ext_profile = new extProfile();
-		$user_ext_profile->setExtId($melody->getLink()->id);
-		$user_ext_profile->setExtLink($melody->getLink()->link);
-		$user_ext_profile->setSfGuardUserProfile($user_profile);
-		$user_ext_profile->setProvider($melody);
-
-		$user->save();*/
 		ProfileMapper::mapFrom($user, $user_profile, $melody)->save();
 
 		$access_token = $melody->getToken();

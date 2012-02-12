@@ -19,4 +19,11 @@
  */
 class BoardPeer extends BaseBoardPeer {
 
+	public static function doSelectByUserId($user_id)
+	{
+		$c = new Criteria();
+		$c->add(BoardPeer::SF_GUARD_USER_PROFILE_ID, $user_id);
+
+		return self::doSelect($c);
+	}
 } // BoardPeer

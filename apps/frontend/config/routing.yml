@@ -6,6 +6,16 @@ homepage:
   url:   /
   param: { module: home, action: index }
 
+### BOARD ###
+
+board:
+  url:   /:username_slug/board/:id
+  class: sfPropelRoute
+  param: { module: board, action: show }
+  options: { model: Board, type: object }
+  requirements:
+    id: \d+
+
 user_register:
   url:   /user/register
   param: { module: user, action: register }

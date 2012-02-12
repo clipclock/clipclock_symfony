@@ -19,4 +19,8 @@
  */
 class ClipComment extends BaseClipComment {
 
+	public function __toString()
+	{
+		return $this->getText();
+	}
 } // ClipComment

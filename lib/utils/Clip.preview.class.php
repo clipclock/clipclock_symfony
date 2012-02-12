@@ -10,9 +10,9 @@ class ClipPreview
 {
 	static $step = 2;
 	static $prefixes_sizes = array(
-		'big' => '100/',
-		'medium' => '70/',
-		'small' => '30/',
+		'big' => '/uploads/100/',
+		'medium' => '/uploads/70/',
+		'small' => '/uploads/61/',
 	);
 
 	public static function c14n($scene_id, $size = 'big')

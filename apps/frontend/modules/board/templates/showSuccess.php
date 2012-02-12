@@ -1,0 +1,1 @@
+<?php include_component('board', 'boardsListPreview', array('current_board' => $current_board)) ?>

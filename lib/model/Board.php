@@ -23,4 +23,9 @@ class Board extends BaseBoard {
 	{
 		return slugify($this->getSfGuardUserProfile()->getNick());
 	}
+
+	public function getSimilarFromUser()
+	{
+		return BoardPeer::doSelectByUserId($this->getSfGuardUserProfileId());
+	}
 } // Board

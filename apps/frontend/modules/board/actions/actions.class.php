@@ -26,13 +26,9 @@ class boardActions extends sfActions
 
 	public function executeShow(sfWebRequest $request)
 	{
-		$this->board = $this->getRoute()->getObject();
-		$this->user = $this->board->getSfGuardUserProfile();
+		$this->current_board = $this->getRoute()->getObject();
+		$this->current_user = $this->current_board->getSfGuardUserProfile();
 
-		$this->forward404Unless($this->board);
-
-		//Component
-		$this->scenes = $this->board->getScenes()->getData();
-		$this->scenes_images = ClipPreview::c14nArrayObjects($this->scenes);
+		$this->forward404Unless($this->current_board);
 	}
 }

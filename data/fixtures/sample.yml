@@ -1,0 +1,213 @@
+sfGuardUser:
+  sfGuardUser_1:
+    username: Facebook_1464279882
+    algorithm: sha1
+    created_at: '2012-02-11 04:10:29'
+    last_login: '2012-02-13 13:07:15'
+    is_active: true
+    is_super_admin: false
+    email: madesst@gmail.com
+  sfGuardUser_2:
+    username: Facebook_100001741937710
+    algorithm: sha1
+    created_at: '2012-02-13 13:36:10.178615'
+    last_login: '2012-02-13 13:36:10.178615'
+    is_active: true
+    is_super_admin: false
+    email: li.mortis@yahoo.com
+  sfGuardUser_3:
+    username: Facebook_100001844027124
+    algorithm: sha1
+    created_at: '2012-02-13 13:41:20.308937'
+    last_login: '2012-02-13 13:41:20.308937'
+    is_active: true
+    is_super_admin: false
+    email: krainov05@mail.ru
+sfGuardRememberKey:
+  sfGuardRememberKey_1_127.0.0.1:
+    user_id: sfGuardUser_1
+    ip_address: 127.0.0.1
+    remember_key: r294ypxbcq8ow4ckcgk8c48kgoo8gko
+    created_at: '2012-02-13 13:07:15'
+Token:
+  Token_3_1:
+    #id: 3
+    user_id: sfGuardUser_1
+    name: facebook
+    token_key: AAAFMkgpmYKcBABZACEP2r5bK72kcpPjRUNZCTiaUBbhBfzjyv2sLGR3FYMF3enZCiOQZBq1aylWSrEgM4TBs4VulH4Jrx5nkQ0JQZAevimwZDZD
+    expire: 1334308021
+    params: '{"expires":"5183994"}'
+    identifier: '1464279882'
+    status: access
+    o_auth_version: 2
+    created_at: '2012-02-13 13:07:15'
+    updated_at: '2012-02-13 13:07:15'
+  Token_4_2:
+    #id: 4
+    user_id: sfGuardUser_2
+    name: facebook
+    token_key: AAAFMkgpmYKcBANQ4M1t2t0yVK2jsFvjcleMm1dkZB3sugah7yemSSQPKZCCc5DWh8KBymZCapVAJijVurwweiqodU9jxoqEZAouq6PioKwZDZD
+    token_secret: ''
+    expire: 1333979193
+    params: '{"expires":"5181044"}'
+    identifier: '100001741937710'
+    status: access
+    o_auth_version: 2
+    created_at: '2012-02-09 18:35:49'
+    updated_at: '2012-02-09 18:35:49'
+  Token_5_3:
+    #id: 5
+    user_id: sfGuardUser_3
+    name: facebook
+    token_key: AAAFMkgpmYKcBAFEsEc8ZCV6NZBoWVZClTfqH3JeTi99vYJwCQb7hzitHDUgYK8hHgoFOvMZBpf1qAM7b87b06ZBumgFHoXjQG41MpwJrxaQZDZD
+    token_secret: ''
+    expire: 1333989010
+    params: '{"expires":"5183894"}'
+    identifier: '100001844027124'
+    status: access
+    o_auth_version: 2
+    created_at: '2012-02-09 20:31:57'
+    updated_at: '2012-02-09 20:31:57'
+SfGuardUserProfile:
+  SfGuardUserProfile_1:
+    sf_guard_user_id: sfGuardUser_1
+    first_name: Maksim
+    last_name: Ustinov
+    nick: madesst
+  SfGuardUserProfile_2:
+    sf_guard_user_id: sfGuardUser_2
+    first_name: Polin
+    last_name: Sergeevea
+    nick: 'Polin Sergeeva'
+  SfGuardUserProfile_3:
+    sf_guard_user_id: sfGuardUser_3
+    first_name: Alexey
+    last_name: Krainov
+    nick: krainov05
+Category:
+  Category_1:
+    name: DEV
+Board:
+  Board_4:
+    is_public: true
+    name: 'Test board'
+    sf_guard_user_profile_id: SfGuardUserProfile_1
+    category_id: Category_1
+  Board_5:
+    is_public: true
+    name: 'Yet another test board'
+    sf_guard_user_profile_id: SfGuardUserProfile_1
+    category_id: Category_1
+Source:
+  Source_1:
+    name: Youtube
+Clip:
+  Clip_1:
+    source_id: Source_1
+    name: KSK-1
+    url: 'http://www.youtube.com/watch?v=_hCK-VDZgZQ'
+  Clip_2:
+    source_id: Source_1
+    name: 'Stille Kämpfer 1/4 KSK - Kommando Spezialkräfte 2010'
+    url: 'http://www.youtube.com/watch?v=7FphIMx3maE'
+  Clip_3:
+    source_id: Source_1
+    name: 'StGSG9 German Special Forces'
+    url: 'http://www.youtube.com/watch?v=x1fOdUK9J2w'
+Scene:
+  Scene_1:
+    created_at: '2012-02-12 03:29:44.052192'
+    clip_id: Clip_1
+    sf_guard_user_profile_id: SfGuardUserProfile_1
+    scene_time: 15
+    board_id: Board_4
+    has_images: false
+  Scene_2:
+    created_at: '2012-02-12 03:32:46.332227'
+    clip_id: Clip_2
+    sf_guard_user_profile_id: SfGuardUserProfile_1
+    scene_time: 55
+    board_id: Board_4
+    has_images: false
+  Scene_3:
+    created_at: '2012-02-12 03:33:35.238257'
+    clip_id: Clip_3
+    sf_guard_user_profile_id: SfGuardUserProfile_1
+    scene_time: 13
+    board_id: Board_5
+    has_images: false
+  Scene_4:
+    created_at: '2012-02-12 19:05:39.302487'
+    clip_id: Clip_2
+    sf_guard_user_profile_id: SfGuardUserProfile_1
+    scene_time: 34
+    board_id: Board_4
+    has_images: false
+  Scene_5:
+    created_at: '2012-02-12 20:05:39.302487'
+    clip_id: Clip_1
+    sf_guard_user_profile_id: SfGuardUserProfile_1
+    scene_time: 12
+    board_id: Board_4
+    has_images: false
+ClipComment:
+  ClipComment_1:
+    sf_guard_user_profile_id: SfGuardUserProfile_1
+    scene_id: Scene_4
+    text: 'Maxims comment #1, у сцены 1 уникальный комментарий'
+  ClipComment_2:
+    sf_guard_user_profile_id: SfGuardUserProfile_1
+    scene_id: Scene_4
+    text: 'Maxims comment #2'
+  ClipComment_3:
+    sf_guard_user_profile_id: SfGuardUserProfile_2
+    scene_id: Scene_2
+    text: 'Polinas comment #1, у сцены 3 уникальных комментария'
+  ClipComment_4:
+    sf_guard_user_profile_id: SfGuardUserProfile_3
+    scene_id: Scene_2
+    text: 'Alexeys comment #1'
+  ClipComment_5:
+    sf_guard_user_profile_id: SfGuardUserProfile_1
+    scene_id: Scene_2
+    text: 'Maxims comment #3'
+  ClipComment_6:
+    sf_guard_user_profile_id: SfGuardUserProfile_1
+    scene_id: Scene_1
+    text: 'Maxims comment #4, у сцены 1 уникальный комментарий'
+  ClipComment_7:
+    sf_guard_user_profile_id: SfGuardUserProfile_2
+    scene_id: Scene_5
+    text: 'Polinas comment #2, у сцены 1 уникальный комментарий'
+  ClipComment_8:
+    sf_guard_user_profile_id: SfGuardUserProfile_2
+    scene_id: Scene_5
+    text: 'Polinas comment #3'
+  ClipComment_9:
+    sf_guard_user_profile_id: SfGuardUserProfile_2
+    scene_id: Scene_5
+    text: 'Polinas comment #4'
+  ClipComment_10:
+    sf_guard_user_profile_id: SfGuardUserProfile_2
+    scene_id: Scene_5
+    text: 'Polinas comment #5'
+  ClipComment_11:
+    sf_guard_user_profile_id: SfGuardUserProfile_2
+    scene_id: Scene_5
+    text: 'Polinas comment #4'
+ExtProfile:
+  ExtProfile_1:
+    sf_guard_user_profile_id: SfGuardUserProfile_1
+    ext_id: '1464279882'
+    ext_link: 'http://www.facebook.com/madesst'
+    provider: 1
+  ExtProfile_2:
+    sf_guard_user_profile_id: SfGuardUserProfile_2
+    ext_id: '100001741937710'
+    ext_link: 'http://www.facebook.com/profile.php?id=100001741937710'
+    provider: 1
+  ExtProfile_3:
+    sf_guard_user_profile_id: SfGuardUserProfile_3
+    ext_id: '100001844027124'
+    ext_link: 'http://www.facebook.com/krainov05'
+    provider: 1

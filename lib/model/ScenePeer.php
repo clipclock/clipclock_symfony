@@ -24,13 +24,13 @@ class ScenePeer extends BaseScenePeer {
 		$c = !$c ? new Criteria() : $c;
 		$c->add(self::BOARD_ID, $board->getId());
 
-		$c->addJoin(self::ID, ClipCommentPeer::SCENE_ID, Criteria::INNER_JOIN);
+		$c->addJoin(self::ID, SceneCommentPeer::SCENE_ID, Criteria::INNER_JOIN);
 
 		$c->clearSelectColumns();
 		$c->addSelectColumn(self::CLIP_ID);
 
 		$c->addGroupByColumn(self::CLIP_ID);
-		$c->addDescendingOrderByColumn('count('. ClipCommentPeer::ID .')');
+		$c->addDescendingOrderByColumn('count('. SceneCommentPeer::ID .')');
 		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);
 	}
 

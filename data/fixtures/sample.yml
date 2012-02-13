@@ -114,91 +114,97 @@ Clip:
     source_id: Source_1
     name: 'StGSG9 German Special Forces'
     url: 'http://www.youtube.com/watch?v=x1fOdUK9J2w'
+SceneTime:
+  SceneTime_1:
+    clip_id: Clip_1
+    scene_time: 15
+    unique_comments_count: 1
+  SceneTime_2:
+    clip_id: Clip_2
+    scene_time: 55
+    unique_comments_count: 3
+  SceneTime_3:
+    clip_id: Clip_3
+    scene_time: 13
+    unique_comments_count: 1
+  SceneTime_4:
+    clip_id: Clip_2
+    scene_time: 34
+    unique_comments_count: 1
+  SceneTime_5:
+    clip_id: Clip_1
+    scene_time: 12
+    unique_comments_count: 1
 Scene:
   Scene_1:
     created_at: '2012-02-12 03:29:44.052192'
-    clip_id: Clip_1
+    scene_time_id: SceneTime_1
     sf_guard_user_profile_id: SfGuardUserProfile_1
-    scene_time: 15
     board_id: Board_4
-    has_images: false
-    unique_comments_count: 1
   Scene_2:
     created_at: '2012-02-12 03:32:46.332227'
-    clip_id: Clip_2
+    scene_time_id: SceneTime_1
     sf_guard_user_profile_id: SfGuardUserProfile_1
-    scene_time: 55
     board_id: Board_4
-    has_images: false
-    unique_comments_count: 3
   Scene_3:
     created_at: '2012-02-12 03:33:35.238257'
-    clip_id: Clip_3
+    scene_time_id: SceneTime_3
     sf_guard_user_profile_id: SfGuardUserProfile_1
-    scene_time: 13
     board_id: Board_5
-    has_images: false
-    unique_comments_count: 1
   Scene_4:
     created_at: '2012-02-12 19:05:39.302487'
-    clip_id: Clip_2
+    scene_time_id: SceneTime_4
     sf_guard_user_profile_id: SfGuardUserProfile_1
-    scene_time: 34
     board_id: Board_4
-    has_images: false
-    unique_comments_count: 1
   Scene_5:
     created_at: '2012-02-12 20:05:39.302487'
-    clip_id: Clip_1
+    scene_time_id: SceneTime_5
     sf_guard_user_profile_id: SfGuardUserProfile_1
-    scene_time: 12
     board_id: Board_4
-    has_images: false
-    unique_comments_count: 1
 SceneComment:
   SceneComment_1:
     sf_guard_user_profile_id: SfGuardUserProfile_1
-    scene_id: Scene_4
+    scene_time_id: SceneTime_4
     text: 'Maxims comment #1, у сцены 1 уникальный комментарий'
   SceneComment_2:
     sf_guard_user_profile_id: SfGuardUserProfile_1
-    scene_id: Scene_4
+    scene_time_id: SceneTime_4
     text: 'Maxims comment #2'
   SceneComment_3:
     sf_guard_user_profile_id: SfGuardUserProfile_2
-    scene_id: Scene_2
+    scene_time_id: SceneTime_2
     text: 'Polinas comment #1, у сцены 3 уникальных комментария'
   SceneComment_4:
     sf_guard_user_profile_id: SfGuardUserProfile_3
-    scene_id: Scene_2
+    scene_time_id: SceneTime_2
     text: 'Alexeys comment #1'
   SceneComment_5:
     sf_guard_user_profile_id: SfGuardUserProfile_1
-    scene_id: Scene_2
+    scene_time_id: SceneTime_2
     text: 'Maxims comment #3'
   SceneComment_6:
     sf_guard_user_profile_id: SfGuardUserProfile_1
-    scene_id: Scene_1
+    scene_time_id: SceneTime_1
     text: 'Maxims comment #4, у сцены 1 уникальный комментарий'
   SceneComment_7:
     sf_guard_user_profile_id: SfGuardUserProfile_2
-    scene_id: Scene_5
+    scene_time_id: SceneTime_5
     text: 'Polinas comment #2, у сцены 1 уникальный комментарий'
   SceneComment_8:
     sf_guard_user_profile_id: SfGuardUserProfile_2
-    scene_id: Scene_5
+    scene_time_id: SceneTime_5
     text: 'Polinas comment #3'
   SceneComment_9:
     sf_guard_user_profile_id: SfGuardUserProfile_2
-    scene_id: Scene_5
+    scene_time_id: SceneTime_5
     text: 'Polinas comment #4'
   SceneComment_10:
     sf_guard_user_profile_id: SfGuardUserProfile_2
-    scene_id: Scene_5
+    scene_time_id: SceneTime_5
     text: 'Polinas comment #5'
   SceneComment_11:
     sf_guard_user_profile_id: SfGuardUserProfile_2
-    scene_id: Scene_5
+    scene_time_id: SceneTime_5
     text: 'Polinas comment #4'
 ExtProfile:
   ExtProfile_1:

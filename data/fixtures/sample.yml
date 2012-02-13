@@ -122,6 +122,7 @@ Scene:
     scene_time: 15
     board_id: Board_4
     has_images: false
+    unique_comments_count: 1
   Scene_2:
     created_at: '2012-02-12 03:32:46.332227'
     clip_id: Clip_2
@@ -129,6 +130,7 @@ Scene:
     scene_time: 55
     board_id: Board_4
     has_images: false
+    unique_comments_count: 3
   Scene_3:
     created_at: '2012-02-12 03:33:35.238257'
     clip_id: Clip_3
@@ -136,6 +138,7 @@ Scene:
     scene_time: 13
     board_id: Board_5
     has_images: false
+    unique_comments_count: 1
   Scene_4:
     created_at: '2012-02-12 19:05:39.302487'
     clip_id: Clip_2
@@ -143,6 +146,7 @@ Scene:
     scene_time: 34
     board_id: Board_4
     has_images: false
+    unique_comments_count: 1
   Scene_5:
     created_at: '2012-02-12 20:05:39.302487'
     clip_id: Clip_1
@@ -150,48 +154,49 @@ Scene:
     scene_time: 12
     board_id: Board_4
     has_images: false
-ClipComment:
-  ClipComment_1:
+    unique_comments_count: 1
+SceneComment:
+  SceneComment_1:
     sf_guard_user_profile_id: SfGuardUserProfile_1
     scene_id: Scene_4
     text: 'Maxims comment #1, у сцены 1 уникальный комментарий'
-  ClipComment_2:
+  SceneComment_2:
     sf_guard_user_profile_id: SfGuardUserProfile_1
     scene_id: Scene_4
     text: 'Maxims comment #2'
-  ClipComment_3:
+  SceneComment_3:
     sf_guard_user_profile_id: SfGuardUserProfile_2
     scene_id: Scene_2
     text: 'Polinas comment #1, у сцены 3 уникальных комментария'
-  ClipComment_4:
+  SceneComment_4:
     sf_guard_user_profile_id: SfGuardUserProfile_3
     scene_id: Scene_2
     text: 'Alexeys comment #1'
-  ClipComment_5:
+  SceneComment_5:
     sf_guard_user_profile_id: SfGuardUserProfile_1
     scene_id: Scene_2
     text: 'Maxims comment #3'
-  ClipComment_6:
+  SceneComment_6:
     sf_guard_user_profile_id: SfGuardUserProfile_1
     scene_id: Scene_1
     text: 'Maxims comment #4, у сцены 1 уникальный комментарий'
-  ClipComment_7:
+  SceneComment_7:
     sf_guard_user_profile_id: SfGuardUserProfile_2
     scene_id: Scene_5
     text: 'Polinas comment #2, у сцены 1 уникальный комментарий'
-  ClipComment_8:
+  SceneComment_8:
     sf_guard_user_profile_id: SfGuardUserProfile_2
     scene_id: Scene_5
     text: 'Polinas comment #3'
-  ClipComment_9:
+  SceneComment_9:
     sf_guard_user_profile_id: SfGuardUserProfile_2
     scene_id: Scene_5
     text: 'Polinas comment #4'
-  ClipComment_10:
+  SceneComment_10:
     sf_guard_user_profile_id: SfGuardUserProfile_2
     scene_id: Scene_5
     text: 'Polinas comment #5'
-  ClipComment_11:
+  SceneComment_11:
     sf_guard_user_profile_id: SfGuardUserProfile_2
     scene_id: Scene_5
     text: 'Polinas comment #4'

@@ -1,0 +1,1 @@
+<li><a href="#"><?php echo $scene_time->getUniqueCommentsCount()?><img src='<?php echo $scene_image?>' alt=''></a></li>

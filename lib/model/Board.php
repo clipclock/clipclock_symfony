@@ -24,8 +24,13 @@ class Board extends BaseBoard {
 		return slugify($this->getSfGuardUserProfile()->getNick());
 	}
 
-	public function getSimilarFromUser()
+	public function getLinkedBoardsIds()
 	{
-		return BoardPeer::doSelectByUserId($this->getSfGuardUserProfileId());
+		return BoardPeer::retrieveIdsLinkedBoardsByUserId($this->getId(), $this->getSfGuardUserProfileId());
+	}
+
+	public function getClipsPreviewsIds()
+	{
+		return SceneTimePeer::retrieveClipsIdsByBoard($this->getId());
 	}
 } // Board

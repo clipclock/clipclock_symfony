@@ -3,8 +3,10 @@
 		<h4><a href="<?php echo url_for('board', $board)?>"><?php echo $board->getName()?></a></h4>
 		<div class="follow-videos">
 			<ul>
-				<?php foreach($scenes as $scene):?>
-					<li><a href="#"><img src='<?php echo $scenes_images[$scene->getId()]?>' alt=''></a></li>
+				<?php foreach($clips_ids as $clip_id):?>
+					<?php include_component('board', 'boardStickerSceneTimePreview', array(
+						'clip_id' => $clip_id['clip_id'],
+						'board_id' => $board->getId()))?>
 				<?php endforeach?>
 			</ul>
 		</div>

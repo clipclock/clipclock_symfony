@@ -19,11 +19,22 @@
  */
 class BoardPeer extends BaseBoardPeer {
 
-	public static function doSelectByUserId($user_id)
+	public static function retrieveIdsLinkedBoardsByUserId($board_id, $user_id)
 	{
 		$c = new Criteria();
-		$c->add(BoardPeer::SF_GUARD_USER_PROFILE_ID, $user_id);
 
-		return self::doSelect($c);
+		$c->clearSelectColumns();
+		$c->addSelectColumn(BoardPeer::ID);
+		$c->setPrimaryTableName(BoardPeer::TABLE_NAME);
+		$c->addJoin(self::ID, ScenePeer::BOARD_ID, Criteria::INNER_JOIN);
+		$c->addJoin(ScenePeer::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
+		$c->addJoin(SceneTimePeer::CLIP_ID, ClipPeer::ID, Criteria::INNER_JOIN);
+
+		$c->add(BoardPeer::SF_GUARD_USER_PROFILE_ID, $user_id);
+		$c->addGroupByColumn(self::ID);
+		$c->addAscendingOrderByColumn(self::ID . ' is distinct from '.$board_id);
+		$c->addDescendingOrderByColumn('sum(' . SceneTimePeer::UNIQUE_COMMENTS_COUNT . ')');
+
+		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);
 	}
 } // BoardPeer

@@ -6,7 +6,7 @@
  * Time: 0:42
  * To change this template use File | Settings | File Templates.
  */
-class ClipPreview
+class SceneTimePreview
 {
 	static $step = 2;
 	static $prefixes_sizes = array(

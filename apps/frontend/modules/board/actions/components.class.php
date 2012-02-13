@@ -8,34 +8,27 @@
  */
 class boardComponents extends sfComponents
 {
-	/**
-	 * @var Board
-	 */
-	protected $board;
-
-	/**
-	 * @var Board
-	 */
-	protected $current_board;
+	public function executeBoardsLinked()
+	{
+		$this->current_board = $this->getVar('current_board');
+		$this->linked_boards_ids = $this->current_board->getLinkedBoardsIds();
+	}
 
 	public function executeBoardSticker()
 	{
-		$this->board = $this->getVar('board');
+		$this->board_id = $this->getVar('board_id');
+		$this->board = BoardPeer::retrieveByPK($this->board_id);
 
-		/*
-		 * TODO: rename to board_scenes
-		 */
-		$this->scenes = $this->board->getScenes()->getData();
-		/*
-		 * TODO: rename to ScenePreview
-		 */
-		$this->scenes_images = ClipPreview::c14nArrayObjects($this->scenes, 'small');
+		$this->clips_ids = $this->board->getClipsPreviewsIds();
 	}
 
-	public function executeBoardsListPreview()
+	public function executeBoardStickerSceneTimePreview()
 	{
-		$this->current_board = $this->getVar('current_board');
-		$this->similiar_boards = $this->current_board->getSimilarFromUser();
+		$this->clip_id = $this->getVar('clip_id');
+		$this->board_id = $this->getVar('board_id');
+		$this->scene_time = SceneTimePeer::retrieveBestByClipId($this->clip_id, $this->board_id);
+
+		$this->scene_image = SceneTimePreview::c14n($this->scene_time->getId(), 'small');
 	}
 
 	public function executeBoardClipsList()
@@ -52,7 +45,7 @@ class boardComponents extends sfComponents
 		$this->clip_scenes = array_slice($scenes, 1, null, true);
 		$this->clip_main_scene = current(array_slice($scenes, 0, 1, true));
 
-		$this->clip_scenes_images = ClipPreview::c14nArrayObjects($scenes, 'big');
+		$this->clip_scenes_images = SceneTimePreview::c14nArrayObjects($scenes, 'big');
 		unset($scenes);
 	}
 }

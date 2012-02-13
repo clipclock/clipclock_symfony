@@ -34,18 +34,23 @@ propel:
   scene:
     id: ~
     created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
-    clip_id: { type: INTEGER, required: true, foreignTable: clip, foreignReference: id }
+    scene_time_id: { type: INTEGER, required: true, foreignTable: scene_time, foreignReference: id }
     sf_guard_user_profile_id: { type: INTEGER, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
-    scene_time: { type: INTEGER, required: true }
     board_id: { type: INTEGER, required: true, foreignTable: board, foreignReference: id }
-    has_images: { type: BOOLEAN, required: true }
+    is_repin: { type: BOOLEAN, required: true, default: false }
+    repin_scene_id: { type: INTEGER, required: false, foreignTable: scene, foreignReference: id }
+  scene_time:
+    id: ~
+    clip_id: { type: INTEGER, required: true, foreignTable: clip, foreignReference: id, primaryKey: true }
+    scene_time: { type: INTEGER, required: true, primaryKey: true }
+    created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
     unique_comments_count: { type: INTEGER, required: true, default: '1' }
   scene_like:
     like_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     scene_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: scene, foreignReference: id }
-  scene_repost:
+  scene_repin:
+    repin_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     scene_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: scene, foreignReference: id }
-    board_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: board, foreignReference: id }
   source:
     id: ~
     name: {type: VARCHAR, size: '128', required: false }
@@ -53,8 +58,9 @@ propel:
     _attributes: {phpName: SceneComment}
     id: ~
     created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
+    reply_to_comment_id: { type: INTEGER, required: true, foreignTable: comment, foreignReference: id }
     sf_guard_user_profile_id: { type: INTEGER, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
-    scene_id: { type: INTEGER, required: true, foreignTable: scene, foreignReference: id }
+    scene_time_id: { type: INTEGER, required: true, foreignTable: scene_time, foreignReference: id }
     text: { type: LONGVARCHAR, required: true }
   history:
     id: ~

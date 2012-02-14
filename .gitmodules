@@ -10,3 +10,6 @@
 [submodule "plugins/sfPropelOAuthPlugin"]
 	path = plugins/sfPropelOAuthPlugin
 	url = git://github.com/madesst/sfPropelOAuthPlugin.git
+[submodule "plugins/sfJqueryReloadedPlugin"]
+	path = plugins/sfJqueryReloadedPlugin
+	url = git://github.com/madesst/sfJqueryReloadedPlugin.git

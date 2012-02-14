@@ -16,6 +16,16 @@ board:
   requirements:
     id: \d+
 
+### STICKER AJAX ###
+
+sticker_scene_change:
+  url:   /scene/:scene_id
+  param: { module: board, action: showSceneAjax }
+  requirements:
+    scene_id: \d+
+
+### MELODY CALLBACKS ###
+
 user_register:
   url:   /user/register
   param: { module: user, action: register }
@@ -23,6 +33,8 @@ user_register:
 user_register_welcome:
   url:   /user/welcome
   param: { module: user, action: welcome }
+
+### MELODY ROUTINE ###
 
 connect_fb:
   url:   /connect_fb

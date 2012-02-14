@@ -31,4 +31,12 @@ class boardActions extends sfActions
 
 		$this->forward404Unless($this->current_board);
 	}
+
+	public function executeShowSceneAjax(sfWebRequest $request)
+	{
+		$this->scene_id = $request->getParameter('scene_id');
+
+		$this->forward404Unless($this->scene_id);
+		$this->getContext()->getConfiguration()->loadHelpers(array('comment'));
+	}
 }

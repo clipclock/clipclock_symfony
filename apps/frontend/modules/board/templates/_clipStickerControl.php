@@ -1,3 +1,7 @@
 <?php foreach($scene_times as $scene_time):?>
-	<a href="/<?php echo $scene_time['id']?>"><?php echo date('i:s', mktime(0, 0, $scene_time['scene_time']))?></a>
+	<?php echo jq_link_to_remote(date('i:s', mktime(0, 0, $scene_time['scene_time'])), array(
+		'update' => array('success' => 'comments_'.$clip_id, 'failure' => "alert('HTTP Error ' + XMLHttpRequest.status + '!')"),
+		'url'    => '@sticker_scene_change?scene_id='.$scene_time['id'],
+		'method' => 'GET'
+	))?>
 <?php endforeach;?>

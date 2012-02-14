@@ -73,11 +73,21 @@ class boardComponents extends sfComponents
 
 	public function executeClipStickerSceneTimeCommentsListShort()
 	{
-		$this->current_scene_time_id = $this->getVar('current_scene_time_id');
+		$this->current_scene_id = $this->getVar('current_scene_id');
+		if($this->getVar('unique_comments_count'))
+		{
+			$this->unique_comments_count = $this->getVar('unique_comments_count');
+		}
+		else
+		{
+			$unique_comments_count = ScenePeer::countUniqueCommentsBySceneId($this->current_scene_id);
+			$this->unique_comments_count = $unique_comments_count['unique_comments_count'];
+		}
+
 
 		$this->comments = SceneCommentPeer::retrieveBySceneTimeId(
-			$this->current_scene_time_id,
-			calculateCommentListLength($this->getVar('unique_comments_count'))
+			$this->current_scene_id,
+			calculateCommentListLength($this->unique_comments_count)
 		);
 	}
 

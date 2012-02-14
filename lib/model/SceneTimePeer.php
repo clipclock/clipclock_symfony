@@ -34,6 +34,23 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);
 	}
 
+	public static function retrieveClipsIdsForListByBoardId($board_id, Criteria $c = null)
+	{
+		$c = !$c ? new Criteria() : $c;
+
+		$c->clearSelectColumns();
+		$c->addSelectColumn(SceneTimePeer::CLIP_ID);
+
+		$c->addJoin(ScenePeer::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
+		$c->add(ScenePeer::BOARD_ID, $board_id);
+
+		$c->addDescendingOrderByColumn('max(' . ScenePeer::CREATED_AT . ')');
+
+		$c->addGroupByColumn(SceneTimePeer::CLIP_ID);
+
+		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);
+	}
+
 	public static function retrieveBestByClipId($clip_id, $board_id)
 	{
 		$c = new Criteria();
@@ -43,5 +60,17 @@ class SceneTimePeer extends BaseSceneTimePeer {
 
 		$c->addDescendingOrderByColumn(self::UNIQUE_COMMENTS_COUNT);
 		return self::doSelectOne($c);
+	}
+
+	public static function countCommentsForSceneTimeId($scene_time_id)
+	{
+		$c = new Criteria();
+
+		$c->clearSelectColumns();
+		$c->addSelectColumn('count(' . SceneCommentPeer::ID . ') as comments_count');
+
+		$c->add(SceneCommentPeer::SCENE_TIME_ID, $scene_time_id);
+
+		return BasePeer::doSelect($c)->fetch(PDO::FETCH_ASSOC);
 	}
 } // SceneTimePeer

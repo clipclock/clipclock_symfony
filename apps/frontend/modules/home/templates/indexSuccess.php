@@ -3,5 +3,4 @@
 <?php else:?>
 	Welcome back, <?php echo $sf_user->getNick();?>
 	<?php echo link_to('Logout', '@sf_guard_signout') ?><br />
-	<?php include_component('home', 'myBoardsList') ?>
 <?php endif; ?>

@@ -1,0 +1,1 @@
+<?php echo $scene_image?>

@@ -18,5 +18,4 @@
  * @package    propel.generator.lib.model
  */
 class ClipPeer extends BaseClipPeer {
-
 } // ClipPeer

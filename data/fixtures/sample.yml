@@ -164,6 +164,7 @@ Scene:
 SceneComment:
   SceneComment_1:
     sf_guard_user_profile_id: SfGuardUserProfile_1
+    created_at: '2012-02-12 03:33:35.238257'
     scene_time_id: SceneTime_4
     text: 'Maxims comment #1, у сцены 1 уникальный комментарий'
   SceneComment_2:
@@ -172,6 +173,7 @@ SceneComment:
     text: 'Maxims comment #2'
   SceneComment_3:
     sf_guard_user_profile_id: SfGuardUserProfile_2
+    created_at: '2012-02-12 03:33:35.238257'
     scene_time_id: SceneTime_2
     text: 'Polinas comment #1, у сцены 3 уникальных комментария'
   SceneComment_4:
@@ -184,11 +186,13 @@ SceneComment:
     text: 'Maxims comment #3'
   SceneComment_6:
     sf_guard_user_profile_id: SfGuardUserProfile_1
+    created_at: '2012-02-12 03:33:35.238257'
     scene_time_id: SceneTime_1
     text: 'Maxims comment #4, у сцены 1 уникальный комментарий'
   SceneComment_7:
     sf_guard_user_profile_id: SfGuardUserProfile_2
     scene_time_id: SceneTime_5
+    created_at: '2012-02-12 03:33:35.238257'
     text: 'Polinas comment #2, у сцены 1 уникальный комментарий'
   SceneComment_8:
     sf_guard_user_profile_id: SfGuardUserProfile_2
@@ -206,6 +210,10 @@ SceneComment:
     sf_guard_user_profile_id: SfGuardUserProfile_2
     scene_time_id: SceneTime_5
     text: 'Polinas comment #4'
+SceneLike:
+  SceneLike_1:
+    like_sf_guard_user_profile_id: SfGuardUserProfile_1
+    scene_id: Scene_5
 ExtProfile:
   ExtProfile_1:
     sf_guard_user_profile_id: SfGuardUserProfile_1

@@ -19,4 +19,8 @@
  */
 class SfGuardUserProfile extends BaseSfGuardUserProfile {
 
+	public function __toString()
+	{
+		return $this->getNick();
+	}
 } // SfGuardUserProfile

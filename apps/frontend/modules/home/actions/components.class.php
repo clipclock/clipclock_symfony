@@ -8,8 +8,4 @@
  */
 class homeComponents extends sfComponents
 {
-	public function executeMyBoardsList()
-	{
-		$this->boards = BoardPeer::doSelectByUserId($this->getUser()->getId());
-	}
 }

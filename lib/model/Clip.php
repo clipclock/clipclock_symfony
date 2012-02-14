@@ -19,4 +19,8 @@
  */
 class Clip extends BaseClip {
 
+	public function getFirstSceneForBoardId($board_id)
+	{
+		return ScenePeer::retrieveFirstByClipIdBoardId($this->getId(), $board_id);
+	}
 } // Clip

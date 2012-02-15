@@ -1,4 +1,4 @@
-<div class="image">
+<div id="image_<?php echo $clip_id ?>" class="image">
 	<?php include_component('board', 'clipStickerSceneTimePreview', array('scene_time_id' => $current_scene_id['scene_time_id']))?>
 </div>
 
@@ -6,6 +6,6 @@
 	<?php include_component('board', 'clipStickerControl', array('board_id' => $board_id, 'clip_id' => $clip_id))?>
 </div>
 
-<div id="comments_<?php echo $clip_id ?>" class="comments">
+<div id="comments_list_<?php echo $clip_id ?>" class="comments">
 	<?php include_component('board', 'clipStickerSceneTimeCommentsListShort', array('current_scene_id' => $current_scene_id['id'], 'unique_comments_count' => $current_scene_id['unique_comments_count']))?>
 </div>

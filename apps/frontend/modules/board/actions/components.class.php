@@ -84,7 +84,6 @@ class boardComponents extends sfComponents
 			$this->unique_comments_count = $unique_comments_count['unique_comments_count'];
 		}
 
-
 		$this->comments = SceneCommentPeer::retrieveBySceneTimeId(
 			$this->current_scene_id,
 			calculateCommentListLength($this->unique_comments_count)

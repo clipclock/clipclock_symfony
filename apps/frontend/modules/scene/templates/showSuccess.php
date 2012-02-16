@@ -1,2 +1,2 @@
-<?php include_component('scene', 'commentForm')?>
-<?php echo $form?>
+<?php include_component('scene', 'peopleForSceneSticker')?>
+<?php //echo $form?>

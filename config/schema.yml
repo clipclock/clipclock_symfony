@@ -49,9 +49,11 @@ propel:
   scene_like:
     like_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     scene_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: scene, foreignReference: id }
+    created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
   scene_repin:
     repin_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     scene_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: scene, foreignReference: id }
+    created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
   source:
     id: ~
     name: {type: VARCHAR, size: '128', required: false }

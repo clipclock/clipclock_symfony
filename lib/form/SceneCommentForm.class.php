@@ -9,7 +9,12 @@
  */
 class SceneCommentForm extends BaseSceneCommentForm
 {
-  public function configure()
-  {
-  }
+	public function configure()
+	{
+		$this->setWidgets(array(
+			'reply_to_comment_id'      => new sfWidgetFormInputHidden(),
+			'scene_time_id'            => new sfWidgetFormInputHidden(),
+			'text'                     => new sfWidgetFormTextarea(),
+		));
+	}
 }

@@ -32,8 +32,12 @@ class sceneComponents extends sfComponents
 
 	public function executeSceneViewEmbed()
 	{
-		$this->clip = $this->getVar('clip');
-		$this->scene_time = $this->getVar('scene_time');
+		$this->scene_time_id = $this->getVar('scene_time_id');
+
+		$scene_time = SceneTimePeer::retrieveByPK($this->scene_time_id);
+		$this->scene_time = $scene_time->getSceneTime();
+
+		$this->clip = ClipPeer::retrieveBySceneTimeId($this->scene_time_id);
 	}
 
 	public function executeSceneViewControl()
@@ -43,5 +47,28 @@ class sceneComponents extends sfComponents
 		$this->scene_id = $this->getVar('scene_id');
 
 		$this->scene_times = ScenePeer::retrieveAscSceneTimeIdByClipIdBoardId($this->clip_id, $this->board_id);
+	}
+
+	public function executeSceneViewDescription()
+	{
+		$this->scene = $this->getVar('scene');
+	}
+
+	public function executeSceneViewCommentForm()
+	{
+		$scene_comment = new SceneComment();
+		$scene_comment->setSceneTimeId($this->getVar('scene_time_id'));
+		$scene_comment->setSfGuardUserProfileId($this->getUser()->getId());
+
+		$this->form = new SceneCommentForm($scene_comment);
+	}
+
+	public function executeSceneViewComments()
+	{
+		$this->scene_time_id = $this->getVar('scene_time_id');
+
+		$this->comments = SceneCommentPeer::retrieveFullBySceneTimeId(
+			$this->scene_time_id
+		);
 	}
 }

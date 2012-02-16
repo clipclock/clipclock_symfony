@@ -35,6 +35,10 @@ scene:
     board_id: \d+
     id: \d+
 
+scene_post_comment:
+  url: /post/scene/comment
+  param: { module: scene, action: postComment }
+
 ### STICKER AJAX ###
 
 scene_change:

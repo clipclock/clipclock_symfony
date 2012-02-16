@@ -38,6 +38,7 @@ propel:
     sf_guard_user_profile_id: { type: INTEGER, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     board_id: { type: INTEGER, required: true, foreignTable: board, foreignReference: id }
     repin_origin_scene_id: { type: INTEGER, required: false, foreignTable: scene, foreignReference: id }
+    text: { type: LONGVARCHAR, required: true }
   scene_time:
     id: ~
     clip_id: { type: INTEGER, required: true, foreignTable: clip, foreignReference: id }

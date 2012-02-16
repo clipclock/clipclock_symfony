@@ -44,6 +44,12 @@ class sceneActions extends sfActions
 			'scene_comments_list' => $this->scene_comments_list
 		));*/
 	}
+
+	public function executePostComment(sfWebRequest $request)
+	{
+		var_dump($request->getPostParameters());
+		die();
+	}
 	public function returnJSON($data)
 	{
 		$json = json_encode($data);

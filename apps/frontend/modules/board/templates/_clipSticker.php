@@ -7,5 +7,5 @@
 </div>
 
 <div id="comments_list_<?php echo $clip_id ?>" class="comments">
-	<?php include_component('board', 'clipStickerSceneTimeCommentsListShort', array('current_scene_id' => $current_scene_id['id'], 'unique_comments_count' => $current_scene_id['unique_comments_count']))?>
+	<?php include_component('board', 'clipStickerSceneTimeCommentsListShort', array('scene_id' => $current_scene_id['id'], 'unique_comments_count' => $current_scene_id['unique_comments_count']))?>
 </div>

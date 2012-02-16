@@ -8,6 +8,7 @@
 function stickerChange(data, clip_id)
 {
 	var data = JSON.parse(data);
+	console.log(data);
 	$('#image_'+clip_id).html(data.scene_image);
 	$('#comments_list_'+clip_id).html(data.scene_comments_list);
 }

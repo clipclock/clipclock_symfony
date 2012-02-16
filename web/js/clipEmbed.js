@@ -14,7 +14,7 @@ function embedClip(container_id, scene_time, video_id, source)
 
 function preparePlayer(container_id, player_container_id, scene_time, video_id, source)
 {
-	if(source == 'Youtube')
+	if(source == 'youtube')
 	{
 		var params = { allowScriptAccess: "always" };
 		var atts = { id: player_container_id };

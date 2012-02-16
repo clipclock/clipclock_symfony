@@ -41,7 +41,7 @@ class boardActions extends sfActions
 
 		$this->getContext()->getConfiguration()->loadHelpers(array('comment'));
 
-		$this->scene_comments_list = $this->getComponent('board', 'clipStickerSceneTimeCommentsListShort', array('current_scene_id' => $this->scene_id));
+		$this->scene_comments_list = $this->getComponent('board', 'clipStickerSceneTimeCommentsListShort', array('scene_id' => $this->scene_id));
 		$this->scene_image = $this->getComponent('board', 'clipStickerSceneTimePreview', array('scene_id' => $this->scene_id));
 
 		return $this->returnJSON(array(

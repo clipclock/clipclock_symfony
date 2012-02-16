@@ -1,5 +1,5 @@
 <div id="image_<?php echo $clip_id ?>" class="image">
-	<?php include_component('board', 'clipStickerSceneTimePreview', array('scene_time_id' => $current_scene_id['scene_time_id']))?>
+	<?php include_component('board', 'clipStickerSceneTimePreview', array('scene_id' => $current_scene_id['id']))?>
 </div>
 
 <div class="control">

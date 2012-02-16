@@ -34,6 +34,7 @@ class boardComponents extends sfComponents
 	public function executeBoardClipsList()
 	{
 		$this->board = $this->getVar('current_board');
+		$this->user = $this->getVar('user');
 		$this->clips_ids = SceneTimePeer::retrieveClipsIdsForListByBoardId($this->board->getId());
 		$this->getContext()->getConfiguration()->loadHelpers(array('comment'));
 	}
@@ -58,7 +59,9 @@ class boardComponents extends sfComponents
 
 	public function executeClipStickerSceneTimePreview()
 	{
-		$this->scene_time_id = $this->getVar('scene_time_id');
+		$this->scene_id = $this->getVar('scene_id');
+
+		$this->scene = ScenePeer::retrieveByPK($this->getVar('scene_id'));
 
 		$this->scene_image = SceneTimePreview::c14n($this->scene_time_id, 'big');
 	}

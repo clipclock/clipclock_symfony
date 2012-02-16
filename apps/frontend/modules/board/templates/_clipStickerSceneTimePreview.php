@@ -1,1 +1,1 @@
-<?php echo $scene_image?>
+<a href="<?php echo url_for('scene', $scene)?>"><?php echo $scene_image?></a>

@@ -24,6 +24,17 @@ sticker_scene_change:
   requirements:
     scene_id: \d+
 
+### SCENE ###
+
+scene:
+  url:   /:username_slug/board/:board_id/scene/:id
+  class: sfPropelRoute
+  param: { module: scene, action: show }
+  options: { model: Scene, type: object }
+  requirements:
+    board_id: \d+
+    id: \d+
+
 ### MELODY CALLBACKS ###
 
 user_register:

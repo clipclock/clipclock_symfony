@@ -1,0 +1,1 @@
+<a href="<?php echo $user->getId()?>"><?php echo $user?></a>

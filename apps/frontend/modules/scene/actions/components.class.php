@@ -11,12 +11,14 @@ class sceneComponents extends sfComponents
 	public function executePeopleForSceneSticker()
 	{
 		$this->scene_id = $this->getVar('scene_id');
-		$this->liked_user_ids = SceneLikePeer::retrieveIdsBySceneId($this->scene_id());
-		$this->repined_user_ids = SceneRepinPeer::retrieveIdsBySceneId($this->scene_id());
+		$this->liked_user_ids = SceneLikePeer::retrieveIdsBySceneId($this->scene_id);
+		$this->repined_user_ids = SceneRepinPeer::retrieveIdsBySceneId($this->scene_id);
 	}
 
 	public function executePeopleForSceneStickerUser()
 	{
+		$this->user_id = $this->getVar('user_id');
 
+		$this->user = SfGuardUserProfilePeer::retrieveByPK($this->user_id);
 	}
 }

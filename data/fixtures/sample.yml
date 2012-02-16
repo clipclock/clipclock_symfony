@@ -100,20 +100,20 @@ Board:
     category_id: Category_1
 Source:
   Source_1:
-    name: Youtube
+    name: youtube
 Clip:
   Clip_1:
     source_id: Source_1
-    name: KSK-1
-    url: 'http://www.youtube.com/watch?v=_hCK-VDZgZQ'
+    name: 'KSK-1'
+    url: '_hCK-VDZgZQ'
   Clip_2:
     source_id: Source_1
     name: 'Stille Kämpfer 1/4 KSK - Kommando Spezialkräfte 2010'
-    url: 'http://www.youtube.com/watch?v=7FphIMx3maE'
+    url: '7FphIMx3maE'
   Clip_3:
     source_id: Source_1
     name: 'StGSG9 German Special Forces'
-    url: 'http://www.youtube.com/watch?v=x1fOdUK9J2w'
+    url: 'x1fOdUK9J2w'
 SceneTime:
   SceneTime_1:
     clip_id: Clip_1

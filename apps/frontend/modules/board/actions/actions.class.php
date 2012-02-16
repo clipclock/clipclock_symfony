@@ -42,11 +42,11 @@ class boardActions extends sfActions
 		$this->getContext()->getConfiguration()->loadHelpers(array('comment'));
 
 		$this->scene_comments_list = $this->getComponent('board', 'clipStickerSceneTimeCommentsListShort', array('current_scene_id' => $this->scene_id));
-		$this->scene_comments_list = $this->getComponent('board', 'clipStickerSceneTimePreview', array('scene_id' => $this->scene_id));
+		$this->scene_image = $this->getComponent('board', 'clipStickerSceneTimePreview', array('scene_id' => $this->scene_id));
 
 		return $this->returnJSON(array(
 			'scene_id' => $this->scene_id,
-			'scene_image' => SceneTimePreview::c14n($scene->getSceneTimeId(), 'big'),
+			'scene_image' => $this->scene_image,
 			'scene_comments_list' => $this->scene_comments_list
 		));
 	}

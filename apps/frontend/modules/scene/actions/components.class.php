@@ -21,4 +21,27 @@ class sceneComponents extends sfComponents
 
 		$this->user = SfGuardUserProfilePeer::retrieveByPK($this->user_id);
 	}
+
+	public function executeSceneView()
+	{
+		$this->scene = $this->getVar('scene');
+
+		$this->scene_time = $this->scene->getSceneTime();
+		$this->clip = ClipPeer::retrieveBySceneTimeId($this->scene->getSceneTimeId());
+	}
+
+	public function executeSceneViewEmbed()
+	{
+		$this->clip = $this->getVar('clip');
+		$this->scene_time = $this->getVar('scene_time');
+	}
+
+	public function executeSceneViewControl()
+	{
+		$this->board_id = $this->getVar('board_id');
+		$this->clip_id = $this->getVar('clip_id');
+		$this->scene_id = $this->getVar('scene_id');
+
+		$this->scene_times = ScenePeer::retrieveAscSceneTimeIdByClipIdBoardId($this->clip_id, $this->board_id);
+	}
 }

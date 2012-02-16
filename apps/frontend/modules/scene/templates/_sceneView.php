@@ -1,0 +1,2 @@
+<?php include_component('scene', 'sceneViewEmbed', array('scene_time' => $scene_time->getSceneTime(), 'clip' => $clip))?>
+<?php include_component('scene', 'sceneViewControl', array('board_id' => $scene->getBoardId(), 'clip_id' => $clip->getId(), 'scene_id' => $scene->getId()))?>

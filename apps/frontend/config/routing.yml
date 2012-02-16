@@ -19,7 +19,7 @@ board:
 ### STICKER AJAX ###
 
 sticker_scene_change:
-  url:   /scene/:scene_id
+  url:   /scene/sticker/:scene_id
   param: { module: board, action: showSceneAjax }
   requirements:
     scene_id: \d+
@@ -34,6 +34,14 @@ scene:
   requirements:
     board_id: \d+
     id: \d+
+
+### STICKER AJAX ###
+
+scene_change:
+  url:   /scene/:scene_id
+  param: { module: scene, action: showSceneAjax }
+  requirements:
+    scene_id: \d+
 
 ### MELODY CALLBACKS ###
 

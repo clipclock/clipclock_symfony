@@ -25,4 +25,31 @@ class sceneActions extends sfActions
 		$this->current_scene = $this->getRoute()->getObject();
 		$this->form = new SceneCommentForm();
 	}
+
+	public function executeShowSceneAjax(sfWebRequest $request)
+	{
+		$this->scene_id = $request->getParameter('scene_id');
+
+		$this->forward404Unless($this->scene_id);
+		/*$scene = ScenePeer::retrieveByPK($this->scene_id);
+
+		$this->getContext()->getConfiguration()->loadHelpers(array('comment'));
+
+		$this->scene_comments_list = $this->getComponent('board', 'clipStickerSceneTimeCommentsListShort', array('current_scene_id' => $this->scene_id));
+		$this->scene_image = $this->getComponent('board', 'clipStickerSceneTimePreview', array('scene_id' => $this->scene_id));
+
+		return $this->returnJSON(array(
+			'scene_id' => $this->scene_id,
+			'scene_image' => $this->scene_image,
+			'scene_comments_list' => $this->scene_comments_list
+		));*/
+	}
+	public function returnJSON($data)
+	{
+		$json = json_encode($data);
+
+		$this->getResponse()->setHttpHeader('Content-type', 'application/json');
+
+		return $this->renderText($json);
+	}
 }

@@ -1,0 +1,2 @@
+default:
+  javascripts:    [swfobject.js, clipEmbed.js, ajaxCallbacks.js]

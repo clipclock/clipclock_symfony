@@ -34,6 +34,7 @@ class boardComponents extends sfComponents
 	public function executeBoardClipsList()
 	{
 		$this->board = $this->getVar('current_board');
+		$this->user = $this->getVar('user');
 		$this->clips_ids = SceneTimePeer::retrieveClipsIdsForListByBoardId($this->board->getId());
 		$this->getContext()->getConfiguration()->loadHelpers(array('comment'));
 	}
@@ -58,7 +59,9 @@ class boardComponents extends sfComponents
 
 	public function executeClipStickerSceneTimePreview()
 	{
-		$this->scene_time_id = $this->getVar('scene_time_id');
+		$this->scene_id = $this->getVar('scene_id');
+
+		$this->scene = ScenePeer::retrieveByPK($this->getVar('scene_id'));
 
 		$this->scene_image = SceneTimePreview::c14n($this->scene_time_id, 'big');
 	}
@@ -73,37 +76,39 @@ class boardComponents extends sfComponents
 
 	public function executeClipStickerSceneTimeCommentsListShort()
 	{
-		$this->current_scene_id = $this->getVar('current_scene_id');
+		$this->scene_id = $this->getVar('scene_id');
 		if($this->getVar('unique_comments_count'))
 		{
 			$this->unique_comments_count = $this->getVar('unique_comments_count');
 		}
 		else
 		{
-			$unique_comments_count = ScenePeer::countUniqueCommentsBySceneId($this->current_scene_id);
+			$unique_comments_count = ScenePeer::countUniqueCommentsBySceneId($this->scene_id);
 			$this->unique_comments_count = $unique_comments_count['unique_comments_count'];
 		}
 
-		$this->comments = SceneCommentPeer::retrieveBySceneTimeId(
-			$this->current_scene_id,
+		$this->scene = ScenePeer::retrieveByPK($this->getVar('scene_id'));
+
+		$this->comments = SceneCommentPeer::retrieveShortBySceneId(
+			$this->scene_id,
 			calculateCommentListLength($this->unique_comments_count)
 		);
 	}
 
 	public function executeClipStickerFooter()
 	{
-		$this->current_scene_id = $this->getVar('current_scene_id');
-		$this->current_scene_time_id = $this->getVar('current_scene_time_id');
+		$this->scene_id = $this->getVar('scene_id');
+		$this->scene_time_id = $this->getVar('scene_time_id');
 
-		$counts = ScenePeer::countRepinsLikesForSceneId($this->current_scene_id);
+		$counts = ScenePeer::countRepinsLikesForSceneId($this->scene_id);
 		$this->repins_count = $counts['repins_count'];
 		$this->likes_count = $counts['likes_count'];
 
-		$my_counts = ScenePeer::countLikesForSceneIdByUserId($this->current_scene_id, $this->getUser()->getId());
+		$my_counts = ScenePeer::countLikesForSceneIdByUserId($this->scene_id, $this->getUser()->getId());
 		$this->i_repin = $my_counts['repins_count'] ? true : false;
 		$this->i_like = $my_counts['likes_count'] ? true : false;
 
-		$counts = SceneTimePeer::countCommentsForSceneTimeId($this->current_scene_time_id);
+		$counts = SceneTimePeer::countCommentsForSceneTimeId($this->scene_time_id);
 		$this->comments_count = $counts['comments_count'];
 	}
 }

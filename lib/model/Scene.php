@@ -19,4 +19,8 @@
  */
 class Scene extends BaseScene {
 
+	public function getUsernameSlug()
+	{
+		return $this->getSfGuardUserProfile()->getNick();
+	}
 } // Scene

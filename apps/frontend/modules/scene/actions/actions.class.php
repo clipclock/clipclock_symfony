@@ -1,19 +1,15 @@
 <?php
 
 /**
- * board actions.
+ * scene actions.
  *
  * @package    videopin
- * @subpackage board
+ * @subpackage scene
  * @author     Your name here
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
-class boardActions extends sfActions
+class sceneActions extends sfActions
 {
-	/**
-	 * @var Board
-	 */
-	protected $board;
 	/**
 	 * Executes index action
 	 *
@@ -26,10 +22,8 @@ class boardActions extends sfActions
 
 	public function executeShow(sfWebRequest $request)
 	{
-		$this->current_board = $this->getRoute()->getObject();
-		$this->current_user = $this->current_board->getSfGuardUserProfile();
-
-		$this->forward404Unless($this->current_board);
+		$this->current_scene = $this->getRoute()->getObject();
+		$this->form = new SceneCommentForm();
 	}
 
 	public function executeShowSceneAjax(sfWebRequest $request)
@@ -37,18 +31,24 @@ class boardActions extends sfActions
 		$this->scene_id = $request->getParameter('scene_id');
 
 		$this->forward404Unless($this->scene_id);
-		$scene = ScenePeer::retrieveByPK($this->scene_id);
+		/*$scene = ScenePeer::retrieveByPK($this->scene_id);
 
 		$this->getContext()->getConfiguration()->loadHelpers(array('comment'));
 
-		$this->scene_comments_list = $this->getComponent('board', 'clipStickerSceneTimeCommentsListShort', array('scene_id' => $this->scene_id));
+		$this->scene_comments_list = $this->getComponent('board', 'clipStickerSceneTimeCommentsListShort', array('current_scene_id' => $this->scene_id));
 		$this->scene_image = $this->getComponent('board', 'clipStickerSceneTimePreview', array('scene_id' => $this->scene_id));
 
 		return $this->returnJSON(array(
 			'scene_id' => $this->scene_id,
 			'scene_image' => $this->scene_image,
 			'scene_comments_list' => $this->scene_comments_list
-		));
+		));*/
+	}
+
+	public function executePostComment(sfWebRequest $request)
+	{
+		var_dump($request->getPostParameters());
+		die();
 	}
 	public function returnJSON($data)
 	{

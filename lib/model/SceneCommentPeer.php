@@ -19,7 +19,7 @@
  */
 class SceneCommentPeer extends BaseSceneCommentPeer {
 
-	public static function retrieveBySceneTimeId($scene_id, $max_limit = 50)
+	public static function retrieveShortBySceneId($scene_id, $max_limit = 50)
 	{
 		$c = new Criteria();
 
@@ -27,6 +27,16 @@ class SceneCommentPeer extends BaseSceneCommentPeer {
 		$c->add(ScenePeer::ID, $scene_id);
 		$c->addAscendingOrderByColumn(self::CREATED_AT);
 		$c->setLimit($max_limit);
+
+		return self::doSelectJoinSfGuardUserProfile($c);
+	}
+
+	public static function retrieveFullBySceneTimeId($scene_time_id)
+	{
+		$c = new Criteria();
+
+		$c->add(self::SCENE_TIME_ID, $scene_time_id);
+		$c->addDescendingOrderByColumn(self::CREATED_AT);
 
 		return self::doSelectJoinSfGuardUserProfile($c);
 	}

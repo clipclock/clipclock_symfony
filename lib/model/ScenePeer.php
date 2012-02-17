@@ -110,6 +110,16 @@ class ScenePeer extends BaseScenePeer {
 		return BasePeer::doSelect($c)->fetch(PDO::FETCH_ASSOC);
 	}
 
+	public static function retrieveByBoardIdSceneTimeId($scene_time_id, $board_id)
+	{
+		$c = new Criteria();
+		$c->add(self::SCENE_TIME_ID, $scene_time_id);
+		$c->add(self::BOARD_ID, $board_id);
+		$c->setLimit(1);
+
+		return self::doSelectOne($c);
+	}
+
 	public static function countUniqueCommentsBySceneId($scene_id)
 	{
 		$c = new Criteria();

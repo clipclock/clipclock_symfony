@@ -27,6 +27,7 @@ class boardComponents extends sfComponents
 		$this->clip_id = $this->getVar('clip_id');
 		$this->board_id = $this->getVar('board_id');
 		$this->scene_time = SceneTimePeer::retrieveBestByClipId($this->clip_id, $this->board_id);
+		$this->scene = ScenePeer::retrieveByBoardIdSceneTimeId($this->scene_time->getId(), $this->board_id);
 
 		$this->scene_image = SceneTimePreview::c14n($this->scene_time->getId(), 'small');
 	}

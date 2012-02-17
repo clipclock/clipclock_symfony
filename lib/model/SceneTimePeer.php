@@ -73,4 +73,22 @@ class SceneTimePeer extends BaseSceneTimePeer {
 
 		return BasePeer::doSelect($c)->fetch(PDO::FETCH_ASSOC);
 	}
+
+	public static function recountUniqueComments($scene_time_id)
+	{
+		$c = new Criteria();
+		$c->clearSelectColumns();
+		$c->add(self::ID, $scene_time_id);
+		$c->addSelectColumn(SceneCommentPeer::SF_GUARD_USER_PROFILE_ID .' as unique_comments_count');
+		$c->addJoin(self::ID, SceneCommentPeer::SCENE_TIME_ID, Criteria::INNER_JOIN);
+		$c->setDistinct();
+
+		$unique_comments_count = BasePeer::doCount($c)->fetch(PDO::FETCH_ASSOC);
+
+		$scene_time = self::retrieveByPK($scene_time_id);
+		$scene_time->setUniqueCommentsCount($unique_comments_count['count']);
+		$scene_time->save();
+
+		return $unique_comments_count;
+	}
 } // SceneTimePeer

@@ -29,27 +29,37 @@ class sceneActions extends sfActions
 	public function executeShowSceneAjax(sfWebRequest $request)
 	{
 		$this->scene_id = $request->getParameter('scene_id');
+		$scene = ScenePeer::retrieveByPK($this->scene_id);
 
 		$this->forward404Unless($this->scene_id);
-		/*$scene = ScenePeer::retrieveByPK($this->scene_id);
-
-		$this->getContext()->getConfiguration()->loadHelpers(array('comment'));
-
-		$this->scene_comments_list = $this->getComponent('board', 'clipStickerSceneTimeCommentsListShort', array('current_scene_id' => $this->scene_id));
-		$this->scene_image = $this->getComponent('board', 'clipStickerSceneTimePreview', array('scene_id' => $this->scene_id));
 
 		return $this->returnJSON(array(
-			'scene_id' => $this->scene_id,
-			'scene_image' => $this->scene_image,
-			'scene_comments_list' => $this->scene_comments_list
-		));*/
+			'scene_comments_list' => $this->getComponent('scene', 'sceneViewComments', array('scene_time_id' => $scene->getSceneTimeId())),
+			'scene_comment_form' => $this->getComponent('scene', 'sceneViewCommentForm', array('scene_time_id' => $scene->getSceneTimeId())),
+			'scene_description' => $this->getComponent('scene', 'sceneViewDescription', array('scene_id' => $this->scene_id)),
+			'scene_people_sticker' => $this->getComponent('scene', 'peopleForSceneSticker', array('scene_id' => $this->scene_id)),
+			'scene_social_buttons' => $this->getComponent('scene', 'sceneViewSocialButtons', array('scene_id' => $this->scene_id))
+		));
 	}
 
 	public function executePostComment(sfWebRequest $request)
 	{
-		var_dump($request->getPostParameters());
-		die();
+		$this->scene_comment_form = new SceneCommentForm(new SceneComment(), array(
+			'sf_guard_user_profile_id' => $this->getUser()->getId(),
+			'created_at' => time()
+		));
+
+		$this->scene_comment_form->bind($request->getParameter($this->scene_comment_form->getName()));
+
+		$this->forward404Unless($this->scene_comment_form->isValid());
+
+		$this->scene_comment_form->save();
+
+		return $this->returnJSON(array(
+			'scene_new_comment' => $this->getPartial('scene/sceneViewComment', array('comment' => $this->scene_comment_form->getObject())),
+		));
 	}
+
 	public function returnJSON($data)
 	{
 		$json = json_encode($data);

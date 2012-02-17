@@ -51,7 +51,7 @@ class sceneComponents extends sfComponents
 
 	public function executeSceneViewDescription()
 	{
-		$this->scene = $this->getVar('scene');
+		$this->scene = ScenePeer::retrieveByPK($this->getVar('scene_id'));
 	}
 
 	public function executeSceneViewCommentForm()
@@ -65,10 +65,18 @@ class sceneComponents extends sfComponents
 
 	public function executeSceneViewComments()
 	{
-		$this->scene_time_id = $this->getVar('scene_time_id');
-
 		$this->comments = SceneCommentPeer::retrieveFullBySceneTimeId(
-			$this->scene_time_id
+			$this->getVar('scene_time_id')
 		);
+	}
+
+	public function executeSceneViewSocialButtons()
+	{
+		$this->scene_id = $this->getVar('scene_id');
+		$this->user = $this->getUser();
+
+		$counts = ScenePeer::countRepinsLikesForSceneId($this->scene_id);
+		$this->repins_count = $counts['repins_count'];
+		$this->likes_count = $counts['likes_count'];
 	}
 }

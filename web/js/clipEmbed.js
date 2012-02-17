@@ -38,7 +38,7 @@ function seekTo(scene_time)
 
 function checkCurrentScene(scene_id, scene_time)
 {
-	seekTo(scene_time-1);
+	seekTo(scene_time);
 
 	if(current_scene_id != scene_id)
 	{

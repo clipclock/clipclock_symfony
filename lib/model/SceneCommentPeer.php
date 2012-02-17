@@ -18,7 +18,6 @@
  * @package    propel.generator.lib.model
  */
 class SceneCommentPeer extends BaseSceneCommentPeer {
-
 	public static function retrieveShortBySceneId($scene_id, $max_limit = 50)
 	{
 		$c = new Criteria();

@@ -15,9 +15,9 @@ function stickerChange(data, clip_id)
 function sceneChange(data)
 {
 	var data = JSON.parse(data);
-	$('#description').html(data.scene_image);
+	$('#description').html(data.scene_description);
 	$('#comment_form').html(data.scene_comment_form);
-	$('#comments').html(data.scene_description);
+	$('#comments').html(data.scene_comments_list);
 	$('#fun_buttons').html(data.scene_social_buttons);
 	$('#people_sticker').html(data.scene_people_sticker);
 }
@@ -28,6 +28,27 @@ function _newSceneTime(player_container_id)
 		$('#new_time_scene').click(function(){
 			ytplayer = document.getElementById(player_container_id);
 			console.log(ytplayer.getCurrentTime());
+		});
+	});
+}
+
+function checkCommentForm(textarea_id)
+{
+	return $('#comment_form form textarea').val() ? true : false;
+}
+
+function prependNewComments(data, list_id)
+{
+	var data = JSON.parse(data);
+	$('#'+list_id).prepend(data.scene_new_comment);
+}
+
+function submitButton(submit_id, form_id)
+{
+	$().ready(function(){
+		$('#'+submit_id).click(function(){
+			$('#'+form_id).trigger('onsubmit');
+			return false;
 		});
 	});
 }

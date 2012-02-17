@@ -23,4 +23,21 @@ class SceneComment extends BaseSceneComment {
 	{
 		return $this->getText();
 	}
+
+	public function save(PropelPDO $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(SceneCommentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+		}
+		$con->beginTransaction();
+		$affected_rows = parent::save($con);
+		try
+		{
+			SceneTimePeer::recountUniqueComments($this->getSceneTimeId());
+			$con->commit();
+			return $affected_rows;
+		} catch (Exception $e) {
+			$con->rollBack();
+		}
+	}
 }

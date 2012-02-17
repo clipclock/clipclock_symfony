@@ -44,9 +44,22 @@ class sceneActions extends sfActions
 
 	public function executePostComment(sfWebRequest $request)
 	{
-		var_dump($request->getPostParameters());
-		die();
+		$this->scene_comment_form = new SceneCommentForm(new SceneComment(), array(
+			'sf_guard_user_profile_id' => $this->getUser()->getId(),
+			'created_at' => time()
+		));
+
+		$this->scene_comment_form->bind($request->getParameter($this->scene_comment_form->getName()));
+
+		$this->forward404Unless($this->scene_comment_form->isValid());
+
+		$this->scene_comment_form->save();
+
+		return $this->returnJSON(array(
+			'scene_new_comment' => $this->getPartial('scene/sceneViewComment', array('comment' => $this->scene_comment_form->getObject())),
+		));
 	}
+
 	public function returnJSON($data)
 	{
 		$json = json_encode($data);

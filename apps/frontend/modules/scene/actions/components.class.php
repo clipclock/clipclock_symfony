@@ -71,4 +71,10 @@ class sceneComponents extends sfComponents
 			$this->scene_time_id
 		);
 	}
+
+	public function executeSceneViewSocialButtons()
+	{
+		$this->scene_id = $this->getVar('scene_id');
+		$this->user = $this->getUser();
+	}
 }

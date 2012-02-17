@@ -9,3 +9,6 @@
 <div id="comments">
 	<?php include_component('scene', 'sceneViewComments', array('scene_time_id' => $scene->getSceneTimeId()))?>
 </div>
+<div id="fun_buttons">
+	<?php include_component('scene', 'sceneViewSocialButtons', array('scene_time_id' => $scene->getSceneTimeId()))?>
+</div>

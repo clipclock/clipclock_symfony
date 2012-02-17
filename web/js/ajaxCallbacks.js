@@ -8,9 +8,18 @@
 function stickerChange(data, clip_id)
 {
 	var data = JSON.parse(data);
-	console.log(data);
 	$('#image_'+clip_id).html(data.scene_image);
 	$('#comments_list_'+clip_id).html(data.scene_comments_list);
+}
+
+function sceneChange(data)
+{
+	var data = JSON.parse(data);
+	$('#description').html(data.scene_image);
+	$('#comment_form').html(data.scene_comment_form);
+	$('#comments').html(data.scene_description);
+	$('#fun_buttons').html(data.scene_social_buttons);
+	$('#people_sticker').html(data.scene_people_sticker);
 }
 
 function _newSceneTime(player_container_id)

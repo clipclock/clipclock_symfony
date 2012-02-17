@@ -15,6 +15,11 @@ class sceneComponents extends sfComponents
 		$this->repined_user_ids = SceneRepinPeer::retrieveIdsBySceneId($this->scene_id);
 	}
 
+    public function executeFacebookLikeButton($render = array())
+    {
+
+    }
+
 	public function executePeopleForSceneStickerUser()
 	{
 		$this->user_id = $this->getVar('user_id');
@@ -74,7 +79,7 @@ class sceneComponents extends sfComponents
 	{
 		$this->scene_id = $this->getVar('scene_id');
 		$this->user = $this->getUser();
-
+        
 		$counts = ScenePeer::countRepinsLikesForSceneId($this->scene_id);
 		$this->repins_count = $counts['repins_count'];
 		$this->likes_count = $counts['likes_count'];

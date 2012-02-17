@@ -30,4 +30,26 @@ class SceneLikePeer extends BaseSceneLikePeer {
 
 		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);
 	}
+
+    public static function toggleBySceneIdAndUserIdByState($scene_id, $user_id, $state)
+    {
+        $c = new Criteria();;
+        $c->add(self::LIKE_SF_GUARD_USER_PROFILE_ID, $user_id);
+        $c->add(self::SCENE_ID, $scene_id);
+
+        if ($state) {
+
+            try {
+                self::doInsert($c);
+            } catch (Exception $e) {
+                return false; // already isseted
+            }
+
+            return true; // new record
+        }
+
+        return self::doDelete($c); // if nothing to delete = 0, else 1
+
+    }
+
 } // SceneLikePeer

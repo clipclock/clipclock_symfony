@@ -19,4 +19,21 @@
  */
 class HistoryPeer extends BaseHistoryPeer {
 
+	const EVENT_NEW_SCENE = 1;
+	const EVENT_NEW_BOARD = 2;
+	const EVENT_NEW_COMMENT = 3;
+	const EVENT_NEW_FOLLOW = 4;
+	const EVENT_NEW_REPIN = 5;
+
+	public static function retrieveLatestEventsByUserId($user_id)
+	{
+		$c = new Criteria();
+		$c->add(self::SF_GUARD_USER_PROFILE_ID, $user_id);
+		$c->addOr(self::FOLLOW_OF_SF_GUARD_USER_PROFILE_ID, $user_id);
+		$c->addOr(self::REPIN_OF_SF_GUARD_USER_PROFILE_ID, $user_id);
+		$c->setLimit(10);
+		$c->addDescendingOrderByColumn(self::CREATED_AT);
+
+		return self::doSelectJoinAllExceptSfGuardUserProfileRelatedBySfGuardUserProfileId($c);
+	}
 } // HistoryPeer

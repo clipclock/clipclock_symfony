@@ -1,8 +1,8 @@
-<?php
-/**
- * Created by JetBrains PhpStorm.
- * User: madesst
- * Date: 18.02.12
- * Time: 14:43
- * To change this template use File | Settings | File Templates.
- */
+<?php foreach($events as $event):?>
+	<?php switch($event->getEventType()):case HistoryPeer::EVENT_NEW_SCENE:?>
+		<?php echo $user?> pinned <?php echo $event->getScene()?> to <?php $event->getBoard()?><br />
+		<?php echo $event->getCreatedAt()?>
+		<?php break;?>
+	<?php endswitch?>
+	<hr />
+<?php endforeach?>

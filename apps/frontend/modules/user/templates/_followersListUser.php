@@ -1,1 +1,1 @@
-<a href="<?php echo $user->getId()?>"><?php echo $user?></a>
+<a href="<?php echo url_for('user', $user)?>"><?php echo $user?></a>

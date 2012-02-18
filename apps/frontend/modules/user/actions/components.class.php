@@ -36,6 +36,7 @@ class userComponents extends sfComponents
 	public function executeHistory()
 	{
 		$this->user = $this->getVar('user');
+		$this->events = HistoryPeer::retrieveLatestEventsByUserId($this->user->getId());
 	}
 
 	public function executeBoards()

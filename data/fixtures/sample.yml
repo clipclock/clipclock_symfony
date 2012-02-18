@@ -84,6 +84,19 @@ SfGuardUserProfile:
     first_name: Alexey
     last_name: Krainov
     nick: krainov05
+FollowerUser:
+  FollowerUser_1:
+    following_sf_guard_user_profile_id: SfGuardUserProfile_1
+    follower_sf_guard_user_profile_id: SfGuardUserProfile_2
+  FollowerUser_2:
+    following_sf_guard_user_profile_id: SfGuardUserProfile_1
+    follower_sf_guard_user_profile_id: SfGuardUserProfile_3
+  FollowerUser_3:
+    following_sf_guard_user_profile_id: SfGuardUserProfile_2
+    follower_sf_guard_user_profile_id: SfGuardUserProfile_1
+  FollowerUser_4:
+    following_sf_guard_user_profile_id: SfGuardUserProfile_2
+    follower_sf_guard_user_profile_id: SfGuardUserProfile_3
 Category:
   Category_1:
     name: DEV

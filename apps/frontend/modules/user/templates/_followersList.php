@@ -1,8 +1,9 @@
-<?php
-/**
- * Created by JetBrains PhpStorm.
- * User: madesst
- * Date: 18.02.12
- * Time: 14:43
- * To change this template use File | Settings | File Templates.
- */
+Followings: <?php echo $followings_count?><br />
+<?php foreach($followings as $following):?>
+	<?php include_component('user', 'followersListUser', array('user_id' => $following['user_id']))?>
+<?php endforeach?>
+<br />
+Followers: <?php echo $followers_count?><br />
+<?php foreach($followers as $follower):?>
+	<?php include_component('user', 'followersListUser', array('user_id' => $follower['user_id']))?>
+<?php endforeach?>

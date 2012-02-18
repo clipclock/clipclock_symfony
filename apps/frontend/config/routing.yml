@@ -51,9 +51,9 @@ scene_change:
   requirements:
     scene_id: \d+
 
-### BOARD ###
+### USER ###
 
-board:
+user:
   url:   /:nick
   class: sfPropelRoute
   param: { module: user, action: show }

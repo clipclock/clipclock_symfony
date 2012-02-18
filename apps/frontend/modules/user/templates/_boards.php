@@ -1,8 +1,3 @@
-<?php
-/**
- * Created by JetBrains PhpStorm.
- * User: madesst
- * Date: 18.02.12
- * Time: 14:43
- * To change this template use File | Settings | File Templates.
- */
+<?php foreach($boards as $board):?>
+	<?php include_component('board', 'boardSticker', array('board_id' => $board->getId(), 'user' => $user))?>
+<?php endforeach?>

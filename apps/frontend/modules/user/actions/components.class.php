@@ -18,7 +18,19 @@ class userComponents extends sfComponents
 	public function executeFollowersList()
 	{
 		$this->user = $this->getVar('user');
+		$this->followers = $this->user->getFollowers();
+		$this->followings = $this->user->getFollowings();
 
+		$counts = FollowerUserPeer::countFollowersAndFollowingByUserId($this->user->getId());
+		$this->followers_count = $counts['followers_count'];
+		$this->followings_count = $counts['followings_count'];
+	}
+
+	public function executeFollowersListUser()
+	{
+		$this->user_id = $this->getVar('user_id');
+
+		$this->user = SfGuardUserProfilePeer::retrieveByPK($this->user_id);
 	}
 
 	public function executeHistory()
@@ -29,5 +41,6 @@ class userComponents extends sfComponents
 	public function executeBoards()
 	{
 		$this->user = $this->getVar('user');
+		$this->boards = $this->user->getBoards();
 	}
 }

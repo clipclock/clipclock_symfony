@@ -11,12 +11,14 @@ class boardComponents extends sfComponents
 	public function executeBoardsLinked()
 	{
 		$this->current_board = $this->getVar('current_board');
+		$this->user = $this->getVar('user');
 		$this->linked_boards_ids = $this->current_board->getLinkedBoardsIds();
 	}
 
 	public function executeBoardSticker()
 	{
 		$this->board_id = $this->getVar('board_id');
+		$this->user = $this->getVar('user');
 		$this->board = BoardPeer::retrieveByPK($this->board_id);
 
 		$this->clips_ids = $this->board->getClipsPreviewsIds();

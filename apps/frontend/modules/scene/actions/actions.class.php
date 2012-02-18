@@ -23,6 +23,7 @@ class sceneActions extends sfActions
 	public function executeShow(sfWebRequest $request)
 	{
 		$this->current_scene = $this->getRoute()->getObject();
+		$this->user = $this->current_scene->getSfGuardUserProfile();
 		$this->form = new SceneCommentForm();
 	}
 

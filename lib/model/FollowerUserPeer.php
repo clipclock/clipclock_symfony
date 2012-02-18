@@ -19,4 +19,20 @@
  */
 class FollowerUserPeer extends BaseFollowerUserPeer {
 
+	public static function countFollowersAndFollowingByUserId($user_id)
+	{
+		$c = new Criteria();
+		$c->clearSelectColumns();
+		$c->addSelectColumn(self::FOLLOWER_SF_GUARD_USER_PROFILE_ID.' as count');
+		$c->add(self::FOLLOWING_SF_GUARD_USER_PROFILE_ID, $user_id);
+		$followers_count = BasePeer::doCount($c)->fetch(PDO::FETCH_ASSOC);
+
+		$c = new Criteria();
+		$c->clearSelectColumns();
+		$c->addSelectColumn(self::FOLLOWING_SF_GUARD_USER_PROFILE_ID.' as count');
+		$c->add(self::FOLLOWER_SF_GUARD_USER_PROFILE_ID, $user_id);
+		$followings_count = BasePeer::doCount($c)->fetch(PDO::FETCH_ASSOC);
+
+		return array('followers_count' => $followers_count['count'], 'followings_count' => $followings_count['count']);
+	}
 } // FollowerUserPeer

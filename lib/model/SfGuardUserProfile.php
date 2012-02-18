@@ -28,4 +28,26 @@ class SfGuardUserProfile extends BaseSfGuardUserProfile {
 	{
 		return $this->getSfGuardUserId();
 	}
+
+	public function getFollowers()
+	{
+		$c = new Criteria();
+		$c->clearSelectColumns();
+		$c->addSelectColumn(FollowerUserPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID.' as user_id');
+		$c->add(FollowerUserPeer::FOLLOWING_SF_GUARD_USER_PROFILE_ID, $this->getId());
+		$c->addDescendingOrderByColumn(FollowerUserPeer::CREATED_AT);
+		$c->setLimit(12);
+		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	public function getFollowings()
+	{
+		$c = new Criteria();
+		$c->clearSelectColumns();
+		$c->addSelectColumn(FollowerUserPeer::FOLLOWING_SF_GUARD_USER_PROFILE_ID.' as user_id');
+		$c->add(FollowerUserPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, $this->getId());
+		$c->addDescendingOrderByColumn(FollowerUserPeer::CREATED_AT);
+		$c->setLimit(12);
+		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);
+	}
 } // SfGuardUserProfile

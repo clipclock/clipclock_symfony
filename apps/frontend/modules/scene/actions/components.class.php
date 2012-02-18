@@ -20,13 +20,6 @@ class sceneComponents extends sfComponents
 
     }
 
-	public function executePeopleForSceneStickerUser()
-	{
-		$this->user_id = $this->getVar('user_id');
-
-		$this->user = SfGuardUserProfilePeer::retrieveByPK($this->user_id);
-	}
-
 	public function executeSceneView()
 	{
 		$this->scene = $this->getVar('scene');

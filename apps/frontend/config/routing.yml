@@ -51,6 +51,14 @@ scene_change:
   requirements:
     scene_id: \d+
 
+### BOARD ###
+
+board:
+  url:   /:nick
+  class: sfPropelRoute
+  param: { module: user, action: show }
+  options: { model: sfGuardUserProfile, type: object }
+
 ### MELODY CALLBACKS ###
 
 user_register:

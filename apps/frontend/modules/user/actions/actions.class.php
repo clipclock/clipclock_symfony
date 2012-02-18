@@ -66,4 +66,9 @@ class userActions extends sfActions
 
 		$this->redirect('@user_register_welcome');
 	}
+
+	public function executeShow(sfWebRequest $request)
+	{
+		$this->user = $this->getRoute()->getObject();
+	}
 }

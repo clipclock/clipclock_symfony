@@ -6,25 +6,32 @@
  * Time: 0:42
  * To change this template use File | Settings | File Templates.
  */
-class SceneTimePreview
+class ImagePreview
 {
 	static $step = 2;
-	static $prefixes_sizes = array(
-		'big' => '/uploads/100/',
-		'medium' => '/uploads/70/',
-		'small' => '/uploads/61/',
+
+	static $prefixes_types_sizes = array(
+		'scene' => array(
+			'big' => '/uploads/scenes/100/',
+			'medium' => '/uploads/scenes/70/',
+			'small' => '/uploads/scenes/61/',
+		),
+		'avatar' => array(
+			'big' => '/uploads/avatar/100/',
+			'small' => '/uploads/avatar/50/',
+		)
 	);
 
-	public static function c14n($scene_id, $size = 'big')
+	public static function c14n($scene_id, $size = 'big', $type = 'scene')
 	{
 		$scene_hash = md5($scene_id);
 
-		if(!isset(self::$prefixes_sizes[$size]))
+		if(!isset(self::$prefixes_types_sizes[$type][$size]))
 		{
 			throw new LogicException('Undefined size: ' . $size);
 		}
 
-		$path_part = self::$prefixes_sizes[$size];
+		$path_part = self::$prefixes_types_sizes[$type][$size];
 
 		for($i = 0; $i < strlen($scene_hash); $i = $i + self::$step)
 		{
@@ -34,7 +41,7 @@ class SceneTimePreview
 		return $path_part . $scene_hash . '.jpg';
 	}
 
-	public static function c14nArray(array $array, $size = 'big', $id_key = 'id')
+	public static function c14nArray(array $array, $size = 'big', $id_key = 'id', $type = 'scene')
 	{
 		$return_paths = array();
 
@@ -46,7 +53,7 @@ class SceneTimePreview
 		return $return_paths;
 	}
 
-	public static function c14nArrayObjects(array $array, $size = 'big', $id_getter = 'getId')
+	public static function c14nArrayObjects(array $array, $size = 'big', $id_getter = 'getId', $type = 'scene')
 	{
 		$return_paths = array();
 

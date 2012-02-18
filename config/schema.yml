@@ -28,9 +28,10 @@ propel:
     source_id: { type: INTEGER, required: true, foreignTable: source, foreignReference: id }
     name: { type: VARCHAR, size: '128', required: true }
     url: { type: VARCHAR, required: true }
-  follower:
-    left_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
-    right_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
+  follower_user:
+    following_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
+    follower_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
+    created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
   scene:
     id: ~
     created_at: { type: timestamp, required: true, defaultExpr: 'now()'}

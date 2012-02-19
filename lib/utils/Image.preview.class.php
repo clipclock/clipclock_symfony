@@ -18,7 +18,8 @@ class ImagePreview
 		),
 		'avatar' => array(
 			'big' => '/uploads/avatar/100/',
-			'small' => '/uploads/avatar/50/',
+			'medium' => '/uploads/avatar/50/',
+			'small' => '/uploads/avatar/30/',
 		)
 	);
 

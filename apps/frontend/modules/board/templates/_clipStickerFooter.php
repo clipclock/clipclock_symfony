@@ -1,5 +1,5 @@
-<p>
-	Репинов: <?php echo $repins_count?><?php echo $i_repin ? ' <strong> - Я репинил это</strong>' : ''?><br />
-	Лайков: <?php echo $likes_count?><?php echo $i_like ? ' <strong> - Я лайкал это</strong>' : ''?><br />
-	Комментариев: <?php echo $comments_count?><br />
-</p>
+<ul class="management-sticker">
+	<li class="fasted"><a href=""><?php echo $repins_count?></a></li>
+	<li class="repost"><a href=""><?php echo $comments_count?></a></li>
+	<li class="like"><a href=""><?php echo $likes_count?></a></li>
+</ul>

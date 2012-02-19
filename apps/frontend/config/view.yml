@@ -12,9 +12,9 @@ default:
     #language:     en
     #robots:       index, follow
 
-  stylesheets:    [main.css]
+  stylesheets:    [style.css, cusel.css]
 
-  javascripts:    []
+  javascripts:    [cusel.js, source.js]
 
   has_layout:     true
   layout:         layout

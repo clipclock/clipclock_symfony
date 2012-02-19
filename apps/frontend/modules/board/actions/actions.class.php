@@ -37,7 +37,6 @@ class boardActions extends sfActions
 		$this->scene_id = $request->getParameter('scene_id');
 
 		$this->forward404Unless($this->scene_id);
-		$scene = ScenePeer::retrieveByPK($this->scene_id);
 
 		$this->getContext()->getConfiguration()->loadHelpers(array('comment'));
 
@@ -47,7 +46,8 @@ class boardActions extends sfActions
 		return $this->returnJSON(array(
 			'scene_id' => $this->scene_id,
 			'scene_image' => $this->scene_image,
-			'scene_comments_list' => $this->scene_comments_list
+			'scene_comments_list' => $this->scene_comments_list,
+			'scene_footer' => $this->getComponent('board', 'clipStickerFooter', array('scene_id' => $this->scene_id))
 		));
 	}
 	public function returnJSON($data)

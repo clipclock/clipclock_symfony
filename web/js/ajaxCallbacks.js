@@ -5,11 +5,14 @@
  * Time: 18:18
  * To change this template use File | Settings | File Templates.
  */
-function stickerChange(data, clip_id)
+function stickerChange(data, clip_id, scene_id)
 {
 	var data = JSON.parse(data);
 	$('#image_'+clip_id).html(data.scene_image);
 	$('#comments_list_'+clip_id).html(data.scene_comments_list);
+	$('#comments_list_footer_'+clip_id).html(data.scene_footer);
+	$('#clip_control_'+clip_id+' li').removeClass('active');
+	$('#sticker_'+clip_id+'_'+scene_id).addClass('active');
 }
 
 function sceneChange(data)
@@ -33,11 +36,15 @@ function newSceneTimeModalHide()
 function newSceneTimeModalShow()
 {
 	$('#new_time_scene_description_container_submit').click(function(){
-		console.log($('#new_time_scene_modal'));
-		$('#new_time_scene_modal').toggle();
-		ytplayer = document.getElementById("scene_embed_video_player");
-		$('#new_time_scene_modal #scene_time_scene_time').val(ytplayer.getCurrentTime());
-		$('#new_time_scene_modal #scene_time_scene_text').val($('#new_time_scene_description').val());
+		if($('#new_time_scene_description').val().length > 3)
+		{
+			$('#new_time_scene_modal').toggle();
+			$('#shadow').toggle();
+
+			ytplayer = document.getElementById("scene_embed_video_player");
+			$('#new_time_scene_modal #scene_time_scene_time').val(ytplayer.getCurrentTime());
+			$('#new_time_scene_modal #scene_time_scene_text').val($('#new_time_scene_description').val());
+		}
 		return false;
 	});
 }
@@ -46,9 +53,17 @@ function newSceneTimeDescriptionContainer()
 {
 	$().ready(function(){
 		$('#new_time_scene').click(function(){
-			$('#new_time_scene_description_container').toggle();
+			$('#scene_info').toggle();
+			$('#scene_add_comment').toggleClass('active');
 			ytplayer = document.getElementById("scene_embed_video_player");
-			ytplayer.pauseVideo();
+			if(ytplayer.getPlayerState() == 1)
+			{
+				ytplayer.pauseVideo();
+			}
+			else
+			{
+				ytplayer.playVideo();
+			}
 			newSceneTimeModalShow();
 			return false;
 		});

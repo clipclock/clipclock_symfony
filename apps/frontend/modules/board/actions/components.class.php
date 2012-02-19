@@ -101,7 +101,8 @@ class boardComponents extends sfComponents
 	public function executeClipStickerFooter()
 	{
 		$this->scene_id = $this->getVar('scene_id');
-		$this->scene_time_id = $this->getVar('scene_time_id');
+		$scene = ScenePeer::retrieveByPK($this->scene_id);
+		$this->scene_time_id = $scene->getSceneTimeId();
 
 		$counts = ScenePeer::countRepinsLikesForSceneId($this->scene_id);
 		$this->repins_count = $counts['repins_count'];

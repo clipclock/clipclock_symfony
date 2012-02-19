@@ -22,12 +22,35 @@ function sceneChange(data)
 	$('#people_sticker').html(data.scene_people_sticker);
 }
 
-function _newSceneTime(player_container_id)
+function newSceneTimeModalHide()
+{
+	$('#new_time_scene_description_container').toggle();
+	$('#new_time_scene_modal').toggle();
+	ytplayer = document.getElementById("scene_embed_video_player");
+	ytplayer.playVideo();
+}
+
+function newSceneTimeModalShow()
+{
+	$('#new_time_scene_description_container_submit').click(function(){
+		console.log($('#new_time_scene_modal'));
+		$('#new_time_scene_modal').toggle();
+		ytplayer = document.getElementById("scene_embed_video_player");
+		$('#new_time_scene_modal #scene_time_scene_time').val(ytplayer.getCurrentTime());
+		$('#new_time_scene_modal #scene_time_scene_text').val($('#new_time_scene_description').val());
+		return false;
+	});
+}
+
+function newSceneTimeDescriptionContainer()
 {
 	$().ready(function(){
 		$('#new_time_scene').click(function(){
-			ytplayer = document.getElementById(player_container_id);
-			console.log(ytplayer.getCurrentTime());
+			$('#new_time_scene_description_container').toggle();
+			ytplayer = document.getElementById("scene_embed_video_player");
+			ytplayer.pauseVideo();
+			newSceneTimeModalShow();
+			return false;
 		});
 	});
 }

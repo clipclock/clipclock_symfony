@@ -35,6 +35,10 @@ scene:
     board_id: \d+
     id: \d+
 
+scene_post:
+  url: /post/scene
+  param: { module: scene, action: postScene }
+
 scene_post_comment:
   url: /post/scene/comment
   param: { module: scene, action: postComment }
@@ -54,7 +58,7 @@ scene_change:
 ### USER ###
 
 user:
-  url:   /:nick
+  url:   /profile/:nick
   class: sfPropelRoute
   param: { module: user, action: show }
   options: { model: sfGuardUserProfile, type: object }

@@ -43,6 +43,26 @@ class sceneActions extends sfActions
 		));
 	}
 
+	public function executePostScene(sfWebRequest $request)
+	{
+		$this->scene_time_form = new SceneTimeForm(null, array(
+			'created_at' => time(),
+			'sf_guard_user_profile_id' => $this->getUser()->getId(),
+		));
+
+		$this->scene_time_form->bind($request->getParameter($this->scene_time_form->getName()));
+
+		$this->forward404Unless($this->scene_time_form->isValid());
+
+		$this->scene_time_form->save();
+
+		$this->redirect($this->generateUrl('scene', array(
+			'username_slug' => $this->getUser()->getNick(),
+			'board_id' => $this->scene_time_form->getEmbeddedForm('scene')->getObject()->getBoardId(),
+			'id' => $this->scene_time_form->getEmbeddedForm('scene')->getObject()->getId()
+		)));
+	}
+
 	public function executePostComment(sfWebRequest $request)
 	{
 		$this->scene_comment_form = new SceneCommentForm(new SceneComment(), array(
@@ -70,20 +90,20 @@ class sceneActions extends sfActions
 		return $this->renderText($json);
 	}
 
-    public function executeToggleFBLikeState(sfWebRequest $request)
-    {
-        /**
-         * @var $this->getUser() sfGuardUser
-         */
+	public function executeToggleFBLikeState(sfWebRequest $request)
+	{
+		/**
+		 * @var $this->getUser() sfGuardUser
+		 */
 
-        if ($this->getUser()->getId() != $request->getParameter('user_id'))
-            return $this->returnJSON(array('code' => 403, 'content' => 'forbidden'));
+		if ($this->getUser()->getId() != $request->getParameter('user_id'))
+			return $this->returnJSON(array('code' => 403, 'content' => 'forbidden'));
 
-        $request = $request->getParameterHolder()->getAll();
+		$request = $request->getParameterHolder()->getAll();
 
-        return (SceneLikePeer::toggleBySceneIdAndUserIdByState($request['scene_id'], $request['user_id'], $request['state'])) ?
-                $this->returnJSON(array('code' => 200, 'content' => 'toggled successfully')) :
-                $this->returnJSON(array('code' => 500, 'content' => 'something wrong')) ;
+		return (SceneLikePeer::toggleBySceneIdAndUserIdByState($request['scene_id'], $request['user_id'], $request['state'])) ?
+				$this->returnJSON(array('code' => 200, 'content' => 'toggled successfully')) :
+				$this->returnJSON(array('code' => 500, 'content' => 'something wrong')) ;
 
-    }
+	}
 }

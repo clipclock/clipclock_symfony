@@ -45,7 +45,7 @@ propel:
   scene_time:
     id: ~
     clip_id: { type: INTEGER, required: true, foreignTable: clip, foreignReference: id }
-    scene_time: { type: INTEGER, required: true }
+    scene_time: { type: decimal, required: true }
     created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
     unique_comments_count: { type: INTEGER, required: true, default: '1' }
     _uniques:

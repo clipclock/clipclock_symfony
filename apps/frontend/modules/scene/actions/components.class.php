@@ -15,6 +15,13 @@ class sceneComponents extends sfComponents
 		$this->repined_user_ids = SceneRepinPeer::retrieveIdsBySceneId($this->scene_id);
 	}
 
+	public function executePeopleForSceneStickerUser()
+	{
+		$this->user_id = $this->getVar('user_id');
+
+		$this->user = SfGuardUserProfilePeer::retrieveByPK($this->user_id);
+	}
+
     public function executeFacebookLikeButton($render = array())
     {
 
@@ -45,6 +52,8 @@ class sceneComponents extends sfComponents
 		$this->scene_id = $this->getVar('scene_id');
 
 		$this->scene_times = ScenePeer::retrieveAscSceneTimeIdByClipIdBoardId($this->clip_id, $this->board_id);
+
+		$this->form = new SceneTimeForm(null, array('clip_id' => $this->clip_id));
 	}
 
 	public function executeSceneViewDescription()

@@ -7,33 +7,33 @@
  */
 
 current_scene_id = 0;
-function embedClip(container_id, scene_time, video_id, source)
+function embedClip(scene_time, video_id, source)
 {
-	player_container_id = container_id + '_player';
-	preparePlayer(container_id, player_container_id, scene_time, video_id, source);
+	preparePlayer(scene_time, video_id, source);
 }
 
-function preparePlayer(container_id, player_container_id, scene_time, video_id, source)
+function preparePlayer(scene_time, video_id, source)
 {
 	if(source == 'youtube')
 	{
 		var params = { allowScriptAccess: "always", allowFullScreen: "true" };
-		var atts = { id: player_container_id };
+		var atts = { id: "scene_embed_video_player" };
 		swfobject.embedSWF("http://www.youtube.com/v/"+video_id+"?enablejsapi=1&playerapiid=ytplayer&start="+scene_time+"&autoplay=1&version=3&feature=player_embedded&fs=1&rel=0&showsearch=0&showinfo=0",
-				container_id, "640", "387", "8", null, null, params, atts);
+				'scene_embed_video', "640", "387", "8", null, null, params, atts);
 
 		function onYouTubePlayerReady(playerId) {
-			ytplayer = document.getElementById(player_container_id);
+			ytplayer = document.getElementById("scene_embed_video_player");
 		}
 	}
 
-	_newSceneTime(player_container_id);
+	newSceneTimeDescriptionContainer();
+	newSceneTimeModalShow();
 }
 
 function seekTo(scene_time)
 {
-	ytplayer = document.getElementById(player_container_id);
-	ytplayer.seekTo(scene_time);
+	ytplayer = document.getElementById("scene_embed_video_player");
+	ytplayer.seekTo(scene_time-1);
 }
 
 function checkCurrentScene(scene_id, scene_time)

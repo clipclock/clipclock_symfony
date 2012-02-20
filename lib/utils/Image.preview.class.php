@@ -20,10 +20,11 @@ class ImagePreview
 			'big' => '/uploads/avatar/100/',
 			'medium' => '/uploads/avatar/50/',
 			'small' => '/uploads/avatar/30/',
+			'tiny' => '/uploads/avatar/21/',
 		)
 	);
 
-	public static function c14n($scene_id, $size = 'big', $type = 'scene')
+	public static function c14n($scene_id, $size = 'medium', $type = 'scene')
 	{
 		$scene_hash = md5($scene_id);
 
@@ -42,7 +43,7 @@ class ImagePreview
 		return $path_part . $scene_hash . '.jpg';
 	}
 
-	public static function c14nArray(array $array, $size = 'big', $id_key = 'id', $type = 'scene')
+	public static function c14nArray(array $array, $size = 'medium', $id_key = 'id', $type = 'scene')
 	{
 		$return_paths = array();
 
@@ -54,7 +55,7 @@ class ImagePreview
 		return $return_paths;
 	}
 
-	public static function c14nArrayObjects(array $array, $size = 'big', $id_getter = 'getId', $type = 'scene')
+	public static function c14nArrayObjects(array $array, $size = 'medium', $id_getter = 'getId', $type = 'scene')
 	{
 		$return_paths = array();
 

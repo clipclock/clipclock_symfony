@@ -1,0 +1,11 @@
+options:
+  amqp:
+    vhost:    '/'
+    host:     'localhost'
+    port:     '5672'
+    user:     'videopin'
+    pass:     'welc0me2IT'
+
+  resize:
+    consume_exchange_name:  'resizesExchanger'
+    queues: [inbox.avatar, inbox.frame, outbox.avatar, outbox.frame]

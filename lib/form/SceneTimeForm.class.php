@@ -42,6 +42,13 @@ class SceneTimeForm extends BaseSceneTimeForm
 
 		foreach($forms as $form)
 		{
+			$values = $this->getValues();
+			if(isset($values[$form->getName()]['name']) && $values[$form->getName()]['name'])
+			{
+				$form->getObject()->setBoardId(
+					BoardPeer::createOrReturnId($values[$form->getName()]['name'], $this->getOption('sf_guard_user_profile_id'))
+				);
+			}
 			$form->getObject()->setSceneTimeId($this->getObject()->getId());
 		}
 		parent::saveEmbeddedForms($con, $forms);

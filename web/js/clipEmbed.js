@@ -22,7 +22,7 @@ function preparePlayer(scene_time, video_id, source)
 				'scene_embed_video', "640", "387", "8", null, null, params, atts);
 
 		function onYouTubePlayerReady(playerId) {
-			ytplayer = document.getElementById("scene_embed_video_player");
+			ytplayer = getPlayer();
 		}
 	}
 
@@ -30,9 +30,14 @@ function preparePlayer(scene_time, video_id, source)
 	newSceneTimeModalShow();
 }
 
+function getPlayer()
+{
+	return document.getElementById("scene_embed_video_player");
+}
+
 function seekTo(scene_time)
 {
-	ytplayer = document.getElementById("scene_embed_video_player");
+	ytplayer = getPlayer();
 	ytplayer.seekTo(scene_time-1);
 }
 

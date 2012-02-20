@@ -58,7 +58,7 @@ class sceneComponents extends sfComponents
 
 	public function executeSceneViewDescription()
 	{
-		$this->scene = ScenePeer::retrieveByPK($this->getVar('scene_id'));
+        $this->scene = ScenePeer::retrieveByPK($this->scene_id);
 	}
 
 	public function executeSceneViewCommentForm()
@@ -85,5 +85,21 @@ class sceneComponents extends sfComponents
 		$counts = ScenePeer::countRepinsLikesForSceneId($this->scene_id);
 		$this->repins_count = $counts['repins_count'];
 		$this->likes_count = $counts['likes_count'];
+
+        $scene = ScenePeer::retrieveByPK($this->scene_id);
+        /**
+         * @var $scene Scene
+         */
+
+
+        $scene->setNew(true);
+        $scene->fromArray(array(
+                                'Id' => null,
+                                'CreatedAt' => null,
+                                'SfGuardUserProfileId' => $this->user->getId(), //$this->user->getProfile()->getId()
+                                'RepinOriginSceneId' => $this->scene_id
+                          ));
+
+		$this->form = new RepinModalForm($scene, array('sf_guard_user_profile_id' => $this->getUser()->getId()));
 	}
 }

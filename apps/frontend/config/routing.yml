@@ -35,6 +35,10 @@ scene:
     board_id: \d+
     id: \d+
 
+scene_repin_modal:
+  url: /scene/get/repin/modal_form
+  param: { module: scene, action: getRepinModalForm }
+
 scene_post:
   url: /post/scene
   param: { module: scene, action: postScene }

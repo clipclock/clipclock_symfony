@@ -90,6 +90,11 @@ class sceneActions extends sfActions
 		return $this->renderText($json);
 	}
 
+    public function executeGetRepinModalForm(sfWebRequest $request)
+    {
+        $this->form = new RepinModalForm(null, array('sf_guard_user_profile_id' => $this->getUser()->getId()));
+    }
+
 	public function executeToggleFBLikeState(sfWebRequest $request)
 	{
 		/**

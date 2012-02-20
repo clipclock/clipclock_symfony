@@ -26,7 +26,7 @@
 			<div id="description" class="b-autor-text">
 				<?php include_component('scene', 'sceneViewDescription', array('scene_id' => $scene->getId()))?>
 			</div>
-			<div id="comment_form" class="b-add-comment">
+			<div id="comment_form" class="b-add-comment ajax_load_shadow">
 				<?php include_component('scene', 'sceneViewCommentForm', array('scene_time_id' => $scene->getSceneTimeId()))?>
 			</div>
 			<div id="comments">

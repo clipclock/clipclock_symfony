@@ -22,6 +22,13 @@ class sceneComponents extends sfComponents
 		$this->user = SfGuardUserProfilePeer::retrieveByPK($this->user_id);
 	}
 
+	public function executeModalForm()
+	{
+		$this->form = $this->getVar('form');
+		$this->form_url = $this->getVar('form_url');
+		$this->form_partial = $this->getVar('form_partial');
+	}
+
     public function executeFacebookLikeButton($render = array())
     {
 

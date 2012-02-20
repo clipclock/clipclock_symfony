@@ -19,4 +19,5 @@
  */
 class CategoryPeer extends BaseCategoryPeer {
 
+	const DEFAULT_CATEGORY_ID = 18;
 } // CategoryPeer

@@ -37,4 +37,28 @@ class BoardPeer extends BaseBoardPeer {
 
 		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);
 	}
+
+	public static function createOrReturnId($name, $user_id)
+	{
+		$c = new Criteria();
+		$c->clearSelectColumns();
+		$c->addSelectColumn(BoardPeer::ID);
+		$c->setPrimaryTableName(BoardPeer::TABLE_NAME);
+		$c->add(BoardPeer::SF_GUARD_USER_PROFILE_ID, $user_id);
+		$c->add(BoardPeer::NAME, $name);
+		$c->setLimit(1);
+
+		$already = BasePeer::doSelect($c)->fetch(PDO::FETCH_ASSOC);
+		if($already && $already['id'])
+		{
+			return $already['id'];
+		}
+
+		$board = new Board();
+		$board->setName($name);
+		$board->setSfGuardUserProfileId($user_id);
+		$board->setCategoryId(CategoryPeer::DEFAULT_CATEGORY_ID);
+		$board->save();
+		return $board->getId();
+	}
 } // BoardPeer

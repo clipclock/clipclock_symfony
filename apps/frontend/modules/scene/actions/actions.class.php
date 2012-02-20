@@ -52,7 +52,9 @@ class sceneActions extends sfActions
 
 		$this->scene_time_form->bind($request->getParameter($this->scene_time_form->getName()));
 
-		$this->forward404Unless($this->scene_time_form->isValid());
+		//var_dump($this->scene_time_form->isValid());
+		//echo $this->scene_time_form; die();
+		//$this->forward404Unless($this->scene_time_form->isValid());
 
 		$this->scene_time_form->save();
 
@@ -77,7 +79,7 @@ class sceneActions extends sfActions
 		$this->scene_comment_form->save();
 
 		return $this->returnJSON(array(
-			'scene_new_comment' => $this->getPartial('scene/sceneViewComment', array('comment' => $this->scene_comment_form->getObject())),
+			'scene_new_comment' => $this->getPartial('scene/sceneViewComment', array('comment' => $this->scene_comment_form->getObject(), 'ajax' => true)),
 		));
 	}
 

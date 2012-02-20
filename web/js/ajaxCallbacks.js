@@ -29,11 +29,13 @@ function newSceneTimeModalHide()
 {
 	$('#new_time_scene_description_container').toggle();
 	$('#new_time_scene_modal').toggle();
-	ytplayer = document.getElementById("scene_embed_video_player");
-	ytplayer.playVideo();
+	if(getPlayer())
+	{
+		getPlayer().playVideo();
+	}
 }
 
-function newSceneTimeModalShow()
+function newSceneTimeModalShow(scene_time_id, scene_text_id)
 {
 	$('#new_time_scene_description_container_submit').click(function(){
 		if($('#new_time_scene_description').val().length > 3)
@@ -41,9 +43,12 @@ function newSceneTimeModalShow()
 			$('#new_time_scene_modal').toggle();
 			$('#shadow').toggle();
 
-			ytplayer = document.getElementById("scene_embed_video_player");
-			$('#new_time_scene_modal #scene_time_scene_time').val(ytplayer.getCurrentTime());
-			$('#new_time_scene_modal #scene_time_scene_text').val($('#new_time_scene_description').val());
+			if(getPlayer())
+			{
+				$('#new_time_scene_modal #'+scene_time_id).val(getPlayer().getCurrentTime());
+			}
+
+			$('#new_time_scene_modal #'+scene_text_id).val($('#new_time_scene_description').val());
 		}
 		return false;
 	});
@@ -53,18 +58,18 @@ function newSceneTimeDescriptionContainer()
 {
 	$().ready(function(){
 		$('#new_time_scene').click(function(){
-			$('#scene_info').toggle();
-			$('#scene_add_comment').toggleClass('active');
-			ytplayer = document.getElementById("scene_embed_video_player");
-			if(ytplayer.getPlayerState() == 1)
+			ytplayer = getPlayer();
+			if(ytplayer.getPlayerState() == 1 && !$('#scene_add_comment').hasClass('active'))
 			{
 				ytplayer.pauseVideo();
 			}
-			else
+			else if($('#scene_add_comment').hasClass('active'))
 			{
 				ytplayer.playVideo();
 			}
-			newSceneTimeModalShow();
+			$('#scene_info').toggle();
+			$('#scene_add_comment').toggleClass('active');
+			newSceneTimeModalShow('scene_time_scene_time', 'scene_time_scene_text');
 			return false;
 		});
 	});
@@ -79,6 +84,11 @@ function prependNewComments(data, list_id)
 {
 	var data = JSON.parse(data);
 	$('#'+list_id).prepend(data.scene_new_comment);
+	var new_comment = $('#'+list_id+' div:first');
+	if($(new_comment).is(":hidden"))
+	{
+		$(new_comment).slideDown("slow");
+	}
 }
 
 function submitButton(submit_id, form_id)
@@ -86,6 +96,7 @@ function submitButton(submit_id, form_id)
 	$().ready(function(){
 		$('#'+submit_id).click(function(){
 			$('#'+form_id).trigger('onsubmit');
+			$('#comment_form').addClass('ajax_load');
 			return false;
 		});
 	});

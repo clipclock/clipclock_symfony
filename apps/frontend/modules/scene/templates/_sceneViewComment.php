@@ -1,4 +1,4 @@
-<div class="b-comment">
+<div class="b-comment"<?php echo isset($ajax) && $ajax == true ? ' style="display: none";' : ''; ?>>
 	<div class="inside">
 		<div class="ph">
 			<a href="<?php echo url_for('user', $comment->getSfGuardUserProfile())?>"><img src="<?php echo ImagePreview::c14n($comment->getSfGuardUserProfile()->getId(), 'small', 'avatar');?>" alt="" width="50" height="50" /></a>

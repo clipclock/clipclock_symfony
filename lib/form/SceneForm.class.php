@@ -16,12 +16,14 @@ class SceneForm extends BaseSceneForm
 		$this->setWidgets(array(
 			'id'                       => new sfWidgetFormInputHidden(),
 			'board_id'                 => new sfWidgetFormPropelChoice(array('model' => 'Board', 'add_empty' => false)),
+			'name'                     => new sfWidgetFormInputText(),
 			'text'                     => new sfWidgetFormInputHidden(),
 		));
 
 		$this->setValidators(array(
 			'id'                       => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
 			'board_id'                 => new sfValidatorPropelChoice(array('model' => 'Board', 'column' => 'id')),
+			'name'                     => new sfValidatorString(array('max_length' => 128, 'required' => false)),
 			'text'                     => new sfValidatorString(),
 		));
 

@@ -8,6 +8,29 @@
  */
 abstract class daemonWorkerBase implements daemonInterfaceWorker {
 
+	//Amqp only
+	protected $amqp_consume_exchange_name;
+	protected $amqp_repeat_exchange_name;
+
+	protected $attemp = 1;
+
+	protected $attemp_intervals = array(
+		10,
+		30,
+		60,
+		90,
+		120,
+		3600,
+		3600,
+		3600,
+		3600,
+		3600,
+		3600,
+		3600,
+		3600,
+		3600
+	);
+
 	/**
 	 * @var daemonDriverAmqp
 	 */
@@ -17,9 +40,12 @@ abstract class daemonWorkerBase implements daemonInterfaceWorker {
 	protected $origin_task;
 	protected $origin_queue_name;
 
+	protected $web_dir;
+
 	public function __construct($task, $origin_queue_name)
 	{
 		$this->task = $task;
+		$this->web_dir = __DIR__.'/../../../../web';
 
 		$this->origin_queue_name = $origin_queue_name;
 
@@ -77,3 +103,33 @@ abstract class daemonWorkerBase implements daemonInterfaceWorker {
 		return $str;
 	}
 }
+
+
+
+function myShutdownHandler()
+{
+	$error = error_get_last();
+	if($error)
+	{
+		switch ($error['type']) {
+			case E_ERROR :
+			case E_PARSE :
+			case E_CORE_ERROR :
+			case E_COMPILE_ERROR :
+			case E_USER_ERROR :
+			case E_WARNING:
+				$error_file = 'critical';
+				break;
+			case E_NOTICE:
+				$error_file = 'notice';
+				break;
+			default:
+				$error_file = 'minor';
+				break;
+		}
+
+		System_Daemon::warning('['.date("H:i:s m.d.y").'] - ' . $error['type'] . ' - ' .$error['message'] . ' in '. $error['file'] . ' at ' . $error['line']."\n");
+	}
+}
+
+$old_shutdown_handler = register_shutdown_function("myShutdownHandler");

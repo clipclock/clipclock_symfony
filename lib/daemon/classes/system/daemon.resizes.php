@@ -16,6 +16,15 @@ class daemonResizes extends daemonConsume {
 
 	protected function retrieveWorker($task, $queueName)
 	{
-		return new daemonWorkerResize(json_decode($task->getBody(), true), $queueName, $this->amqp_options);
+		$task_decoded = json_decode($task['msg'], true);
+		switch($task_decoded['task_type'])
+		{
+			case 1:
+				return new daemonWorkerInboxResize($task_decoded, $queueName, $this->amqp_options);
+				break;
+			case 2:
+				return new daemonWorkerOutboxResize($task_decoded, $queueName, $this->amqp_options);
+				break;
+		}
 	}
 }

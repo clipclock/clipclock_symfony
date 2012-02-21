@@ -59,17 +59,12 @@ class daemonDriverAmqp implements daemonInterfaceDriver {
 		{
 			$this->amqp_connection = new AMQPConnection(array('port' => $this->amqp_port, 'login' => $this->amqp_user, 'password' => $this->amqp_pass, 'vhost' => $this->amqp_vhost));
 			$this->amqp_connection->connect();
-			$this->amqp_channel = new AMQPChannel($this->amqp_connection);
 
-			$this->amqp_queue = new AMQPQueue($this->amqp_channel);
-			$this->amqp_queue->setName($amqp_queue_name);
-			$this->amqp_queue->setFlags(AMQP_DURABLE);
-			$this->amqp_queue_length = $this->amqp_queue->declare();
+			$this->amqp_queue = new AMQPQueue($this->amqp_connection);
+			$this->amqp_queue_length = $this->amqp_queue->declare($amqp_queue_name, AMQP_DURABLE);
 
-			$this->amqp_exchange = new AMQPExchange($this->amqp_channel);
-			$this->amqp_exchange->setName($amqp_exchange_name);
-			$this->amqp_exchange->setType(AMQP_EX_TYPE_FANOUT);
-			$this->amqp_exchange->declare();
+			$this->amqp_exchange = new AMQPExchange($this->amqp_connection);
+			$this->amqp_exchange->declare($amqp_exchange_name, AMQP_EX_TYPE_FANOUT);
 
 			//$this->amqp_exchange->bind($amqp_queue_name, $amqp_routing_name);
 			$this->amqp_queue->bind($amqp_exchange_name, $amqp_routing_name);
@@ -80,7 +75,7 @@ class daemonDriverAmqp implements daemonInterfaceDriver {
 		}
 		catch(AMQPException $e)
 		{
-			throw new daemonExceptionDbConnection($e);
+			$this->init($amqp_queue_name, $amqp_exchange_name);
 		}
 
 		return $this->amqp_connection;

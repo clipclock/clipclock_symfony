@@ -17,12 +17,38 @@ class ImagePreview
 			'small' => '/uploads/scenes/61/',
 		),
 		'avatar' => array(
-			'big' => '/uploads/avatar/100/',
+			'big' => '/uploads/avatar/180/',
 			'medium' => '/uploads/avatar/50/',
 			'small' => '/uploads/avatar/30/',
 			'tiny' => '/uploads/avatar/21/',
+			'original_photo' => '/uploads/avatar/original_photo/',
+			'original_avatar' => '/uploads/avatar/original_avatar/',
 		)
 	);
+
+	static $sizes = array(
+		'scene' => array(
+			'big' => '100x100',
+			'medium' => '70x70',
+			'small' => '61x61',
+		),
+		'avatar' => array(
+			'big' => '180x290',
+			'medium' => '50x50',
+			'small' => '30x30',
+			'tiny' => '21x21',
+		)
+	);
+
+	public static function getRealSize($size = 'medium', $type = 'scene')
+	{
+		if(!isset(self::$sizes[$type][$size]))
+		{
+			throw new LogicException('Undefined size: ' . $size);
+		}
+
+		return self::$sizes[$type][$size];
+	}
 
 	public static function c14n($scene_id, $size = 'medium', $type = 'scene')
 	{

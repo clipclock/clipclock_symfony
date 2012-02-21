@@ -100,34 +100,28 @@ class daemonConsume extends daemonBase {
 	{
 		try
 		{
-			if(!$this->amqp_connection || !$this->amqp_connection->isConnected())
+			if(!$this->amqp_connection)
 			{
 				$this->amqp_connection = new AMQPConnection(array(
-					'host' => '127.0.0.1',
 					'port' => $this->amqp_port,
 					'login' => $this->amqp_user,
 					'password' => $this->amqp_pass,
 					'vhost' => $this->amqp_vhost));
 				$this->amqp_connection->connect();
-				$this->amqp_channel = new AMQPChannel($this->amqp_connection);
 				$this->refillAmqpQueues();
 			}
 			elseif(!$this->amqp_connection->isConnected())
 			{
 				$this->amqp_connection->reconnect();
-				$this->amqp_channel = new AMQPChannel($this->amqp_connection);
-				$this->refillAmqpQueues();
-			}
-			elseif(!$this->amqp_channel->isConnected())
-			{
-				$this->amqp_channel = new AMQPChannel($this->amqp_connection);
 				$this->refillAmqpQueues();
 			}
 		}
-		catch(AMQPConnectionException $e)
+		catch(Exception $e)
 		{
-			sleep(1);
-			$this->reconnect();
+			if(!$this->shutdown)
+			{
+				$this->reconnect();
+			}
 		}
 	}
 
@@ -135,9 +129,8 @@ class daemonConsume extends daemonBase {
 	{
 		foreach($this->amqp_queues_routings as $queue)
 		{
-			$amqp_queue= new AMQPQueue($this->amqp_channel);
-			$amqp_queue->setName($queue);
-			$amqp_queue->setFlags(AMQP_DURABLE);
+			$amqp_queue= new AMQPQueue($this->amqp_connection, $queue);
+			//$amqp_queue->declare($queue, AMQP_DURABLE);
 
 			$this->amqp_queues[$queue] = $amqp_queue;
 			unset($amqp_queue);
@@ -153,13 +146,14 @@ class daemonConsume extends daemonBase {
 
 		$raw_task = $amqp_queue->get();
 
-		if($raw_task)
+		if($raw_task['count'] >= 0)
 		{
+
 			$raw_tasks[] = $raw_task;
 			for($i = 1; $i < 5; $i++)
 			{
 				$raw_task = $amqp_queue->get();
-				if(!$raw_task)
+				if($raw_task['count'] == -1)
 				{
 					break;
 				}
@@ -168,13 +162,14 @@ class daemonConsume extends daemonBase {
 			}
 		}
 
-		if($raw_tasks)
+		unset($amqp_queue);
+
+		if(count($raw_tasks))
 		{
-			$tasks = $this->executeConsumeCallback($queueName, $raw_tasks, $amqp_queue);
-			unset($amqp_queue);
-			$this->amqp_connection->disconnect();
+			$tasks = $this->executeConsumeCallback($queueName, $raw_tasks);
 			if(count($tasks))
 			{
+				$this->amqp_connection->disconnect();
 				$pid = pcntl_fork();
 				if($pid == -1)
 				{
@@ -199,9 +194,9 @@ class daemonConsume extends daemonBase {
 				}
 				else
 				{
-					fclose(STDIN);
+					/*fclose(STDIN);
 					fclose(STDOUT);
-					fclose(STDERR);
+					fclose(STDERR);*/
 
 					foreach($tasks as $task)
 					{
@@ -226,32 +221,27 @@ class daemonConsume extends daemonBase {
 		}
 		else
 		{
-			unset($amqp_queue);
 			usleep(1000);
 		}
 	}
 
-	protected function executeConsumeCallback($queueName, $raw_tasks, $amqp_queue)
+	protected function executeConsumeCallback($queueName, $raw_tasks)
 	{
 		$check_tasks = $raw_tasks;
 		foreach($check_tasks as $key => $raw_task)
 		{
-			if(!$raw_task->getTimeStamp())
+			if(!isset($raw_task['timestamp']))
 			{
 				continue;
 			}
 			else
 			{
-				if($raw_task->getTimeStamp() > time())
+				if($raw_task['timestamp'] > time())
 				{
-					$exchange = new AMQPExchange($this->amqp_channel);
-					$exchange->setName($this->amqp_consume_exchange_name.'_republish_exchange');
-					$exchange->setType(AMQP_EX_TYPE_FANOUT);
-					$exchange->declare();
-
-					$this->amqp_queues[$queueName]->bind($this->amqp_consume_exchange_name.'_republish_exchange', $this->amqp_consume_exchange_name.'_republish_route');
-
-					$exchange->publish($raw_task->getBody(), $this->amqp_consume_exchange_name.'_republish_route', null, array('timestamp' => $raw_task['timestamp']));
+					$exchange = new AMQPExchange($this->amqp_connection);
+					$exchange->declare($this->amqp_consume_exchange_name.'_republish_exchange', AMQP_EX_TYPE_FANOUT);
+					$exchange->bind($queueName, $this->amqp_consume_exchange_name.'_republish_route');
+					$exchange->publish($raw_task['msg'], $this->amqp_consume_exchange_name.'_republish_route', null, array('timestamp' => $raw_task['timestamp']));
 					unset($raw_tasks[$key]);
 
 					//republish in queue
@@ -264,11 +254,12 @@ class daemonConsume extends daemonBase {
 		unset($raw_task);
 		unset($check_tasks);
 		unset($exchange);
+		return $raw_tasks;
+		/*
 		foreach($raw_tasks as $raw_task)
 		{
-			$amqp_queue->ack($raw_task->getDeliveryTag());
-		}
-		return $raw_tasks;
+			$queue->ack($raw_task['delivery_tag']);
+		}*/
 	}
 
 	protected function executeTask($task, $queueName)

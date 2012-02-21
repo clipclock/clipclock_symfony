@@ -7,37 +7,14 @@
  * To change this template use File | Settings | File Templates.
  */
 
-class daemonWorkerResize extends daemonWorkerBase {
-
-	protected $attemp = 1;
-
-	protected $attemp_intervals = array(
-		10,
-		30,
-		60,
-		90,
-		120,
-		3600,
-		3600,
-		3600,
-		3600,
-		3600,
-		3600,
-		3600,
-		3600,
-		3600
-	);
-
-	//Amqp only
-	protected $amqp_consume_exchange_name;
-	protected $amqp_repeat_exchange_name;
+class daemonWorkerOutboxResize extends daemonWorkerBase {
 
 	//Internal vars
 	protected 	$task_type,
-				$url,
+				$original_path,
+				$save_path,
 				$sizes,
-				$c14n_id,
-				$force;
+				$delete;
 
 	public function __construct($task, $queueName, $amqp_options)
 	{
@@ -51,24 +28,65 @@ class daemonWorkerResize extends daemonWorkerBase {
 
 	public function executeTask()
 	{
-		parent::executeTask();
+		if(!file_exists($this->original_path))
+		{
+			return false;
+		}
+		$im = imagecreatefromjpeg($this->original_path);
 
-		System_Daemon::notice($this->task['url']['photo']);
+		if($this->sizes['width'] != imagesx($im) || $this->sizes['height'] / imagesy($im))
+		{
+			$k1 = $this->sizes['width'] / imagesx($im);
+			$k2 = $this->sizes['height'] / imagesy($im);
+			$k = $k1 > $k2 ? $k2 : $k1;
+
+			$w = intval(imagesx($im) * $k);
+			$h = intval(imagesy($im) * $k);
+
+			$im1 = imagecreatetruecolor($w, $h);
+			imagecopyresampled($im1, $im, 0, 0, 0, 0, $w, $h, imagesx($im), imagesy($im));
+
+			imagejpeg($im1, $this->save_path, 100);
+			imagedestroy($im1);
+		}
+		imagedestroy($im);
+
+		$this->checkForDelete();
+	}
+
+	public function checkForDelete()
+	{
+		$check_array = $this->delete['check'];
+		foreach($this->delete['check'] as $key => $check_path)
+		{
+			if(file_exists($check_path))
+			{
+				unset($check_array[$key]);
+			}
+		}
+
+		if(!count($check_array))
+		{
+			foreach($this->delete['path'] as $path)
+			{
+				unlink($path);
+			}
+		}
 	}
 
 	protected function connectAMQP()
 	{
-		/*$this->amqp_driver = new daemonDriverAmqp($this->amqp_options);
-		$this->amqp_driver->init($this->amqp_outbox_agregators_queue_name);*/
+
 	}
 
 	protected function fromArray($task)
 	{
+		System_Daemon::notice(var_export($task, true));
 		$this->task_type = $task['task_type'];
-		$this->url = $task['url'];
-		$this->sizes = $task['sizes'];
-		$this->c14n_id = $task['c14n_id'];
-		$this->force = $task['force'];
+		$this->original_path = $task['original_path'];
+		$this->sizes = $task['resize'];
+		$this->save_path = $task['save_path'];
+		$this->delete = $task['delete'];
 	}
 
 	protected function toArray()

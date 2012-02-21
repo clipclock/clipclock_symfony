@@ -13,12 +13,12 @@
 <br />
 
 <script type="text/javascript">
-	repinClip(); //<?php //echo $scene_time?>, '<?php //echo $clip->getUrl()?>', '<?php //echo $clip->getSource()->getName()?>');
+	repinClip();
 </script>
 
 <?php slot('repin_modal') ?>
 <div id='new_repin_modal' style="display: none;" class="pop-window">
-	<form method="post" action="<?php echo url_for('scene_post');?>">
+	<form method="post" action="<?php echo url_for('scene_repin');?>">
 	<div class="close"></div>
 	<!-- b-header  -->
 	<div class="b-header">
@@ -28,7 +28,7 @@
 	<!-- b-content  -->
 	<div class="b-content">
 		<div class="add-video-scene">
-				<?php //echo $form->renderHiddenFields()?>
+				<?php echo $form->renderHiddenFields()?>
 				<!-- video-descriptions  -->
 				<div class="video-descriptions">
 					<div class="line-form">
@@ -51,4 +51,8 @@
 	<!-- /b-footer -->
 </div>
 <?php end_slot(); ?>
-<div id="new_repin" class="new-tag">repin</div>
+<?php if(!SceneRepinPeer::isRepinnedSceneByUser($scene_id, $user->getId())) : ?>
+    <div id="new_repin" class="new-tag">repin</div>
+<?php else :?>
+    <div id="un_repin" class="new-tag" href="<?php echo url_for('@scene_unrepin'); ?>" scene_id="<?php echo $scene_id; ?>" user_id="<?php echo $user->getId(); ?>">unrepin</div>
+<?php endif; ?>

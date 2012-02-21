@@ -22,13 +22,6 @@ class sceneComponents extends sfComponents
 		$this->user = SfGuardUserProfilePeer::retrieveByPK($this->user_id);
 	}
 
-	public function executeModalForm()
-	{
-		$this->form = $this->getVar('form');
-		$this->form_url = $this->getVar('form_url');
-		$this->form_partial = $this->getVar('form_partial');
-	}
-
     public function executeFacebookLikeButton($render = array())
     {
 
@@ -86,27 +79,28 @@ class sceneComponents extends sfComponents
 
 	public function executeSceneViewSocialButtons()
 	{
-		$this->scene_id = $this->getVar('scene_id');
+		$this->scene_id = $this->scene->getId();
 		$this->user = $this->getUser();
         
 		$counts = ScenePeer::countRepinsLikesForSceneId($this->scene_id);
 		$this->repins_count = $counts['repins_count'];
 		$this->likes_count = $counts['likes_count'];
 
-        $scene = ScenePeer::retrieveByPK($this->scene_id);
+        //$scene = ScenePeer::retrieveByPK($this->scene_id);
+        $new_scene = clone($this->scene);
         /**
          * @var $scene Scene
          */
 
 
-        $scene->setNew(true);
-        $scene->fromArray(array(
+        $new_scene->setNew(true);
+        $new_scene->fromArray(array(
                                 'Id' => null,
-                                'CreatedAt' => null,
+                                'CreatedAt' => time(),
                                 'SfGuardUserProfileId' => $this->user->getId(), //$this->user->getProfile()->getId()
                                 'RepinOriginSceneId' => $this->scene_id
                           ));
 
-		$this->form = new RepinModalForm($scene, array('sf_guard_user_profile_id' => $this->getUser()->getId()));
+		$this->form = new RepinModalForm($new_scene, array('sf_guard_user_profile_id' => $this->user->getId()));
 	}
 }

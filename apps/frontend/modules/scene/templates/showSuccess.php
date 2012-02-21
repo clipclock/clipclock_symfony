@@ -8,7 +8,7 @@
 	<div class="long-col">
 		<div class="long-col-inside">
 			<div class="right-mini-coll">
-				<?php //include_component('scene', 'sceneViewSocialButtons', array('scene_id' => $current_scene->getId()))?>
+				<?php include_component('scene', 'sceneViewSocialButtons', array('scene' => $current_scene))?>
 			</div>
 			<div class="center-col">
 				<div class="b-main-video">

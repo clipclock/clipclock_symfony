@@ -19,6 +19,10 @@
  */
 class SceneRepinPeer extends BaseSceneRepinPeer {
 
+    const PINNED = 0xFF;
+    const UN_PINNED = 0xEE;
+    const NOT_BEEN_PINNED = 0xBB;
+
 	public static function retrieveIdsBySceneId($scene_id)
 	{
 		$c = new Criteria();
@@ -30,5 +34,42 @@ class SceneRepinPeer extends BaseSceneRepinPeer {
 
 		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);
 	}
+
+    public static function isRepinnedSceneByUser($scene_id, $user_id)
+    {
+        $c = new Criteria();;
+        $c->add(self::REPIN_SF_GUARD_USER_PROFILE_ID, $user_id);
+        $c->add(self::SCENE_ID, $scene_id);
+        
+        return self::doCount($c);
+    }
+
+    public static function toggleBySceneIdAndUserIdByState($scene_id, $user_id, $state)
+    {
+        $c = new Criteria();;
+        $c->add(self::REPIN_SF_GUARD_USER_PROFILE_ID, $user_id);
+        $c->add(self::SCENE_ID, $scene_id);
+
+        if ($state) {
+
+            try {
+                self::doInsert($c);
+            } catch (Exception $e) {
+                return false; // already isseted
+            }
+
+            return self::PINNED; // new record
+        } else {
+            try {
+                $result = self::doDelete($c);
+                ScenePeer::doDeleteBySceneId($scene_id);
+            } catch (Exception $e) {
+                return false; // holly crap happens
+            }
+        }
+
+        return ($result) ? self::UN_PINNED: self::NOT_BEEN_PINNED; // if nothing to delete = 0, else 1
+
+    }
 
 } // SceneRepinPeer

@@ -10,39 +10,41 @@ function repinClip()
 
 function newRepinModalShow()
 {
-	//$('#new_time_scene_description_container_submit').click(function(){
-		//if($('#new_time_scene_description').val().length > 3)
 		{
 			$('#new_repin_modal').toggle();
-			//$('#shadow').toggle();
-
-			//ytplayer = document.getElementById("scene_embed_video_player");
-			//$('#new_time_scene_modal #scene_time_scene_time').val(ytplayer.getCurrentTime());
-			//$('#new_time_scene_modal #scene_time_scene_text').val($('#new_time_scene_description').val());
 		}
 		return false;
-	//});
 }
 
 function newRepinContainer()
 {
 	$().ready(function(){
 		$('#new_repin').click(function(){
-			//$('#scene_info').toggle();
-			//$('#scene_add_comment').toggleClass('active');
-			/*
             ytplayer = document.getElementById("scene_embed_video_player");
-			if(ytplayer.getPlayerState() == 1)
-			{
-				ytplayer.pauseVideo();
-			}
-			else
-			{
-				ytplayer.playVideo();
-			}
-			*/
-			newRepinModalShow();
-			return false;
-		});
+            if(ytplayer.getPlayerState() == 1)
+            {
+                ytplayer.pauseVideo();
+            }
+            else
+            {
+                ytplayer.playVideo();
+            }
+            newRepinModalShow();
+            return false;
+        });
+
+        $('#un_repin').click(function(){
+            var url = $(this).attr('href');
+            var user_id = $(this).attr('user_id');
+            var scene_id = $(this).attr('scene_id');
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                data: { user_id : user_id, scene_id : scene_id }
+            });
+
+            return false;
+        });
 	});
 }

@@ -14,6 +14,7 @@
 <div id="wrapper">
 <div class="scroll-to-top"></div>
 <?php include_slot('scene_modal') ?>
+<?php include_slot('repin_modal') ?>
 <!-- ******************		HEAD START ****************************** -->
 <div id="head">
 	<!-- header  -->

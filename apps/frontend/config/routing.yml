@@ -35,9 +35,13 @@ scene:
     board_id: \d+
     id: \d+
 
-scene_repin_modal:
-  url: /scene/get/repin/modal_form
-  param: { module: scene, action: getRepinModalForm }
+scene_unrepin:
+  url: /scene/unrepin
+  param: { module: scene, action: unrepin }
+
+scene_repin:
+  url: /scene/repin
+  param: { module: scene, action: repin }
 
 scene_post:
   url: /post/scene

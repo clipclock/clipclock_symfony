@@ -35,6 +35,14 @@ scene:
     board_id: \d+
     id: \d+
 
+scene_unrepin:
+  url: /scene/unrepin
+  param: { module: scene, action: unrepin }
+
+scene_repin:
+  url: /scene/repin
+  param: { module: scene, action: repin }
+
 scene_post:
   url: /post/scene
   param: { module: scene, action: postScene }

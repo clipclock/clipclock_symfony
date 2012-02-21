@@ -132,4 +132,12 @@ class ScenePeer extends BaseScenePeer {
 
 		return BasePeer::doSelect($c)->fetch(PDO::FETCH_ASSOC);
 	}
+
+    public static function doDeleteBySceneId($scene_id)
+	{
+		$c = new Criteria();
+        $c->add(self::ID, $scene_id);
+
+		return self::doDelete($c);
+	}
 } // ScenePeer

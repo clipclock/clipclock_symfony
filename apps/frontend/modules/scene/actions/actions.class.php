@@ -92,18 +92,44 @@ class sceneActions extends sfActions
 		return $this->renderText($json);
 	}
 
+    public function executeUnrepin(sfWebRequest $request)
+    {
+        if ($this->getUser()->getId() != $request->getParameter('user_id'))
+                return $this->returnJSON(array('code' => 403, 'content' => 'forbidden'));
+
+        return (SceneRepinPeer::toggleBySceneIdAndUserIdByState($request->getParameter('scene_id'),
+                                                        $request->getParameter('user_id'),
+                                                        false) == SceneRepinPeer::UN_PINNED) ?
+
+        $this->returnJSON(array('code' => 200, 'content' => 'toggled successfully')) :
+        $this->returnJSON(array('code' => 500, 'content' => 'something wrong')) ;
+
+    }
+
+    public function executeRepin(sfWebRequest $request)
+    {
+        $this->scene_form = new RepinModalForm(null);
+
+        $this->scene_form->bind($request->getParameter($this->scene_form->getName()));
+
+        $this->scene_form->save();
+
+        $this->redirect($this->generateUrl('scene', array(
+            'username_slug' => $this->getUser()->getNick(),
+            'board_id' => $this->scene_form->getObject()->getBoardId(),
+            'id' => $this->scene_form->getObject()->getId()
+        )));
+    }
+
 	public function executeToggleFBLikeState(sfWebRequest $request)
 	{
-		/**
-		 * @var $this->getUser() sfGuardUser
-		 */
-
 		if ($this->getUser()->getId() != $request->getParameter('user_id'))
 			return $this->returnJSON(array('code' => 403, 'content' => 'forbidden'));
 
-		$request = $request->getParameterHolder()->getAll();
+		return (SceneLikePeer::toggleBySceneIdAndUserIdByState($request->getParameter('scene_id'),
+                                                               $request->getParameter('user_id'),
+                                                               $request->getParameter('state'))) ?
 
-		return (SceneLikePeer::toggleBySceneIdAndUserIdByState($request['scene_id'], $request['user_id'], $request['state'])) ?
 				$this->returnJSON(array('code' => 200, 'content' => 'toggled successfully')) :
 				$this->returnJSON(array('code' => 500, 'content' => 'something wrong')) ;
 

@@ -53,7 +53,7 @@ class RepinModalForm extends BaseSceneForm {
 
             parent::save($con);
 
-            SceneRepinPeer::toggleBySceneIdAndUserIdByState($this->getObject()->getId(),
+            SceneRepinPeer::toggleBySceneIdAndUserIdByState($this->getObject()->getRepinOriginSceneId(),
                                                             $this->getObject()->getSfGuardUserProfileId(),
                                                             true);
 

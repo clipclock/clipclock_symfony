@@ -51,8 +51,8 @@
 	<!-- /b-footer -->
 </div>
 <?php end_slot(); ?>
-<?php if(!SceneRepinPeer::isRepinnedSceneByUser($scene_id, $user->getId())) : ?>
+<?php if(!ScenePeer::isRepinnedSceneByUser($origin_scene_id, $user->getId())) : ?>
     <div id="new_repin" class="new-tag">repin</div>
 <?php else :?>
-    <div id="un_repin" class="new-tag" href="<?php echo url_for('@scene_unrepin'); ?>" scene_id="<?php echo $scene_id; ?>" user_id="<?php echo $user->getId(); ?>">unrepin</div>
+    <div id="un_repin" class="new-tag" href="<?php echo url_for('@scene_unrepin'); ?>" scene_id="<?php echo $origin_scene_id; ?>" user_id="<?php echo $user->getId(); ?>">unrepin</div>
 <?php endif; ?>

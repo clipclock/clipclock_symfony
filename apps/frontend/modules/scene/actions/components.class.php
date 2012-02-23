@@ -80,16 +80,18 @@ class sceneComponents extends sfComponents
 	public function executeSceneViewSocialButtons()
 	{
 		$this->scene_id = $this->scene->getId();
+		$this->origin_scene_id = ($this->scene->getRepinOriginSceneId()) ? $this->scene->getRepinOriginSceneId() : $this->scene_id;
 		$this->user = $this->getUser();
         
-		$counts = ScenePeer::countRepinsLikesForSceneId($this->scene_id);
+		$counts = ScenePeer::countRepinsLikesForSceneId($this->origin_scene_id);
 		$this->repins_count = $counts['repins_count'];
 		$this->likes_count = $counts['likes_count'];
 
         //$scene = ScenePeer::retrieveByPK($this->scene_id);
         $new_scene = clone($this->scene);
-        /**
+        /** 
          * @var $scene Scene
+         * @var $new_scene Scene
          */
 
 
@@ -98,7 +100,7 @@ class sceneComponents extends sfComponents
                                 'Id' => null,
                                 'CreatedAt' => time(),
                                 'SfGuardUserProfileId' => $this->user->getId(), //$this->user->getProfile()->getId()
-                                'RepinOriginSceneId' => $this->scene_id
+                                'RepinOriginSceneId' => ($new_scene->getRepinOriginSceneId()) ? $new_scene->getRepinOriginSceneId() : $this->scene_id
                           ));
 
 		$this->form = new RepinModalForm($new_scene, array('sf_guard_user_profile_id' => $this->user->getId()));

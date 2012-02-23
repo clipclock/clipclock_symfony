@@ -35,14 +35,6 @@ class SceneRepinPeer extends BaseSceneRepinPeer {
 		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-    public static function isRepinnedSceneByUser($scene_id, $user_id)
-    {
-        $c = new Criteria();;
-        $c->add(self::REPIN_SF_GUARD_USER_PROFILE_ID, $user_id);
-        $c->add(self::SCENE_ID, $scene_id);
-        
-        return self::doCount($c);
-    }
 
     public static function toggleBySceneIdAndUserIdByState($scene_id, $user_id, $state)
     {
@@ -51,7 +43,6 @@ class SceneRepinPeer extends BaseSceneRepinPeer {
         $c->add(self::SCENE_ID, $scene_id);
 
         if ($state) {
-
             try {
                 self::doInsert($c);
             } catch (Exception $e) {
@@ -61,8 +52,11 @@ class SceneRepinPeer extends BaseSceneRepinPeer {
             return self::PINNED; // new record
         } else {
             try {
+                $origin_scene_id = ScenePeer::retrieveOriginSceneIdBySceneIdAndUserId($scene_id, $user_id);
+                $origin_scene_id = ($origin_scene_id) ? $origin_scene_id : $scene_id;
+
                 $result = self::doDelete($c);
-                ScenePeer::doDeleteBySceneId($scene_id);
+                ScenePeer::doDeleteByOriginSceneIdAndUserId($origin_scene_id, $user_id);
             } catch (Exception $e) {
                 return false; // holly crap happens
             }

@@ -110,6 +110,15 @@ class ScenePeer extends BaseScenePeer {
 		return BasePeer::doSelect($c)->fetch(PDO::FETCH_ASSOC);
 	}
 
+    public static function isRepinnedSceneByUser($scene_id, $user_id)
+    {
+        $c = new Criteria();;
+        $c->add(self::SF_GUARD_USER_PROFILE_ID, $user_id);
+        $c->add(self::REPIN_ORIGIN_SCENE_ID, $scene_id);
+
+        return self::doCount($c);
+    }
+
 	public static function retrieveByBoardIdSceneTimeId($scene_time_id, $board_id)
 	{
 		$c = new Criteria();
@@ -133,10 +142,21 @@ class ScenePeer extends BaseScenePeer {
 		return BasePeer::doSelect($c)->fetch(PDO::FETCH_ASSOC);
 	}
 
-    public static function doDeleteBySceneId($scene_id)
+    public static function retrieveOriginSceneIdBySceneIdAndUserId($scene_id, $user_id)
+	{
+        $c = new Criteria();
+        $c->add(self::REPIN_ORIGIN_SCENE_ID, $scene_id);
+        $c->add(self::SF_GUARD_USER_PROFILE_ID, $user_id);
+
+        $obj = self::doSelectOne($c);
+        return ($obj) ? $obj->getId() : 0;
+    }
+
+    public static function doDeleteByOriginSceneIdAndUserId($scene_id, $user_id)
 	{
 		$c = new Criteria();
         $c->add(self::ID, $scene_id);
+        $c->add(self::SF_GUARD_USER_PROFILE_ID, $user_id);
 
 		return self::doDelete($c);
 	}

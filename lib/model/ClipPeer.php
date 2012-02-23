@@ -31,4 +31,15 @@ class ClipPeer extends BaseClipPeer {
 
 		return current(self::doSelectJoinSource($c));
 	}
+
+	public static function retrieveByUrlAndSourceId($url, $source_id)
+	{
+		$c = new Criteria();
+
+		$c->clearSelectColumns();
+		$c->add(self::URL, $url);
+		$c->add(self::SOURCE_ID, $source_id);
+
+		return self::doSelectOne($c);
+	}
 } // ClipPeer

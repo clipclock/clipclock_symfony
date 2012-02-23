@@ -6,8 +6,8 @@
  * Time: 11:09
  * To change this template use File | Settings | File Templates.
  */
- 
-class daemonVideo extends daemonConsume {
+
+class daemonScenes extends daemonConsume {
 
 	public function __construct(array $daemon_options, array $amqp_options, array $amqp_queues_routings, array $queue_max_workers, array $run_mode) //$argv
 	{
@@ -16,6 +16,15 @@ class daemonVideo extends daemonConsume {
 
 	protected function retrieveWorker($task, $queueName)
 	{
-		return daemonFactory::retrieveWorker($task['msg'], $queueName, $this->amqp_options);
+		$task_decoded = json_decode($task['msg'], true);
+		switch($task_decoded['task_type'])
+		{
+			case 3:
+				return new daemonWorkerInboxScene($task_decoded, $queueName, $this->amqp_options);
+				break;
+			case 4:
+				return new daemonWorkerOutboxScene($task_decoded, $queueName, $this->amqp_options);
+				break;
+		}
 	}
 }

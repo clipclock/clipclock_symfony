@@ -18,7 +18,7 @@ propel:
     provider: {type: INTEGER, required: true}
   board:
     id: ~
-    is_public: { type: BOOLEAN, required: true }
+    is_public: { type: BOOLEAN, required: true, default: true }
     name: { type: VARCHAR, size: '128', required: true }
     sf_guard_user_profile_id: { type: INTEGER, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     category_id: { type: INTEGER, required: true, foreignTable: category, foreignReference: id }

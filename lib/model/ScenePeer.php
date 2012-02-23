@@ -140,4 +140,14 @@ class ScenePeer extends BaseScenePeer {
 
 		return self::doDelete($c);
 	}
+
+	public static function retrieveYoungestByClipId($clip_id)
+	{
+		$c = new Criteria();
+		$c->addJoin(self::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
+		$c->add(SceneTimePeer::CLIP_ID, $clip_id);
+		$c->addDescendingOrderByColumn(ScenePeer::CREATED_AT);
+		$c->setLimit(1);
+		return current(self::doSelectJoinSfGuardUserProfile($c));
+	}
 } // ScenePeer

@@ -19,7 +19,7 @@ function preparePlayer(scene_time, video_id, source)
 	}
 
 	newSceneTimeDescriptionContainer();
-	newSceneTimeModalShow();
+	//newSceneTimeModalShow();
 }
 
 function getPlayer()
@@ -30,7 +30,7 @@ function getPlayer()
 function seekTo(scene_time)
 {
 	ytplayer = getPlayer();
-	ytplayer.seekTo(scene_time-1);
+	ytplayer.seekTo(scene_time);
 }
 
 function checkCurrentScene(scene_id, scene_time)

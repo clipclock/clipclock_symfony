@@ -9,8 +9,8 @@
  
 abstract class daemonBase implements daemonInterfaceDaemon {
 
-	protected $gid = 1000;
-	protected $uid = 1000;
+	protected $gid = 0;
+	protected $uid = 0;
 
 	protected $run = true;
 	protected $shutdown = false;

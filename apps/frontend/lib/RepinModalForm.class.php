@@ -6,11 +6,13 @@
  * Time: 12:52 PM
  * To change this template use File | Settings | File Templates.
  */
- 
+
 class RepinModalForm extends BaseSceneForm {
 
     public function configure()
     {
+		unset($this['scene_repost_list']);
+		unset($this['scene_repin_list']);
         $this->getObject()->setSfGuardUserProfileId($this->getOption('sf_guard_user_profile_id'));
 
         $c = new Criteria();

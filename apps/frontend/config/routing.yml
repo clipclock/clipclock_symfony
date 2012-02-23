@@ -94,3 +94,13 @@ callback_fb:
 sf_guard_signout:
   url:   /logout
   param: { module: sfGuardAuth, action: signout }
+
+### ADD NEW CLIP ###
+
+preview_new_clip:
+  url:  /preview
+  param: { module: static, action: previewNew}
+
+new_clip_scene_post:
+  url:  /preview/create
+  param: { module: static, action: newClipPostScene}

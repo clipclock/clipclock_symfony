@@ -81,7 +81,6 @@ class daemonWorkerOutboxResize extends daemonWorkerBase {
 
 	protected function fromArray($task)
 	{
-		System_Daemon::notice(var_export($task, true));
 		$this->task_type = $task['task_type'];
 		$this->original_path = $task['original_path'];
 		$this->sizes = $task['resize'];

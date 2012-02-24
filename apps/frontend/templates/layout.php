@@ -19,79 +19,19 @@
 <div id="head">
 	<!-- header  -->
 	<div class="header">
-		<a href="http://" class="logo"></a>
+		<a href="<?php echo url_for('homepage')?>" class="logo"></a>
 		<!-- head-menu  -->
 		<div class="head-menu">
-			<!-- autorizing  -->
-			<ul class="autorizing hidden">
-				<li class="sing"><a href="">Sign up</a></li>
-				<li class="login"><a href="">Login</a></li>
-				<li class="about">
-					<a href="">About</a>
-					<div class="sub">
-						<ul>
-							<li><a href="">Help</a></li>
-							<li class="before-divider"><a href="">Copyright</a></li>
-							<li class="divider"><a href="">Careers</a></li>
-							<li><a href="">Team</a></li>
-							<li><a href="">Blog</a></li>
-						</ul>
-					</div>
-				</li>
-			</ul>
-			<!-- /autorizing -->
-			<!-- autorized  -->
-			<ul class="autorized">
-				<li class="invite"><a href="">Invite</a></li>
-				<li class="user">
-					<a href=""><span><img src="/images/avatars/user-pic.jpg" alt="" width="21" height="21" /></span><strong>fdsfdklsjdfdffldksjfsd;flds;fkary</strong></a>
-					<div class="sub">
-						<ul>
-							<li><a href="">Invite Friends</a></li>
-							<li class="before-divider"><a href="">Find Friends</a></li>
-							<li class="divider"><a href="">Boards</a></li>
-							<li><a href="">Pins</a></li>
-							<li class="before-divider"><a href="">Likes</a></li>
-							<li class="divider"><a href="">Settings</a></li>
-							<li><a href="">Loguot</a></li>
-						</ul>
-					</div>
-				</li>
-				<li class="about">
-					<a href="">About</a>
-					<div class="sub">
-						<ul>
-							<li><a href="">Help</a></li>
-							<li class="before-divider"><a href="">Copyright</a></li>
-							<li class="divider"><a href="">Careers</a></li>
-							<li><a href="">Team</a></li>
-							<li><a href="">Blog</a></li>
-						</ul>
-					</div>
-				</li>
-			</ul>
-			<!-- /autorized -->
+			<?php include_component('static', 'authForm', array('user' => $sf_user))?>
 		</div>
 		<!-- /head-menu -->
 		<!-- head-search  -->
-		<div class="head-search">
-			<div class="inside">
-				<div class="b-btn">
-					<input name="" type="button" />
-				</div>
-				<div class="b-input">
-					<input name="" type="text" title="Paste and enter YouTube video URL" value="Paste and enter YouTube video URL" />
-				</div>
-			</div>
-		</div>
+		<?php include_component('static', 'clipForm') ?>
 		<!-- /head-search -->
 	</div>
 	<!-- /header -->
 </div>
 <!-- ******************		HEADE END ******************************** -->
-
-
-
 
 <!-- ******************		CONTENT START *************************** -->
 <div id="content">

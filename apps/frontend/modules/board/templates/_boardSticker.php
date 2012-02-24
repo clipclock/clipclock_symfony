@@ -1,4 +1,4 @@
-<li>
+<li class="board_sticker">
 	<div class="inner">
 		<h4><a href="<?php echo url_for('board', array('id' => $board->getId(), 'username_slug' => $user->getNick()))?>"><?php echo $board->getName()?></a></h4>
 		<div class="follow-videos">

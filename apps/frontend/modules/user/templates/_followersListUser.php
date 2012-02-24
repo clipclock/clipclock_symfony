@@ -1,1 +1,1 @@
-<a href="<?php echo url_for('user', $user)?>"><?php echo $user?></a>
+<li><a href="<?php echo url_for('user', $user)?>"><img src="<?php echo ImagePreview::c14n($user->getId(), 'small', 'avatar');?>" alt="<?php echo $user?>" title="<?php echo $user?>" width="30" height="30" /></a></li>

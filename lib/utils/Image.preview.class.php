@@ -12,9 +12,9 @@ class ImagePreview
 
 	static $prefixes_types_sizes = array(
 		'scene' => array(
-			'big' => '/uploads/scenes/100/',
-			'medium' => '/uploads/scenes/70/',
-			'small' => '/uploads/scenes/61/',
+			'big' => '/uploads/scenes/192/',
+			'medium' => '/uploads/scenes/61/',
+			'original_scene' => '/uploads/scenes/original_scene/',
 		),
 		'avatar' => array(
 			'big' => '/uploads/avatar/180/',
@@ -28,9 +28,8 @@ class ImagePreview
 
 	static $sizes = array(
 		'scene' => array(
-			'big' => '100x100',
-			'medium' => '70x70',
-			'small' => '61x61',
+			'big' => '192x144',
+			'medium' => '61x61',
 		),
 		'avatar' => array(
 			'big' => '180x290',

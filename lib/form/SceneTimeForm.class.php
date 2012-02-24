@@ -28,6 +28,42 @@ class SceneTimeForm extends BaseSceneTimeForm
 		//sfForm::disableCSRFProtection();
 	}
 
+	public function save($con = null)
+	{
+		if (!$this->isValid())
+		{
+			throw $this->getErrorSchema();
+		}
+
+		if (null === $con)
+		{
+			$con = $this->getConnection();
+		}
+
+		try
+		{
+			$con->beginTransaction();
+
+			$this->doSave($con);
+
+			$amqp_publisher = new AMQPPublisher();
+			$amqp_publisher->jobScene(
+				$this->getObject()->getId(),
+				$this->getObject()->getClip()->getUrl(),
+				$this->getObject()->getSceneTime());
+
+			$con->commit();
+		}
+		catch (Exception $e)
+		{
+			$con->rollBack();
+
+			throw $e;
+		}
+
+		return $this->getObject();
+	}
+
 	public function saveEmbeddedForms($con = null, $forms = null)
 	{
 		if(null === $con)

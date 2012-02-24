@@ -28,9 +28,9 @@ $daemon_options = array(
 
 $queue_max_workers = array(
 	'inbox.avatar' => 30,
-	'inbox.frame' => 30,
+	/*'inbox.frame' => 30,*/
 	'outbox.avatar' => 30,
-	'outbox.frame' => 30
+	/*'outbox.frame' => 30*/
 );
 
 $amqp_options = array(
@@ -47,9 +47,9 @@ $amqp_options = array(
 
 $amqp_queues_routings = array(
 	'inbox.avatar',
-	'inbox.frame',
+	/*'inbox.frame',*/
 	'outbox.avatar',
-	'outbox.frame'
+	/*'outbox.frame'*/
 );
 
 $daemon = new daemonResizes($daemon_options, $amqp_options, $amqp_queues_routings, $queue_max_workers, $argv);

@@ -13,6 +13,7 @@ function stickerChange(data, clip_id, scene_id)
 	$('#comments_list_footer_'+clip_id).html(data.scene_footer);
 	$('#clip_control_'+clip_id+' li').removeClass('active');
 	$('#sticker_'+clip_id+'_'+scene_id).addClass('active');
+	//$('#container').masonry('reload');
 }
 
 function sceneChange(data)
@@ -37,20 +38,22 @@ function newSceneTimeModalHide()
 
 function newSceneTimeModalShow(scene_time_id, scene_text_id)
 {
-	$('#new_time_scene_description_container_submit').click(function(){
-		if($('#new_time_scene_description').val().length > 3)
-		{
-			$('#new_time_scene_modal').toggle();
-			$('#shadow').toggle();
-
-			if(getPlayer())
+	$().ready(function(){
+		$('#new_time_scene_description_container_submit').click(function(){
+			if($('#new_time_scene_description').val().length > 3)
 			{
-				$('#new_time_scene_modal #'+scene_time_id).val(getPlayer().getCurrentTime());
-			}
+				$('#new_time_scene_modal').toggle();
+				$('#shadow').toggle();
 
-			$('#new_time_scene_modal #'+scene_text_id).val($('#new_time_scene_description').val());
-		}
-		return false;
+				if(getPlayer())
+				{
+					$('#new_time_scene_modal #'+scene_time_id).val(getPlayer().getCurrentTime());
+				}
+
+				$('#new_time_scene_modal #'+scene_text_id).val($('#new_time_scene_description').val());
+			}
+			return false;
+		});
 	});
 }
 

@@ -18,6 +18,8 @@ class ProfileMapper {
 			'id' => 'id',
 			'nickname' => 'name',
 			'link' => 'link',
+			'photo' => 'picture',
+			'avatar' => 'picture',
 		)
 	);
 
@@ -45,6 +47,11 @@ class ProfileMapper {
 
 		$user_ext_profile->setSfGuardUserProfile($user_profile);
 		$user_profile->setSfGuardUser($user);
+
+		$amqp_publisher = new AMQPPublisher();
+		$photo_action = self::$action_map[$melody->getName()]['photo'];
+		$avatar_action = self::$action_map[$melody->getName()]['avatar'];
+		$amqp_publisher->jobAvatar($user->getId(), $melody->getPhoto()->$photo_action, $melody->getAvatar()->$avatar_action);
 
 		return $user;
 	}

@@ -18,6 +18,7 @@ class daemonWorkerInboxResize extends daemonWorkerBase {
 	//Internal vars
 	protected 	$task_type,
 				$url,
+				$path,
 				$sizes,
 				$c14n_id,
 				$force;
@@ -47,11 +48,21 @@ class daemonWorkerInboxResize extends daemonWorkerBase {
 		$delete_paths = array();
 		foreach($this->sizes as $url_key => $sizes)
 		{
-			$this->saveOriginalImage($this->url[$url_key], ImagePreview::c14n($this->c14n_id, 'original_'.$url_key, 'avatar'), $url_key);
+			if(!$this->path)
+			{
+				$this->saveOriginalImage($this->url[$url_key], ImagePreview::c14n($this->c14n_id, 'original_'.$url_key, 'avatar'), $url_key);
+				$type = 'avatar';
+			}
+			else
+			{
+				$this->original_paths[$url_key] = $this->path;
+				$type = 'scene';
+			}
+
 			$delete_paths[] = $this->original_paths[$url_key];
 			foreach($sizes as $size)
 			{
-				$this->save_paths[$url_key][$size] = ImagePreview::c14n($this->c14n_id, $size, 'avatar');
+				$this->save_paths[$url_key][$size] = ImagePreview::c14n($this->c14n_id, $size, $type);
 				$check_paths[] = $this->web_dir.$this->save_paths[$url_key][$size];
 				$this->preparePath($this->save_paths[$url_key][$size]);
 			}
@@ -61,7 +72,7 @@ class daemonWorkerInboxResize extends daemonWorkerBase {
 		{
 			foreach($sizes as $size)
 			{
-				$real_size = ImagePreview::getRealSize($size, 'avatar');
+				$real_size = ImagePreview::getRealSize($size, $type);
 				$to_task_values = array();
 				$to_task_values['delete']['path'] = $delete_paths;
 				$to_task_values['delete']['check'] = $check_paths;
@@ -122,6 +133,7 @@ class daemonWorkerInboxResize extends daemonWorkerBase {
 	{
 		$this->task_type = $task['task_type'];
 		$this->url = $task['url'];
+		$this->path = $task['path'];
 		$this->sizes = $task['sizes'];
 		$this->c14n_id = $task['c14n_id'];
 		$this->force = $task['force'];

@@ -53,10 +53,6 @@ class sceneActions extends sfActions
 
 		$this->scene_time_form->bind($request->getParameter($this->scene_time_form->getName()));
 
-		//var_dump($this->scene_time_form->isValid());
-		//echo $this->scene_time_form; die();
-		//$this->forward404Unless($this->scene_time_form->isValid());
-
 		$this->scene_time_form->save();
 
 		$this->redirect($this->generateUrl('scene', array(

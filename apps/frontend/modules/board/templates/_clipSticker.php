@@ -1,4 +1,4 @@
-<li>
+<li class="clip_sticker">
 	<div class="inner">
 		<div id="image_<?php echo $clip_id ?>" class="b-video">
 			<?php include_component('board', 'clipStickerSceneTimePreview', array('scene_id' => $current_scene_id['id']))?>

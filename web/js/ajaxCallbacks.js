@@ -13,6 +13,7 @@ function stickerChange(data, clip_id, scene_id)
 	$('#comments_list_footer_'+clip_id).html(data.scene_footer);
 	$('#clip_control_'+clip_id+' li').removeClass('active');
 	$('#sticker_'+clip_id+'_'+scene_id).addClass('active');
+	//$('#container').masonry('reload');
 }
 
 function sceneChange(data)

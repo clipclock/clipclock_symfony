@@ -31,6 +31,8 @@ all:
     escaping_strategy:      true
     escaping_method:        ESC_SPECIALCHARS
 
+    jquery_core: jquery-1.7.1.min.js
+
     secure_module:          sfGuardAuth
     secure_action:          secure
 

@@ -456,3 +456,12 @@ label {font-size:18px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 #footer {height:150px; margin:-150px 0 0; background:#8b8b8b; }
 /* footer end
 -------------------------------------------------------------------------------------------------------*/
+
+
+/* facebook style start
+-------------------------------------------------------------------------------------------------------*/
+.connect_widget_number_cloud {
+    height: 25px!important;
+}
+/* facebook style end
+-------------------------------------------------------------------------------------------------------*/

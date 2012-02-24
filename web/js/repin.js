@@ -19,6 +19,23 @@ function newRepinModalShow()
 function newRepinContainer()
 {
 	$().ready(function(){
+        $('.ajax-button').click(function() {
+            var button = $(this);
+            $.ajax({
+                url: $(this).attr('href'),
+                type: "GET",
+                dataType: 'json',
+                success: function(data, textStatus, jqXHR) {
+                    console.log(data.result);
+                    if (data.result == 'success')
+                        $(button).parent().find('.ajax-button').each(function(){ $(this).toggleClass('hidden') });
+                }
+
+
+            });
+            return false;
+        });
+
 		$('#new_repin').click(function(){
             ytplayer = document.getElementById("scene_embed_video_player");
             if(ytplayer.getPlayerState() == 1)

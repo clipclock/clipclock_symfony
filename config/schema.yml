@@ -30,7 +30,7 @@ propel:
     source_id: { type: INTEGER, required: true, foreignTable: source, foreignReference: id }
     name: { type: VARCHAR, size: '128', required: true }
     url: { type: VARCHAR, required: true }
-  follower_user:
+  user_follower:
     following_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     follower_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
@@ -79,3 +79,9 @@ propel:
     comment_id: { type: INTEGER, required: false, foreignTable: comment, foreignReference: id }
     follow_of_sf_guard_user_profile_id: { type: INTEGER, required: false, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     repin_of_sf_guard_user_profile_id: { type: INTEGER, required: false, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
+  clip_follower:
+    clip_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: clip, foreignReference: id }
+    follower_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
+  board_follower:
+    board_id: { type: INTEGER, primaryKey: true, required: false, foreignTable: board, foreignReference: id }
+    follower_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }

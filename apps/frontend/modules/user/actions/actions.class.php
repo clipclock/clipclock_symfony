@@ -71,4 +71,41 @@ class userActions extends sfActions
 	{
 		$this->user = $this->getRoute()->getObject();
 	}
+
+
+    public function executeFollowUser(sfWebRequest $request)
+    {
+        echo json_encode(array('result' => (UserFollowerPeer::followUserByFollower($request->getParameter('user_id'), $this->getUser()->getId())) ? 'success' : 'fail'));
+        return sfView::NONE;
+    }
+
+    public function executeUnfollowUser(sfWebRequest $request)
+    {
+        echo json_encode(array('result' => (UserFollowerPeer::unfollowUserByFollower($request->getParameter('user_id'), $this->getUser()->getId())) ? 'success' : 'fail'));
+        return sfView::NONE;
+    }
+
+    public function executeFollowClip(sfWebRequest $request)
+    {
+        echo json_encode(array('result' => (ClipFollowerPeer::followClipByUser($request->getParameter('clip_id'), $this->getUser()->getId())) ? 'success' : 'fail'));
+        return sfView::NONE;
+    }
+
+    public function executeUnfollowClip(sfWebRequest $request)
+    {
+        echo json_encode(array('result' => (ClipFollowerPeer::unfollowClipByUser($request->getParameter('clip_id'), $this->getUser()->getId())) ? 'success' : 'fail'));
+        return sfView::NONE;
+    }
+
+    public function executeFollowBoard(sfWebRequest $request)
+    {
+        echo json_encode(array('result' => (BoardFollowerPeer::followBoardByUser($request->getParameter('board_id'), $this->getUser()->getId())) ? 'success' : 'fail'));
+        return sfView::NONE;
+    }
+
+    public function executeUnfollowBoard(sfWebRequest $request)
+    {
+        echo json_encode(array('result' => (BoardFollowerPeer::unfollowBoardByUser($request->getParameter('board_id'), $this->getUser()->getId())) ? 'success' : 'fail'));
+        return sfView::NONE;
+    }
 }

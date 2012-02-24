@@ -1,19 +1,38 @@
-Репинов: <?php echo $repins_count?><br />
-Лайков: <?php echo $likes_count?>
+<div class="likes">
+    <div class="rep-like">
+        <div class="amount">
+            <div class="arrow"></div>
+            <?php echo $repins_count?>
+        </div>
+        <div class="info">
+            <?php if(!ScenePeer::isRepinnedSceneByUser($origin_scene_id, $user->getId())) : ?>
+                <a href="#" id="new_repin"><img src="/images/likes-2.jpg" alt="" width="60" height="29"></a>
+            <?php else :?>
+                <a id="un_repin" href="<?php echo url_for('@scene_unrepin'); ?>" scene_id="<?php echo $origin_scene_id; ?>" user_id="<?php echo $user->getId(); ?>"><img src="/images/likes-3.jpg" alt="" width="60" height="29"></a>
+            <?php endif; ?>
+        </div>
+    </div>
+    <div class="rep-like">
+        <!--
+        <div class="amount">
+            <div class="arrow"></div>
+            <?php echo $likes_count?>
+        </div>
+        -->
+        <div class="info">
+            <fb:like send="false" layout="box_count" width="60" height="29" show_faces="true"></fb:like>
+            <!-- <a href="#"><img src="images/likes-2.jpg" alt="" width="60" height="29"></a> -->
+        </div>
+    </div>
+</div>
+
 <div id="fb-root"></div>
 
 <script>
 	<?php if($user->getId()):?>
 		fbHooks(<?php echo sprintf('%d, %d', $scene_id, $user->getId()) ?>, "<?php echo url_for('@scene_change_liked_state'); ?>");
-	<?php endif;?>
-
-</script>
-<fb:like send="false" layout="box_count" width="55" show_faces="true"></fb:like>
-
-<br />
-
-<script type="text/javascript">
-	repinClip();
+        repinClip();
+    <?php endif;?>
 </script>
 
 <?php slot('repin_modal') ?>
@@ -51,8 +70,4 @@
 	<!-- /b-footer -->
 </div>
 <?php end_slot(); ?>
-<?php if(!ScenePeer::isRepinnedSceneByUser($origin_scene_id, $user->getId())) : ?>
-    <div id="new_repin" class="new-tag">repin</div>
-<?php else :?>
-    <div id="un_repin" class="new-tag" href="<?php echo url_for('@scene_unrepin'); ?>" scene_id="<?php echo $origin_scene_id; ?>" user_id="<?php echo $user->getId(); ?>">unrepin</div>
-<?php endif; ?>
+

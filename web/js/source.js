@@ -24,5 +24,5 @@
        $('.welcome, .welcome .inner').slideUp(1500);
     });
 // end плавное закрытие блока WELCOME
-           
+
 });

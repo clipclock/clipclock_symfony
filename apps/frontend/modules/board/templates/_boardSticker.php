@@ -10,9 +10,13 @@
 				<?php endforeach?>
 			</ul>
 		</div>
-		<div class="b-btn">
-			<a href="" class="default-un-follow-btn">Follow Set</a>
-			<a href="" class="default-un-follow-btn hidden">Unfollow Set</a>
-		</div>
+		    <?php include_component('user', 'follow', array(
+                        'state_names' => array('Follow Set', 'Unfollow Set'),
+                        'sf_routes' => array('follow_board', 'unfollow_board'),
+                        'id_key' => 'board_id',
+                        'id' => $board->getId(),
+                        'active' => BoardFollowerPeer::isBoardFollowedByUser($board->getId(), $current_user->getId())
+              ))?>
+
 	</div>
 </li>

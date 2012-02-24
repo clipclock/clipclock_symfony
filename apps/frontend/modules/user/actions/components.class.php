@@ -21,7 +21,7 @@ class userComponents extends sfComponents
 		$this->followers = $this->user->getFollowers();
 		$this->followings = $this->user->getFollowings();
 
-		$counts = FollowerUserPeer::countFollowersAndFollowingByUserId($this->user->getId());
+		$counts = UserFollowerPeer::countFollowersAndFollowingByUserId($this->user->getId());
 		$this->followers_count = $counts['followers_count'];
 		$this->followings_count = $counts['followings_count'];
 	}
@@ -44,4 +44,13 @@ class userComponents extends sfComponents
 		$this->user = $this->getVar('user');
 		$this->boards = $this->user->getBoards();
 	}
+
+    public function executeFollow()
+    {
+        $this->active = (!isset($this->active)) ? false : $this->active;
+        $this->state_names = (!isset($this->state_names)) ? array('Follow User', 'Unfollow User') : $this->state_names;
+        $this->sf_routes = (!isset($this->sf_routes)) ? array('follow_user', 'unfollow_user') : $this->sf_routes;
+        $this->id_key = (!isset($this->id_key)) ? 'user_id' : $this->id_key;
+        $this->id = (!isset($this->id)) ? null : $this->id;
+    }
 }

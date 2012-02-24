@@ -24,6 +24,33 @@ sticker_scene_change:
   requirements:
     scene_id: \d+
 
+
+### FOLLOW ###
+
+follow_user:
+  url:  /follow/user/:user_id
+  param: { module: user, action: followUser }
+
+unfollow_user:
+  url:  /unfollow/user/:user_id
+  param: { module: user, action: unfollowUser }
+
+follow_clip:
+  url:  /follow/clip/:clip_id
+  param: { module: user, action: followClip }
+
+unfollow_clip:
+  url:  /unfollow/clip/:clip_id
+  param: { module: user, action: unfollowClip }
+
+follow_board:
+  url:  /follow/set/:board_id
+  param: { module: user, action: followBoard }
+
+unfollow_board:
+  url:  /unfollow/set/:board_id
+  param: { module: user, action: unfollowBoard }
+
 ### SCENE ###
 
 scene:
@@ -94,3 +121,4 @@ callback_fb:
 sf_guard_signout:
   url:   /logout
   param: { module: sfGuardAuth, action: signout }
+

@@ -91,15 +91,19 @@ class sceneActions extends sfActions
 
     public function executeUnrepin(sfWebRequest $request)
     {
-        if ($this->getUser()->getId() != $request->getParameter('user_id'))
-                return $this->returnJSON(array('code' => 403, 'content' => 'forbidden'));
+        $origin_scene = ScenePeer::retrieveByPK($request->getParameter('scene_id'));
+        $this->getContext()->getConfiguration()->loadHelpers(array('Url'));
 
         return (SceneRepinPeer::toggleBySceneIdAndUserIdByState($request->getParameter('scene_id'),
-                                                        $request->getParameter('user_id'),
+                                                        $this->getUser()->getId(),
                                                         false) == SceneRepinPeer::UN_PINNED) ?
 
-        $this->returnJSON(array('code' => 200, 'content' => 'toggled successfully')) :
-        $this->returnJSON(array('code' => 500, 'content' => 'something wrong')) ;
+        $this->returnJSON(array('result' => 'success', 'location' => url_for(array(
+                                                                                  'sf_route' => 'scene',
+                                                                                  'username_slug' => $origin_scene->getSfGuardUserProfile()->getNick(),
+                                                                                  'board_id' => $origin_scene->getBoardId(),
+                                                                                  'id' => $origin_scene->getId())), 'content' => 'toggled successfully')) :
+        $this->returnJSON(array('result' => 'unsuccess', 'content' => 'something wrong')) ;
 
     }
 

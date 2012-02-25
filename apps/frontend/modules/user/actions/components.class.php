@@ -53,4 +53,11 @@ class userComponents extends sfComponents
         $this->id_key = (!isset($this->id_key)) ? 'user_id' : $this->id_key;
         $this->id = (!isset($this->id)) ? null : $this->id;
     }
+
+    public function executeNavigation()
+    {
+		$this->avatar_img = ImagePreview::c14n($this->current_scene->getSfGuardUserProfile()->getId(), 'small', 'avatar');
+        $this->nick = $this->current_scene->getSfguardUserProfile()->getNick();
+        $this->getContext()->getConfiguration()->loadHelpers(array('Navigation'));
+    }
 }

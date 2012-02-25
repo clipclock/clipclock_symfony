@@ -1,39 +1,30 @@
-function getModalDialog(url) {
-
-}
-
 function repinClip()
 {
     newRepinContainer();
-    //newRepinModalShow();
 }
 
 function newRepinModalShow()
 {
-		{
-			$('#new_repin_modal').toggle();
-		}
+	    $('#new_repin_modal').toggle();
 		return false;
 }
 
 function newRepinContainer()
 {
 	$().ready(function(){
-        $('.ajax-button').click(function() {
-            var button = $(this);
-            $.ajax({
-                url: $(this).attr('href'),
-                type: "GET",
-                dataType: 'json',
-                success: function(data, textStatus, jqXHR) {
-                    console.log(data.result);
-                    if (data.result == 'success')
-                        $(button).parent().find('.ajax-button').each(function(){ $(this).toggleClass('hidden') });
-                }
 
+        $('#new_repin_modal .close,  #new_repin_modal .default-un-follow-btn').click(function(){
+            $('#new_repin_modal').toggle();
 
-            });
-            return false;
+            ytplayer = document.getElementById("scene_embed_video_player");
+            if(ytplayer.getPlayerState() == 1)
+            {
+                ytplayer.pauseVideo();
+            }
+            else
+            {
+                ytplayer.playVideo();
+            }
         });
 
 		$('#new_repin').click(function(){
@@ -52,13 +43,16 @@ function newRepinContainer()
 
         $('#un_repin').click(function(){
             var url = $(this).attr('href');
-            var user_id = $(this).attr('user_id');
-            var scene_id = $(this).attr('scene_id');
 
             $.ajax({
                 url: url,
                 type: "GET",
-                data: { user_id : user_id, scene_id : scene_id }
+                dataType: 'json',
+                success: function(data, textStatus, jqXHR) {
+                    console.log(data);
+                    if (data.result == 'success')
+                        document.location.href = data.location;
+                }
             });
 
             return false;

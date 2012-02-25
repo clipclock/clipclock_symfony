@@ -26,7 +26,7 @@
 		</div>
 		<!-- /head-menu -->
 		<!-- head-search  -->
-		<?php include_component('static', 'clipForm') ?>
+		<?php include_component('static', 'clipForm', array('user' => $sf_user)) ?>
 		<!-- /head-search -->
 	</div>
 	<?php include_slot('homepage_filter') ?>

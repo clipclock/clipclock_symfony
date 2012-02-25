@@ -15,7 +15,13 @@ class staticComponents extends sfComponents
 
 	public function executeClipForm()
 	{
+		$user = $this->getVar('user');
 		$this->form = new NewClipForm();
+
+		if($user && $user->getFlash('new_clip_form', ''))
+		{
+			$this->form->setDefault('url', $user->getFlash('new_clip_form'));
+		}
 	}
 
 	public function executeAuthForm()

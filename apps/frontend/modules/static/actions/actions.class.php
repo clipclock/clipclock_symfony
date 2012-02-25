@@ -74,5 +74,10 @@ class staticActions extends sfActions
 
 			$this->form = new SceneTimeForm(null, array('clip_id' => $this->clip->getId()));
 		}
+		else
+		{
+			$this->getUser()->setFlash('new_clip_form', 'Bad URL!');
+			$this->redirect($request->getReferer());
+		}
 	}
 }

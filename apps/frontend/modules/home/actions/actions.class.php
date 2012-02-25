@@ -18,9 +18,10 @@ class homeActions extends sfActions
 	public function executeIndex(sfWebRequest $request)
 	{
 		//$this->forward('default', 'module');
+		$this->user = null;
 		if($this->getUser()->isAuthenticated())
 		{
-
+			$this->user = $this->getUser();
 		}
 
 		$this->pager = new sfPropelPager('SceneTime', 30);

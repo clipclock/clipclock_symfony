@@ -32,6 +32,7 @@ class NewClipForm extends sfForm
 		));
 
 		$this->widgetSchema->setNameFormat('new_clip[%s]');
+		$this->setDefault('url', 'Paste and enter YouTube video URL');
 		$this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
 		parent::setup();
@@ -40,5 +41,17 @@ class NewClipForm extends sfForm
 	public function generateRegex()
 	{
 		return sprintf(self::REGEX_URL_FORMAT, implode('|', array('http')));
+	}
+
+	public function bind(array $taintedValues = null, array $taintedFiles = null)
+	{
+		if(!empty($taintedValues['url']))
+		{
+			if($taintedValues['url'] == $this->getDefault('url'))
+			{
+				unset($taintedValues['url']);
+			}
+		}
+		parent::bind($taintedValues, $taintedFiles);
 	}
 }

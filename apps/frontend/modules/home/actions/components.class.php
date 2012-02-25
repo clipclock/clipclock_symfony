@@ -18,6 +18,6 @@ class homeComponents extends sfComponents
 
 	public function executeFilterForm()
 	{
-		$this->form = new HomeFilterForm();
+		$this->form = new HomeFilterForm(null, array('user' => $this->getVar('current_user')));
 	}
 }

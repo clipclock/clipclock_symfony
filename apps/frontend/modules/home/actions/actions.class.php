@@ -22,5 +22,10 @@ class homeActions extends sfActions
 		{
 
 		}
+
+		$this->pager = new sfPropelPager('SceneTime', 30);
+		$this->pager->setCriteria(SceneTimePeer::retrieveClipsIdsForMainByUserId($this->getUser()->getId()));
+		$this->pager->setPeerMethod('doSelectForPager');
+		$this->pager->setPage($request->getParameter('page', 1));
 	}
 }

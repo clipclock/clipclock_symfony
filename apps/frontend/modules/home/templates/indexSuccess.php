@@ -1,6 +1,4 @@
-<?php if(!$sf_user->isAuthenticated()):?>
-	<?php echo link_to('Connect to facebook', '@connect_fb') ?>
-<?php else:?>
-	Welcome back, <?php echo $sf_user->getNick();?>
-	<?php echo link_to('Logout', '@sf_guard_signout') ?><br />
-<?php endif; ?>
+<?php include_component('home', 'filterForm')?>
+<div class="video-stickers">
+	<?php include_component('home', 'clipList', array('pager' => $pager))?>
+</div>

@@ -51,6 +51,28 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);
 	}
 
+	public static function retrieveClipsIdsForMainByUserId($user_id, Criteria $c = null)
+	{
+		$c = !$c ? new Criteria() : $c;
+
+		$c->setPrimaryTableName(SceneTimePeer::TABLE_NAME);
+		$c->clearSelectColumns();
+		$c->addSelectColumn(SceneTimePeer::CLIP_ID);
+		$c->addSelectColumn(ScenePeer::BOARD_ID);
+		$c->addJoin(SceneTimePeer::ID, ScenePeer::SCENE_TIME_ID, Criteria::INNER_JOIN);
+		//$c->addDescendingOrderByColumn('max(' . ScenePeer::CREATED_AT . ')');
+		$c->addDescendingOrderByColumn('max('.self::UNIQUE_COMMENTS_COUNT.')');
+		$c->addDescendingOrderByColumn('count('.self::UNIQUE_COMMENTS_COUNT.')');
+
+		$c->addGroupByColumn(SceneTimePeer::CLIP_ID);
+		$c->addGroupByColumn(ScenePeer::BOARD_ID);
+		return $c;
+	}
+
+	public static function doSelectForPager( $c ) {
+		return parent::doSelectStmt( $c );
+	}
+
 	public static function retrieveBestByClipId($clip_id, $board_id)
 	{
 		$c = new Criteria();

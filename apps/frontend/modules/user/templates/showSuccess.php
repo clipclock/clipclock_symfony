@@ -1,3 +1,4 @@
+<div class="b-content">
 <div class="content-wrap-in">
 	<!-- side-left-col  -->
 	<div class="side-left-col">
@@ -11,4 +12,5 @@
 	<div class="long-col">
 		<?php include_component('user', 'boards', array('user' => $user, 'current_user' => $current_user)) ?>
 	</div>
+</div>
 </div>

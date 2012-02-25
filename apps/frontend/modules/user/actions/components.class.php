@@ -56,7 +56,7 @@ class userComponents extends sfComponents
 
     public function executeNavigation()
     {
-		$this->avatar_img = ImagePreview::c14n($this->current_scene->getSfGuardUserProfile()->getId(), 'small', 'avatar');
+		$this->avatar_img = ImagePreview::c14n($this->current_scene->getSfGuardUserProfile()->getId(), 'medium', 'avatar');
         $this->nick = $this->current_scene->getSfguardUserProfile()->getNick();
         $this->getContext()->getConfiguration()->loadHelpers(array('Navigation'));
     }

@@ -1,4 +1,5 @@
 <?php slot('homepage_filter') ?>
+<?php if(!$user):?>
 <div class="welcome">
 	<div class="close"></div>
 	<div class="inner">
@@ -6,6 +7,7 @@
 		<h2>See and add a video, comment on the length of time. <a href="#">How does it work?</a></h2>
 	</div>
 </div>
+<?php endif; ?>
 <!-- /welcome -->
 <!-- b-filter  -->
 <div class="b-filter">

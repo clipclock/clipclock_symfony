@@ -39,7 +39,7 @@ class boardComponents extends sfComponents
 		$this->board = $this->getVar('current_board');
 		$this->user = $this->getVar('user');
 		$this->clips_ids = SceneTimePeer::retrieveClipsIdsForListByBoardId($this->board->getId());
-		$this->getContext()->getConfiguration()->loadHelpers(array('comment'));
+		$this->getContext()->getConfiguration()->loadHelpers(array('Comment'));
 	}
 
 	public function executeClipSticker()

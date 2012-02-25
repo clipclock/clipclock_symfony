@@ -19,6 +19,11 @@
  */
 class Board extends BaseBoard {
 
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
 	public function getUsernameSlug()
 	{
 		return slugify($this->getSfGuardUserProfile()->getNick());

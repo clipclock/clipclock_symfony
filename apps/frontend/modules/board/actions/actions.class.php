@@ -27,7 +27,8 @@ class boardActions extends sfActions
 	public function executeShow(sfWebRequest $request)
 	{
 		$this->current_board = $this->getRoute()->getObject();
-		$this->current_user = $this->getUser()->getProfile();
+		$this->user = $this->current_board->getSfGuardUserProfile();
+		$this->current_user = $this->getUser();
 
 		$this->forward404Unless($this->current_board);
 	}

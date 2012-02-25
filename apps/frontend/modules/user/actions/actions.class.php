@@ -70,6 +70,7 @@ class userActions extends sfActions
 	public function executeShow(sfWebRequest $request)
 	{
 		$this->user = $this->getRoute()->getObject();
+		$this->current_user = $this->getUser();
 	}
 
 

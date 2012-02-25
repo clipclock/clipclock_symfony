@@ -9,6 +9,6 @@
 		</div>
 	</div>
 	<div class="long-col">
-		<?php include_component('user', 'boards', array('user' => $user)) ?>
+		<?php include_component('user', 'boards', array('user' => $user, 'current_user' => $current_user)) ?>
 	</div>
 </div>

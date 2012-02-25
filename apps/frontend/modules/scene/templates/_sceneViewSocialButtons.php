@@ -6,9 +6,9 @@
         </div>
         <div class="info">
             <?php if(!ScenePeer::isRepinnedSceneByUser($origin_scene_id, $user->getId())) : ?>
-                <a href="#" id="new_repin"><img src="/images/likes-2.jpg" alt="" width="60" height="29"></a>
+                <?php echo link_to(image_tag("/images/repin.jpg", array('width' => '60', 'height' => '29')), array('sf_route' => 'scene_repin', 'scene_id' => $origin_scene_id), array('id' => 'new_repin')); ?>
             <?php else :?>
-                <a id="un_repin" href="<?php echo url_for('@scene_unrepin'); ?>" scene_id="<?php echo $origin_scene_id; ?>" user_id="<?php echo $user->getId(); ?>"><img src="/images/likes-3.jpg" alt="" width="60" height="29"></a>
+                <?php echo link_to(image_tag("/images/repin.jpg", array('width' => '60', 'height' => '29')), array('sf_route' => 'scene_unrepin', 'scene_id' => $origin_scene_id), array('id' => 'un_repin')); ?>
             <?php endif; ?>
         </div>
     </div>
@@ -35,6 +35,7 @@
     <?php endif;?>
 </script>
 
+<!--
 <?php slot('repin_modal') ?>
 <div id='new_repin_modal' style="display: none;" class="pop-window">
 	<form method="post" action="<?php echo url_for('scene_repin');?>">
@@ -71,3 +72,4 @@
 </div>
 <?php end_slot(); ?>
 
+-->

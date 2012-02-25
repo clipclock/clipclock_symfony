@@ -19,4 +19,8 @@
  */
 class SceneTime extends BaseSceneTime {
 
+    public function __toString()
+    {
+        return date('i:s', mktime(0, 0, $this->getSceneTime()));
+    }
 } // SceneTime

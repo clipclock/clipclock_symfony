@@ -97,6 +97,6 @@ class sceneComponents extends sfComponents
                                 'RepinOriginSceneId' => ($new_scene->getRepinOriginSceneId()) ? $new_scene->getRepinOriginSceneId() : $this->scene_id
                           ));
 
-		$this->form = new RepinModalForm($new_scene, array('sf_guard_user_profile_id' => $this->user->getId()));
+		$this->repin_form = new RepinModalForm($new_scene, array('sf_guard_user_profile_id' => $this->user->getId()));
 	}
 }

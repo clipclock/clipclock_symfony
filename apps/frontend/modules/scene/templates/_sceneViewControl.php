@@ -1,4 +1,7 @@
+<?php slot('scene_modal') ?>
 <?php include_partial('scene/modalForm', array('form' => $form, 'form_url' => url_for('scene_post'), 'form_partial' => 'scene/modalFormFields'))?>
+<?php end_slot(); ?>
+
 <a href="" class="arrows prev"></a>
 <a href="" class="arrows next"></a>
 <ul id="scene_controls" class="tabs">

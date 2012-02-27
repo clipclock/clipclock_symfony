@@ -54,10 +54,29 @@ class userComponents extends sfComponents
         $this->id = (!isset($this->id)) ? null : $this->id;
     }
 
-    public function executeNavigation()
+    private function executeNavigation()
     {
-		$this->avatar_img = ImagePreview::c14n($this->current_scene->getSfGuardUserProfile()->getId(), 'medium', 'avatar');
-        $this->nick = $this->current_scene->getSfguardUserProfile()->getNick();
+		$this->avatar_img = ImagePreview::c14n($this->user->getId(), 'medium', 'avatar');
+        $this->nick = $this->user->getNick();
         $this->getContext()->getConfiguration()->loadHelpers(array('Navigation'));
+    }
+
+    public function executeNavigationPath()
+    {
+        $this->executeNavigation();
+    }
+
+    public function executeNavigationPerson()
+    {
+        /**
+         * @var $this->user SfGuardUserProfile
+         */
+
+        $this->fullname = $this->user->getFirstName() . ' ' . $this->user->getLastName();
+        $this->boards_count = 1; //BoardPeer::
+        $this->pins_count = 1; //BoardPeer::
+        $this->likes_count = 1; //BoardPeer::
+        $this->comments_count = 1; //BoardPeer::
+        $this->executeNavigation();
     }
 }

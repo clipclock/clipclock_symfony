@@ -35,41 +35,6 @@
     <?php endif;?>
 </script>
 
-<!--
 <?php slot('repin_modal') ?>
-<div id='new_repin_modal' style="display: none;" class="pop-window">
-	<form method="post" action="<?php echo url_for('scene_repin');?>">
-	<div class="close"></div>
-	<!-- b-header  -->
-	<div class="b-header">
-		<h2>Add a video scene 01:32 in the set</h2>
-	</div>
-	<!-- /b-header -->
-	<!-- b-content  -->
-	<div class="b-content">
-		<div class="add-video-scene">
-				<?php echo $form->renderHiddenFields()?>
-				<!-- video-descriptions  -->
-				<div class="video-descriptions">
-					<div class="line-form">
-						<?php echo $form['board_id']?>
-					</div>
-				</div>
-				<!-- /video-descriptions -->
-
-		</div>
-	</div>
-	<!-- /b-content -->
-	<!-- b-footer  -->
-	<div class="b-footer">
-		<div class="b-btn">
-			<input name="" type="reset" class="default-un-follow-btn" value="Cancel">
-			<input name="" type="submit" class="default-follow-btn" value="Done">
-		</div>
-	</div>
-	</form>
-	<!-- /b-footer -->
-</div>
+<?php include_partial('scene/modalForm', array('form' => $repin_form, 'form_url' => url_for('scene_repin'), 'form_partial' => 'scene/repinFormFields', 'id' => 'new_repin_modal'))?>
 <?php end_slot(); ?>
-
--->

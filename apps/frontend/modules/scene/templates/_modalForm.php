@@ -1,5 +1,4 @@
-<?php slot('scene_modal') ?>
-<div id='new_time_scene_modal' style="display: none;" class="pop-window">
+<div id='<?php echo (isset($id)) ? $id : 'new_time_scene_modal' ; ?>' style="display: none;" class="pop-window">
 	<form method="post" action="<?php echo $form_url;?>">
 		<div class="close"></div>
 		<!-- b-header  -->
@@ -32,4 +31,3 @@
 	</form>
 	<!-- /b-footer -->
 </div>
-<?php end_slot(); ?>

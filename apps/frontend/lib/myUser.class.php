@@ -2,6 +2,11 @@
 
 class myUser extends sfMelodyUser
 {
+    public function getFullName()
+    {
+        return $this->getProfile()->getFirstName() . ' ' . $this->getProfile()->getLastName();
+    }
+
 	public function getId()
 	{
 		$guard_user = $this->getGuardUser();

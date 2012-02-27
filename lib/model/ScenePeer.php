@@ -19,6 +19,14 @@
  */
 class ScenePeer extends BaseScenePeer {
 
+    public static function getCountByUserId($user_id)
+    {
+        $c = new Criteria();
+        $c->add(self::SF_GUARD_USER_PROFILE_ID, $user_id);
+        $c->add(self::REPIN_ORIGIN_SCENE_ID, null, Criteria::ISNOTNULL);
+        return self::doCount($c);
+    }
+
 	public static function retrieveFirstSceneTimeIdByClipIdBoardId($clip_id, $board_id)
 	{
 		$c = new Criteria();

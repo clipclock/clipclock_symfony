@@ -14,7 +14,9 @@ $(document).ready(function(){
                 dataType: 'json',
                 success: function(data, textStatus, jqXHR) {
                     if (data.result == 'success')
-                        $(button).parent().find('.ajax-button').each(function(){ $(this).toggleClass('hidden') });
+                        //$(button).parent().find('.ajax-button').each(function(){ $(this).toggleClass('hidden') });
+                        $('a[href="' + $(button).attr('href') + '"]')
+                                .each(function(){ $(this).parent().find('.ajax-button').each(function(){ $(this).toggleClass('hidden') }); });
                 }
 
 

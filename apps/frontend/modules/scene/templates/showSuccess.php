@@ -1,4 +1,11 @@
-<?php include_component('user', 'navigation', array('current_scene' => $current_scene, 'current_user' => $current_user))?>
+<?php include_component('user', 'navigationPath', array('subject' => $current_scene, 'current_user' => $current_user, 'user' => $user,
+           'follow_button' => get_component('user', 'follow', array(
+                                'state_names' => array('Follow Video', 'Unfollow Video'),
+                                'sf_routes' => array('follow_clip', 'unfollow_clip'),
+                                'id_key' => 'clip_id',
+                                'id' => $current_scene->getSceneTime()->getClipId(),
+                                'active' => ClipFollowerPeer::isClipFollowedByUser($current_scene->getSceneTime()->getClipId(), $current_user->getId())
+                                ))))?>
 
 <div class="content-wrap-in">
 	<div class="side-left-col">

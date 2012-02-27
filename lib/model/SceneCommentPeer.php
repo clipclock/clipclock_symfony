@@ -18,7 +18,15 @@
  * @package    propel.generator.lib.model
  */
 class SceneCommentPeer extends BaseSceneCommentPeer {
-	public static function retrieveShortBySceneId($scene_id, $max_limit = 50)
+
+    public static function getCountByUserId($user_id)
+    {
+        $c = new Criteria();
+        $c->add(self::SF_GUARD_USER_PROFILE_ID, $user_id);
+        return self::doCount($c);
+    }
+
+    public static function retrieveShortBySceneId($scene_id, $max_limit = 50)
 	{
 		$c = new Criteria();
 

@@ -11,12 +11,13 @@ class RepinModalForm extends BaseSceneForm {
 
     public function configure()
     {
-		unset($this['scene_repost_list']);
-		unset($this['scene_repin_list']);
-        $this->getObject()->setSfGuardUserProfileId($this->getOption('sf_guard_user_profile_id'));
+        unset($this['scene_repost_list']);
+        unset($this['scene_repin_list']);
+        //$this->getObject()->setSfGuardUserProfileId($this->getOption('sf_guard_user_profile_id'));
 
         $c = new Criteria();
-        $c->add(BoardPeer::SF_GUARD_USER_PROFILE_ID, $this->getObject()->getSfGuardUserProfileId());
+
+        $c->add(BoardPeer::SF_GUARD_USER_PROFILE_ID, $this->getOption('sf_guard_user_profile_id'));
 
         $fields = $this->widgetSchema->getFields();
 
@@ -32,7 +33,12 @@ class RepinModalForm extends BaseSceneForm {
         $this->setValidator('scene_like_list', new sfValidatorPass());
 
         $this->setWidget('board_id', new sfWidgetFormPropelChoice(array('model' => 'Board', 'add_empty' => false, 'criteria' => $c)));
-
+/*
+        $this->embedForm('board', new BoardForm(null, array(
+                                                           'created_at' => $this->getOption('created_at'),
+                                                           'sf_guard_user_profile_id' => $this->getOption('sf_guard_user_profile_id'),
+                                                      )));
+*/
         $this->widgetSchema->setNameFormat('repin_modal_form[%s]');
 
         $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
@@ -69,6 +75,32 @@ class RepinModalForm extends BaseSceneForm {
         }
 
         return null;
+    }
+
+    public function saveEmbeddedForms($con = null, $forms = null)
+    {
+        if(null === $con)
+        {
+            $con = $this->getConnection();
+        }
+
+        if(null === $forms)
+        {
+            $forms = $this->embeddedForms;
+        }
+
+        foreach($forms as $form)
+        {
+            $values = $this->getValues();
+            if(isset($values[$form->getName()]['name']) && $values[$form->getName()]['name'])
+            {
+                $form->getObject()->setBoardId(
+                    BoardPeer::createOrReturnId($values[$form->getName()]['name'], $this->getOption('sf_guard_user_profile_id'))
+                );
+            }
+            $form->getObject()->setSceneTimeId($this->getObject()->getId());
+        }
+        parent::saveEmbeddedForms($con, $forms);
     }
 
 }

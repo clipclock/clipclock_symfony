@@ -70,6 +70,7 @@ class BoardPeer extends BaseBoardPeer {
 
 		$board = new Board();
 		$board->setName($name);
+		$board->setIsPublic(false);
 		$board->setSfGuardUserProfileId($user_id);
 		$board->setCategoryId($default_category['id']);
 		$board->save();

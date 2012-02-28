@@ -11,5 +11,6 @@ class BoardForm extends BaseBoardForm
 {
   public function configure()
   {
+        
   }
 }

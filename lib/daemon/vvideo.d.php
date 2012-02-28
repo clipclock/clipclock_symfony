@@ -13,7 +13,7 @@ require dirname(__FILE__) . '/classes/daemon.bootstrap.php';
 
 $daemon_options = array(
 	'appName' => 'vdaemon-video',
-	'appDir' => dirname(__FILE__).'/daemon',
+	'appDir' => dirname(__FILE__),
 	'appDescription' => 'Maintains frame extraction queues',
 	'logVerbosity' => System_Daemon::LOG_INFO,
 	'authorName' => 'madesst',

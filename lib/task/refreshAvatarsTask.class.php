@@ -46,7 +46,7 @@ EOF;
 				$melody = sfMelody::getInstance($token->getName(), array('token' => $token));
 				$action_map = ProfileMapper::$action_map;
 				$photo_action = $action_map[$melody->getName()]['photo'];
-				$avatar_action = self::$action_map[$melody->getName()]['avatar'];
+				$avatar_action = Profile::$action_map[$melody->getName()]['avatar'];
 				$photo_url = $melody->getPhoto()->$photo_action;
 				$avatar_url = $melody->getAvatar()->$avatar_action;
 

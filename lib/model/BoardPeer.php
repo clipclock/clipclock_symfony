@@ -61,10 +61,17 @@ class BoardPeer extends BaseBoardPeer {
 			return $already['id'];
 		}
 
+		$cat_c = new Criteria();
+		$cat_c->addAscendingOrderByColumn(CategoryPeer::ID);
+		$cat_c->setLimit(1);
+		$cat_c->clearSelectColumns();
+		$cat_c->addSelectColumn(CategoryPeer::ID);
+		$default_category = BasePeer::doSelect($cat_c)->fetch(PDO::FETCH_ASSOC);
+
 		$board = new Board();
 		$board->setName($name);
 		$board->setSfGuardUserProfileId($user_id);
-		$board->setCategoryId(CategoryPeer::DEFAULT_CATEGORY_ID);
+		$board->setCategoryId($default_category['id']);
 		$board->save();
 		return $board->getId();
 	}

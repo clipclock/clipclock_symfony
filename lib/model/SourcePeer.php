@@ -19,4 +19,13 @@
  */
 class SourcePeer extends BaseSourcePeer {
 
+	public static function retrieveByName($name)
+	{
+		$c = new Criteria();
+		$c->clearSelectColumns();
+		$c->addSelectColumn(self::ID);
+		$c->add(self::NAME, $name);
+		$c->setLimit(1);
+		return BasePeer::doSelect($c)->fetch(PDO::FETCH_ASSOC);
+	}
 } // SourcePeer

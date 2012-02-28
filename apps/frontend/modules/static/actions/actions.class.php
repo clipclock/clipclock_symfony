@@ -48,7 +48,7 @@ class staticActions extends sfActions
 				$this->clip_name = $doc->getElementsByTagName("title")->item(0)->nodeValue;
 			}
 
-			$this->source_id = ClipPeer::retrieveByName($this->source_name);
+			$this->source_id = SourcePeer::retrieveByName($this->source_name);
 			//--
 
 			$clip = ClipPeer::retrieveByUrlAndSourceId($this->clip_url, $this->source_id);

@@ -52,7 +52,7 @@ class boardActions extends sfActions
 
 		$this->forward404Unless($scene_id);
 
-		$this->getContext()->getConfiguration()->loadHelpers(array('comment'));
+		$this->getContext()->getConfiguration()->loadHelpers(array('Comment'));
 
 		return $this->returnJSON(array(
 			'scene_id' => $this->scene->getId(),

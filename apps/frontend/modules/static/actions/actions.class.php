@@ -73,7 +73,7 @@ class staticActions extends sfActions
 				)));
 			}
 
-			$this->form = new SceneTimeForm(null, array('clip_id' => $this->clip->getId()));
+			$this->form = new SceneTimeForm(null, array('clip_id' => $this->clip->getId(), 'user_id' => $this->getUser()->getId()));
 		}
 		else
 		{

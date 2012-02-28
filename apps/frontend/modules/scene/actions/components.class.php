@@ -53,7 +53,7 @@ class sceneComponents extends sfComponents
 
 		$this->scene_times = ScenePeer::retrieveAscSceneTimeIdByClipIdBoardId($this->clip_id, $this->board_id);
 
-		$this->form = new SceneTimeForm(null, array('clip_id' => $this->clip_id));
+		$this->form = new SceneTimeForm(null, array('clip_id' => $this->clip_id, 'sf_guard_user_profile_id' => $this->getUser()->getId()));
 	}
 
 	public function executeSceneViewDescription()

@@ -11,7 +11,6 @@
 					</div>
 					<script type="text/javascript">
 						embedClip(0, '<?php echo $clip_url?>', '<?php echo $source_name?>');
-						newSceneTimeModalShow('scene_time_scene_time', 'scene_time_scene_text');
 					</script>
 
 					<?php include_partial('scene/modalForm', array('form' => $form, 'form_url' => url_for('scene_post'), 'form_partial' => 'scene/modalFormFields'))?>

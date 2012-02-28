@@ -15,12 +15,14 @@ class SceneTimeForm extends BaseSceneTimeForm
 		unset($this['created_at']);
 		unset($this['unique_comments_count']);
 
+
 		$this->setWidget('scene_time', new sfWidgetFormInputHidden());
 		$this->setWidget('clip_id', new sfWidgetFormInputHidden());
 
 		$this->embedForm('scene', new SceneForm(null, array(
 			'created_at' => $this->getOption('created_at'),
 			'sf_guard_user_profile_id' => $this->getOption('sf_guard_user_profile_id'),
+			'no_boards' => BoardPeer::getCountByUserId($this->getOption('sf_guard_user_profile_id')) ? false : true
 		)));
 
 		$this->getObject()->setClipId($this->getOption('clip_id'));

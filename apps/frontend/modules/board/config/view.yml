@@ -1,2 +1,2 @@
 default:
-  javascripts:    [ajaxCallbacks.js, follow.js]
+  javascripts:    [ajaxCallbacks.js, follow.js, cusel.js]

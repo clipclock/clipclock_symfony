@@ -51,7 +51,7 @@ function newSceneTimeModalShow(scene_time_id, scene_text_id)
 				if(getPlayer())
 				{
 					var player_time = getPlayer().getCurrentTime();
-					$('#new_time_scene_modal #'+scene_time_id).val();
+					$('#new_time_scene_modal #'+scene_time_id).val(player_time);
 					var label_time = secondsToTime(player_time);
 					$('#label_time').html(label_time.m+':'+label_time.s);
 				}

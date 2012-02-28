@@ -27,6 +27,11 @@ class SceneForm extends BaseSceneForm
 			'text'                     => new sfValidatorString(),
 		));
 
+		if($this->getOption('no_boards'))
+		{
+			unset($this['board_id']);
+		}
+
 		$this->widgetSchema->setNameFormat('scene[%s]');
 
 		$this->getObject()->setSfGuardUserProfileId($this->getOption('sf_guard_user_profile_id'));

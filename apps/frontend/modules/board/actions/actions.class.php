@@ -31,26 +31,37 @@ class boardActions extends sfActions
 		$this->current_user = $this->getUser();
 
 		$this->forward404Unless($this->current_board);
+
+		$this->pager = new sfPropelPager('SceneTime', 30);
+		$this->pager->setCriteria(SceneTimePeer::retrieveClipsIdsForListByBoardId($this->current_board->getId()));
+		$this->pager->setPeerMethod('doSelectForPager');
+		$this->pager->setPage($request->getParameter('page', 1));
+
+		if($request->isXmlHttpRequest())
+		{
+			return $this->returnJSON(array(
+				'clips_list' => $this->getComponent('board', 'boardClipsList', array('current_board' => $this->current_board, 'pager' => $this->pager))
+			));
+		}
 	}
 
 	public function executeShowSceneAjax(sfWebRequest $request)
 	{
-		$this->scene_id = $request->getParameter('scene_id');
+		$scene_id = $request->getParameter('scene_id');
+		$this->scene = ScenePeer::retrieveByPK($scene_id);
 
-		$this->forward404Unless($this->scene_id);
+		$this->forward404Unless($scene_id);
 
 		$this->getContext()->getConfiguration()->loadHelpers(array('comment'));
 
-		$this->scene_comments_list = $this->getComponent('board', 'clipStickerSceneTimeCommentsListShort', array('scene_id' => $this->scene_id));
-		$this->scene_image = $this->getComponent('board', 'clipStickerSceneTimePreview', array('scene_id' => $this->scene_id));
-
 		return $this->returnJSON(array(
-			'scene_id' => $this->scene_id,
-			'scene_image' => $this->scene_image,
-			'scene_comments_list' => $this->scene_comments_list,
-			'scene_footer' => $this->getComponent('board', 'clipStickerFooter', array('scene_id' => $this->scene_id))
+			'scene_id' => $this->scene->getId(),
+			'scene_image' => $this->getComponent('board', 'clipStickerSceneTimePreview', array('scene' => $this->scene)),
+			'scene_comments_list' => $this->getComponent('board', 'clipStickerSceneTimeCommentsListShort', array('scene' => $this->scene)),
+			'scene_footer' => $this->getComponent('board', 'clipStickerFooter', array('scene' => $this->scene))
 		));
 	}
+
 	public function returnJSON($data)
 	{
 		$json = json_encode($data);

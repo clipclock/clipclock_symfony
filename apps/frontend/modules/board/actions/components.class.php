@@ -12,7 +12,7 @@ class boardComponents extends sfComponents
 	{
 		$this->current_board = $this->getVar('current_board');
 		$this->user = $this->getVar('user');
-		$this->linked_boards_ids = $this->current_board->getLinkedBoardsIds();
+		$this->linked_boards_ids = BoardPeer::retrieveIdsLinkedBoardsByUserId($this->current_board->getId(), $this->user->getId());
 	}
 
 	public function executeBoardSticker()
@@ -21,24 +21,25 @@ class boardComponents extends sfComponents
 		$this->user = $this->getVar('user');
 		$this->board = BoardPeer::retrieveByPK($this->board_id);
 
-		$this->clips_ids = $this->board->getClipsPreviewsIds();
+		$this->clips_ids = SceneTimePeer::retrieveClipsIdsByBoard($this->board_id);
 	}
 
 	public function executeBoardStickerSceneTimePreview()
 	{
 		$this->clip_id = $this->getVar('clip_id');
 		$this->board_id = $this->getVar('board_id');
-		$this->scene_time = SceneTimePeer::retrieveBestByClipId($this->clip_id, $this->board_id);
-		$this->scene = ScenePeer::retrieveByBoardIdSceneTimeId($this->scene_time->getId(), $this->board_id);
+		$this->scene = ScenePeer::retrieveBestByClipId($this->clip_id, $this->board_id);
 
-		$this->scene_image = ImagePreview::c14n($this->scene_time->getId(), 'medium');
+		$this->scene_image = ImagePreview::c14n($this->scene->getSceneTimeId(), 'medium');
 	}
 
 	public function executeBoardClipsList()
 	{
 		$this->board = $this->getVar('current_board');
+		$this->pager = $this->getVar('pager');
 		$this->user = $this->getVar('user');
-		$this->clips_ids = SceneTimePeer::retrieveClipsIdsForListByBoardId($this->board->getId());
+		$this->pager->init();
+		$this->clips_ids = $this->pager->getResults();
 		$this->getContext()->getConfiguration()->loadHelpers(array('Comment'));
 	}
 
@@ -46,26 +47,12 @@ class boardComponents extends sfComponents
 	{
 		$this->clip_id = $this->getVar('clip_id');
 		$this->board_id = $this->getVar('board_id');
-		$this->current_scene_id = $this->getVar('current_scene_id');
-
-		$this->current_scene_id = null;
-		if($this->current_scene_id)
-		{
-			$this->current_scene_id = ScenePeer::retrieveFirstSceneTimeIdById($this->current_scene_id);
-		}
-
-		if(!$this->current_scene_id)
-		{
-			$this->current_scene_id = ScenePeer::retrieveFirstSceneTimeIdByClipIdBoardId($this->clip_id, $this->board_id);
-		}
+		$this->scene = ScenePeer::retrieveFirstSceneTimeIdByClipIdBoardId($this->clip_id, $this->board_id);
 	}
 
 	public function executeClipStickerSceneTimePreview()
 	{
-		$this->scene_id = $this->getVar('scene_id');
-
-		$this->scene = ScenePeer::retrieveByPK($this->getVar('scene_id'));
-
+		$this->scene = $this->getVar('scene');
 		$this->scene_image = ImagePreview::c14n($this->scene->getSceneTimeId(), 'big');
 	}
 
@@ -79,30 +66,19 @@ class boardComponents extends sfComponents
 
 	public function executeClipStickerSceneTimeCommentsListShort()
 	{
-		$this->scene_id = $this->getVar('scene_id');
-		if($this->getVar('unique_comments_count'))
-		{
-			$this->unique_comments_count = $this->getVar('unique_comments_count');
-		}
-		else
-		{
-			$unique_comments_count = ScenePeer::countUniqueCommentsBySceneId($this->scene_id);
-			$this->unique_comments_count = $unique_comments_count['unique_comments_count'];
-		}
-
-		$this->scene = ScenePeer::retrieveByPK($this->getVar('scene_id'));
+		$this->scene = $this->getVar('scene');
+		$this->unique_comments_count = $this->scene->getSceneTime()->getUniqueCommentsCount();
 
 		$this->comments = SceneCommentPeer::retrieveShortBySceneId(
-			$this->scene_id,
+			$this->scene->getId(),
 			calculateCommentListLength($this->unique_comments_count)
 		);
 	}
 
 	public function executeClipStickerFooter()
 	{
-		$this->scene_id = $this->getVar('scene_id');
-		$scene = ScenePeer::retrieveByPK($this->scene_id);
-		$this->scene_time_id = $scene->getSceneTimeId();
+		$this->scene = $this->getVar('scene');
+		$this->scene_time_id = $this->scene->getSceneTimeId();
 
 		$counts = ScenePeer::countRepinsLikesForSceneId($this->scene_id);
 		$this->repins_count = $counts['repins_count'];

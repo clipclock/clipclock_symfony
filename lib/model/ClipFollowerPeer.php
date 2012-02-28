@@ -54,4 +54,16 @@ class ClipFollowerPeer extends BaseClipFollowerPeer {
 
         return true;
     }
+
+	public static function retrieveIdByFollower($user_id)
+	{
+		$c = new Criteria();
+		$c->add(self::FOLLOWER_SF_GUARD_USER_PROFILE_ID, $user_id);
+		$c->clearSelectColumns();
+		$c->addSelectColumn(self::CLIP_ID . ' as clip_id');
+		$c->addSelectColumn(self::CREATED_AT . ' as created_at');
+		$c->setLimit(1);
+
+		return BasePeer::doSelect($c)->fetch(PDO::FETCH_ASSOC);
+	}
 } // ClipFollowerPeer

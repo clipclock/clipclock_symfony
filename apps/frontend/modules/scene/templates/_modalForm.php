@@ -3,7 +3,7 @@
 		<div class="close"></div>
 		<!-- b-header  -->
 		<div class="b-header">
-			<h2>Add a video scene <span id="human_time">01:32</span> in the set</h2>
+			<h2>Add a video scene <span id="label_time">01:32</span> in the set</h2>
 		</div>
 		<!-- /b-header -->
 		<!-- b-content  -->
@@ -31,3 +31,25 @@
 	</form>
 	<!-- /b-footer -->
 </div>
+
+<script type="text/javascript">
+	$().ready(function(){
+		jQuery(".cusel").each(
+				function(){
+					var w = parseInt(jQuery(this).width()),
+							scrollPanel = jQuery(this).find(".cusel-scroll-pane");
+					if(w>=scrollPanel.width())
+					{
+						jQuery(this).find(".jScrollPaneContainer").width(w);
+						scrollPanel.width(w);
+					}
+				});
+
+		var params = {
+			changedEl: ".line-form select",
+			visRows: 7,
+			scrollArrows: true
+		}
+		cuSel(params);
+	});
+</script>

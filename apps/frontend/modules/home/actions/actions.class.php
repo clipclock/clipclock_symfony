@@ -10,6 +10,17 @@
  */
 class homeActions extends sfActions
 {
+	public function preExecute()
+	{
+		$this->user = null;
+		if($this->getUser()->isAuthenticated())
+		{
+			$this->user = $this->getUser();
+		}
+
+		$this->form = new HomeFilterForm(null, array('user' => $this->user));
+		$this->criteria = SceneTimePeer::retrieveClipsIdsForMainByUserId($this->getUser()->getId());
+	}
 	/**
 	 * Executes index action
 	 *
@@ -17,16 +28,35 @@ class homeActions extends sfActions
 	 */
 	public function executeIndex(sfWebRequest $request)
 	{
-		//$this->forward('default', 'module');
-		$this->user = null;
-		if($this->getUser()->isAuthenticated())
+		if($request->getParameter('source') && $request->getParameter('source') == 2)
 		{
-			$this->user = $this->getUser();
+			$this->form->setDefault('source', $request->getParameter('source'));
+			$this->form->setDefault('category', $request->getParameter('category'));
+
+			$user_following = UserFollowerPeer::retrieveIdByFollower($this->user->getId());
+			$board_following = BoardFollowerPeer::retrieveIdByFollower($this->user->getId());
+			$clip_following = ClipFollowerPeer::retrieveIdByFollower($this->user->getId());
+
+			$this->criteria = SceneTimePeer::modifyCriteriaByFilter($this->criteria, $user_following, $board_following, $clip_following, $request->getParameter('category'));
 		}
 
 		$this->pager = new sfPropelPager('SceneTime', 30);
-		$this->pager->setCriteria(SceneTimePeer::retrieveClipsIdsForMainByUserId($this->getUser()->getId()));
+		$this->pager->setCriteria($this->criteria);
 		$this->pager->setPeerMethod('doSelectForPager');
 		$this->pager->setPage($request->getParameter('page', 1));
+	}
+
+	public function executeBindForm(sfWebRequest $request)
+	{
+		$this->form->bind($request->getParameter($this->form->getName()));
+		$request->getParameter($this->form->getName());
+
+		if(!$this->form->isValid())
+		{
+			$this->redirect($this->generateUrl('homepage'));
+			return sfView::NONE;
+		}
+
+		$this->redirect($this->generateUrl('homepage', array('source' => $this->form->getValue('source'), 'category' => $this->form->getValue('category'))));
 	}
 }

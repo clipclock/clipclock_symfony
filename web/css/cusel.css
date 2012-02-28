@@ -149,15 +149,10 @@
 }
 
 
-.cuselFocus .cuselFrameRight {
-	background-position: 100% -34px;
-}
-
 .cusel.cuselFocus  {
-	background-position: 0 -34px;
 	box-shadow:0 0 3px #ccc;
-	-moz-box-shadow:0 0 3px #ccc; 
-	-webkit-box-shadow:0 0 3px #ccc; 
-	-khtml-box-shadow:0 0 3px #ccc; 
+	-moz-box-shadow:0 0 3px #ccc;
+	-webkit-box-shadow:0 0 3px #ccc;
+	-khtml-box-shadow:0 0 3px #ccc;
 	behavior: url(js/PIE.htc);
 }

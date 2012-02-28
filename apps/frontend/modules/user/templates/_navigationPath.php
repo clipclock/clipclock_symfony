@@ -1,4 +1,4 @@
-<div class="b-content">
+
 <div class="user-title">
     <!-- user-like  -->
     <div class="user-like">

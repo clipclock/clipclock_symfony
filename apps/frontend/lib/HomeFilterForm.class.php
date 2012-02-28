@@ -8,6 +8,7 @@
  */
 class HomeFilterForm extends sfForm
 {
+	const ALL_CATEGORIES_ID = 0;
 
 	public function configure()
 	{
@@ -34,8 +35,8 @@ class HomeFilterForm extends sfForm
 	protected  function getSources()
 	{
 		$choices = array(
-			'0' => 'Recent uploads',
-			'1' => 'Following',
+			'1' => 'Recent uploads',
+			'2' => 'Following',
 		);
 
 		if(!$this->getOption('user'))
@@ -60,7 +61,9 @@ class HomeFilterForm extends sfForm
 
 	protected function getCategories()
 	{
-		$choices = array();
+		$choices = array(
+			self::ALL_CATEGORIES_ID => 'All'
+		);
 		$categories = CategoryPeer::doSelect(new Criteria());
 		foreach($categories as $category)
 		{

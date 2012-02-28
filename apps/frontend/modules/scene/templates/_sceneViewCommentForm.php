@@ -8,7 +8,9 @@
 		'update' => array('success_callback' => 'prependNewComments(data, "comments");', 'failure' => "alert('HTTP Error ' + XMLHttpRequest.status + '!')"),
 		'condition' => 'checkCommentForm("textarea#text")',
 	))?>
-		<?php echo $form['text']?><?php echo $form->renderHiddenFields()?>
+		<div class="brd">
+			<?php echo $form['text']?><?php echo $form->renderHiddenFields()?>
+		</div>
 		<div class="b-btn">
 			<input id="submit_comment" class="default-un-follow-btn" name="" type="button" value="Comment" />
 		</div>

@@ -3,8 +3,35 @@
 
 # default rules
 homepage:
-  url:   /
+  url:   /:source/:category
+  param: { module: home, action: index, source: '', category: '' }
+  requirements:
+    source: \d+
+    category: \d+
+
+homepage_bind:
+  url:   /form
+  param: { module: home, action: bindForm }
+
+homepage_search:
+  url:   /search/:search_string
   param: { module: home, action: index }
+
+### HOMEPAGE AJAX ###
+
+homepage_page:
+  url:   /:source/:category/page/:page
+  param: { module: home, action: index }
+  requirements:
+    source: \d+
+    category: \d+
+    page: \d+
+
+homepage_search_page:
+  url:   /search/:search_string/page/:page
+  param: { module: home, action: index }
+  requirements:
+    page: \d+
 
 ### BOARD ###
 
@@ -24,6 +51,14 @@ sticker_scene_change:
   requirements:
     scene_id: \d+
 
+board_page:
+  url:   /:username_slug/board/:id/page/:page
+  class: sfPropelRoute
+  param: { module: board, action: show }
+  options: { model: Board, type: object }
+  requirements:
+    id: \d+
+    page: \d+
 
 ### FOLLOW ###
 

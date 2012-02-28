@@ -1,4 +1,5 @@
-<?php include_component('user', 'navigationPerson', array('subject' => $user, 'current_user' => $current_user, 'user' => $user,
+<div class="b-content">
+	<?php include_component('user', 'navigationPerson', array('subject' => $user, 'current_user' => $current_user, 'user' => $user,
            'follow_button' => get_component('user', 'follow', array(
                                 'state_names' => array('Follow Person', 'Unfollow Person'),
                                 'sf_routes' => array('follow_user', 'unfollow_user'),
@@ -7,8 +8,6 @@
                                 'active' => UserFollowerPeer::isUserFollowedByUser($user->getId(), $current_user->getId())
                                 ))))?>
 
-
-<div class="b-content">
 <div class="content-wrap-in">
 	<!-- side-left-col  -->
 	<div class="side-left-col">

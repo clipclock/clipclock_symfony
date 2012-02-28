@@ -28,7 +28,7 @@
 				<li><a href="">Pins</a></li>
 				<li class="before-divider"><a href="">Likes</a></li>
 				<li class="divider"><a href="">Settings</a></li>
-				<li><a href="<?php echo url_for('sf_guard_signout')?>">Loguot</a></li>
+				<li><a href="<?php echo url_for('sf_guard_signout')?>">Logout</a></li>
 			</ul>
 		</div>
 	</li>

@@ -1,3 +1,4 @@
+<div class="b-content">
 <?php include_component('user', 'navigationPath', array('subject' => $current_scene, 'current_user' => $current_user, 'user' => $user,
            'follow_button' => get_component('user', 'follow', array(
                                 'state_names' => array('Follow Video', 'Unfollow Video'),

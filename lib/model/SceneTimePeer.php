@@ -86,9 +86,10 @@ class SceneTimePeer extends BaseSceneTimePeer {
 	{
 		$c = new Criteria();
 		$c->clearSelectColumns();
-		$c->add(self::ID, $scene_time_id);
-		$c->addSelectColumn(SceneCommentPeer::SF_GUARD_USER_PROFILE_ID .' as unique_comments_count');
-		$c->addJoin(self::ID, SceneCommentPeer::SCENE_TIME_ID, Criteria::INNER_JOIN);
+		$c->setPrimaryTableName(SceneCommentPeer::TABLE_NAME);
+		$c->add(SceneCommentPeer::SCENE_TIME_ID, $scene_time_id);
+		$c->addSelectColumn(SceneCommentPeer::SF_GUARD_USER_PROFILE_ID);
+		$c->addGroupByColumn(SceneCommentPeer::SF_GUARD_USER_PROFILE_ID);
 		$c->setDistinct();
 
 		$unique_comments_count = BasePeer::doCount($c)->fetch(PDO::FETCH_ASSOC);

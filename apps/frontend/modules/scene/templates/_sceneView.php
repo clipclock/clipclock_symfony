@@ -27,7 +27,7 @@
 				<?php include_component('scene', 'sceneViewDescription', array('scene_id' => $scene->getId()))?>
 			</div>
 			<div id="comment_form" class="b-add-comment ajax_load_shadow">
-				<?php include_component('scene', 'sceneViewCommentForm', array('scene_time_id' => $scene->getSceneTimeId()))?>
+				<?php include_component('scene', 'sceneViewCommentForm', array('scene_time_id' => $scene->getSceneTimeId(), 'current_user' => $current_user))?>
 			</div>
 			<div id="comments">
 				<?php include_component('scene', 'sceneViewComments', array('scene_time_id' => $scene->getSceneTimeId()))?>

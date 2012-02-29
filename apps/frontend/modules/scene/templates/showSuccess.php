@@ -4,8 +4,8 @@
                                 'state_names' => array('Follow Video', 'Unfollow Video'),
                                 'sf_routes' => array('follow_clip', 'unfollow_clip'),
                                 'id_key' => 'clip_id',
-                                'id' => $current_scene->getSceneTime()->getClipId(),
-                                'active' => ClipFollowerPeer::isClipFollowedByUser($current_scene->getSceneTime()->getClipId(), $current_user->getId())
+                                'id' => $current_scene->getSceneTime()->getReclip()->getClipId(),
+                                'active' => ClipFollowerPeer::isClipFollowedByUser($current_scene->getSceneTime()->getReclip()->getClipId(), $current_user->getId())
                                 )) : ''))?>
 
 <div class="content-wrap-in">

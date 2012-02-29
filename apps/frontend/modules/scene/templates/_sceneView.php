@@ -1,6 +1,6 @@
-<?php include_component('scene', 'sceneViewEmbed', array('scene_time_id' => $scene_time->getId()))?>
+<?php include_component('scene', 'sceneViewEmbed', array('scene_time' => $scene_time->getSceneTime(), 'reclip' => $reclip))?>
 <div class="b-tabs">
-	<?php include_component('scene', 'sceneViewControl', array('board_id' => $scene->getBoardId(), 'clip_id' => $clip->getId(), 'scene_id' => $scene->getId()))?>
+	<?php include_component('scene', 'sceneViewControl', array('board_id' => $scene->getBoardId(), 'reclip_id' => $reclip->getId(), 'scene_id' => $scene->getId()))?>
 	<ul class="tabs-items">
 		<li id='scene_add_comment' class="tag-new-cont">
 			<!-- b-add-comment  -->

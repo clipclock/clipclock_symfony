@@ -61,19 +61,32 @@ class staticActions extends sfActions
 				$clip->setSourceId($this->source_id);
 				$clip->save();
 			}
+			else
+			{
+				$scene = ScenePeer::retrieveYoungestByClipId($clip->getId());
+				if($scene)
+				{
+					$this->redirect($this->generateUrl('scene', array(
+						'username_slug' => $scene->getSfGuardUserProfile()->getNick(),
+						'board_id' => $scene->getBoardId(),
+						'id' => $scene->getId()
+					)));
+					return sfView::NONE;
+				}
+			}
 			$this->clip = $clip;
 
-			$scene = ScenePeer::retrieveYoungestByClipId($clip->getId());
-			if($scene)
+			$reclip = ReclipPeer::retrieveByClipIdUserId($clip->getId(), $this->getUser()->getId());
+			if(!$reclip)
 			{
-				$this->redirect($this->generateUrl('scene', array(
-					'username_slug' => $scene->getSfGuardUserProfile()->getNick(),
-					'board_id' => $scene->getBoardId(),
-					'id' => $scene->getId()
-				)));
+				$reclip = new Reclip();
+				$reclip->setClipId($this->clip->getId());
+				$reclip->setSfGuardUserProfileId($this->getUser()->getId());
+				$reclip->save();
 			}
+			$this->reclip = $reclip;
 
-			$this->form = new SceneTimeForm(null, array('clip_id' => $this->clip->getId(), 'sf_guard_user_profile_id' => $this->getUser()->getId()));
+			$this->form = new SceneTimeForm(null, array('reclip_id' => $this->reclip->getId(), 'sf_guard_user_profile_id' => $this->getUser()->getId()));
 		}
 		else
 		{

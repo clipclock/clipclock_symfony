@@ -5,7 +5,7 @@
 			<ul>
 				<?php foreach($clips_ids as $clip_id):?>
 					<?php include_component('board', 'boardStickerSceneTimePreview', array(
-						'clip_id' => $clip_id['clip_id'],
+						'reclip_id' => $clip_id['reclip_id'],
 						'board_id' => $board->getId()))?>
 				<?php endforeach?>
 			</ul>

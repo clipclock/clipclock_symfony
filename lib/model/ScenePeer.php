@@ -27,11 +27,11 @@ class ScenePeer extends BaseScenePeer {
         return self::doCount($c);
     }
 
-	public static function retrieveFirstSceneTimeIdByClipIdBoardId($clip_id, $user_id = null)
+	public static function retrieveFirstSceneTimeIdByClipIdBoardId($reclip_id, $user_id = null)
 	{
 		$c = new Criteria();
 
-		$c->add(SceneTimePeer::CLIP_ID, $clip_id);
+		$c->add(SceneTimePeer::RECLIP_ID, $reclip_id);
 		$c->addDescendingOrderByColumn(SceneTimePeer::UNIQUE_COMMENTS_COUNT);
 		if($user_id)
 		{
@@ -42,7 +42,7 @@ class ScenePeer extends BaseScenePeer {
 		return current(self::doSelectJoinSceneTime($c));
 	}
 
-	public static function retrieveAscSceneTimeIdByClipIdBoardId($clip_id, $board_id)
+	public static function retrieveAscSceneTimeIdByClipIdBoardId($reclip_id, $board_id)
 	{
 		$c = new Criteria();
 
@@ -53,7 +53,7 @@ class ScenePeer extends BaseScenePeer {
 
 		//$c->add(self::BOARD_ID, $board_id);
 		$c->addJoin(self::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
-		$c->add(SceneTimePeer::CLIP_ID, $clip_id);
+		$c->add(SceneTimePeer::RECLIP_ID, $reclip_id);
 		$c->add(self::REPIN_ORIGIN_SCENE_ID, null, Criteria::ISNULL);
 		$c->addAscendingOrderByColumn(SceneTimePeer::SCENE_TIME);
 
@@ -71,6 +71,7 @@ class ScenePeer extends BaseScenePeer {
 
 		$c->addJoin(SceneTimePeer::ID, self::SCENE_TIME_ID, Criteria::INNER_JOIN);
 		$c->add(self::ID, $id);
+		$c->addAscendingOrderByColumn(self::REPIN_ORIGIN_SCENE_ID);
 		$c->addAscendingOrderByColumn(SceneTimePeer::SCENE_TIME);
 		$c->setLimit(1);
 
@@ -126,12 +127,13 @@ class ScenePeer extends BaseScenePeer {
         return self::doCount($c);
     }
 
-	public static function retrieveBestByClipId($clip_id, $board_id)
+	public static function retrieveBestByClipId($reclip_id, $board_id)
 	{
 		$c = new Criteria();
-		$c->addJoin(SceneTimePeer::ID, self::SCENE_TIME_ID, Criteria::INNER_JOIN);
+		$c->setPrimaryTableName(self::TABLE_NAME);
+		$c->addJoin(self::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
 		$c->add(self::BOARD_ID, $board_id);
-		$c->add(SceneTimePeer::CLIP_ID, $clip_id);
+		$c->add(SceneTimePeer::RECLIP_ID, $reclip_id);
 
 		$c->addDescendingOrderByColumn(SceneTimePeer::UNIQUE_COMMENTS_COUNT);
 		return self::doSelectOne($c);
@@ -183,7 +185,8 @@ class ScenePeer extends BaseScenePeer {
 	{
 		$c = new Criteria();
 		$c->addJoin(self::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
-		$c->add(SceneTimePeer::CLIP_ID, $clip_id);
+		$c->addJoin(SceneTimePeer::RECLIP_ID, ReclipPeer::ID, Criteria::INNER_JOIN);
+		$c->add(ReclipPeer::CLIP_ID, $clip_id);
 		$c->addDescendingOrderByColumn(ScenePeer::CREATED_AT);
 		$c->setLimit(1);
 		return current(self::doSelectJoinSfGuardUserProfile($c));

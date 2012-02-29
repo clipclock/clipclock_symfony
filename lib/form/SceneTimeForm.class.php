@@ -17,7 +17,7 @@ class SceneTimeForm extends BaseSceneTimeForm
 
 
 		$this->setWidget('scene_time', new sfWidgetFormInputHidden());
-		$this->setWidget('clip_id', new sfWidgetFormInputHidden());
+		$this->setWidget('reclip_id', new sfWidgetFormInputHidden());
 
 		$this->embedForm('scene', new SceneForm(null, array(
 			'created_at' => $this->getOption('created_at'),
@@ -25,7 +25,7 @@ class SceneTimeForm extends BaseSceneTimeForm
 			'no_boards' => BoardPeer::getCountByUserId($this->getOption('sf_guard_user_profile_id')) ? false : true
 		)));
 
-		$this->getObject()->setClipId($this->getOption('clip_id'));
+		$this->getObject()->setReclipId($this->getOption('reclip_id'));
 		$this->getObject()->setCreatedAt($this->getOption('created_at'));
 		//sfForm::disableCSRFProtection();
 	}
@@ -51,7 +51,7 @@ class SceneTimeForm extends BaseSceneTimeForm
 			$amqp_publisher = new AMQPPublisher();
 			$amqp_publisher->jobScene(
 				$this->getObject()->getId(),
-				$this->getObject()->getClip()->getUrl(),
+				$this->getObject()->getReclip()->getClip()->getUrl(),
 				$this->getObject()->getSceneTime());
 
 			$con->commit();

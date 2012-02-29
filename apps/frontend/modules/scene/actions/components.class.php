@@ -32,28 +32,22 @@ class sceneComponents extends sfComponents
 		$this->scene = $this->getVar('scene');
 
 		$this->scene_time = $this->scene->getSceneTime();
-		$this->clip = ClipPeer::retrieveBySceneTimeId($this->scene->getSceneTimeId());
+		$this->reclip = ReclipPeer::retrieveBySceneTimeId($this->scene->getSceneTimeId());
 	}
 
 	public function executeSceneViewEmbed()
 	{
-		$this->scene_time_id = $this->getVar('scene_time_id');
-
-		$scene_time = SceneTimePeer::retrieveByPK($this->scene_time_id);
-		$this->scene_time = $scene_time->getSceneTime();
-
-		$this->clip = ClipPeer::retrieveBySceneTimeId($this->scene_time_id);
 	}
 
 	public function executeSceneViewControl()
 	{
 		$this->board_id = $this->getVar('board_id');
-		$this->clip_id = $this->getVar('clip_id');
+		$this->reclip_id = $this->getVar('reclip_id');
 		$this->scene_id = $this->getVar('scene_id');
 
-		$this->scene_times = ScenePeer::retrieveAscSceneTimeIdByClipIdBoardId($this->clip_id, $this->board_id);
+		$this->scene_times = ScenePeer::retrieveAscSceneTimeIdByClipIdBoardId($this->reclip_id, $this->board_id);
 
-		$this->form = new SceneTimeForm(null, array('clip_id' => $this->clip_id, 'sf_guard_user_profile_id' => $this->getUser()->getId()));
+		$this->form = new SceneTimeForm(null, array('reclip_id' => $this->reclip_id, 'sf_guard_user_profile_id' => $this->getUser()->getId()));
 	}
 
 	public function executeSceneViewDescription()

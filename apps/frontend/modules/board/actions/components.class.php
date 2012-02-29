@@ -26,9 +26,9 @@ class boardComponents extends sfComponents
 
 	public function executeBoardStickerSceneTimePreview()
 	{
-		$this->clip_id = $this->getVar('clip_id');
+		$this->reclip_id = $this->getVar('reclip_id');
 		$this->board_id = $this->getVar('board_id');
-		$this->scene = ScenePeer::retrieveBestByClipId($this->clip_id, $this->board_id);
+		$this->scene = ScenePeer::retrieveBestByClipId($this->reclip_id, $this->board_id);
 
 		$this->scene_image = ImagePreview::c14n($this->scene->getSceneTimeId(), 'medium');
 	}
@@ -45,9 +45,9 @@ class boardComponents extends sfComponents
 
 	public function executeClipSticker()
 	{
-		$this->clip_id = $this->getVar('clip_id');
+		$this->reclip_id = $this->getVar('reclip_id');
 
-		$this->scene = ScenePeer::retrieveFirstSceneTimeIdByClipIdBoardId($this->clip_id, $this->getVar('current_user')->getId());
+		$this->scene = ScenePeer::retrieveFirstSceneTimeIdByClipIdBoardId($this->reclip_id, $this->getVar('current_user')->getId());
 		$this->board_id = $this->scene->getBoardId();
 	}
 
@@ -59,10 +59,10 @@ class boardComponents extends sfComponents
 
 	public function executeClipStickerControl()
 	{
-		$this->clip_id = $this->getVar('clip_id');
+		$this->reclip_id = $this->getVar('reclip_id');
 		$this->board_id = $this->getVar('board_id');
 
-		$this->scene_times = ScenePeer::retrieveAscSceneTimeIdByClipIdBoardId($this->clip_id, $this->board_id);
+		$this->scene_times = ScenePeer::retrieveAscSceneTimeIdByClipIdBoardId($this->reclip_id, $this->board_id);
 	}
 
 	public function executeClipStickerSceneTimeCommentsListShort()

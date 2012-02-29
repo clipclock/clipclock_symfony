@@ -35,7 +35,6 @@ class BoardPeer extends BaseBoardPeer {
 		$c->setPrimaryTableName(BoardPeer::TABLE_NAME);
 		$c->addJoin(self::ID, ScenePeer::BOARD_ID, Criteria::INNER_JOIN);
 		$c->addJoin(ScenePeer::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
-		$c->addJoin(SceneTimePeer::CLIP_ID, ClipPeer::ID, Criteria::INNER_JOIN);
 
 		$c->add(BoardPeer::SF_GUARD_USER_PROFILE_ID, $user_id);
 		$c->addGroupByColumn(self::ID);

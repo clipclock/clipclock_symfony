@@ -19,19 +19,6 @@
  */
 class ClipPeer extends BaseClipPeer {
 
-	public static function retrieveBySceneTimeId($scene_time_id)
-	{
-		$c = new Criteria();
-
-		$c->clearSelectColumns();
-
-		$c->addJoin(self::ID, SceneTimePeer::CLIP_ID, Criteria::INNER_JOIN);
-		$c->add(SceneTimePeer::ID, $scene_time_id);
-		$c->setLimit(1);
-
-		return current(self::doSelectJoinSource($c));
-	}
-
 	public static function retrieveByUrlAndSourceId($url, $source_id)
 	{
 		$c = new Criteria();

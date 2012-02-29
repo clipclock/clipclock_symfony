@@ -43,6 +43,14 @@ board:
   requirements:
     id: \d+
 
+edit_board:
+  url:   /edit/board/:board_id
+  class: sfPropelRoute
+  param: { module: board, action: show }
+  options: { model: Board, type: object }
+  requirements:
+    board_id: \d+
+
 ### STICKER AJAX ###
 
 sticker_scene_change:
@@ -132,6 +140,14 @@ user:
   class: sfPropelRoute
   param: { module: user, action: show }
   options: { model: sfGuardUserProfile, type: object }
+
+edit_user:
+  url:   /edit/profile/:user_id
+  class: sfPropelRoute
+  param: { module: user, action: show }
+  options: { model: sfGuardUserProfile, type: object }
+  requirements:
+    user_id: \d+
 
 ### MELODY CALLBACKS ###
 

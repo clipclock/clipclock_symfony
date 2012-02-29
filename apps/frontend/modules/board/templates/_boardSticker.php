@@ -11,11 +11,11 @@
 			</ul>
 		</div>
 		    <?php include_component('user', 'follow', array(
-                        'state_names' => array('Follow Set', 'Unfollow Set'),
-                        'sf_routes' => array('follow_board', 'unfollow_board'),
+                        'state_names' => array('Follow Set', 'Unfollow Set', 'Edit'),
+                        'sf_routes' => array('follow_board', 'unfollow_board', 'edit_board'),
                         'id_key' => 'board_id',
                         'id' => $board->getId(),
-                        'active' => BoardFollowerPeer::isBoardFollowedByUser($board->getId(), $current_user->getId())
+                        'active' => $current_user->getId() == $user->getId() ? 'my' : BoardFollowerPeer::isBoardFollowedByUser($board->getId(), $current_user->getId())
               ))?>
 
 	</div>

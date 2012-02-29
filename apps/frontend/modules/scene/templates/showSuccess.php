@@ -18,11 +18,11 @@
 	<div class="long-col">
 		<div class="long-col-inside">
 			<div class="right-mini-coll">
-				<?php include_component('scene', 'sceneViewSocialButtons', array('scene_id' => $current_scene->getId()))?>
+				<?php include_component('scene', 'sceneViewSocialButtons', array('scene_id' => $current_scene->getId(), 'user' => $user, 'current_user' => $current_user))?>
 			</div>
 			<div class="center-col">
 				<div class="b-main-video">
-					<?php include_component('scene', 'sceneView', array('scene' => $current_scene))?>
+					<?php include_component('scene', 'sceneView', array('scene' => $current_scene, 'user' => $user, 'current_user' => $current_user))?>
 				</div>
 			</div>
 		</div>

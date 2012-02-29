@@ -80,11 +80,11 @@ class boardComponents extends sfComponents
 		$this->scene = $this->getVar('scene');
 		$this->scene_time_id = $this->scene->getSceneTimeId();
 
-		$counts = ScenePeer::countRepinsLikesForSceneId($this->scene_id);
+		$counts = ScenePeer::countRepinsLikesForSceneId($this->scene->getId());
 		$this->repins_count = $counts['repins_count'];
 		$this->likes_count = $counts['likes_count'];
 
-		$my_counts = ScenePeer::countLikesForSceneIdByUserId($this->scene_id, $this->getUser()->getId());
+		$my_counts = ScenePeer::countLikesForSceneIdByUserId($this->scene->getId(), $this->getUser()->getId());
 		$this->i_repin = $my_counts['repins_count'] ? true : false;
 		$this->i_like = $my_counts['likes_count'] ? true : false;
 

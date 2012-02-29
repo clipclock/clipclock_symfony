@@ -7,7 +7,7 @@
 			<div class="b-add-comment">
 				<div class="inside">
 					<div class="ph">
-						<a href="<?php echo url_for('user', $sf_user)?>"><img src="<?php echo ImagePreview::c14n($sf_user->getId(), 'medium', 'avatar');?>" alt="<?php echo $user?>" title="<?php echo $user?>" width="50" height="50" /></a>
+						<a href="<?php echo url_for('user', $current_user)?>"><img src="<?php echo ImagePreview::c14n($current_user->getId(), 'medium', 'avatar');?>" alt="<?php echo $current_user?>" title="<?php echo $current_user?>" width="50" height="50" /></a>
 					</div>
 					<form method="get">
 						<div class="brd">

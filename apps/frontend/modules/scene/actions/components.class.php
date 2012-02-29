@@ -82,7 +82,7 @@ class sceneComponents extends sfComponents
 		$this->scene_id = $this->getVar('scene_id');
 		$this->scene = ScenePeer::retrieveByPK($this->scene_id);
 		$this->origin_scene_id = ($this->scene->getRepinOriginSceneId()) ? $this->scene->getRepinOriginSceneId() : $this->scene_id;
-		$this->user = $this->getUser();
+		$this->current_user = $this->getVar('current_user');
         
 		$counts = ScenePeer::countRepinsLikesForSceneId($this->origin_scene_id);
 		$this->repins_count = $counts['repins_count'];
@@ -93,10 +93,10 @@ class sceneComponents extends sfComponents
         $new_scene->fromArray(array(
                                 'Id' => null,
                                 'CreatedAt' => time(),
-                                'SfGuardUserProfileId' => $this->user->getId(),
+                                'SfGuardUserProfileId' => $this->current_user->getId(),
                                 'RepinOriginSceneId' => ($new_scene->getRepinOriginSceneId()) ? $new_scene->getRepinOriginSceneId() : $this->scene_id
                           ));
 
-		$this->repin_form = new RepinModalForm($new_scene, array('sf_guard_user_profile_id' => $this->user->getId()));
+		$this->repin_form = new RepinModalForm($new_scene, array('sf_guard_user_profile_id' => $this->current_user->getId()));
 	}
 }

@@ -13,7 +13,7 @@
 	<?php endif;?>
 	<?php if(count($repined_user_ids)):?>
 		<div class="b-follow">
-			<div class="title"><a href="#"><strong><?php echo count($repined_user_ids)?></strong> like<?php echo count($repined_user_ids) > 1 ? 's' : '' ?></a></div>
+			<div class="title"><a href="#"><strong><?php echo count($repined_user_ids)?></strong> repin<?php echo count($repined_user_ids) > 1 ? 's' : '' ?></a></div>
 			<ul>
 			<?php foreach($repined_user_ids as $repined_user_id):?>
 				<?php include_component('scene', 'peopleForSceneStickerUser', array('user_id' => $repined_user_id['repin_sf_guard_user_profile_id'], 'scene' => $scene))?>

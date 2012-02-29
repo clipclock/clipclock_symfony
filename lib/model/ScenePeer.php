@@ -27,13 +27,16 @@ class ScenePeer extends BaseScenePeer {
         return self::doCount($c);
     }
 
-	public static function retrieveFirstSceneTimeIdByClipIdBoardId($clip_id)
+	public static function retrieveFirstSceneTimeIdByClipIdBoardId($clip_id, $user_id = null)
 	{
 		$c = new Criteria();
 
 		$c->add(SceneTimePeer::CLIP_ID, $clip_id);
 		$c->addDescendingOrderByColumn(SceneTimePeer::UNIQUE_COMMENTS_COUNT);
-		$c->addAscendingOrderByColumn(SceneTimePeer::SCENE_TIME);
+		if($user_id)
+		{
+			$c->addAscendingOrderByColumn(ScenePeer::SF_GUARD_USER_PROFILE_ID . ' is distinct from '.$user_id);
+		}
 		$c->setLimit(1);
 
 		return current(self::doSelectJoinSceneTime($c));

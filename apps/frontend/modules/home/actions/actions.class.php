@@ -12,14 +12,10 @@ class homeActions extends sfActions
 {
 	public function preExecute()
 	{
-		$this->user = null;
-		if($this->getUser()->isAuthenticated())
-		{
-			$this->user = $this->getUser();
-		}
+		$this->user = $this->getUser();
 
 		$this->form = new HomeFilterForm(null, array('user' => $this->user));
-		$this->criteria = SceneTimePeer::retrieveClipsIdsForMainByUserId($this->getUser()->getId());
+		$this->criteria = SceneTimePeer::retrieveClipsIdsForMainByUserId();
 	}
 	/**
 	 * Executes index action

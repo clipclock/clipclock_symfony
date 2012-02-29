@@ -14,7 +14,7 @@
 	<div class="long-col">
 		<div class="video-stickers">
 			<ul id="container" class="stickers-list" style="position: relative;">
-				<?php include_component('board', 'boardClipsList', array('current_board' => $current_board, 'pager' => $pager)) ?>
+				<?php include_component('board', 'boardClipsList', array('current_board' => $current_board, 'pager' => $pager, 'current_user' => $current_user)) ?>
 			</ul>
 			<?php echo jq_link_to_remote('next', array(
 			'update' => array('success_callback' => 'console.log(JSON.parse(data));', 'failure' => "alert('HTTP Error ' + XMLHttpRequest.status + '!')"),

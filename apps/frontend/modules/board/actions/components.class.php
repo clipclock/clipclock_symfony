@@ -47,7 +47,7 @@ class boardComponents extends sfComponents
 	{
 		$this->clip_id = $this->getVar('clip_id');
 
-		$this->scene = ScenePeer::retrieveFirstSceneTimeIdByClipIdBoardId($this->clip_id);
+		$this->scene = ScenePeer::retrieveFirstSceneTimeIdByClipIdBoardId($this->clip_id, $this->getVar('current_user')->getId());
 		$this->board_id = $this->scene->getBoardId();
 	}
 

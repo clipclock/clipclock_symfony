@@ -1,6 +1,6 @@
 <ul id="container" class="stickers-list" style="position: relative;">
 <?php foreach($results as $result):?>
-	<?php include_component('board', 'clipSticker', array('clip_id' => $result['clip_id']))?>
+	<?php include_component('board', 'clipSticker', array('clip_id' => $result['clip_id'], 'current_user' => $current_user))?>
 <?php endforeach?>
 </ul>
 <script type="text/javascript">

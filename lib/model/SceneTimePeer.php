@@ -51,20 +51,18 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		return $c;
 	}
 
-	public static function retrieveClipsIdsForMainByUserId($user_id, Criteria $c = null)
+	public static function retrieveClipsIdsForMainByUserId(Criteria $c = null)
 	{
 		$c = !$c ? new Criteria() : $c;
 
 		$c->setPrimaryTableName(SceneTimePeer::TABLE_NAME);
 		$c->clearSelectColumns();
 		$c->addSelectColumn(SceneTimePeer::CLIP_ID);
-		//$c->addSelectColumn(ScenePeer::BOARD_ID);
 		$c->addJoin(SceneTimePeer::ID, ScenePeer::SCENE_TIME_ID, Criteria::INNER_JOIN);
 		$c->addDescendingOrderByColumn('max('.self::UNIQUE_COMMENTS_COUNT.')');
 		$c->addDescendingOrderByColumn('max('.self::CREATED_AT.')');
 
 		$c->addGroupByColumn(SceneTimePeer::CLIP_ID);
-		//$c->addGroupByColumn(ScenePeer::BOARD_ID);
 		return $c;
 	}
 

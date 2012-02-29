@@ -11,6 +11,7 @@ class homeComponents extends sfComponents
 	public function executeClipList()
 	{
 		$this->pager = $this->getVar('pager');
+		$this->current_user = $this->getVar('current_user');
 		$this->pager->init();
 		$this->results = $this->pager->getResults()->fetchAll(PDO::FETCH_ASSOC);
 		$this->getContext()->getConfiguration()->loadHelpers(array('Comment'));

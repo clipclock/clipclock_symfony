@@ -50,7 +50,7 @@ class ScenePeer extends BaseScenePeer {
 		$c->addSelectColumn(SceneTimePeer::SCENE_TIME);
 		$c->addSelectColumn(SceneTimePeer::ID . ' as scene_time_id');
 
-		$c->add(self::BOARD_ID, $board_id);
+		//$c->add(self::BOARD_ID, $board_id);
 		$c->addJoin(self::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
 		$c->add(SceneTimePeer::CLIP_ID, $clip_id);
 		$c->addAscendingOrderByColumn(SceneTimePeer::SCENE_TIME);

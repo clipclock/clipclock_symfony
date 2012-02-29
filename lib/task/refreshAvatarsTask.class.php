@@ -13,6 +13,7 @@ class refreshAvatarsTask extends sfBaseTask
 			new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name', 'frontend'),
 			new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
 			new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+			new sfCommandOption('force', null, sfCommandOption::PARAMETER_OPTIONAL, 'Force update for all elements', ''),
 			// add your own options here
 		));
 
@@ -41,7 +42,7 @@ EOF;
 		foreach($tokens as $token)
 		{
 			if(!file_exists(__DIR__.'/../../web'.ImagePreview::c14n($token->getUserId(), 'medium', 'avatar')) ||
-					!file_exists(__DIR__.'/../../web'.ImagePreview::c14n($token->getUserId(), 'big', 'avatar')))
+					!file_exists(__DIR__.'/../../web'.ImagePreview::c14n($token->getUserId(), 'big', 'avatar')) || $options['force'])
 			{
 				$melody = sfMelody::getInstance($token->getName(), array('token' => $token));
 				$action_map = ProfileMapper::$action_map;

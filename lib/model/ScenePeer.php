@@ -54,6 +54,7 @@ class ScenePeer extends BaseScenePeer {
 		//$c->add(self::BOARD_ID, $board_id);
 		$c->addJoin(self::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
 		$c->add(SceneTimePeer::CLIP_ID, $clip_id);
+		$c->add(self::REPIN_ORIGIN_SCENE_ID, null, Criteria::ISNULL);
 		$c->addAscendingOrderByColumn(SceneTimePeer::SCENE_TIME);
 
 		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);

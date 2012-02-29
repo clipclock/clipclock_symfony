@@ -41,7 +41,7 @@ class HomeFilterForm extends sfForm
 
 		if(!$this->getOption('user'))
 		{
-			unset($choices['1']);
+			unset($choices['2']);
 		}
 
 		return $choices;

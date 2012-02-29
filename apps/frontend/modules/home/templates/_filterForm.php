@@ -31,7 +31,7 @@
 						<input name="" type="submit" value="" />
 					</div>
 					<div class="b-input">
-						<?php echo $form['search']?>
+						<?php echo $form['search']->render(array('title' => $form->getDefault('search')))?>
 					</div>
 				</div>
 			</div>

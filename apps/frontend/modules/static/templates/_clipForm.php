@@ -6,7 +6,7 @@
 				<input name="" type="submit" value="" />
 			</div>
 			<div class="b-input">
-				<?php echo $form['url']?>
+				<?php echo $form['url']->render(array('title' => $form->getDefault('url')))?>
 			</div>
 		</form>
 	</div>

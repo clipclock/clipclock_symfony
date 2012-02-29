@@ -48,11 +48,19 @@ class ProfileMapper {
 		$user_ext_profile->setSfGuardUserProfile($user_profile);
 		$user_profile->setSfGuardUser($user);
 
+		if($user->getId())
+		{
+			self::retrieveAvatarsAndPublish($user, $melody);
+		}
+
+		return $user;
+	}
+
+	public static function retrieveAvatarsAndPublish($user, $melody)
+	{
 		$amqp_publisher = new AMQPPublisher();
 		$photo_action = self::$action_map[$melody->getName()]['photo'];
 		$avatar_action = self::$action_map[$melody->getName()]['avatar'];
 		$amqp_publisher->jobAvatar($user->getId(), $melody->getPhoto()->$photo_action, $melody->getAvatar()->$avatar_action);
-
-		return $user;
 	}
 }

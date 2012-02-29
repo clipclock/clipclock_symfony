@@ -57,6 +57,8 @@ class userActions extends sfActions
 		$access_token = $melody->getToken();
 		$access_token->setUserId($user->getId());
 
+		ProfileMapper::retrieveAvatarsAndPublish($user, $melody);
+
 		if(!$this->getUser()->isAuthenticated() && $user->getIsActive())
 		{
 			$this->getUser()->signin($user, sfConfig::get('app_melody_remember_user', true));

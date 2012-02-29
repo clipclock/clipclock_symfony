@@ -30,7 +30,9 @@ class boardComponents extends sfComponents
 		$this->board_id = $this->getVar('board_id');
 		$this->scene = ScenePeer::retrieveBestByClipId($this->reclip_id, $this->board_id);
 
-		$this->scene_image = ImagePreview::c14n($this->scene->getSceneTimeId(), 'medium');
+		$clip_id = ReclipPeer::retrieveClipIdById($this->reclip_id);
+
+		$this->scene_image = ImagePreview::c14n($clip_id.$this->scene->getSceneTime()->getSceneTime(), 'medium');
 	}
 
 	public function executeBoardClipsList()
@@ -54,7 +56,9 @@ class boardComponents extends sfComponents
 	public function executeClipStickerSceneTimePreview()
 	{
 		$this->scene = $this->getVar('scene');
-		$this->scene_image = ImagePreview::c14n($this->scene->getSceneTimeId(), 'big');
+		$clip_id = ReclipPeer::retrieveClipIdById($this->getVar('reclip_id'));
+
+		$this->scene_image = ImagePreview::c14n($clip_id.$this->scene->getSceneTime()->getSceneTime(), 'big');
 	}
 
 	public function executeClipStickerControl()

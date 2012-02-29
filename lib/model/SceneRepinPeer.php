@@ -36,34 +36,44 @@ class SceneRepinPeer extends BaseSceneRepinPeer {
 	}
 
 
-    public static function toggleBySceneIdAndUserIdByState($scene_id, $user_id, $state)
-    {
-        $c = new Criteria();;
-        $c->add(self::REPIN_SF_GUARD_USER_PROFILE_ID, $user_id);
-        $c->add(self::SCENE_ID, $scene_id);
+	public static function toggleBySceneIdAndUserIdByState($scene_id, $user_id, $state)
+	{
+		$c = new Criteria();
+		$c->add(self::REPIN_SF_GUARD_USER_PROFILE_ID, $user_id);
+		$c->add(self::SCENE_ID, $scene_id);
 
-        if ($state) {
-            try {
-                self::doInsert($c);
-            } catch (Exception $e) {
-                return false; // already isseted
-            }
+		if($state)
+		{
+			try
+			{
+				self::doInsert($c);
+			}
+			catch(Exception $e)
+			{
+				return false; // already isseted
+			}
 
-            return self::PINNED; // new record
-        } else {
-            try {
-                $origin_scene_id = ScenePeer::retrieveOriginSceneIdBySceneIdAndUserId($scene_id, $user_id);
-                $origin_scene_id = ($origin_scene_id) ? $origin_scene_id : $scene_id;
+			return self::PINNED; // new record
+		}
+		else
+		{
+			try
+			{
+				$origin_scene = ScenePeer::retrieveOriginSceneIdBySceneIdAndUserId($scene_id, $user_id);
+				$origin_scene_id = ($origin_scene) ? $origin_scene->getId() : $scene_id;
 
-                $result = self::doDelete($c);
-                ScenePeer::doDeleteByOriginSceneIdAndUserId($origin_scene_id, $user_id);
-            } catch (Exception $e) {
-                return false; // holly crap happens
-            }
-        }
+				$result = self::doDelete($c);
+				ScenePeer::doDeleteByOriginSceneIdAndUserId($origin_scene_id, $user_id);
+				SceneTimePeer::doDelete($origin_scene->getSceneTimeId());
+			}
+			catch(Exception $e)
+			{
+				return false; // holly crap happens
+			}
+		}
 
-        return ($result) ? self::UN_PINNED: self::NOT_BEEN_PINNED; // if nothing to delete = 0, else 1
+		return ($result) ? self::UN_PINNED : self::NOT_BEEN_PINNED; // if nothing to delete = 0, else 1
 
-    }
+	}
 
 } // SceneRepinPeer

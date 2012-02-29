@@ -15,7 +15,6 @@ class SceneTimeForm extends BaseSceneTimeForm
 		unset($this['created_at']);
 		unset($this['unique_comments_count']);
 
-
 		$this->setWidget('scene_time', new sfWidgetFormInputHidden());
 		$this->setWidget('reclip_id', new sfWidgetFormInputHidden());
 
@@ -50,7 +49,7 @@ class SceneTimeForm extends BaseSceneTimeForm
 
 			$amqp_publisher = new AMQPPublisher();
 			$amqp_publisher->jobScene(
-				$this->getObject()->getId(),
+				$this->getObject()->getReclip()->getClipId().$this->getObject()->getSceneTime(),
 				$this->getObject()->getReclip()->getClip()->getUrl(),
 				$this->getObject()->getSceneTime());
 

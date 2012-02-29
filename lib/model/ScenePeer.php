@@ -54,7 +54,7 @@ class ScenePeer extends BaseScenePeer {
 		//$c->add(self::BOARD_ID, $board_id);
 		$c->addJoin(self::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
 		$c->add(SceneTimePeer::RECLIP_ID, $reclip_id);
-		$c->add(self::REPIN_ORIGIN_SCENE_ID, null, Criteria::ISNULL);
+		//$c->add(self::REPIN_ORIGIN_SCENE_ID, null, Criteria::ISNULL);
 		$c->addAscendingOrderByColumn(SceneTimePeer::SCENE_TIME);
 
 		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);
@@ -168,8 +168,7 @@ class ScenePeer extends BaseScenePeer {
         $c->add(self::REPIN_ORIGIN_SCENE_ID, $scene_id);
         $c->add(self::SF_GUARD_USER_PROFILE_ID, $user_id);
 
-        $obj = self::doSelectOne($c);
-        return ($obj) ? $obj->getId() : 0;
+        return self::doSelectOne($c);
     }
 
     public static function doDeleteByOriginSceneIdAndUserId($scene_id, $user_id)

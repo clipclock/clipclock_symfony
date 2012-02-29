@@ -27,6 +27,18 @@ class ReclipPeer extends BaseReclipPeer {
 		return self::doSelectOne($c);
 	}
 
+	public static function retrieveClipIdById($reclip_id)
+	{
+		$c = new Criteria();
+		$c->clearSelectColumns();
+		$c->addSelectColumn(self::CLIP_ID);
+		$c->add(self::ID, $reclip_id);
+		$c->setLimit(1);
+
+		$reclip = BasePeer::doSelect($c)->fetch(PDO::FETCH_ASSOC);
+		return $reclip['clip_id'];
+	}
+
 	public static function retrieveBySceneTimeId($scene_time_id)
 	{
 		$c = new Criteria();
@@ -38,5 +50,27 @@ class ReclipPeer extends BaseReclipPeer {
 		$c->setLimit(1);
 
 		return current(self::doSelectJoinClip($c));
+	}
+
+	public static function repinReclipBySceneIdUserId($scene_time_id, $user_id)
+	{
+		$c = new Criteria();
+		$c->clearSelectColumns();
+		$c->addSelectColumn(self::CLIP_ID);
+		$c->addJoin(SceneTimePeer::RECLIP_ID, ReclipPeer::ID, Criteria::INNER_JOIN);
+		$c->add(SceneTimePeer::ID, $scene_time_id);
+		$c->setLimit(1);
+
+		$origin_reclip = BasePeer::doSelect($c)->fetch(PDO::FETCH_ASSOC);
+
+		$new_reclip = self::retrieveByClipIdUserId($origin_reclip['clip_id'], $user_id);
+		if(!$new_reclip)
+		{
+			$new_reclip = new Reclip();
+			$new_reclip->setClipId($origin_reclip['clip_id']);
+			$new_reclip->setSfGuardUserProfileId($user_id);
+			$new_reclip->save();
+		}
+		return $new_reclip->getId();
 	}
 } // ReclipPeer

@@ -1,7 +1,7 @@
 <li class="clip_sticker">
 	<div class="inner">
 		<div id="image_<?php echo $reclip_id ?>" class="b-video">
-			<?php include_component('board', 'clipStickerSceneTimePreview', array('scene' => $scene))?>
+			<?php include_component('board', 'clipStickerSceneTimePreview', array('scene' => $scene, 'reclip_id' => $reclip_id))?>
 		</div>
 
 		<div class="b-tabs">

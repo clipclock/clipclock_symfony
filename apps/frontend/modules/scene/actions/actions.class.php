@@ -89,38 +89,43 @@ class sceneActions extends sfActions
 		return $this->renderText($json);
 	}
 
-    public function executeUnrepin(sfWebRequest $request)
-    {
-        $origin_scene = ScenePeer::retrieveByPK($request->getParameter('scene_id'));
-        $this->getContext()->getConfiguration()->loadHelpers(array('Url'));
+	public function executeUnrepin(sfWebRequest $request)
+	{
+		$origin_scene = ScenePeer::retrieveByPK($request->getParameter('scene_id'));
+		$this->getContext()->getConfiguration()->loadHelpers(array('Url'));
 
-        return (SceneRepinPeer::toggleBySceneIdAndUserIdByState($request->getParameter('scene_id'),
-                                                        $this->getUser()->getId(),
-                                                        false) == SceneRepinPeer::UN_PINNED) ?
+		if(SceneRepinPeer::toggleBySceneIdAndUserIdByState($request->getParameter('scene_id'), $this->getUser()->getId(), false)
+				== SceneRepinPeer::UN_PINNED)
+		{
+			$result = array('result' => 'success', 'location' => url_for(array(
+										'sf_route' => 'scene',
+										'username_slug' => $origin_scene->getSfGuardUserProfile()->getNick(),
+										'board_id' => $origin_scene->getBoardId(),
+										'id' => $origin_scene->getId())), 'content' => 'toggled successfully');
+		}
+		else
+		{
+			$result = array('result' => 'unsuccess', 'content' => 'something wrong');
+		}
 
-        $this->returnJSON(array('result' => 'success', 'location' => url_for(array(
-                                                                                  'sf_route' => 'scene',
-                                                                                  'username_slug' => $origin_scene->getSfGuardUserProfile()->getNick(),
-                                                                                  'board_id' => $origin_scene->getBoardId(),
-                                                                                  'id' => $origin_scene->getId())), 'content' => 'toggled successfully')) :
-        $this->returnJSON(array('result' => 'unsuccess', 'content' => 'something wrong')) ;
+		return $this->returnJSON($result);
 
-    }
+	}
 
-    public function executeRepin(sfWebRequest $request)
-    {
-        $this->scene_form = new RepinModalForm(null);
+	public function executeRepin(sfWebRequest $request)
+	{
+		$this->scene_form = new RepinModalForm(null);
 
-        $this->scene_form->bind($request->getParameter($this->scene_form->getName()));
+		$this->scene_form->bind($request->getParameter($this->scene_form->getName()));
 
-        $this->scene_form->save();
+		$this->scene_form->save();
 
-        $this->redirect($this->generateUrl('scene', array(
-            'username_slug' => $this->getUser()->getNick(),
-            'board_id' => $this->scene_form->getObject()->getBoardId(),
-            'id' => $this->scene_form->getObject()->getId()
-        )));
-    }
+		$this->redirect($this->generateUrl('scene', array(
+			'username_slug' => $this->getUser()->getNick(),
+			'board_id' => $this->scene_form->getObject()->getBoardId(),
+			'id' => $this->scene_form->getObject()->getId()
+		)));
+	}
 
 	public function executeToggleFBLikeState(sfWebRequest $request)
 	{

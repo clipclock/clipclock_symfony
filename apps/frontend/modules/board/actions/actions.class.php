@@ -56,7 +56,7 @@ class boardActions extends sfActions
 
 		return $this->returnJSON(array(
 			'scene_id' => $this->scene->getId(),
-			'scene_image' => $this->getComponent('board', 'clipStickerSceneTimePreview', array('scene' => $this->scene)),
+			'scene_image' => $this->getComponent('board', 'clipStickerSceneTimePreview', array('scene' => $this->scene, 'reclip_id' => $this->scene->getSceneTime()->getReclipId())),
 			'scene_comments_list' => $this->getComponent('board', 'clipStickerSceneTimeCommentsListShort', array('scene' => $this->scene)),
 			'scene_footer' => $this->getComponent('board', 'clipStickerFooter', array('scene' => $this->scene))
 		));

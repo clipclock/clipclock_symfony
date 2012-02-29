@@ -19,6 +19,16 @@
  */
 class SceneTimePeer extends BaseSceneTimePeer {
 
+	public static function repinSceneTimeBySceneTimeUserId($scene_time, $user_id)
+	{
+		$new_scene_time = new SceneTime();
+		$new_scene_time->setSceneTime($scene_time->getSceneTime());
+		$new_scene_time->setReclipId(ReclipPeer::repinReclipBySceneIdUserId($scene_time->getId(), $user_id));
+		$new_scene_time->setCreatedAt(time());
+		$new_scene_time->save();
+		return $new_scene_time->getId();
+	}
+
 	public static function retrieveClipsIdsByBoard($board_id, Criteria $c = null)
 	{
 		$c = !$c ? new Criteria() : $c;

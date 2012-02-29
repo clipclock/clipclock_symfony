@@ -9,7 +9,7 @@
         <!-- name-and-adress  -->
         <div class="name-and-adress">
             <?php echo link_to($fullname, array('sf_route' => 'user', 'nick' => $nick)); ?>
-            <span><a href="#">Moscow</a>, <a href="#">Russia</a></span>
+            <span>Moscow, Russia</span>
         </div>
         <!-- /name-and-adress -->
         <!-- user-title-menu  -->

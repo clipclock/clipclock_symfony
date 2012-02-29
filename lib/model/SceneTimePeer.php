@@ -64,7 +64,7 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		$c->addDescendingOrderByColumn('max('.self::CREATED_AT.')');
 
 		$c->addGroupByColumn(SceneTimePeer::CLIP_ID);
-		//$c->addGroupByColumn(ScenePeer::BOARD_ID);
+		$c->addGroupByColumn(ScenePeer::BOARD_ID);
 		return $c;
 	}
 

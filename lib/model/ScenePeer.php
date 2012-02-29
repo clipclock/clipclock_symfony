@@ -27,12 +27,10 @@ class ScenePeer extends BaseScenePeer {
         return self::doCount($c);
     }
 
-	public static function retrieveFirstSceneTimeIdByClipIdBoardId($clip_id, $board_id)
+	public static function retrieveFirstSceneTimeIdByClipIdBoardId($clip_id)
 	{
 		$c = new Criteria();
 
-		$c->add(self::BOARD_ID, $board_id);
-		//$c->addJoin(self::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
 		$c->add(SceneTimePeer::CLIP_ID, $clip_id);
 		$c->addDescendingOrderByColumn(SceneTimePeer::UNIQUE_COMMENTS_COUNT);
 		$c->addAscendingOrderByColumn(SceneTimePeer::SCENE_TIME);

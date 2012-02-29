@@ -46,8 +46,9 @@ class boardComponents extends sfComponents
 	public function executeClipSticker()
 	{
 		$this->clip_id = $this->getVar('clip_id');
-		$this->board_id = $this->getVar('board_id');
-		$this->scene = ScenePeer::retrieveFirstSceneTimeIdByClipIdBoardId($this->clip_id, $this->board_id);
+
+		$this->scene = ScenePeer::retrieveFirstSceneTimeIdByClipIdBoardId($this->clip_id);
+		$this->board_id = $this->scene->getBoardId();
 	}
 
 	public function executeClipStickerSceneTimePreview()

@@ -58,13 +58,13 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		$c->setPrimaryTableName(SceneTimePeer::TABLE_NAME);
 		$c->clearSelectColumns();
 		$c->addSelectColumn(SceneTimePeer::CLIP_ID);
-		$c->addSelectColumn(ScenePeer::BOARD_ID);
+		//$c->addSelectColumn(ScenePeer::BOARD_ID);
 		$c->addJoin(SceneTimePeer::ID, ScenePeer::SCENE_TIME_ID, Criteria::INNER_JOIN);
 		$c->addDescendingOrderByColumn('max('.self::UNIQUE_COMMENTS_COUNT.')');
 		$c->addDescendingOrderByColumn('max('.self::CREATED_AT.')');
 
 		$c->addGroupByColumn(SceneTimePeer::CLIP_ID);
-		$c->addGroupByColumn(ScenePeer::BOARD_ID);
+		//$c->addGroupByColumn(ScenePeer::BOARD_ID);
 		return $c;
 	}
 

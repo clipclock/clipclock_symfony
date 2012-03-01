@@ -27,16 +27,16 @@
 });
 
 
-function layoutAndScroll(path, elem, offset)
+function layoutAndScroll(path, elem, width)
 {
 	if(!elem)
 	{
 		elem = 'clip_sticker';
 	}
 
-	if(!offset)
+	if(!width)
 	{
-		offset = 5;
+		width = 235;
 	}
 	$(document).ready(function(){
 		$('#container').infinitescroll({
@@ -52,15 +52,15 @@ function layoutAndScroll(path, elem, offset)
 		},function(arrayOfNewElems){
 			$('.'+elem).wookmark({
 				container: $('#container'),
-				offset: offset,
-				itemWidth: 235,
+				offset: 5,
+				itemWidth: width,
 				autoResize: true
 			});
 		} );
 		var handler = $('.'+elem).wookmark({
 			container: $('#container'),
-			offset: offset,
-			itemWidth: 235,
+			offset: 5,
+			itemWidth: width,
 			autoResize: true
 		});
 	});

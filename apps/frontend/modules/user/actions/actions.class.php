@@ -74,7 +74,7 @@ class userActions extends sfActions
 		$this->user = $this->getRoute()->getObject();
 		$this->current_user = $this->getUser();
 
-		$this->pager = new sfPropelPager('Board', 1);
+		$this->pager = new sfPropelPager('Board', 8);
 		$this->pager->setCriteria(BoardPeer::retrieveBoardIdByUserId($this->user->getId()));
 		$this->pager->setPeerMethod('doSelectForPager');
 		$this->pager->setPage($request->getParameter('page', 1));

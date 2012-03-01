@@ -27,8 +27,12 @@
 });
 
 
-function layoutAndScroll(path)
+function layoutAndScroll(path, elem)
 {
+	if(!elem)
+	{
+		elem = 'clip_sticker';
+	}
 	$(document).ready(function(){
 		$('#container').infinitescroll({
 
@@ -41,14 +45,14 @@ function layoutAndScroll(path)
 			path: path
 			// selector for all items you'll retrieve
 		},function(arrayOfNewElems){
-			$('.clip_sticker').wookmark({
+			$('.'+elem).wookmark({
 				container: $('#container'),
 				offset: 5,
 				itemWidth: 235,
 				autoResize: true
 			});
 		} );
-		var handler = $('.clip_sticker').wookmark({
+		var handler = $('.'+elem).wookmark({
 			container: $('#container'),
 			offset: 5,
 			itemWidth: 235,

@@ -1,4 +1,3 @@
-
 <?php foreach($boards_ids as $board_id):?>
 	<?php include_component('board', 'boardSticker', array('board_id' => $board_id['id'], 'user' => $user, 'current_user' => $current_user))?>
 <?php endforeach?>

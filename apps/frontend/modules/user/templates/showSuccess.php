@@ -23,7 +23,7 @@
 			<?php include_component('user', 'boards', array('user' => $user, 'pager' => $pager, 'current_user' => $current_user)) ?>
 		</ul>
 		<script type="text/javascript">
-			layoutAndScroll('<?php echo url_for('user_page', array('nick' => $user->getNick(), 'page' => $pager->getNextPage())) ?>');
+			layoutAndScroll('<?php echo url_for('user_page', array('nick' => $user->getNick(), 'page' => $pager->getNextPage())) ?>', 'board_sticker');
 		</script>
 	</div>
 </div>

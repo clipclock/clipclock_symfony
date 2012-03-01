@@ -26,12 +26,11 @@ class SceneCommentPeer extends BaseSceneCommentPeer {
         return self::doCount($c);
     }
 
-    public static function retrieveShortBySceneId($scene_id, $max_limit = 50)
+    public static function retrieveShortBySceneId($scene_time_id, $max_limit = 50)
 	{
 		$c = new Criteria();
 
-		$c->addJoin(self::SCENE_TIME_ID, ScenePeer::SCENE_TIME_ID, Criteria::INNER_JOIN);
-		$c->add(ScenePeer::ID, $scene_id);
+		$c->add(self::SCENE_TIME_ID, $scene_time_id);
 		$c->addAscendingOrderByColumn(self::CREATED_AT);
 		$c->setLimit($max_limit);
 

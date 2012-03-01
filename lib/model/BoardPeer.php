@@ -90,4 +90,12 @@ class BoardPeer extends BaseBoardPeer {
 		$board->save();
 		return $board->getId();
 	}
+
+	public static function retrieveJoinSfGuardById($board_id)
+	{
+		$c = new Criteria();
+		$c->add(self::ID, $board_id);
+		$c->setLimit(1);
+		return current(self::doSelectJoinSfGuardUserProfile($c));
+	}
 } // BoardPeer

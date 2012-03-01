@@ -1,1 +1,1 @@
-<li><a href="<?php echo url_for('scene', $scene)?>"><img src='<?php echo $scene_image?>' alt='' width="61" height="61" /></a></li>
+<li><a href="<?php echo url_for('scene', array('id' => $scene_id, 'board_id' => $board->getId(), 'username_slug' => $board->getSfGuardUserProfile()))?>"><img src='<?php echo $scene_image?>' alt='' width="61" height="61" /></a></li>

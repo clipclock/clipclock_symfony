@@ -31,7 +31,22 @@ class ScenePeer extends BaseScenePeer {
 	{
 		$c = new Criteria();
 
+		$c->clearSelectColumns();
+		$c->addSelectColumn(SceneTimePeer::SCENE_TIME);
+		$c->addSelectColumn(SceneTimePeer::UNIQUE_COMMENTS_COUNT);
+		$c->addSelectColumn(ScenePeer::BOARD_ID);
+		$c->addSelectColumn(SceneTimePeer::ID.' as scene_time_id');
+		$c->addSelectColumn(ScenePeer::ID.' as scene_id');
+		$c->addSelectColumn(ScenePeer::TEXT);
+		$c->addSelectColumn(ScenePeer::SF_GUARD_USER_PROFILE_ID. ' as user_id');
+		$c->addSelectColumn(SfGuardUserProfilePeer::NICK. ' as nick');
+		$c->addSelectColumn(ReclipPeer::CLIP_ID);
+
 		$c->add(SceneTimePeer::RECLIP_ID, $reclip_id);
+		$c->addJoin(self::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
+		$c->addJoin(SceneTimePeer::RECLIP_ID, ReclipPeer::ID, Criteria::INNER_JOIN);
+		$c->addJoin(ScenePeer::SF_GUARD_USER_PROFILE_ID, SfGuardUserProfilePeer::SF_GUARD_USER_ID, Criteria::INNER_JOIN);
+
 		$c->addDescendingOrderByColumn(SceneTimePeer::UNIQUE_COMMENTS_COUNT);
 		if($user_id)
 		{
@@ -39,7 +54,7 @@ class ScenePeer extends BaseScenePeer {
 		}
 		$c->setLimit(1);
 
-		return current(self::doSelectJoinSceneTime($c));
+		return BasePeer::doSelect($c)->fetch(PDO::FETCH_ASSOC);
 	}
 
 	public static function retrieveAscSceneTimeIdByClipIdBoardId($reclip_id, $board_id)

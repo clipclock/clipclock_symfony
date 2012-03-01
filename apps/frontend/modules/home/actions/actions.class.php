@@ -38,7 +38,7 @@ class homeActions extends sfActions
 			$this->criteria = SceneTimePeer::modifyCriteriaByFilter($this->criteria, $user_following, $board_following, $clip_following, $request->getParameter('category'));
 		}
 
-		$this->pager = new sfPropelPager('SceneTime', 14);
+		$this->pager = new sfPropelPager('SceneTime', 24);
 		$this->pager->setCriteria($this->criteria);
 		$this->pager->setPeerMethod('doSelectForPager');
 		$this->pager->setPage($request->getParameter('page', 1));

@@ -26,13 +26,12 @@ class boardComponents extends sfComponents
 
 	public function executeBoardStickerSceneTimePreview()
 	{
-		$this->reclip_id = $this->getVar('reclip_id');
-		$this->board_id = $this->getVar('board_id');
-		$this->scene = ScenePeer::retrieveBestByClipId($this->reclip_id, $this->board_id);
+		$this->clip_id = $this->getVar('clip_id');
+		$this->scene_id = $this->getVar('scene_id');
+		$this->scene_time = $this->getVar('scene_time');
+		$this->board = $this->getVar('board');
 
-		$clip_id = ReclipPeer::retrieveClipIdById($this->reclip_id);
-
-		$this->scene_image = ImagePreview::c14n($clip_id.$this->scene->getSceneTime()->getSceneTime(), 'medium');
+		$this->scene_image = ImagePreview::c14n($this->clip_id.$this->scene_time, 'medium');
 	}
 
 	public function executeBoardClipsList()
@@ -49,16 +48,16 @@ class boardComponents extends sfComponents
 	{
 		$this->reclip_id = $this->getVar('reclip_id');
 
-		$this->scene = ScenePeer::retrieveFirstSceneTimeIdByClipIdBoardId($this->reclip_id, $this->getVar('current_user')->getId());
-		$this->board_id = $this->scene->getBoardId();
+		$this->scene_info = ScenePeer::retrieveFirstSceneTimeIdByClipIdBoardId($this->reclip_id, $this->getVar('current_user')->getId());
+		$this->board = BoardPeer::retrieveJoinSfGuardById($this->scene_info['board_id']);
 	}
 
 	public function executeClipStickerSceneTimePreview()
 	{
-		$this->scene = $this->getVar('scene');
-		$clip_id = ReclipPeer::retrieveClipIdById($this->getVar('reclip_id'));
+		$this->scene_info = $this->getVar('scene_info');
+		//$clip_id = ReclipPeer::retrieveClipIdById($this->getVar('reclip_id'));
 
-		$this->scene_image = ImagePreview::c14n($clip_id.$this->scene->getSceneTime()->getSceneTime(), 'big');
+		$this->scene_image = ImagePreview::c14n($this->scene_info['clip_id'].$this->scene_info['scene_time'], 'big');
 	}
 
 	public function executeClipStickerControl()
@@ -71,29 +70,29 @@ class boardComponents extends sfComponents
 
 	public function executeClipStickerSceneTimeCommentsListShort()
 	{
-		$this->scene = $this->getVar('scene');
-		$this->unique_comments_count = $this->scene->getSceneTime()->getUniqueCommentsCount();
+		$this->scene_info = $this->getVar('scene_info');
+		$this->unique_comments_count = $this->scene_info['unique_comments_count'];
 
 		$this->comments = SceneCommentPeer::retrieveShortBySceneId(
-			$this->scene->getId(),
+			$this->scene_info['scene_time_id'],
 			calculateCommentListLength($this->unique_comments_count)
 		);
 	}
 
 	public function executeClipStickerFooter()
 	{
-		$this->scene = $this->getVar('scene');
-		$this->scene_time_id = $this->scene->getSceneTimeId();
+		$this->scene_info = $this->getVar('scene_info');
+		$this->scene_time_id = $this->scene_info['scene_time_id'];
 
-		$counts = ScenePeer::countRepinsLikesForSceneId($this->scene->getId());
+		$counts = ScenePeer::countRepinsLikesForSceneId($this->scene_info['scene_id']);
 		$this->repins_count = $counts['repins_count'];
 		$this->likes_count = $counts['likes_count'];
 
-		$my_counts = ScenePeer::countLikesForSceneIdByUserId($this->scene->getId(), $this->getUser()->getId());
+		/*$my_counts = ScenePeer::countLikesForSceneIdByUserId($this->scene_info['scene_id'], $this->getUser()->getId());
 		$this->i_repin = $my_counts['repins_count'] ? true : false;
 		$this->i_like = $my_counts['likes_count'] ? true : false;
-
-		$counts = SceneTimePeer::countCommentsForSceneTimeId($this->scene_time_id);
+*/
+		$counts = SceneTimePeer::countCommentsForSceneTimeId($this->scene_info['scene_time_id']);
 		$this->comments_count = $counts['comments_count'];
 	}
 }

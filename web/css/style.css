@@ -476,3 +476,4 @@ label {font-size:18px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 #infscr-loading { position: fixed; left: 40%; bottom: 40px; }
 #content { min-height: auto !important;}
 /*.pager_navigation { display: none; }*/
+.long-col {margin:0 0 0 228px;}

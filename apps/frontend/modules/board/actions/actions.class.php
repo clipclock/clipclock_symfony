@@ -32,7 +32,7 @@ class boardActions extends sfActions
 
 		$this->forward404Unless($this->current_board);
 
-		$this->pager = new sfPropelPager('SceneTime', 30);
+		$this->pager = new sfPropelPager('SceneTime', 8);
 		$this->pager->setCriteria(SceneTimePeer::retrieveClipsIdsForListByBoardId($this->current_board->getId()));
 		$this->pager->setPeerMethod('doSelectForPager');
 		$this->pager->setPage($request->getParameter('page', 1));

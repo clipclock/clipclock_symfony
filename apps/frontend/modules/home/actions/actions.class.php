@@ -24,6 +24,8 @@ class homeActions extends sfActions
 	 */
 	public function executeIndex(sfWebRequest $request)
 	{
+		$this->source = $request->getParameter('source');
+		$this->category = $request->getParameter('category');
 		if($request->getParameter('source') && $request->getParameter('source') == 2)
 		{
 			$this->form->setDefault('source', $request->getParameter('source'));
@@ -40,6 +42,11 @@ class homeActions extends sfActions
 		$this->pager->setCriteria($this->criteria);
 		$this->pager->setPeerMethod('doSelectForPager');
 		$this->pager->setPage($request->getParameter('page', 1));
+
+		if($request->isXmlHttpRequest())
+		{
+			return $this->returnJSON($this->getComponent('home', 'clipList', array('pager' => $this->pager, 'current_user' => $this->user, 'source' => $this->source, 'category' => $this->category)));
+		}
 	}
 
 	public function executeBindForm(sfWebRequest $request)
@@ -54,5 +61,15 @@ class homeActions extends sfActions
 		}
 
 		$this->redirect($this->generateUrl('homepage', array('source' => $this->form->getValue('source'), 'category' => $this->form->getValue('category'))));
+	}
+
+
+	public function returnJSON($data)
+	{
+		$json = json_encode($data);
+
+		$this->getResponse()->setHttpHeader('Content-type', 'application/json');
+
+		return $this->renderText($json);
 	}
 }

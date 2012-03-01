@@ -16,18 +16,8 @@
 			<ul id="container" class="stickers-list" style="position: relative;">
 				<?php include_component('board', 'boardClipsList', array('current_board' => $current_board, 'pager' => $pager, 'current_user' => $current_user)) ?>
 			</ul>
-			<?php echo jq_link_to_remote('next', array(
-			'update' => array('success_callback' => 'console.log(JSON.parse(data));', 'failure' => "alert('HTTP Error ' + XMLHttpRequest.status + '!')"),
-			'url'    => '@board_page?page=3&id='.$current_board->getId().'&username_slug='.$current_user->getNick(),
-			'method' => 'GET'
-			))?>
 			<script type="text/javascript">
-				var handler = $('.clip_sticker').wookmark({
-					container: $('#container'),
-					offset: 5,
-					itemWidth: 235,
-					autoResize: true
-				});
+				layoutAndScroll('<?php echo url_for('board_page', array('id' => $current_board->getId(), 'username_slug' => $current_user->getNick(), 'page' => $pager->getNextPage())) ?>');
 			</script>
 		</div>
 	</div>

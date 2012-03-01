@@ -14,7 +14,7 @@ default:
 
   stylesheets:    [style.css, cusel.css]
 
-  javascripts:    [cusel.js, source.js, jquery.wookmark.min.js, follow.js, source.js]
+  javascripts:    [cusel.js, source.js, jquery.wookmark.min.js,  jquery.infinitescroll.js, follow.js]
 
   has_layout:     true
   layout:         layout

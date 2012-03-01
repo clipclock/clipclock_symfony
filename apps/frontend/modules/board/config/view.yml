@@ -1,2 +1,2 @@
 default:
-  javascripts:    [ajaxCallbacks.js, jquery.wookmark.min.js, follow.js, cusel.js, source.js]
+  javascripts:    [ajaxCallbacks.js, jquery.wookmark.min.js, follow.js, cusel.js, source.js, jquery.infinitescroll.js]

@@ -1,2 +1,0 @@
-default:
-  javascripts:    [ajaxCallbacks.js, cusel.js, source.js]

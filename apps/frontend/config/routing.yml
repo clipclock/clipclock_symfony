@@ -20,8 +20,8 @@ homepage_search:
 ### HOMEPAGE AJAX ###
 
 homepage_page:
-  url:   /:source/:category/page/:page
-  param: { module: home, action: index }
+  url:   /page/:page/:source/:category
+  param: { module: home, action: index, source: '', category: '' }
   requirements:
     source: \d+
     category: \d+
@@ -62,7 +62,7 @@ sticker_scene_change:
 board_page:
   url:   /:username_slug/board/:id/page/:page
   class: sfPropelRoute
-  param: { module: board, action: show }
+  param: { module: board, action: show, page: '' }
   options: { model: Board, type: object }
   requirements:
     id: \d+

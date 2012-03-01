@@ -39,9 +39,8 @@ class boardActions extends sfActions
 
 		if($request->isXmlHttpRequest())
 		{
-			return $this->returnJSON(array(
-				'clips_list' => $this->getComponent('board', 'boardClipsList', array('current_board' => $this->current_board, 'pager' => $this->pager))
-			));
+			return $this->returnJSON($this->getComponent('board', 'boardClipsList', array('current_board' => $this->current_board, 'pager' => $this->pager, 'current_user' => $this->current_user))
+			);
 		}
 	}
 

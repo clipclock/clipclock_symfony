@@ -1,2 +1,2 @@
 default:
-  javascripts:    [swfobject.js, clipEmbed.js, ajaxCallbacks.js, cusel.js]
+  javascripts:    [swfobject.js, clipEmbed.js, ajaxCallbacks.js, cusel.js, source.js]

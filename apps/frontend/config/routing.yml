@@ -62,7 +62,7 @@ sticker_scene_change:
 board_page:
   url:   /:username_slug/board/:id/page/:page
   class: sfPropelRoute
-  param: { module: board, action: show, page: '' }
+  param: { module: board, action: show, page: 0 }
   options: { model: Board, type: object }
   requirements:
     id: \d+
@@ -139,6 +139,12 @@ user:
   url:   /profile/:nick
   class: sfPropelRoute
   param: { module: user, action: show }
+  options: { model: sfGuardUserProfile, type: object }
+
+user_page:
+  url:   /profile/:nick/page/:page
+  class: sfPropelRoute
+  param: { module: user, action: show, page: '' }
   options: { model: sfGuardUserProfile, type: object }
 
 edit_user:

@@ -41,8 +41,11 @@ class userComponents extends sfComponents
 
 	public function executeBoards()
 	{
+		$this->pager = $this->getVar('pager');
+		$this->current_user = $this->getVar('current_user');
 		$this->user = $this->getVar('user');
-		$this->boards = $this->user->getBoards();
+		$this->pager->init();
+		$this->boards_ids = $this->pager->getResults();
 	}
 
     public function executeFollow()

@@ -73,6 +73,17 @@ class userActions extends sfActions
 	{
 		$this->user = $this->getRoute()->getObject();
 		$this->current_user = $this->getUser();
+
+		$this->pager = new sfPropelPager('Board', 8);
+		$this->pager->setCriteria(BoardPeer::retrieveBoardIdByUserId($this->user->getId()));
+		$this->pager->setPeerMethod('doSelectForPager');
+		$this->pager->setPage($request->getParameter('page', 1));
+
+		if($request->isXmlHttpRequest())
+		{
+			return $this->returnJSON($this->getComponent('user', 'boards', array('current_user' => $this->current_user, 'pager' => $this->pager, 'user' => $this->user))
+			);
+		}
 	}
 
 
@@ -111,4 +122,13 @@ class userActions extends sfActions
         echo json_encode(array('result' => (BoardFollowerPeer::unfollowBoardByUser($request->getParameter('board_id'), $this->getUser()->getId())) ? 'success' : 'fail'));
         return sfView::NONE;
     }
+
+	public function returnJSON($data)
+	{
+		$json = json_encode($data);
+
+		$this->getResponse()->setHttpHeader('Content-type', 'application/json');
+
+		return $this->renderText($json);
+	}
 }

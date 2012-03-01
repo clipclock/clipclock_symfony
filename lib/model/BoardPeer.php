@@ -26,6 +26,21 @@ class BoardPeer extends BaseBoardPeer {
         return self::doCount($c);
     }
 
+	public static function retrieveBoardIdByUserId($user_id)
+	{
+		$c = new Criteria();
+		$c->clearSelectColumns();
+		$c->addSelectColumn(BoardPeer::ID);
+		$c->setPrimaryTableName(BoardPeer::TABLE_NAME);
+		$c->add(BoardPeer::SF_GUARD_USER_PROFILE_ID, $user_id);
+
+		return $c;
+	}
+
+	public static function doSelectForPager( $c ) {
+		return parent::doSelectStmt( $c );
+	}
+
 	public static function retrieveIdsLinkedBoardsByUserId($board_id, $user_id)
 	{
 		$c = new Criteria();

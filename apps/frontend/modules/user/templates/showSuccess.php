@@ -19,7 +19,12 @@
 		</div>
 	</div>
 	<div class="long-col">
-		<?php include_component('user', 'boards', array('user' => $user, 'current_user' => $current_user)) ?>
+		<ul id="container" class="follow-set" style="position: relative;">
+			<?php include_component('user', 'boards', array('user' => $user, 'pager' => $pager, 'current_user' => $current_user)) ?>
+		</ul>
+		<script type="text/javascript">
+			layoutAndScroll('<?php echo url_for('user_page', array('nick' => $user->getNick(), 'page' => $pager->getNextPage())) ?>');
+		</script>
 	</div>
 </div>
 </div>

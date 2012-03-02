@@ -53,10 +53,23 @@ class boardActions extends sfActions
 
 		$this->getContext()->getConfiguration()->loadHelpers(array('Comment'));
 
+		$clip_id = ReclipPeer::retrieveClipIdById($this->scene->getSceneTime()->getReclipId());
+
+		$scene_info = array(
+			'scene_id' => $scene_id,
+			'clip_id' => $clip_id,
+			'scene_time' => $this->scene->getSceneTime()->getSceneTime(),
+			'scene_time_id' => $this->scene->getSceneTimeId(),
+			'unique_comments_count' => $this->scene->getSceneTime()->getUniqueCommentsCount(),
+			'nick' => $this->scene->getSfGuardUserProfile()->getNick(),
+			'user_id' => $this->scene->getSfGuardUserProfileId(),
+			'text' => $this->scene->getText(),
+		);
+
 		return $this->returnJSON(array(
 			'scene_id' => $this->scene->getId(),
-			'scene_image' => $this->getComponent('board', 'clipStickerSceneTimePreview', array('scene' => $this->scene, 'reclip_id' => $this->scene->getSceneTime()->getReclipId())),
-			'scene_comments_list' => $this->getComponent('board', 'clipStickerSceneTimeCommentsListShort', array('scene' => $this->scene)),
+			'scene_image' => $this->getComponent('board', 'clipStickerSceneTimePreview', array('scene_info' => $scene_info, 'reclip_id' => $this->scene->getSceneTime()->getReclipId(), 'board' => $this->scene->getBoard())),
+			'scene_comments_list' => $this->getComponent('board', 'clipStickerSceneTimeCommentsListShort', array('scene_info' => $scene_info)),
 			'scene_footer' => $this->getComponent('board', 'clipStickerFooter', array('scene' => $this->scene))
 		));
 	}

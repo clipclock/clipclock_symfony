@@ -47,7 +47,8 @@ function layoutAndScroll(path, elem, width)
 			// selector for the NEXT link (to page 2)
 			itemSelector : "li",
 			dataType: 'json',
-			path: path
+			path: path,
+			bufferPx: 2000
 			// selector for all items you'll retrieve
 		},function(arrayOfNewElems){
 			$('.'+elem).wookmark({
@@ -61,7 +62,8 @@ function layoutAndScroll(path, elem, width)
 			container: $('#container'),
 			offset: 5,
 			itemWidth: width,
-			autoResize: true
+			autoResize: true,
+			bufferPx: 2000
 		});
 	});
 }

@@ -50,7 +50,7 @@ P { padding:0 0 13px 0;}
 .size300 {width:300px;}
 
 /* default-btns */
-.default-follow-btn, 
+.default-follow-btn,
 .default-un-follow-btn {border:1px solid #ac1010; font-size:15px; text-align:center; font-weight:bold; color:#fff; background:url(../images/head-menu-list-bg.jpg) repeat-x; text-shadow:0 -1px 1px #ccc; display:block; padding:6px 10px; position:relative; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; -khtml-border-radius:3px; behavior: url(js/PIE.htc);}
 .default-un-follow-btn{ background:#F2F0F0; border:1px solid #ccc; color:#555; text-shadow:none;}
 .default-follow-btn:hover { color:#fff;}

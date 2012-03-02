@@ -58,6 +58,7 @@ class boardActions extends sfActions
 		$scene_info = array(
 			'scene_id' => $scene_id,
 			'clip_id' => $clip_id,
+			'board_id' => $this->scene->getBoardId(),
 			'scene_time' => $this->scene->getSceneTime()->getSceneTime(),
 			'scene_time_id' => $this->scene->getSceneTimeId(),
 			'unique_comments_count' => $this->scene->getSceneTime()->getUniqueCommentsCount(),
@@ -70,7 +71,7 @@ class boardActions extends sfActions
 			'scene_id' => $this->scene->getId(),
 			'scene_image' => $this->getComponent('board', 'clipStickerSceneTimePreview', array('scene_info' => $scene_info, 'reclip_id' => $this->scene->getSceneTime()->getReclipId(), 'board' => $this->scene->getBoard())),
 			'scene_comments_list' => $this->getComponent('board', 'clipStickerSceneTimeCommentsListShort', array('scene_info' => $scene_info)),
-			'scene_footer' => $this->getComponent('board', 'clipStickerFooter', array('scene' => $this->scene))
+			'scene_footer' => $this->getComponent('board', 'clipStickerFooter', array('scene_info' => $scene_info))
 		));
 	}
 

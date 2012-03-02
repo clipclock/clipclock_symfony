@@ -39,11 +39,13 @@ EOF;
 		$c->addDescendingOrderByColumn(TokenPeer::CREATED_AT);
 		$tokens = TokenPeer::doSelect($c);
 
+		$i=0;
 		foreach($tokens as $token)
 		{
 			if(!file_exists(__DIR__.'/../../web'.ImagePreview::c14n($token->getUserId(), 'medium', 'avatar')) ||
 					!file_exists(__DIR__.'/../../web'.ImagePreview::c14n($token->getUserId(), 'big', 'avatar')) || $options['force'])
 			{
+				$i++;
 				$melody = sfMelody::getInstance($token->getName(), array('token' => $token));
 				$action_map = ProfileMapper::$action_map;
 				$photo_action = $action_map[$melody->getName()]['photo'];
@@ -59,7 +61,7 @@ EOF;
 			}
 		}
 
-		echo "Done!
+		echo "Done! Tasks published: ".$i."
 ";
 		// add your code here
 	}

@@ -1,6 +1,5 @@
 <?php if(!$user->getId()):?>
 <ul class="autorizing">
-	<li class="sing"><a href="">Sign up</a></li>
 	<li class="login"><a href="<?php echo url_for('connect_fb')?>">Login</a></li>
 	<li class="about">
 		<a href="">About</a>

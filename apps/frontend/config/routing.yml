@@ -155,6 +155,48 @@ edit_user:
   requirements:
     user_id: \d+
 
+### LISTINGS ###
+
+list_followers:
+  url: /profile/:nick/list/followers
+  class: sfPropelRoute
+  param: { module: list, action: showUserFollowers }
+  options: { model: sfGuardUserProfile, type: object }
+
+list_followings:
+  url: /profile/:nick/list/followings
+  class: sfPropelRoute
+  param: { module: list, action: showUserFollowings }
+  options: { model: sfGuardUserProfile, type: object }
+
+
+list_likes:
+  url:   /:username_slug/board/:board_id/scene/:id/list/likes
+  class: sfPropelRoute
+  param: { module: list, action: showSceneLikes }
+  options: { model: Scene, type: object }
+  requirements:
+    board_id: \d+
+    id: \d+
+
+list_repins:
+  url:   /:username_slug/board/:board_id/scene/:id/list/repins
+  class: sfPropelRoute
+  param: { module: list, action: showSceneRepins }
+  options: { model: Scene, type: object }
+  requirements:
+    board_id: \d+
+    id: \d+
+
+list_comments:
+  url:   /:username_slug/board/:board_id/scene/:id/list/comments
+  class: sfPropelRoute
+  param: { module: list, action: showSceneComments }
+  options: { model: Scene, type: object }
+  requirements:
+    board_id: \d+
+    id: \d+
+
 ### MELODY CALLBACKS ###
 
 user_register:

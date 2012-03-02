@@ -51,7 +51,6 @@ class listActions extends sfActions
 		$this->pager->setPeerMethod('doSelectForPager');
 		$this->pager->setPage($request->getParameter('page', 1));
 
-
 		if($request->isXmlHttpRequest())
 		{
 			return $this->returnJSON($this->getComponent('board', 'boardClipsList', array('current_board' => $this->current_board, 'pager' => $this->pager, 'current_user' => $this->current_user))

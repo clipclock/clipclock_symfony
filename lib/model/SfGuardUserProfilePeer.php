@@ -76,8 +76,7 @@ class SfGuardUserProfilePeer extends BaseSfGuardUserProfilePeer {
 				$c->addJoin(self::SF_GUARD_USER_ID, SceneCommentPeer::SF_GUARD_USER_PROFILE_ID, Criteria::INNER_JOIN);
 
 				$c->addMultipleJoin(array(
-					array(self::SF_GUARD_USER_ID, ScenePeer::SF_GUARD_USER_PROFILE_ID),
-					array(ScenePeer::SCENE_TIME_ID, SceneCommentPeer::SCENE_TIME_ID),
+					array(SceneCommentPeer::SCENE_TIME_ID, ScenePeer::SCENE_TIME_ID),
 					array(ScenePeer::ID, $object_id)
 				), Criteria::INNER_JOIN);
 				$c->addGroupByColumn(self::SF_GUARD_USER_ID);

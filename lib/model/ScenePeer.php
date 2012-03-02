@@ -19,6 +19,26 @@
  */
 class ScenePeer extends BaseScenePeer {
 
+	public static function retrieveLatestByUserId($user_id)
+	{
+		$c = new Criteria();
+		$c->add(self::SF_GUARD_USER_PROFILE_ID, $user_id);
+		$c->addJoin(self::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
+		$c->addJoin(SceneTimePeer::RECLIP_ID, ReclipPeer::ID, Criteria::INNER_JOIN);
+		$c->addJoin(self::SF_GUARD_USER_PROFILE_ID, SfGuardUserProfilePeer::SF_GUARD_USER_ID, Criteria::INNER_JOIN);
+		$c->setLimit(8);
+		$c->addDescendingOrderByColumn(self::CREATED_AT);
+
+		$c->clearSelectColumns();
+		$c->addSelectColumn(self::ID . ' as scene_id');
+		$c->addSelectColumn(SceneTimePeer::SCENE_TIME . ' as scene_time');
+		$c->addSelectColumn(ReclipPeer::CLIP_ID);
+		$c->addSelectColumn(ScenePeer::BOARD_ID);
+		$c->addSelectColumn(SfGuardUserProfilePeer::NICK);
+
+		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);
+	}
+
     public static function getCountByUserId($user_id)
     {
         $c = new Criteria();

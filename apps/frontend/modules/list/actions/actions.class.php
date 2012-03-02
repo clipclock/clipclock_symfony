@@ -10,16 +10,11 @@
  */
 class listActions extends sfActions
 {
-	const FOLLOWERS = 'followers';
-	const FOLLOWINGS = 'followings';
-	const SCENE_LIKES = 'scene_likes';
-	const SCENE_REPINS = 'scene_repins';
-	const SCENE_COMMENTS = 'scene_comments';
+
 
 	protected function checkType()
 	{
-		$reflection = new ReflectionClass($this);
-		$valid_types = array_flip($reflection->getConstants());
+		$valid_types = array_flip(SfGuardUserProfilePeer::$objects_types);
 
 		if(!isset($valid_types[$this->getRequest()->getParameter('type')]))
 		{
@@ -27,7 +22,7 @@ class listActions extends sfActions
 		}
 		else
 		{
-			$this->type = $valid_types[$this->getRequest()->getParameter('type')];
+			$this->type_id = $valid_types[$this->getRequest()->getParameter('type')];
 		}
 	}
 
@@ -46,13 +41,16 @@ class listActions extends sfActions
 		$this->checkType();
 		$this->back_url = $request->getReferer();
 		$this->object = $this->getRoute()->getObject();
+		$this->type = SfGuardUserProfilePeer::$objects_types_names[$this->type_id];
+		$this->current_user = $this->getUser();
 
 		$this->forward404Unless($this->object);
 
 		$this->pager = new sfPropelPager('SfGuardUserProfile', 16);
-		$this->pager->setCriteria(SfGuardUserProfilePeer::retrieveCriteriaForListingByObjectIdAndType($this->object->getId(), $this->type));
+		$this->pager->setCriteria(SfGuardUserProfilePeer::retrieveCriteriaForListingByObjectIdAndTypeId($this->object->getId(), $this->type_id));
 		$this->pager->setPeerMethod('doSelectForPager');
 		$this->pager->setPage($request->getParameter('page', 1));
+
 
 		if($request->isXmlHttpRequest())
 		{

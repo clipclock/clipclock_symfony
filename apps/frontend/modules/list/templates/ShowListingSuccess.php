@@ -10,7 +10,9 @@
 			<!-- /title -->
 			<!-- list  -->
 			<div class="list">
-
+				<ul id="container">
+					<?php include_component('list', 'itemsList', array('pager' => $pager, 'current_user' => $current_user)) ?>
+				</ul>
 			</div>
 		</div>
 	</div>

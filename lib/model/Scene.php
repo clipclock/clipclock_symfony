@@ -23,4 +23,9 @@ class Scene extends BaseScene {
 	{
 		return $this->getSfGuardUserProfile()->getNick();
 	}
+
+	public function __toString()
+	{
+		return $this->getText();
+	}
 } // Scene

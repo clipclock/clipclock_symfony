@@ -1,4 +1,4 @@
-current_scene_id = 0;
+
 function embedClip(scene_time, video_id, source)
 {
 	preparePlayer(scene_time, video_id, source);
@@ -36,8 +36,7 @@ function seekTo(scene_time)
 function checkCurrentScene(scene_id, scene_time)
 {
 	seekTo(scene_time);
-	$('#scene_controls li').removeClass('active');
-	$('#scene_'+scene_id).addClass('active');
+	highliteControlTab(scene_id);
 
 	if(current_scene_id != scene_id)
 	{

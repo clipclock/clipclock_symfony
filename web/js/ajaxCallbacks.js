@@ -5,6 +5,8 @@
  * Time: 18:18
  * To change this template use File | Settings | File Templates.
  */
+current_scene_id = 0;
+first_scene = null;
 function stickerChange(data, clip_id, scene_id)
 {
 	var data = JSON.parse(data);
@@ -16,14 +18,63 @@ function stickerChange(data, clip_id, scene_id)
 	$('.clip_sticker').wookmark('update');
 }
 
-function sceneChange(data)
+function sceneChange(json_data, dont_history, url, json_url, secs, scene_id)
 {
-	var data = JSON.parse(data);
+	var data = JSON.parse(json_data);
 	$('#description').html(data.scene_description);
 	$('#comment_form').html(data.scene_comment_form);
 	$('#comments').html(data.scene_comments_list);
 	$('#fun_buttons').html(data.scene_social_buttons);
 	$('#people_sticker').html(data.scene_people_sticker);
+
+	if(!dont_history)
+	{
+		history.pushState({json_url: json_url, secs: secs, scene_id: scene_id}, 'Title', url);
+	}
+}
+
+function bindSceneChangeBack(json_url, secs, scene_id)
+{
+	window.addEventListener('popstate', function(e){
+		if(e.state)
+		{
+			json_url = e.state.json_url;
+			secs = e.state.secs;
+			scene_id = e.state.scene_id;
+		}
+		else if(first_scene)
+		{
+			scene_id = first_scene.scene_id;
+			secs = first_scene.secs;
+			json_url = first_scene.json_url;
+		}
+
+		if(bindedChangeBack)
+		{
+			$.ajax({
+				url: json_url,
+				beforeSend: function(){highliteControlTab(scene_id);seekTo(secs);},
+				dataType: 'text',
+				success: function(data){
+					sceneChange(data, true);
+				}
+			});
+			scene_id = null;
+			secs = null;
+			json_url = null;
+		}
+		else
+		{
+			first_scene = {scene_id: scene_id, secs: secs, json_url: json_url};
+			bindedChangeBack = true;
+		}
+	}, false);
+}
+
+function highliteControlTab(scene_id)
+{
+	$('#scene_controls li').removeClass('active');
+	$('#scene_'+scene_id).addClass('active');
 }
 
 function newSceneTimeModalHide()

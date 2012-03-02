@@ -1,7 +1,8 @@
+<?php if($current_user->getId()):?>
 <?php slot('scene_modal') ?>
 <?php include_partial('scene/modalForm', array('form' => $form, 'form_url' => url_for('scene_post'), 'form_partial' => 'scene/modalFormFields'))?>
 <?php end_slot(); ?>
-
+<?php endif?>
 <a href="" class="arrows prev"></a>
 <a href="" class="arrows next"></a>
 <ul id="scene_controls" class="tabs">
@@ -15,5 +16,7 @@
 			))?>
 	</li>
 <?php endforeach;?>
+<?php if($current_user->getId()):?>
 	<li id="new_time_scene" class="new-tag">New scene</li>
+<?php endif?>
 </ul>

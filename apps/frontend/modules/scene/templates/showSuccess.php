@@ -1,6 +1,6 @@
 <div class="b-content">
 <?php include_component('user', 'navigationPath', array('subject' => $current_scene, 'current_user' => $current_user, 'user' => $user,
-           'follow_button' => $current_user->getId() != $user->getId() ? get_component('user', 'follow', array(
+           'follow_button' => $current_user->getId() && $current_user->getId() != $user->getId() ? get_component('user', 'follow', array(
                                 'state_names' => array('Follow Video', 'Unfollow Video'),
                                 'sf_routes' => array('follow_clip', 'unfollow_clip'),
                                 'id_key' => 'clip_id',
@@ -17,9 +17,11 @@
 	</div>
 	<div class="long-col">
 		<div class="long-col-inside">
+			<?php if($current_user->getId()):?>
 			<div class="right-mini-coll">
 				<?php include_component('scene', 'sceneViewSocialButtons', array('scene_id' => $current_scene->getId(), 'user' => $user, 'current_user' => $current_user))?>
 			</div>
+				<?php endif?>
 			<div class="center-col">
 				<div class="b-main-video">
 					<?php include_component('scene', 'sceneView', array('scene' => $current_scene, 'user' => $user, 'current_user' => $current_user))?>

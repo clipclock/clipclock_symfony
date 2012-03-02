@@ -25,7 +25,7 @@ class staticActions extends sfActions
 		$this->form = new NewClipForm();
 
 		$this->form->bind($request->getParameter($this->form->getName()));
-		if($this->form->isValid())
+		if($this->form->isValid() && $this->getUser()->getId())
 		{
 			$this->source_name = 'youtube';
 			//Into util or helper

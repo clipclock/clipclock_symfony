@@ -39,7 +39,7 @@ class HomeFilterForm extends sfForm
 			'2' => 'Following',
 		);
 
-		if(!$this->getOption('user'))
+		if(!$this->getOption('user') || !$this->getOption('user')->getId())
 		{
 			unset($choices['2']);
 		}

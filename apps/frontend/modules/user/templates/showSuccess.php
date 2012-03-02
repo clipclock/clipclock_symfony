@@ -1,12 +1,12 @@
 <div class="b-content">
 	<?php include_component('user', 'navigationPerson', array('subject' => $user, 'current_user' => $current_user, 'user' => $user,
-           'follow_button' => get_component('user', 'follow', array(
+           'follow_button' => $current_user->getId() && $user->getId() != $current_user->getId() ? get_component('user', 'follow', array(
                                 'state_names' => array('Follow Person', 'Unfollow Person', 'Edit'),
                                 'sf_routes' => array('follow_user', 'unfollow_user', 'edit_user'),
                                 'id_key' => 'user_id',
                                 'id' => $user->getId(),
                                 'active' => $current_user->getId() == $user->getId() ? 'my' : UserFollowerPeer::isUserFollowedByUser($user->getId(), $current_user->getId())
-                                ))))?>
+                                )) : ''))?>
 
 <div class="content-wrap-in">
 	<!-- side-left-col  -->

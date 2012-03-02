@@ -160,20 +160,20 @@ edit_user:
 list_followers:
   url: /profile/:nick/list/followers
   class: sfPropelRoute
-  param: { module: list, action: showUserFollowers }
+  param: { module: list, action: showListing, type: 'followers' }
   options: { model: sfGuardUserProfile, type: object }
 
 list_followings:
   url: /profile/:nick/list/followings
   class: sfPropelRoute
-  param: { module: list, action: showUserFollowings }
+  param: { module: list, action: showListing, type: 'followings' }
   options: { model: sfGuardUserProfile, type: object }
 
 
 list_likes:
   url:   /:username_slug/board/:board_id/scene/:id/list/likes
   class: sfPropelRoute
-  param: { module: list, action: showSceneLikes }
+  param: { module: list, action: showListing, type: 'scene_likes' }
   options: { model: Scene, type: object }
   requirements:
     board_id: \d+
@@ -182,7 +182,7 @@ list_likes:
 list_repins:
   url:   /:username_slug/board/:board_id/scene/:id/list/repins
   class: sfPropelRoute
-  param: { module: list, action: showSceneRepins }
+  param: { module: list, action: showListing, type: 'scene_repins' }
   options: { model: Scene, type: object }
   requirements:
     board_id: \d+
@@ -191,7 +191,7 @@ list_repins:
 list_comments:
   url:   /:username_slug/board/:board_id/scene/:id/list/comments
   class: sfPropelRoute
-  param: { module: list, action: showSceneComments }
+  param: { module: list, action: showListing, type: 'scene_comments' }
   options: { model: Scene, type: object }
   requirements:
     board_id: \d+

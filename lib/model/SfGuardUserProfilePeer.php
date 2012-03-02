@@ -19,5 +19,9 @@
  */
 class SfGuardUserProfilePeer extends BaseSfGuardUserProfilePeer {
     
-
+	public static function retrieveCriteriaForListingByObjectIdAndType($object_id, $type)
+	{
+		$c = new Criteria();
+		$c->add();
+	}
 } // SfGuardUserProfilePeer

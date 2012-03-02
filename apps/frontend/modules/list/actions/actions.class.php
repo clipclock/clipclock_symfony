@@ -10,6 +10,27 @@
  */
 class listActions extends sfActions
 {
+	const FOLLOWERS = 'followers';
+	const FOLLOWINGS = 'followings';
+	const SCENE_LIKES = 'scene_likes';
+	const SCENE_REPINS = 'scene_repins';
+	const SCENE_COMMENTS = 'scene_comments';
+
+	protected function checkType()
+	{
+		$reflection = new ReflectionClass($this);
+		$valid_types = array_flip($reflection->getConstants());
+
+		if(!isset($valid_types[$this->getRequest()->getParameter('type')]))
+		{
+			$this->forward404();
+		}
+		else
+		{
+			$this->type = $valid_types[$this->getRequest()->getParameter('type')];
+		}
+	}
+
 	/**
 	 * Executes index action
 	 *
@@ -20,28 +41,23 @@ class listActions extends sfActions
 		$this->forward('default', 'module');
 	}
 
-	public function executeShowUserFollowers(sfWebRequest $request)
+	public function executeShowListing(sfWebRequest $request)
 	{
+		$this->checkType();
+		$this->back_url = $request->getReferer();
+		$this->object = $this->getRoute()->getObject();
 
-	}
+		$this->forward404Unless($this->object);
 
-	public function executeShowUserFollowings(sfWebRequest $request)
-	{
+		$this->pager = new sfPropelPager('SfGuardUserProfile', 16);
+		$this->pager->setCriteria(SfGuardUserProfilePeer::retrieveCriteriaForListingByObjectIdAndType($this->object->getId(), $this->type));
+		$this->pager->setPeerMethod('doSelectForPager');
+		$this->pager->setPage($request->getParameter('page', 1));
 
-	}
-
-	public function executeShowSceneLikes(sfWebRequest $request)
-	{
-
-	}
-
-	public function executeShowSceneRepins(sfWebRequest $request)
-	{
-
-	}
-
-	public function executeShowSceneComments(sfWebRequest $request)
-	{
-
+		if($request->isXmlHttpRequest())
+		{
+			return $this->returnJSON($this->getComponent('board', 'boardClipsList', array('current_board' => $this->current_board, 'pager' => $this->pager, 'current_user' => $this->current_user))
+			);
+		}
 	}
 }

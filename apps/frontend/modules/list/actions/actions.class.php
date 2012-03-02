@@ -42,7 +42,7 @@ class listActions extends sfActions
 		$this->back_url = $request->getReferer();
 		$this->object = $this->getRoute()->getObject();
 		$this->type = SfGuardUserProfilePeer::$objects_types_names[$this->type_id];
-		$this->current_user = $this->getUser();
+		$this->user = $this->getUser();
 
 		$this->forward404Unless($this->object);
 
@@ -53,7 +53,7 @@ class listActions extends sfActions
 
 		if($request->isXmlHttpRequest())
 		{
-			return $this->returnJSON($this->getComponent('board', 'boardClipsList', array('current_board' => $this->current_board, 'pager' => $this->pager, 'current_user' => $this->current_user))
+			return $this->returnJSON($this->getComponent('board', 'boardClipsList', array('current_board' => $this->current_board, 'pager' => $this->pager, 'user' => $this->user))
 			);
 		}
 	}

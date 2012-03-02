@@ -3,12 +3,12 @@
 		<a href="<?php echo url_for('user', array('nick' => $scene_infos[0]['nick']))?>"><img src="<?php echo ImagePreview::c14n($user_id, 'medium', 'avatar');?>" alt="" width="50" height="50" /></a>
 	</div>
 	<div class="name"><a href="<?php echo url_for('user', array('nick' => $scene_infos[0]['nick']))?>"><?php echo $scene_infos[0]['nick']?></a></div>
-	<?php $current_user->getId() && $user->getId() != $current_user->getId() ? include_component('user', 'follow', array(
+	<?php $user->getId() ? include_component('user', 'follow', array(
 		'state_names' => array('Follow Person', 'Unfollow Person', 'Edit'),
 		'sf_routes' => array('follow_user', 'unfollow_user', 'edit_user'),
 		'id_key' => 'user_id',
 		'id' => $user_id,
-		'active' => $current_user->getId() == $user_id ? 'my' : UserFollowerPeer::isUserFollowedByUser($user_id, $current_user->getId())
+		'active' => $user->getId() == $user_id ? 'my' : UserFollowerPeer::isUserFollowedByUser($user_id, $user->getId())
 	)) : ''?>
 	<div class="gallery">
 		<div class="pins">Pins</div>

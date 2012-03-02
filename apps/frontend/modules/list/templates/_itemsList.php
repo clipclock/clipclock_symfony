@@ -1,5 +1,5 @@
 <?php foreach($results as $result):?>
-	<?php include_component('list', 'item', array('user_id' => $result['user_id'], 'current_user' => $current_user))?>
+	<?php include_component('list', 'item', array('user_id' => $result['user_id'], 'user' => $user))?>
 <?php endforeach?>
 <?php if($pager->getNextPage() != $pager->getPage()):?>
 <div class="pager_navigation">

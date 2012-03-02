@@ -11,7 +11,7 @@
 			<!-- list  -->
 			<div class="list">
 				<ul id="container">
-					<?php include_component('list', 'itemsList', array('pager' => $pager, 'current_user' => $current_user)) ?>
+					<?php include_component('list', 'itemsList', array('pager' => $pager, 'user' => $user)) ?>
 				</ul>
 			</div>
 		</div>

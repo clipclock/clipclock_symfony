@@ -6,8 +6,9 @@ function buildNavigationPath($subject)
 
     switch(get_class($subject)) {
         case 'SfGuardUserProfile' :
+			use_helper('I18N');
 
-            $boards_count = BoardPeer::getCountByUserId($subject->getId());
+			$boards_count = BoardPeer::getCountByUserId($subject->getId());
             $pins_count = ScenePeer::getCountByUserId($subject->getId());
             $likes_count = SceneLikePeer::getCountByUserId($subject->getId());
             $comments_count = SceneCommentPeer::getCountByUserId($subject->getId());

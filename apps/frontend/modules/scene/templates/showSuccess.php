@@ -13,12 +13,14 @@
 		<ul class="follow-set">
 			<?php include_component('board', 'boardSticker', array('board_id' => $current_scene->getBoardId(), 'user' => $user, 'current_user' => $current_user))?>
 		</ul>
+		<div id="people_sticker">
 		<?php include_component('scene', 'peopleForSceneSticker', array('scene_id' => $current_scene->getId()))?>
+		</div>
 	</div>
 	<div class="long-col">
 		<div class="long-col-inside">
 			<?php if($current_user->getId()):?>
-			<div class="right-mini-coll">
+			<div id="fun_buttons" class="right-mini-coll">
 				<?php include_component('scene', 'sceneViewSocialButtons', array('scene_id' => $current_scene->getId(), 'user' => $user, 'current_user' => $current_user))?>
 			</div>
 				<?php endif?>

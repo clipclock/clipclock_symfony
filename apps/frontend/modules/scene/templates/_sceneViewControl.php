@@ -22,6 +22,5 @@
 </ul>
 <script type="text/javascript">
 	<?php $current_scene_time = $scene_times[$current_key];?>
-	var bindedChangeBack = false;
 		bindSceneChangeBack('<?php echo url_for('@scene_change?scene_id='.$current_scene_time['id'])?>', '<?php echo $current_scene_time['scene_time']?>', '<?php echo $current_scene_time['id']?>');
 </script>

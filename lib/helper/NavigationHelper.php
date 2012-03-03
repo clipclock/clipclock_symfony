@@ -1,6 +1,4 @@
 <?php
-use_helper('I18N');
-
 
 function buildNavigationPath($subject)
 {

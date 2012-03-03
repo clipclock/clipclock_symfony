@@ -3,12 +3,12 @@
     <!-- user-like  -->
     <div class="user-like">
         <!-- ph  -->
-        <div class="ph">
+        <div id="nav_avatar" class="ph">
             <?php echo link_to(image_tag($avatar_img), array('sf_route' => 'user', 'nick' => $nick)); ?>
         </div>
         <!-- /ph -->
         <!-- path  -->
-        <div class="path">
+        <div id="nav_path" class="path">
             <?php echo buildNavigationPath($sf_data->getRaw('subject')); ?>
         </div>
         <!-- /path -->

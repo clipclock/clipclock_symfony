@@ -194,9 +194,9 @@ class daemonConsume extends daemonBase {
 				}
 				else
 				{
-					fclose(STDIN);
-					fclose(STDOUT);
-					fclose(STDERR);
+					//fclose(STDIN);
+					//fclose(STDOUT);
+					//fclose(STDERR);
 
 					foreach($tasks as $task)
 					{

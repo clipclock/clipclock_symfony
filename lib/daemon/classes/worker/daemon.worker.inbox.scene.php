@@ -55,7 +55,7 @@ class daemonWorkerInboxScene extends daemonWorkerBase {
 		$to_task_values['task_type'] = 1;
 		$to_task_values['path'] = $this->original_path;
 		$to_task_values['sizes'] = array(
-			'scenes' => array(
+			'scene' => array(
 				'big',
 				'medium',
 			)

@@ -52,7 +52,10 @@ class daemonWorkerInboxScene extends daemonWorkerBase {
 		}
 		else
 		{
+
+			$this->preparePath($temp_frame_path);
 			$this->original_path = $this->web_dir.$this->dir_path . DIRECTORY_SEPARATOR . $this->c14n_name;
+
 		}
 
 		$to_task_values = array();

@@ -50,6 +50,10 @@ class daemonWorkerInboxScene extends daemonWorkerBase {
 			$this->saveOriginalImage($temp_frame_path, ImagePreview::c14n($this->c14n_id, 'original_scene', 'scene'));
 			rmdir($temp_dir_path);
 		}
+		else
+		{
+			$this->original_path = $this->web_dir.$this->dir_path . DIRECTORY_SEPARATOR . $this->c14n_name;
+		}
 
 		$to_task_values = array();
 		$to_task_values['task_type'] = 1;

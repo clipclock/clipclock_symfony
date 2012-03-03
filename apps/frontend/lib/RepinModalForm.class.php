@@ -18,6 +18,8 @@ class RepinModalForm extends BaseSceneForm
 		$c = new Criteria();
 
 		$c->add(BoardPeer::SF_GUARD_USER_PROFILE_ID, $this->getOption('sf_guard_user_profile_id'));
+		$c->addJoin(BoardPeer::ID, ScenePeer::BOARD_ID, Criteria::INNER_JOIN);
+		$c->addDescendingOrderByColumn(ScenePeer::CREATED_AT);
 
 		$fields = $this->widgetSchema->getFields();
 

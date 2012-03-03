@@ -33,3 +33,24 @@
 	</div>
 </div>
 </div>
+<script type="text/javascript">
+	$().ready(function(){
+		jQuery(".cusel").each(
+				function(){
+					var w = parseInt(jQuery(this).width()),
+							scrollPanel = jQuery(this).find(".cusel-scroll-pane");
+					if(w>=scrollPanel.width())
+					{
+						jQuery(this).find(".jScrollPaneContainer").width(w);
+						scrollPanel.width(w);
+					}
+				});
+
+		var params = {
+			changedEl: ".line-form select",
+			visRows: 4,
+			scrollArrows: true
+		}
+		cuSel(params);
+	});
+</script>

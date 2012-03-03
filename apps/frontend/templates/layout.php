@@ -12,7 +12,7 @@
 <div id="shadow" class="shadow" style="display: none;"></div>
 <!-- ****************** WRAPPER START **************************** -->
 <div id="wrapper">
-<div class="scroll-to-top"></div>
+<div id="scroll-to-top" class="scroll-to-top"></div>
 <?php include_slot('scene_modal') ?>
 <?php include_slot('repin_modal') ?>
 <!-- ******************		HEAD START ****************************** -->

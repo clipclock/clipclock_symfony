@@ -35,8 +35,8 @@ class HomeFilterForm extends sfForm
 	protected  function getSources()
 	{
 		$choices = array(
-			'1' => 'Recent uploads',
-			'2' => 'Following',
+			'1' => 'Everything',
+			'2' => 'I Follow',
 		);
 
 		if(!$this->getOption('user') || !$this->getOption('user')->getId())
@@ -62,7 +62,7 @@ class HomeFilterForm extends sfForm
 	protected function getCategories()
 	{
 		$choices = array(
-			self::ALL_CATEGORIES_ID => 'All'
+			self::ALL_CATEGORIES_ID => 'Everything'
 		);
 		$categories = CategoryPeer::doSelect(new Criteria());
 		foreach($categories as $category)

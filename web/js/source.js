@@ -23,6 +23,8 @@
 	$('.welcome .close').click (function() {
 		$('.welcome, .welcome .inner').slideUp(700);
 	});
+
+	$().UItoTop({ easingType: 'easeOutQuart', scrollSpeed: 200, containerID: 'scroll-to-top' });
 // end плавное закрытие блока WELCOME
 });
 
@@ -48,6 +50,17 @@ function layoutAndScroll(path, elem, width)
 			itemSelector : "li",
 			dataType: 'json',
 			path: path,
+			loading:
+			{
+				finished: undefined,
+				finishedMsg: "<em>No more clips</em>",
+				img: '/images/ajax-loader-horizontal.gif',
+				msg: null,
+				msgText: "<em>Fetching new clips...</em>",
+				selector: null,
+				speed: 'fast',
+				start: undefined
+			},
 			bufferPx: 2000
 			// selector for all items you'll retrieve
 		},function(arrayOfNewElems){

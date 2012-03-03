@@ -47,7 +47,7 @@ P { padding:0 0 13px 0;}
 
 /* widhts */
 .size164 {width:164px;}
-.size300 {width:300px;}
+
 
 /* default-btns */
 .default-follow-btn,
@@ -473,7 +473,20 @@ label {font-size:18px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 .add-video-scene h4 {padding: 12px 0 6px 0;text-align: left;}
 .user-title .person .name-and-adress span { color:#a7a7a7;}
 .long-col .video-stickers .stickers-list, .long-col .follow-set {padding-bottom: 50px; }
-#infscr-loading { position: fixed; left: 40%; bottom: 40px; }
+#infscr-loading {
+    position: fixed; left: 40%; bottom: 40px;
+    display: inline-block;
+    padding: 1.5em 1.5em 1.25em;
+    background: rgba(0,0,0,0.8);
+    -webkit-box-shadow: 1px 1px 1px #000;
+    -webkit-border-radius: 1em;
+    margin: 1em;
+    z-index: 1000;
+    width: 220px;
+    color: rgb(222, 222, 222);
+    font-weight: normal;
+}
+
 #content { min-height: auto !important;}
 .pager_navigation { display: none; }
 
@@ -484,3 +497,20 @@ label {font-size:18px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 
 .b-user-list .list li .b-btn {width:140px;}
 .stickers-list li .inner, .follow-set li .inner  {min-height:50px;}
+
+.size300 {width:428px;}
+.cusel span {height: 26px;}
+.scroll-to-top {display:none;}
+
+.header .logo {background:none;}
+
+#scene_embed_video span
+{
+    display: block;
+    margin: 0 auto;
+    width: 533px;
+    height: 330px;
+    background-image: url('../images/ajax-loader.gif');
+    background-position: center center;
+    background-repeat: no-repeat;
+}

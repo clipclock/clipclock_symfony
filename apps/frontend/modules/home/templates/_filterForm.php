@@ -53,7 +53,7 @@
 
 		var params = {
 			changedEl: ".line-form select",
-			visRows: 7,
+			visRows: 10,
 			scrollArrows: true
 		}
 		cuSel(params);

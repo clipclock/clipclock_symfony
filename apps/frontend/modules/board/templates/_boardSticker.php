@@ -18,6 +18,7 @@
                         'sf_routes' => array('follow_board', 'unfollow_board', 'edit_board'),
                         'id_key' => 'board_id',
                         'id' => $board->getId(),
+						'board_view' => true,
                         'active' => $current_user->getId() == $user->getId() ? 'my' : BoardFollowerPeer::isBoardFollowedByUser($board->getId(), $current_user->getId())
               ))?>
 <?php endif?>

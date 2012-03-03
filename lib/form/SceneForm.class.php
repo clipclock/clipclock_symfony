@@ -30,6 +30,8 @@ class SceneForm extends BaseSceneForm
 
 		$c = new Criteria();
 		$c->add(BoardPeer::SF_GUARD_USER_PROFILE_ID, $this->getOption('sf_guard_user_profile_id'));
+		$c->addJoin(BoardPeer::ID, ScenePeer::BOARD_ID, Criteria::INNER_JOIN);
+		$c->addDescendingOrderByColumn(ScenePeer::CREATED_AT);
 		$this->setWidget('board_id', new sfWidgetFormPropelChoice(array('model' => 'Board', 'add_empty' => false, 'criteria' => $c)));
 
 		if($this->getOption('no_boards'))

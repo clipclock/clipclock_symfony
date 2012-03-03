@@ -1,2 +1,0 @@
-default:
-  javascripts:    [swfobject.js, clipEmbed.js, ajaxCallbacks.js, fb.js, repin.js, follow.js, cusel.js, source.js]

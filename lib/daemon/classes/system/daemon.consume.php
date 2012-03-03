@@ -300,6 +300,7 @@ class daemonConsume extends daemonBase {
 				{
 					default:
 					case 'daemonExceptionUnrepeatableBase':
+					var_dump($e);
 						$worker->handleUnrepeatableException($e);
 						break;
 					case 'daemonExceptionRepeatableBase':

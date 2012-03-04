@@ -76,14 +76,7 @@ class daemonWorkerInboxScene extends daemonWorkerBase {
 		$this->preparePath($path);
 		$this->original_path = $this->web_dir.$this->dir_path . DIRECTORY_SEPARATOR . $this->c14n_name;
 
-		if(!file_exists($this->original_path))
-		{
-			rename($temp_path, $this->original_path);
-		}
-		else
-		{
-			unlink($temp_path);
-		}
+		rename($temp_path, $this->original_path);
 	}
 
 	protected function preparePath($path)

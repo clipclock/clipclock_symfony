@@ -67,7 +67,7 @@ function downloadfile($filename,$time,$outputfile,$print_to_console=false)
 		}
 		unlink($filename.$ext);
 		exec("ffmpeg -i {$filename}{$ext} -ss 00:00:00.001 -t 00:00:00.001 -f image2 $filename".directory_postfix.'/'.$outputfile.' 2> /var/log/vdaemon-ffmpeg.log', $output, $return_val);
-		unlink($filename.directory_postfix);
+		unlink($filename);
 		if(!file_exists($filename.directory_postfix.'/'.$outputfile)){
 			return ERROR_CANT_MAKE_THUMBNAIL;
 		}

@@ -75,6 +75,7 @@ class daemonDriverAmqp implements daemonInterfaceDriver {
 		}
 		catch(AMQPException $e)
 		{
+			usleep(1000);
 			$this->init($amqp_queue_name, $amqp_exchange_name);
 		}
 

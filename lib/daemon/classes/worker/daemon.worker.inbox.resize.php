@@ -68,6 +68,9 @@ class daemonWorkerInboxResize extends daemonWorkerBase {
 			}
 		}
 
+		var_dump($this->web_dir);
+		var_dump($this->save_paths[$url_key][$size]);
+
 		foreach($this->sizes as $url_key => $sizes)
 		{
 			foreach($sizes as $size)

@@ -45,6 +45,7 @@ class daemonWorkerInboxScene extends daemonWorkerBase {
 		$this->helper->retrieveFrame($this->url, $this->time);
 		$temp_frame_path = $this->helper->temp_frame_path;
 		$temp_dir_path = $this->helper->temp_dir_path;
+		var_dump($temp_frame_path);
 		if(file_exists($temp_frame_path))
 		{
 			$this->saveOriginalImage($temp_frame_path, ImagePreview::c14n($this->c14n_id, 'original_scene', 'scene'));
@@ -52,10 +53,8 @@ class daemonWorkerInboxScene extends daemonWorkerBase {
 		}
 		else
 		{
-
-			$this->preparePath($temp_frame_path);
-			$this->original_path = $this->web_dir.$this->dir_path . DIRECTORY_SEPARATOR . $this->c14n_name;
-
+			var_dump('no frame!');
+			return false;
 		}
 
 		$to_task_values = array();

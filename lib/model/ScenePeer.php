@@ -165,16 +165,21 @@ class ScenePeer extends BaseScenePeer {
         return self::doCount($c);
     }
 
-	public static function retrieveBestByClipId($reclip_id, $board_id)
+	public static function retrieveBestByClipId($clip_id, $board_id)
 	{
 		$c = new Criteria();
 		$c->setPrimaryTableName(self::TABLE_NAME);
 		$c->addJoin(self::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
+		$c->addJoin(SceneTimePeer::RECLIP_ID, ReclipPeer::ID, Criteria::INNER_JOIN);
 		$c->add(self::BOARD_ID, $board_id);
-		$c->add(SceneTimePeer::RECLIP_ID, $reclip_id);
+		$c->add(ReclipPeer::CLIP_ID, $clip_id);
+		$c->clearSelectColumns();
+		$c->addSelectColumn(SceneTimePeer::SCENE_TIME);
+		$c->addSelectColumn(ScenePeer::ID);
+		$c->setLimit(1);
 
 		$c->addDescendingOrderByColumn(SceneTimePeer::UNIQUE_COMMENTS_COUNT);
-		return self::doSelectOne($c);
+		return BasePeer::doSelect($c)->fetch(PDO::FETCH_ASSOC);
 	}
 
 	public static function retrieveByBoardIdSceneTimeId($scene_time_id, $board_id)

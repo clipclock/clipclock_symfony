@@ -150,7 +150,7 @@ class daemonConsume extends daemonBase {
 		{
 
 			$raw_tasks[] = $raw_task;
-			for($i = 1; $i < 5; $i++)
+			/*for($i = 1; $i < 2; $i++)
 			{
 				$raw_task = $amqp_queue->get();
 				if($raw_task['count'] == -1)
@@ -159,7 +159,7 @@ class daemonConsume extends daemonBase {
 				}
 
 				$raw_tasks[] = $raw_task;
-			}
+			}*/
 		}
 
 		unset($amqp_queue);

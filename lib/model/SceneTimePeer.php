@@ -29,25 +29,45 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		return $new_scene_time->getId();
 	}
 
-	public static function retrieveClipsIdsByBoard($board_id, Criteria $c = null)
+	public static function retrieveClipsCount($board_id, Criteria $c = null)
 	{
 		$c = !$c ? new Criteria() : $c;
 
 		$c->clearSelectColumns();
-		//$c->setPrimaryTableName(ReclipPeer::TABLE_NAME);
+		$c->setPrimaryTableName(self::TABLE_NAME);
 		$c->addSelectColumn(ReclipPeer::CLIP_ID);
-		$c->addSelectColumn(self::SCENE_TIME.' as scene_time');
-		$c->addSelectColumn(ScenePeer::ID.' as scene_id');
+		$c->addJoin(self::ID, ScenePeer::SCENE_TIME_ID, Criteria::INNER_JOIN);
+		$c->addJoin(self::RECLIP_ID, ReclipPeer::ID, Criteria::INNER_JOIN);
+		$c->add(ScenePeer::BOARD_ID, $board_id);
+		$c->addGroupByColumn(ReclipPeer::CLIP_ID);
+		$c->setDistinct();
+
+		return BasePeer::doCount($c)->fetch(PDO::FETCH_ASSOC);
+	}
+
+	public static function retrieveClipsIdsByBoard($board_id, $limit = 9)
+	{
+		$c = new Criteria();
+
+		$c->clearSelectColumns();
+		$c->setPrimaryTableName(self::TABLE_NAME);
+		$c->addSelectColumn(ReclipPeer::CLIP_ID);
+		/*$c->addSelectColumn(self::SCENE_TIME.' as scene_time');
+		$c->addSelectColumn(ScenePeer::ID.' as scene_id');*/
 
 		$c->addJoin(self::ID, ScenePeer::SCENE_TIME_ID, Criteria::INNER_JOIN);
 		$c->addJoin(self::RECLIP_ID, ReclipPeer::ID, Criteria::INNER_JOIN);
 		$c->add(ScenePeer::BOARD_ID, $board_id);
 
 		$c->addGroupByColumn(ReclipPeer::CLIP_ID);
-		$c->addGroupByColumn(self::SCENE_TIME);
-		$c->addGroupByColumn(ScenePeer::ID);
-		$c->addDescendingOrderByColumn('max('. self::UNIQUE_COMMENTS_COUNT .')');
-		$c->addDescendingOrderByColumn('max('. self::CREATED_AT .')');
+		$c->addGroupByColumn('date_trunc(\'day\', '.self::CREATED_AT.')');
+		/*$c->addGroupByColumn(self::SCENE_TIME);
+		$c->addGroupByColumn(ScenePeer::ID);*/
+		$c->addDescendingOrderByColumn('date_trunc(\'day\', '.self::CREATED_AT.')');
+		$c->addDescendingOrderByColumn('max('.self::UNIQUE_COMMENTS_COUNT.')');
+		$c->addDescendingOrderByColumn('count('.self::ID.')');
+		$c->setLimit($limit);
+
 		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);
 	}
 
@@ -75,11 +95,11 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		$c->setPrimaryTableName(SceneTimePeer::TABLE_NAME);
 		$c->clearSelectColumns();
 		$c->addSelectColumn(SceneTimePeer::RECLIP_ID);
-		$c->addJoin(SceneTimePeer::ID, ScenePeer::SCENE_TIME_ID, Criteria::INNER_JOIN);
 		$c->addGroupByColumn('date_trunc(\'day\', '.self::CREATED_AT.')');
 		$c->addDescendingOrderByColumn('date_trunc(\'day\', '.self::CREATED_AT.')');
 		$c->addDescendingOrderByColumn('max('.self::UNIQUE_COMMENTS_COUNT.')');
 		$c->addDescendingOrderByColumn('count('.SceneTimePeer::ID.')');
+		$c->addDescendingOrderByColumn(SceneTimePeer::RECLIP_ID);
 
 		$c->addGroupByColumn(SceneTimePeer::RECLIP_ID);
 		return $c;

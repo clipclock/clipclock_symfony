@@ -17,21 +17,25 @@ class boardComponents extends sfComponents
 
 	public function executeBoardSticker()
 	{
+		$this->getContext()->getConfiguration()->loadHelpers(array('Comment'));
 		$this->board_id = $this->getVar('board_id');
 		$this->user = $this->getVar('user');
 		$this->board = BoardPeer::retrieveByPK($this->board_id);
+		$this->clips_count = SceneTimePeer::retrieveClipsCount($this->board_id);
+		$limit = calculateBoardStickerLength($this->clips_count['count']);
 
-		$this->clips_ids = SceneTimePeer::retrieveClipsIdsByBoard($this->board_id);
+		$this->clips_ids = SceneTimePeer::retrieveClipsIdsByBoard($this->board_id, $limit);
 	}
 
 	public function executeBoardStickerSceneTimePreview()
 	{
 		$this->clip_id = $this->getVar('clip_id');
-		$this->scene_id = $this->getVar('scene_id');
-		$this->scene_time = $this->getVar('scene_time');
 		$this->board = $this->getVar('board');
 
-		$this->scene_image = ImagePreview::c14n($this->clip_id.$this->scene_time, 'medium');
+		$scene_info = ScenePeer::retrieveBestByClipId($this->clip_id, $this->board->getId());
+		$this->scene_id = $scene_info['id'];
+
+		$this->scene_image = ImagePreview::c14n($this->clip_id.$scene_info['scene_time'], 'medium');
 	}
 
 	public function executeBoardClipsList()

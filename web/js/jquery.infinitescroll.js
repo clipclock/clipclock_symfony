@@ -254,7 +254,6 @@
 
         // Load Callback
         _loadcallback: function infscr_loadcallback(box, data) {
-
             var opts = this.options,
 	    		callback = this.options.callback, // GLOBAL OBJECT FOR CALLBACK
 	    		result = (opts.state.isDone) ? 'done' : (!opts.appendCallback) ? 'no-append' : 'append',
@@ -320,6 +319,7 @@
 						{
 							opts.path = null;
 						}
+						data = null;
 					}
 
 

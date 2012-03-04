@@ -28,8 +28,10 @@ class daemonWorkerOutboxResize extends daemonWorkerBase {
 
 	public function executeTask()
 	{
+		var_dump($this->original_path);
 		if(!file_exists($this->original_path))
 		{
+			var_dump('failed');
 			return false;
 		}
 		$im = imagecreatefromjpeg($this->original_path);

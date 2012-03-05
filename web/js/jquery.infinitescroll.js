@@ -134,7 +134,10 @@
 
             // distance from nav links to bottom
             // computed as: height of the document + top offset of container - top offset of nav link
-            opts.pixelsFromNavToBottom = $(document).height() - $(opts.navSelector).offset().top;
+			if(!opts.pixelsFromNavToBottom)
+			{
+            	opts.pixelsFromNavToBottom = $(document).height() - $(opts.navSelector).offset().top;
+			}
 
 			// determine loading.start actions
             opts.loading.start = opts.loading.start || function() {
@@ -345,6 +348,10 @@
 
         _nearbottom: function infscr_nearbottom() {
 
+			if(this.oldScrollPosition > this.options.binder.scrollTop())
+			{
+				return false;
+			}
             var opts = this.options,
 	        	pixelsFromWindowBottomToBottom = 0 + $(document).height() - (opts.binder.scrollTop()) - $(window).height();
 
@@ -354,6 +361,8 @@
 			}
 
 			this._debug('math:', pixelsFromWindowBottomToBottom, opts.pixelsFromNavToBottom);
+
+			this.oldScrollPosition = opts.binder.scrollTop();
 
             // if distance remaining in the scroll (including buffer) is less than the orignal nav to bottom....
             return (pixelsFromWindowBottomToBottom - opts.bufferPx < opts.pixelsFromNavToBottom);

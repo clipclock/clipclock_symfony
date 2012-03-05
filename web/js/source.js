@@ -61,7 +61,7 @@ function layoutAndScroll(path, elem, width)
 				speed: 'fast',
 				start: undefined
 			},
-			bufferPx: 2000
+			pixelsFromNavToBottom: 1500
 			// selector for all items you'll retrieve
 		},function(arrayOfNewElems){
 			$('.'+elem).wookmark({
@@ -75,8 +75,7 @@ function layoutAndScroll(path, elem, width)
 			container: $('#container'),
 			offset: 5,
 			itemWidth: width,
-			autoResize: true,
-			bufferPx: 2000
+			autoResize: true
 		});
 	});
 }

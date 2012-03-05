@@ -140,29 +140,35 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		return $unique_comments_count;
 	}
 
-	public static function modifyCriteriaByFilter($criteria, $user_following = false, $board_following = false, $clip_following = false, $category_id = false)
+	public static function modifyCriteriaByFilter($criteria, $user_id, $category_id = false)
 	{
 		$criterions = array();
-		if($user_following)
-		{
-			$criterion = $criteria->getNewCriterion(ScenePeer::CREATED_AT, $user_following['created_at'], Criteria::GREATER_EQUAL);
-			$criterion->addAnd($criteria->getNewCriterion(ScenePeer::SF_GUARD_USER_PROFILE_ID, $user_following['user_id']));
-			$criterions[] = $criterion;
-		}
+		$criteria->addJoin(SceneTimePeer::ID, ScenePeer::SCENE_TIME_ID, Criteria::INNER_JOIN);
 
-		if($board_following)
-		{
-			$criterion = $criteria->getNewCriterion(ScenePeer::CREATED_AT, $board_following['created_at'], Criteria::GREATER_EQUAL);
-			$criterion->addAnd($criteria->getNewCriterion(ScenePeer::BOARD_ID, $user_following['board_id']));
-			$criterions[] = $criterion;
-		}
+		$criteria->addMultipleJoin(array(
+			array(ScenePeer::SF_GUARD_USER_PROFILE_ID, UserFollowerPeer::FOLLOWING_SF_GUARD_USER_PROFILE_ID),
+			array(UserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, $user_id),
+			array(ScenePeer::CREATED_AT, UserFollowerPeer::CREATED_AT, Criteria::GREATER_EQUAL)
+		), Criteria::LEFT_JOIN);
 
-		if($clip_following)
-		{
-			$criterion = $criteria->getNewCriterion(ScenePeer::CREATED_AT, $clip_following['created_at'], Criteria::GREATER_EQUAL);
-			$criterion->addAnd($criteria->getNewCriterion(SceneTimePeer::CLIP_ID, $clip_following['clip_id']));
-			$criterions[] = $criterion;
-		}
+		$criterions[] = $criteria->getNewCriterion(UserFollowerPeer::FOLLOWING_SF_GUARD_USER_PROFILE_ID, null, Criteria::ISNOTNULL);
+
+		$criteria->addMultipleJoin(array(
+			array(ScenePeer::BOARD_ID, BoardFollowerPeer::BOARD_ID),
+			array(BoardFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, $user_id),
+			array(ScenePeer::CREATED_AT, BoardFollowerPeer::CREATED_AT, Criteria::GREATER_EQUAL)
+		), Criteria::LEFT_JOIN);
+
+		$criterions[] = $criteria->getNewCriterion(BoardFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, null, Criteria::ISNOTNULL);
+
+		$criteria->addJoin(SceneTimePeer::RECLIP_ID, ReclipPeer::ID, Criteria::INNER_JOIN);
+		$criteria->addMultipleJoin(array(
+			array(ReclipPeer::CLIP_ID, ClipFollowerPeer::CLIP_ID),
+			array(ClipFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, $user_id),
+			array(ScenePeer::CREATED_AT, ClipFollowerPeer::CREATED_AT, Criteria::GREATER_EQUAL)
+		), Criteria::LEFT_JOIN);
+
+		$criterions[] = $criteria->getNewCriterion(ClipFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, null, Criteria::ISNOTNULL);
 
 		foreach($criterions as $criterion)
 		{
@@ -175,6 +181,8 @@ class SceneTimePeer extends BaseSceneTimePeer {
 			$criteria->add(BoardPeer::CATEGORY_ID, $category_id);
 		}
 
+
+		var_dump($criteria->toString());//die();
 		return $criteria;
 	}
 } // SceneTimePeer

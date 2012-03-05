@@ -31,11 +31,7 @@ class homeActions extends sfActions
 			$this->form->setDefault('source', $request->getParameter('source'));
 			$this->form->setDefault('category', $request->getParameter('category'));
 
-			$user_following = UserFollowerPeer::retrieveIdByFollower($this->user->getId());
-			$board_following = BoardFollowerPeer::retrieveIdByFollower($this->user->getId());
-			$clip_following = ClipFollowerPeer::retrieveIdByFollower($this->user->getId());
-
-			$this->criteria = SceneTimePeer::modifyCriteriaByFilter($this->criteria, $user_following, $board_following, $clip_following, $request->getParameter('category'));
+			$this->criteria = SceneTimePeer::modifyCriteriaByFilter($this->criteria, $this->user->getId(), $request->getParameter('category'));
 		}
 
 		$this->pager = new sfPropelPager('SceneTime', 20);

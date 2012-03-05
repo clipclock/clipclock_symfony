@@ -43,7 +43,7 @@ class ScenePeer extends BaseScenePeer {
     {
         $c = new Criteria();
         $c->add(self::SF_GUARD_USER_PROFILE_ID, $user_id);
-        $c->add(self::REPIN_ORIGIN_SCENE_ID, null, Criteria::ISNOTNULL);
+        $c->add(self::REPIN_ORIGIN_SCENE_ID, null, Criteria::ISNULL);
         return self::doCount($c);
     }
 

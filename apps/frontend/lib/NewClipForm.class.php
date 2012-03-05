@@ -18,6 +18,7 @@ class NewClipForm extends sfForm
       )
       (:[0-9]+)?                              # a port (optional)
       (/watch)                               # a /, nothing or a / with something
+      (.*)
       ([\?\&]?v=.*)
     $~ix';
 

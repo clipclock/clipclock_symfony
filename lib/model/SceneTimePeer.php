@@ -180,9 +180,6 @@ class SceneTimePeer extends BaseSceneTimePeer {
 			$criteria->addJoin(ScenePeer::BOARD_ID, BoardPeer::ID, Criteria::INNER_JOIN);
 			$criteria->add(BoardPeer::CATEGORY_ID, $category_id);
 		}
-
-
-		var_dump($criteria->toString());//die();
 		return $criteria;
 	}
 } // SceneTimePeer

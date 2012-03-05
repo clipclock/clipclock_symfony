@@ -41,6 +41,7 @@ function checkCurrentScene(scene_id, scene_time)
 	if(current_scene_id != scene_id)
 	{
 		current_scene_id = scene_id;
+		toggleAjaxLoader();
 		return true;
 	}
 	else

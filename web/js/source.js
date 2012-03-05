@@ -61,7 +61,7 @@ function layoutAndScroll(path, elem, width)
 				speed: 'fast',
 				start: undefined
 			},
-			pixelsFromNavToBottom: 1500
+			pixelsFromNavToBottom: 4500
 			// selector for all items you'll retrieve
 		},function(arrayOfNewElems){
 			$('.'+elem).wookmark({

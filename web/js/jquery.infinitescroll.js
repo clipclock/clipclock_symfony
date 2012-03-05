@@ -127,7 +127,8 @@
             //opts.path = this._determinepath(path);
 
             // Define loading.msg
-            opts.loading.msg = $('<div id="infscr-loading"><img alt="Loading..." src="' + opts.loading.img + '" /><div>' + opts.loading.msgText + '</div></div>');
+			opts.loading.msg = $('#infscr-loading');
+            //opts.loading.msg = $('<div id="infscr-loading"><img alt="Loading..." src="' + opts.loading.img + '" /><div>' + opts.loading.msgText + '</div></div>');
 
             // Preload loading.img
             (new Image()).src = opts.loading.img;
@@ -144,7 +145,7 @@
 				
 				$(opts.navSelector).hide();
 				opts.loading.msg
-					.appendTo(opts.loading.selector)
+					//.appendTo(opts.loading.selector)
 					.show(opts.loading.speed, function () {
 	                	beginAjax(opts);
 	            });
@@ -348,10 +349,10 @@
 
         _nearbottom: function infscr_nearbottom() {
 
-			if(this.oldScrollPosition > this.options.binder.scrollTop())
-			{
-				return false;
-			}
+//			if(this.oldScrollPosition > this.options.binder.scrollTop())
+//			{
+//				return false;
+//			}
             var opts = this.options,
 	        	pixelsFromWindowBottomToBottom = 0 + $(document).height() - (opts.binder.scrollTop()) - $(window).height();
 
@@ -362,7 +363,7 @@
 
 			this._debug('math:', pixelsFromWindowBottomToBottom, opts.pixelsFromNavToBottom);
 
-			this.oldScrollPosition = opts.binder.scrollTop();
+			//this.oldScrollPosition = opts.binder.scrollTop();
 
             // if distance remaining in the scroll (including buffer) is less than the orignal nav to bottom....
             return (pixelsFromWindowBottomToBottom - opts.bufferPx < opts.pixelsFromNavToBottom);
@@ -439,9 +440,7 @@
 	    		.find('img')
 	    		.hide()
 	    		.parent()
-	    		.find('div').html(opts.loading.finishedMsg).animate({ opacity: 1 }, 2000, function () {
-	    		    $(this).parent().fadeOut('normal');
-	    		});
+	    		.find('div').html(opts.loading.finishedMsg);
 
             // user provided callback when done    
             opts.errorCallback.call($(opts.contentSelector)[0],'done');
@@ -713,7 +712,7 @@
             if (scrollTimeout) { clearTimeout(scrollTimeout); }
             scrollTimeout = setTimeout(function () {
                 $.event.handle.apply(context, args);
-            }, execAsap === "execAsap" ? 0 : 100);
+            }, execAsap === "execAsap" ? 1 : 1);
         }
     };
 

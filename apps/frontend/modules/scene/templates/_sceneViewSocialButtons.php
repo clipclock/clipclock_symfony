@@ -32,7 +32,6 @@
 </div>
 
 <div id="fb-root"></div>
-
 <script>
 	<?php if($user->getId()):?>
 		fbHooks(<?php echo sprintf('%d, %d', $scene_id, $current_user->getId()) ?>, "<?php echo url_for('@scene_change_liked_state'); ?>");

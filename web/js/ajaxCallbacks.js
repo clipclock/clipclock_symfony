@@ -15,7 +15,25 @@ function stickerChange(data, clip_id, scene_id)
 	$('#comments_list_footer_'+clip_id).html(data.scene_footer);
 	$('#clip_control_'+clip_id+' li').removeClass('active');
 	$('#sticker_'+clip_id+'_'+scene_id).addClass('active');
+	toggleAjaxLoader('_'+clip_id);
 	$('.clip_sticker').wookmark('update');
+}
+
+function checkCurrentSticker(clip_id, scene_id)
+{
+	toggleAjaxLoader('_'+clip_id);
+
+	return true;
+}
+
+function toggleAjaxLoader(elem_id)
+{
+	if(!elem_id)
+	{
+		elem_id = '';
+	}
+	$('.ajax_toogle'+elem_id).toggleClass('ajax_hider');
+	$('.ajax_toogle_container'+elem_id).toggleClass('ajax_loader');
 }
 
 function sceneChange(json_data, dont_history, url, json_url, secs, scene_id)
@@ -28,7 +46,7 @@ function sceneChange(json_data, dont_history, url, json_url, secs, scene_id)
 	$('#people_sticker').html(data.scene_people_sticker);
 	$('#nav_path').html(data.nav_path);
 	$('#nav_avatar').html(data.nav_avatar);
-	console.log(data.scene_social_buttons);
+	toggleAjaxLoader();
 
 	if(!dont_history)
 	{

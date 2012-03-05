@@ -2,6 +2,7 @@
 	<li id='sticker_<?php echo $reclip_id?>_<?php echo $scene_time['id']?>'<?php echo $scene_time['scene_time_id'] == $scene_info['scene_time_id'] ? ' class="active"' : '' ?>><?php echo jq_link_to_remote(date('i:s', mktime(0, 0, $scene_time['scene_time'])), array(
 		'update' => array('success_callback' => 'stickerChange(data, "'.$reclip_id.'", "'.$scene_time['id'].'");', 'failure' => "alert('HTTP Error ' + XMLHttpRequest.status + '!')"),
 		'url'    => '@sticker_scene_change?scene_id='.$scene_time['id'],
+		'condition' => 'checkCurrentSticker('.$reclip_id.', '.$scene_time['id'].')',
 		'method' => 'GET'
 	))?></li>
 <?php endforeach;?>

@@ -1,6 +1,7 @@
 <?php foreach($results as $result):?>
 	<?php include_component('list', 'item', array('user_id' => $result['user_id'], 'user' => $user))?>
 <?php endforeach?>
+<?php include_partial('static/loadingMsg')?>
 <?php if($pager->getNextPage() != $pager->getPage()):?>
 <div class="pager_navigation">
 	<a href="<?php echo url_for('homepage_page', array('page' => $pager->getNextPage(), 'source' => $source, 'category' => $category)) ?>"><?php echo $pager->getNext();?></a>

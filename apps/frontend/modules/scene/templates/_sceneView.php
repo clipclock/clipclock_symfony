@@ -24,17 +24,19 @@
 			<!-- /b-add-comment -->
 		</li>
 		<?php endif?>
-		<li id="scene_info" class="active">
-			<div id="description" class="b-autor-text">
-				<?php include_component('scene', 'sceneViewDescription', array('scene_id' => $scene->getId()))?>
-			</div>
-			<?php if($current_user->getId()):?>
-			<div id="comment_form" class="b-add-comment ajax_load_shadow">
-				<?php include_component('scene', 'sceneViewCommentForm', array('scene_time_id' => $scene->getSceneTimeId(), 'current_user' => $current_user))?>
-			</div>
-			<?php endif?>
-			<div id="comments">
-				<?php include_component('scene', 'sceneViewComments', array('scene_time_id' => $scene->getSceneTimeId()))?>
+		<li id="scene_info" class="active ajax_toogle_container">
+			<div class="ajax_toogle">
+				<div id="description" class="b-autor-text">
+					<?php include_component('scene', 'sceneViewDescription', array('scene_id' => $scene->getId()))?>
+				</div>
+				<?php if($current_user->getId()):?>
+				<div id="comment_form" class="b-add-comment ajax_load_shadow">
+					<?php include_component('scene', 'sceneViewCommentForm', array('scene_time_id' => $scene->getSceneTimeId(), 'current_user' => $current_user))?>
+				</div>
+				<?php endif?>
+				<div id="comments">
+					<?php include_component('scene', 'sceneViewComments', array('scene_time_id' => $scene->getSceneTimeId()))?>
+				</div>
 			</div>
 		</li>
 	</ul>

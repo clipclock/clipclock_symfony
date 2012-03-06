@@ -43,7 +43,8 @@ class sceneActions extends sfActions
 			'scene_people_sticker' => $this->getComponent('scene', 'peopleForSceneSticker', array('scene_id' => $this->scene_id)),
 			'scene_social_buttons' => $this->getComponent('scene', 'sceneViewSocialButtons', array('scene_id' => $this->scene_id, 'user' => $scene->getSfGuardUserProfile(), 'current_user' => $this->getUser())),
 			'nav_path' => buildNavigationPath($scene),
-			'nav_avatar' => link_to(image_tag(ImagePreview::c14n($scene->getSfGuardUserProfileId(), 'medium', 'avatar')), array('sf_route' => 'user', 'nick' => $scene->getSfGuardUserProfile()->getNick()))
+			'nav_avatar' => link_to(image_tag(ImagePreview::c14n($scene->getSfGuardUserProfileId(), 'medium', 'avatar')), array('sf_route' => 'user', 'nick' => $scene->getSfGuardUserProfile()->getNick())),
+			'rating_url' => $this->generateUrl('scene_post_comment_rating')
 		));
 	}
 

@@ -46,6 +46,7 @@ function sceneChange(json_data, dont_history, url, json_url, secs, scene_id)
 	$('#people_sticker').html(data.scene_people_sticker);
 	$('#nav_path').html(data.nav_path);
 	$('#nav_avatar').html(data.nav_avatar);
+	bindCommentRatingButtons(data.rating_url);
 	toggleAjaxLoader();
 
 	if(!dont_history)
@@ -213,7 +214,6 @@ function submitButton(submit_id, form_id)
 
 function bindCommentRatingButtons(url)
 {
-	$().ready(function(){
 		$('ul.rating li.arrow').click(function(){
 			container = $(this).parents('ul.rating');
 			comment_id = $(container).attr('id').replace('comment_', '');
@@ -230,5 +230,4 @@ function bindCommentRatingButtons(url)
 				}
 			});
 		});
-	});
 }

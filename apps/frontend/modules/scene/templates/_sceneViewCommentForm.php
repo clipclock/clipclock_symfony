@@ -18,6 +18,5 @@
 </div>
 <script type="text/javascript">
 	submitButton('submit_comment', 'comment_form form');
-	bindCommentRatingButtons('<?php echo url_for('scene_post_comment_rating')?>');
 </script>
 <?php endif?>

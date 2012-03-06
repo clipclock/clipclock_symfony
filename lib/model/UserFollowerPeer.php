@@ -57,7 +57,7 @@ class UserFollowerPeer extends BaseUserFollowerPeer {
     public static function followUserByFollower($user_id, $follower_id)
     {
         try {
-            self::doInsert(self::buildFollowerCriteria($user_id, $follower_id));
+            self::doInsert(self::buildFollowerCriteria($user_id, $follower_id, true));
         } catch (Exception $e) {
             return false;
         }

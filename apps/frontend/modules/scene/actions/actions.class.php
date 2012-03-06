@@ -35,7 +35,7 @@ class sceneActions extends sfActions
 
 		$this->forward404Unless($this->scene_id);
 
-		$this->getContext()->getConfiguration()->loadHelpers(array('Navigation'));
+		$this->getContext()->getConfiguration()->loadHelpers(array('Navigation', 'Comment'));
 		return $this->returnJSON(array(
 			'scene_comments_list' => $this->getComponent('scene', 'sceneViewComments', array('scene_time_id' => $scene->getSceneTimeId(), 'current_user' => $this->getUser())),
 			'scene_comment_form' => $this->getComponent('scene', 'sceneViewCommentForm', array('scene_time_id' => $scene->getSceneTimeId(), 'current_user' => $this->getUser())),

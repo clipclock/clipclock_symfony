@@ -19,11 +19,15 @@
  */
 class BoardFollowerPeer extends BaseBoardFollowerPeer {
 
-    protected static function buildFollowerCriteria($board_id, $user_id)
+    protected static function buildFollowerCriteria($board_id, $user_id, $insert = false)
     {
         $c = new Criteria();
         $c->add(self::BOARD_ID, $board_id);
         $c->add(self::FOLLOWER_SF_GUARD_USER_PROFILE_ID, $user_id);
+		if($insert)
+		{
+			$c->add(self::CREATED_AT, date('Y-m-d H:i:s', time()-7*24*3600));
+		}
 
         return $c;
     }
@@ -36,7 +40,7 @@ class BoardFollowerPeer extends BaseBoardFollowerPeer {
     public static function followBoardByUser($board_id, $user_id)
     {
         try {
-            self::doInsert(self::buildFollowerCriteria($board_id, $user_id));
+            self::doInsert(self::buildFollowerCriteria($board_id, $user_id, true));
         } catch (Exception $e) {
             return false;
         }

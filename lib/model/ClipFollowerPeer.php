@@ -19,11 +19,15 @@
  */
 class ClipFollowerPeer extends BaseClipFollowerPeer {
 
-    protected static function buildFollowerCriteria($clip_id, $user_id)
+    protected static function buildFollowerCriteria($clip_id, $user_id, $insert = false)
     {
         $c = new Criteria();
         $c->add(self::CLIP_ID, $clip_id);
         $c->add(self::FOLLOWER_SF_GUARD_USER_PROFILE_ID, $user_id);
+		if($insert)
+		{
+			$c->add(self::CREATED_AT, date('Y-m-d H:i:s', time()-7*24*3600));
+		}
 
         return $c;
     }
@@ -36,7 +40,7 @@ class ClipFollowerPeer extends BaseClipFollowerPeer {
     public static function followClipByUser($clip_id, $user_id)
     {
         try {
-            self::doInsert(self::buildFollowerCriteria($clip_id, $user_id));
+            self::doInsert(self::buildFollowerCriteria($clip_id, $user_id, true));
         } catch (Exception $e) {
             return false;
         }

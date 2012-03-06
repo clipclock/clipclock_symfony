@@ -36,11 +36,15 @@ class UserFollowerPeer extends BaseUserFollowerPeer {
         return array('followers_count' => $followers_count['count'], 'followings_count' => $followings_count['count']);
     }
 
-    protected static function buildFollowerCriteria($user_id, $follower_id)
+    protected static function buildFollowerCriteria($user_id, $follower_id, $insert = false)
     {
         $c = new Criteria();
         $c->add(self::FOLLOWING_SF_GUARD_USER_PROFILE_ID, $user_id);
         $c->add(self::FOLLOWER_SF_GUARD_USER_PROFILE_ID, $follower_id);
+		if($insert)
+		{
+			$c->add(self::CREATED_AT, date('Y-m-d H:i:s', time()-7*24*3600));
+		}
 
         return $c;
     }

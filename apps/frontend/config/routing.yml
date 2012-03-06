@@ -125,6 +125,12 @@ scene_change_liked_state:
   url: /change/scene/like/state
   param: { module: scene, action: toggleFBLikeState }
 
+scene_post_comment_rating:
+  url: /post/scene/comment/rating
+  param: { module: scene, action: postCommentRating }
+  requirements:
+    id: \d+
+
 ### STICKER AJAX ###
 
 scene_change:

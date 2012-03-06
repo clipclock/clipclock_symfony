@@ -69,6 +69,8 @@ class sceneComponents extends sfComponents
 		$this->comments = SceneCommentPeer::retrieveFullBySceneTimeId(
 			$this->getVar('scene_time_id')
 		);
+
+		$this->my_votes = SceneCommentRatingVotesPeer::retrieveForSceneTimeId($this->getVar('scene_time_id'), $this->getVar('current_user')->getId());
 	}
 
 	public function executeSceneViewSocialButtons()

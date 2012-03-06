@@ -210,3 +210,25 @@ function submitButton(submit_id, form_id)
 		});
 	});
 }
+
+function bindCommentRatingButtons(url)
+{
+	$().ready(function(){
+		$('ul.rating li.arrow').click(function(){
+			container = $(this).parents('ul.rating');
+			comment_id = $(container).attr('id').replace('comment_', '');
+			$.ajax({
+				url: url,
+				type: "POST",
+				data: {id : comment_id, sign: $(this).hasClass('max') ? 1 : 0},
+				beforeSend: function( xhr ) {
+					toggleAjaxLoader('_'+comment_id);
+				},
+				success: function( data ) {
+					$(container).find('div').html(data['scene_comment_rating']);
+					toggleAjaxLoader('_'+comment_id);
+				}
+			});
+		});
+	});
+}

@@ -6,6 +6,38 @@
  * Time: 13:58
  * To change this template use File | Settings | File Templates.
  */
+function getCommentRatingSign($rating)
+{
+	$sign = '';
+	if($rating > 0)
+	{
+		$sign = '+';
+	}
+	elseif($rating < 0)
+	{
+		$sign = '-';
+	}
+
+	return $sign;
+}
+
+function getCommentRatingClass($rating)
+{
+	$sign = getCommentRatingSign($rating);
+	$class_name = '';
+	switch($sign)
+	{
+		case '+':
+			$class_name = 'pls';
+			break;
+		case '-':
+			$class_name = 'mns';
+			break;
+	}
+
+	return $class_name;
+}
+
 function calculateCommentListLength($unique_comments_count)
 {
 	$return_count = 1;

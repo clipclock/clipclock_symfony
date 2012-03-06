@@ -35,9 +35,12 @@
 				</div>
 				<?php endif?>
 				<div id="comments">
-					<?php include_component('scene', 'sceneViewComments', array('scene_time_id' => $scene->getSceneTimeId()))?>
+					<?php include_component('scene', 'sceneViewComments', array('scene_time_id' => $scene->getSceneTimeId(), 'current_user' => $current_user))?>
 				</div>
 			</div>
 		</li>
+		<script type="text/javascript">
+			bindCommentRatingButtons('<?php echo url_for('scene_post_comment_rating')?>');
+		</script>
 	</ul>
 </div>

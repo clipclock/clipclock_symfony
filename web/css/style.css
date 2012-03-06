@@ -531,3 +531,5 @@ label {font-size:18px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 {
     visibility: hidden;
 }
+.b-tabs .tabs-items li .b-comment .inside .rating li.arrow { height:21px;}
+.b-tabs .tabs-items li .b-comment .inside .rating li.txt {margin-left:8px;}

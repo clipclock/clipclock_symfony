@@ -19,6 +19,60 @@
  */
 class SceneCommentPeer extends BaseSceneCommentPeer {
 
+	public static function addRatingByIdAndUserId($comment_id, $user_id, $sign)
+	{
+		$con = Propel::getConnection(SceneCommentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+		$con->beginTransaction();
+
+		try{
+			$c = new Criteria();
+			$c->add(SceneCommentRatingVotesPeer::SF_GUARD_USER_PROFILE_ID, $user_id);
+			$c->add(SceneCommentRatingVotesPeer::COMMENT_ID, $comment_id);
+			$c->setLimit(1);
+			$c->clearSelectColumns();
+			$c->addSelectColumn(SceneCommentRatingVotesPeer::COMMENT_ID);
+			$already_voted = BasePeer::doSelect($c, $con)->fetch(PDO::FETCH_ASSOC);
+
+			if($already_voted)
+			{
+				throw new LogicException('Trying to add vote second time');
+			}
+
+			$new_vote = new SceneCommentRatingVotes();
+			$new_vote->setSfGuardUserProfileId($user_id);
+			$new_vote->setCommentId($comment_id);
+			$new_vote->setSign($sign);
+			$new_vote->save($con);
+
+			$query = 'UPDATE '.SceneCommentPeer::TABLE_NAME.'
+			SET rating = rating'.($sign ? '+' : '-').'1,
+			rating_votes_count = rating_votes_count+1
+			WHERE id = '.$comment_id.' RETURNING rating';
+
+			$statement = $con->prepare($query);
+			if($statement->execute())
+			{
+				$resultset = current($statement->fetch(PDO::FETCH_NUM));
+			}
+
+			$con->commit();
+		}
+		catch(Exception $e)
+		{
+			$con->rollBack();
+
+			$c = new Criteria();
+			$c->add(SceneCommentPeer::ID, $comment_id);
+			$c->setLimit(1);
+			$c->clearSelectColumns();
+			$c->addSelectColumn(SceneCommentPeer::RATING);
+			$result = BasePeer::doSelect($c, $con)->fetch(PDO::FETCH_ASSOC);
+			$resultset = $result['rating'];
+		}
+
+		return $resultset;
+	}
+
     public static function getCountByUserId($user_id)
     {
         $c = new Criteria();

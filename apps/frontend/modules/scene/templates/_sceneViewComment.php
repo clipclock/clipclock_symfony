@@ -8,11 +8,15 @@
 			<span class="text"><?php echo $comment->getText()?></span>
 		</p>
 		<!-- rating  -->
-		<!--ul class="rating">
-			<li class="txt pls">+5</li>
-			<li class="arrow min"></li>
-			<li class="arrow max"></li>
-		</ul-->
+			<ul id="comment_<?php echo $comment->getId()?>" class="rating ajax_toogle_container_<?php echo $comment->getId()?>">
+				<div class="ajax_toogle_<?php echo $comment->getId()?>">
+				<?php if($current_user->getId() && !$has_voted):?>
+				<li class="arrow min"></li>
+				<li class="arrow max"></li>
+				<?php endif;?>
+				<?php include_partial('scene/sceneViewCommentRating', array('rating' => $comment->getRating()))?>
+				</div>
+			</ul>
 		<!-- /rating -->
 	</div>
 </div>

@@ -37,7 +37,7 @@ class sceneActions extends sfActions
 
 		$this->getContext()->getConfiguration()->loadHelpers(array('Navigation'));
 		return $this->returnJSON(array(
-			'scene_comments_list' => $this->getComponent('scene', 'sceneViewComments', array('scene_time_id' => $scene->getSceneTimeId())),
+			'scene_comments_list' => $this->getComponent('scene', 'sceneViewComments', array('scene_time_id' => $scene->getSceneTimeId(), 'current_user' => $this->getUser())),
 			'scene_comment_form' => $this->getComponent('scene', 'sceneViewCommentForm', array('scene_time_id' => $scene->getSceneTimeId(), 'current_user' => $this->getUser())),
 			'scene_description' => $this->getComponent('scene', 'sceneViewDescription', array('scene_id' => $this->scene_id)),
 			'scene_people_sticker' => $this->getComponent('scene', 'peopleForSceneSticker', array('scene_id' => $this->scene_id)),
@@ -75,11 +75,25 @@ class sceneActions extends sfActions
 		$this->scene_comment_form->bind($request->getParameter($this->scene_comment_form->getName()));
 
 		$this->forward404Unless($this->scene_comment_form->isValid());
+		$this->getContext()->getConfiguration()->loadHelpers(array('Comment'));
 
 		$this->scene_comment_form->save();
 
 		return $this->returnJSON(array(
-			'scene_new_comment' => $this->getPartial('scene/sceneViewComment', array('comment' => $this->scene_comment_form->getObject(), 'ajax' => true)),
+			'scene_new_comment' => $this->getPartial('scene/sceneViewComment', array('comment' => $this->scene_comment_form->getObject(), 'current_user' => $this->getUser(), 'ajax' => true, 'has_voted' => true)),
+		));
+	}
+
+	public function executePostCommentRating(sfWebRequest $request)
+	{
+		$this->forward404Unless($request->getMethod() == sfRequest::POST && $this->getUser()->getId());
+
+		$this->getContext()->getConfiguration()->loadHelpers(array('Comment'));
+
+		$rating = SceneCommentPeer::addRatingByIdAndUserId($request->getParameter('id'), $this->getUser()->getId(), (bool)$request->getParameter('sign'));
+
+		return $this->returnJSON(array(
+			'scene_comment_rating' => $this->getPartial('scene/sceneViewCommentRating', array('rating' => $rating)),
 		));
 	}
 

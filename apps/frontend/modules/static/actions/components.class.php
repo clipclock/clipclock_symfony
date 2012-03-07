@@ -28,5 +28,8 @@ class staticComponents extends sfComponents
 	{
 		$this->user = $this->getVar('user');
 		$this->user_image = ImagePreview::c14n($this->user->getId(), 'tiny', 'avatar');
+
+		$fb = sfConfig::get('app_melody_facebook');
+		$this->fb_app_id = $fb['key'];
 	}
 }

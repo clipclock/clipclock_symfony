@@ -17,24 +17,43 @@ function toggleFBLikeButton(scene_id, user_id, state, url) {
 	});
 }
 
-function fbHooks(scene_id, user_id, url)
+function fbHooks(app_id, scene_id, user_id, url)
 {
 	window.fbAsyncInit = function() {
 		FB.init({
-			appId      : 365665100128423,
+			appId      : app_id,
 			channelUrl : '//viddii.dev/channel.html',
 			status     : true, // check login status
 			cookie     : true, // enable cookies to allow the server to access the session
 			xfbml      : true  // parse XFBML
 		});
 
-		FB.Event.subscribe('edge.create',
-				function(response) { toggleFBLikeButton(scene_id, user_id, 1, url); }
-		);
+		if(scene_id && user_id && url)
+		{
+			FB.Event.subscribe('edge.create',
+					function(response) { toggleFBLikeButton(scene_id, user_id, 1, url); }
+			);
 
-		FB.Event.subscribe('edge.remove',
-				function(response) { toggleFBLikeButton(scene_id, user_id, 0, url); }
-		);
+			FB.Event.subscribe('edge.remove',
+					function(response) { toggleFBLikeButton(scene_id, user_id, 0, url); }
+			);
+		}
 
+		function sendRequestToRecipients() {
+			FB.ui({method: 'apprequests',
+				message: 'My Great Request',
+				to: '100003277218703'
+			}, function(){console.log('123')});
+		}
+
+		function sendRequestViaMultiFriendSelector() {
+			FB.ui({method: 'apprequests',
+				message: 'My Great Request'
+			}, function(){console.log('123')});
+		}
+		$('#fb_invite').click(function(){
+			sendRequestToRecipients();
+			return false;
+		});
 	};
 }

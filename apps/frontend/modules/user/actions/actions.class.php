@@ -86,7 +86,6 @@ class userActions extends sfActions
 		}
 	}
 
-
     public function executeFollowUser(sfWebRequest $request)
     {
         echo json_encode(array('result' => (UserFollowerPeer::followUserByFollower($request->getParameter('user_id'), $this->getUser()->getId())) ? 'success' : 'fail'));

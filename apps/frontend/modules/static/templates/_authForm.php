@@ -16,7 +16,7 @@
 </ul>
 <?php else: ?>
 <ul class="autorized">
-	<li class="invite"><a href="">Invite</a></li>
+	<li class="invite"><a id="fb_invite" href="#">Invite</a></li>
 	<li class="user">
 		<a href="<?php echo url_for('user', $user)?>"><span><img src="<?php echo $user_image?>" alt="" width="21" height="21" /></span><strong><?php echo $user->getNick()?></strong></a>
 		<div class="sub">
@@ -44,4 +44,7 @@
 		</div>
 	</li>
 </ul>
+<script type="text/javascript">
+	fbHooks(<?php echo $fb_app_id?>);
+</script>
 <?php endif;?>

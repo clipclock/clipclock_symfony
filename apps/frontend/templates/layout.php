@@ -17,6 +17,7 @@
 <?php include_slot('repin_modal') ?>
 <!-- ******************		HEAD START ****************************** -->
 <div id="head">
+	<div id="fb-root"></div>
 	<!-- header  -->
 	<div class="header">
 		<a href="<?php echo url_for('homepage')?>" class="logo"></a>

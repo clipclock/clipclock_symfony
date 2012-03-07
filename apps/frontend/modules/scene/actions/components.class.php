@@ -94,5 +94,7 @@ class sceneComponents extends sfComponents
                           ));
 
 		$this->repin_form = new RepinModalForm($new_scene, array('sf_guard_user_profile_id' => $this->current_user->getId()));
+		$fb = sfConfig::get('app_melody_facebook');
+		$this->fb_app_id = $fb['key'];
 	}
 }

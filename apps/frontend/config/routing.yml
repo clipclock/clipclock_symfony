@@ -236,3 +236,7 @@ preview_new_clip:
 new_clip_scene_post:
   url:  /preview/create
   param: { module: static, action: newClipPostScene}
+
+facebook_canvas:
+  url:   /canvas/facebook/*
+  param: { module: static, action: facebookCanvas }

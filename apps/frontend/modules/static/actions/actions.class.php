@@ -94,4 +94,10 @@ class staticActions extends sfActions
 			$this->redirect($request->getReferer());
 		}
 	}
+
+	public function executeFacebookCanvas(sfWebRequest $request)
+	{
+		$this->setLayout(false);
+		$this->url = $this->generateUrl('connect_fb');
+	}
 }

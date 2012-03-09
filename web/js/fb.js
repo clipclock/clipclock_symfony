@@ -40,16 +40,9 @@ function fbHooks(app_id, scene_id, user_id, url)
 			);
 		}
 
-		function sendRequestToRecipients() {
-			FB.ui({method: 'apprequests',
-				message: 'Maksim Ustinov has invited you to join Pinterest, an online pinboard to organize and share your inspirations!',
-				to: '100003277218703'
-			}, function(){console.log('123')});
-		}
-
 		function sendRequestViaMultiFriendSelector() {
 			FB.ui({method: 'apprequests',
-				message: 'Maksim Ustinov has invited you to join Pinterest, an online pinboard to organize and share your inspirations!',
+				message: 'Invite to something',
 				filters: ["app_non_users"]
 			}, function(response){console.log(response)});
 		}

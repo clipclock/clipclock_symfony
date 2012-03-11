@@ -88,4 +88,16 @@ class UserFollowerPeer extends BaseUserFollowerPeer {
 		return BasePeer::doSelect($c)->fetch(PDO::FETCH_ASSOC);
 	}
 
+
+	public static function retrieveUserIdsByIdentifiers($identifiers, $name)
+	{
+		$c = new Criteria();
+		$c->add(TokenPeer::NAME, $name);
+		$c->add(TokenPeer::IDENTIFIER, $identifiers, Criteria::IN);
+		$c->clearSelectColumns();
+		$c->addSelectColumn(TokenPeer::USER_ID);
+
+		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);
+	}
+
 } // UserFollowerPeer

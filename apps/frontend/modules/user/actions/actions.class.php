@@ -66,6 +66,8 @@ class userActions extends sfActions
 
 		$this->getUser()->addToken($access_token);
 
+		FriendsMapper::mapFrom($melody, $user);
+
 		$this->redirect('@user_register_welcome');
 	}
 

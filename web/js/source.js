@@ -17,7 +17,6 @@
 			}
 		}
 	});
-// end очистка поллей вода текста
 
 
 	$('.welcome .close').click (function() {
@@ -25,7 +24,13 @@
 	});
 
 	$().UItoTop({ easingType: 'easeOutQuart', scrollSpeed: 200, containerID: 'scroll-to-top' });
-// end плавное закрытие блока WELCOME
+
+	if($('#viewport').length > 0)
+	{
+		$('html, body').animate({scrollTop:$('div#head').outerHeight(true) + 5}, 500, 'easeOutQuart');
+	}
+
+
 });
 
 

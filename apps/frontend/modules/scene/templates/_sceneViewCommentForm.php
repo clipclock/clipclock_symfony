@@ -5,10 +5,10 @@
 	</div>
 	<?php echo jq_form_remote_tag(array(
 		'url' => 'scene_post_comment',
-		'update' => array('success_callback' => 'prependNewComments(data, "comments");', 'failure' => "alert('HTTP Error ' + XMLHttpRequest.status + '!')"),
+		'update' => array('success_callback' => 'prependNewComments(data, "comments", "comment_form_text", "scene_controls");', 'failure' => "alert('HTTP Error ' + XMLHttpRequest.status + '!')"),
 		'condition' => 'checkCommentForm("textarea#text")',
 	))?>
-		<div class="brd">
+		<div id="comment_form_text" class="brd">
 			<?php echo $form['text']?><?php echo $form->renderHiddenFields()?>
 		</div>
 		<div class="b-btn">

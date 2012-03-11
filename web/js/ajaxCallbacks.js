@@ -190,15 +190,28 @@ function checkCommentForm(textarea_id)
 	return $('#comment_form form textarea').val() ? true : false;
 }
 
-function prependNewComments(data, list_id)
+function prependNewComments(data, list_id, comment_text_area_id, scroll_to_id)
 {
 	var data = JSON.parse(data);
+
 	$('#'+list_id).prepend(data.scene_new_comment);
+	$('#'+comment_text_area_id+' textarea').val('');
+
 	var new_comment = $('#'+list_id+' div:first');
+
 	if($(new_comment).is(":hidden"))
 	{
+		$(new_comment).css('background-color', '#ffff99');
 		$(new_comment).slideDown("slow");
+		//$(new_comment).effect("highlight", {}, 30000);
+		$(new_comment).animate({
+			'background-color': '#ffffff'
+		}, 3000, function(){
+			$(new_comment).attr('style', '');
+		});
 	}
+
+	$('html, body').animate({scrollTop:$('#'+scroll_to_id).offset().top - 5}, 600, 'easeOutQuart');
 }
 
 function submitButton(submit_id, form_id)

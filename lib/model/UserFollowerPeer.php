@@ -62,6 +62,21 @@ class UserFollowerPeer extends BaseUserFollowerPeer {
             return false;
         }
 
+		$already_boards_raw = BoardFollowerPeer::retrieveIdByFollowerForFollowing($follower_id, $user_id);
+		$already_boards = array();
+		foreach($already_boards_raw as $already_board)
+		{
+			$already_boards[$already_board['board_id']] = 1;
+		}
+		$user_boards = BasePeer::doSelect(BoardPeer::retrieveBoardIdByUserId($user_id))->fetchAll(PDO::FETCH_ASSOC);
+		foreach($user_boards as $user_board)
+		{
+			if(!isset($already_boards[$user_board['id']]))
+			{
+				BoardFollowerPeer::followBoardByUser($user_board['id'], $follower_id);
+			}
+		}
+
         return true;
     }
 

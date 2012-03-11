@@ -9,7 +9,7 @@
             <?php if(!ScenePeer::isRepinnedSceneByUser($origin_scene_id, $current_user->getId())) : ?>
                 <?php echo link_to(image_tag("/images/repin.jpg", array('width' => '60', 'height' => '29')), array('sf_route' => 'scene_repin', 'scene_id' => $origin_scene_id), array('id' => 'new_repin')); ?>
             <?php else :?>
-                <?php echo link_to(image_tag("/images/repin.jpg", array('width' => '60', 'height' => '29')), array('sf_route' => 'scene_unrepin', 'scene_id' => $origin_scene_id), array('id' => 'un_repin')); ?>
+                <?php echo link_to(image_tag("/images/unrepin.jpg", array('width' => '60', 'height' => '29')), array('sf_route' => 'scene_unrepin', 'scene_id' => $origin_scene_id), array('id' => 'un_repin')); ?>
             <?php endif; ?>
         </div>
     </div>

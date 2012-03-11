@@ -1,5 +1,5 @@
 <h2><?php echo $reclip->getClip()->getName()?></h2>
-<div id="viewport" class="viewing">
+<div class="viewing">
 <div id="scene_embed_video">
 	<span></span>
 </div>

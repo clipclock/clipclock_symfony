@@ -106,11 +106,11 @@ scene:
     id: \d+
 
 scene_unrepin:
-  url: /scene/unrepin
+  url: /scene/unreclip
   param: { module: scene, action: unrepin }
 
 scene_repin:
-  url: /scene/repin
+  url: /scene/reclip
   param: { module: scene, action: repin }
 
 scene_post:
@@ -161,6 +161,24 @@ edit_user:
   requirements:
     user_id: \d+
 
+my_boards:
+  url:   /profile/:nick
+  class: sfPropelRoute
+  param: { module: user, action: show }
+  options: { model: sfGuardUserProfile, type: object }
+
+my_pins:
+  url:   /profile/:nick
+  class: sfPropelRoute
+  param: { module: user, action: show }
+  options: { model: sfGuardUserProfile, type: object }
+
+my_likes:
+  url:   /profile/:nick
+  class: sfPropelRoute
+  param: { module: user, action: show }
+  options: { model: sfGuardUserProfile, type: object }
+
 ### LISTINGS ###
 
 list_followers:
@@ -186,7 +204,7 @@ list_likes:
     id: \d+
 
 list_repins:
-  url:   /:username_slug/board/:board_id/scene/:id/list/repins
+  url:   /:username_slug/board/:board_id/scene/:id/list/reclips
   class: sfPropelRoute
   param: { module: list, action: showListing, type: 'scene_repins' }
   options: { model: Scene, type: object }

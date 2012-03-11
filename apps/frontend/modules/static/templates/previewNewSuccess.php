@@ -32,7 +32,7 @@
 												<textarea id="new_time_scene_description" name="" cols="" rows=""></textarea>
 											</div>
 											<div class="b-btn">
-												<input id="new_time_scene_description_container_submit" class="default-follow-btn" name="" type="button" value="Create scene" />
+												<input id="new_time_scene_description_container_submit" class="default-follow-btn" name="" type="button" value="Create clip" />
 											</div>
 										</form>
 									</div>

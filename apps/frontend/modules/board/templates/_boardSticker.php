@@ -12,7 +12,7 @@
 		</div>
 <?php if($current_user->getId()):?>
 		    <?php include_component('user', 'follow', array(
-                        'state_names' => array('Follow Set', 'Unfollow Set', 'Edit'),
+                        'state_names' => array('Follow Channel', 'Unfollow Channel', 'Edit'),
                         'sf_routes' => array('follow_board', 'unfollow_board', 'edit_board'),
                         'id_key' => 'board_id',
                         'id' => $board->getId(),

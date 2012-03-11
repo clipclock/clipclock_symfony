@@ -1,6 +1,7 @@
 <li class="clip_sticker">
 	<div class="inner">
 		<div id="image_<?php echo $reclip_id ?>" class="b-video">
+			<p class="scene_description"><?php echo truncate_text($scene_info['name'], 32, '…', true)?></p>
 			<?php include_component('board', 'clipStickerSceneTimePreview', array('scene_info' => $scene_info, 'reclip_id' => $reclip_id, 'board' => $board))?>
 		</div>
 

@@ -61,10 +61,12 @@ class ScenePeer extends BaseScenePeer {
 		$c->addSelectColumn(ScenePeer::SF_GUARD_USER_PROFILE_ID. ' as user_id');
 		$c->addSelectColumn(SfGuardUserProfilePeer::NICK. ' as nick');
 		$c->addSelectColumn(ReclipPeer::CLIP_ID);
+		$c->addSelectColumn(ClipPeer::NAME);
 
 		$c->add(SceneTimePeer::RECLIP_ID, $reclip_id);
 		$c->addJoin(self::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
 		$c->addJoin(SceneTimePeer::RECLIP_ID, ReclipPeer::ID, Criteria::INNER_JOIN);
+		$c->addJoin(ReclipPeer::CLIP_ID, ClipPeer::ID, Criteria::INNER_JOIN);
 		$c->addJoin(ScenePeer::SF_GUARD_USER_PROFILE_ID, SfGuardUserProfilePeer::SF_GUARD_USER_ID, Criteria::INNER_JOIN);
 
 		$c->addDescendingOrderByColumn(SceneTimePeer::UNIQUE_COMMENTS_COUNT);

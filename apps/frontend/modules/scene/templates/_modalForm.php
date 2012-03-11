@@ -3,7 +3,7 @@
 		<div class="close"></div>
 		<!-- b-header  -->
 		<div class="b-header">
-			<h2>Add a video scene <span id="label_time">01:32</span> in the set</h2>
+			<h2>Add a clip <span id="label_time">01:32</span> in the channel</h2>
 		</div>
 		<!-- /b-header -->
 		<!-- b-content  -->

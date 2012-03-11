@@ -39,4 +39,4 @@ all:
     # Enable the database manager
     use_database:           true
     enabled_modules:        [default, sfGuardGroup, sfGuardUser, sfGuardAuth, sfGuardPermission, sfMelody, sfPropelOAuthPlugin]
-    standard_helpers:       [Partial, Cache, Slug, jQuery]
+    standard_helpers:       [Partial, Cache, Slug, jQuery, Text]

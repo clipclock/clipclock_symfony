@@ -49,6 +49,11 @@ function sceneChange(json_data, dont_history, url, json_url, secs, scene_id)
 	bindCommentRatingButtons(data.rating_url);
 	toggleAjaxLoader();
 
+	if($('#scene_add_comment').hasClass('active'))
+	{
+		new_time_scene_pause_player();
+	}
+
 	if(!dont_history)
 	{
 		history.pushState({json_url: json_url, secs: secs, scene_id: scene_id}, 'Title', url);
@@ -185,7 +190,7 @@ function newSceneTimeDescriptionContainer()
 	});
 }
 
-function checkCommentForm(textarea_id)
+function checkCommentForm()
 {
 	return $('#comment_form form textarea').val() ? true : false;
 }
@@ -203,7 +208,6 @@ function prependNewComments(data, list_id, comment_text_area_id, scroll_to_id)
 	{
 		$(new_comment).css('background-color', '#ffff99');
 		$(new_comment).slideDown("slow");
-		//$(new_comment).effect("highlight", {}, 30000);
 		$(new_comment).animate({
 			'background-color': '#ffffff'
 		}, 3000, function(){

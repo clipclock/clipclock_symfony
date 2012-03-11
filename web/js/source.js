@@ -27,7 +27,7 @@
 
 	if($('#viewport').length > 0)
 	{
-		$('html, body').animate({scrollTop:$('div#head').outerHeight(true) + 5}, 500, 'easeOutQuart');
+		$('html, body').animate({scrollTop:$('div#viewport').offset().top - 3}, 500, 'easeOutQuart');
 	}
 
 

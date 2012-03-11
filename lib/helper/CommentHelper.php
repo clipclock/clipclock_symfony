@@ -6,6 +6,7 @@
  * Time: 13:58
  * To change this template use File | Settings | File Templates.
  */
+
 function getCommentRatingSign($rating)
 {
 	$sign = '';

@@ -8,7 +8,7 @@
                                 'active' => ClipFollowerPeer::isClipFollowedByUser($current_scene->getSceneTime()->getReclip()->getClipId(), $current_user->getId())
                                 )) : ''))?>
 
-<div class="content-wrap-in">
+<div class="content-wrap-in" id="viewport">
 	<div class="side-left-col">
 		<ul class="follow-set">
 			<?php include_component('board', 'boardSticker', array('board_id' => $current_scene->getBoardId(), 'user' => $user, 'current_user' => $current_user))?>

@@ -17,7 +17,7 @@
 	</li>
 <?php endforeach;?>
 <?php if($current_user->getId()):?>
-	<li id="new_time_scene" class="new-tag">New scene</li>
+	<li id="new_time_scene" class="new-tag">New clip</li>
 <?php endif?>
 </ul>
 <script type="text/javascript">

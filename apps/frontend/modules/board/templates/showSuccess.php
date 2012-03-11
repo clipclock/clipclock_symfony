@@ -1,7 +1,7 @@
 <div class="b-content">
 <?php include_component('user', 'navigationPath', array('subject' => $current_board, 'current_user' => $current_user, 'user' => $user,
            'follow_button' => $current_user->getId() && $user->getId() != $current_user->getId() ? get_component('user', 'follow', array(
-                                'state_names' => array('Follow Set', 'Unfollow Set', 'Edit'),
+                                'state_names' => array('Follow Channel', 'Unfollow Channel', 'Edit'),
                                 'sf_routes' => array('follow_board', 'unfollow_board', 'edit_board'),
                                 'id_key' => 'board_id',
                                 'id' => $current_board->getId(),

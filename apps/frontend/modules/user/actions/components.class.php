@@ -63,6 +63,14 @@ class userComponents extends sfComponents
 		$this->pager->init();
 		$this->clips_ids = $this->pager->getResults();
 	}
+	public function executeComments()
+	{
+		$this->pager = $this->getVar('pager');
+		$this->current_user = $this->getVar('current_user');
+		$this->user = $this->getVar('user');
+		$this->pager->init();
+		$this->clips_ids = $this->pager->getResults();
+	}
 
     public function executeFollow()
     {

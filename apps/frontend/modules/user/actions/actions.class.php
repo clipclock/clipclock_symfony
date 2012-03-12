@@ -110,6 +110,24 @@ class userActions extends sfActions
 		}
 	}
 
+	public function executeComments(sfWebRequest $request)
+	{
+		$this->user = $this->getRoute()->getObject();
+		$this->current_user = $this->getUser();
+
+		$this->pager = new sfPropelPager('Scene', 20);
+		$this->pager->setCriteria(ScenePeer::retrieveReclipIdsByCommentsUserId($this->user->getId()));
+		$this->pager->setPeerMethod('doSelectForPager');
+		$this->pager->setPage($request->getParameter('page', 1));
+		$this->getContext()->getConfiguration()->loadHelpers(array('Comment'));
+
+		if($request->isXmlHttpRequest())
+		{
+			return $this->returnJSON($this->getComponent('user', 'comments', array('current_user' => $this->current_user, 'pager' => $this->pager, 'user' => $this->user))
+			);
+		}
+	}
+
 	public function executeLikes(sfWebRequest $request)
 	{
 		$this->user = $this->getRoute()->getObject();

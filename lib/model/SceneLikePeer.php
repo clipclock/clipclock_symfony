@@ -22,8 +22,7 @@ class SceneLikePeer extends BaseSceneLikePeer {
     public static function getCountByUserId($user_id)
     {
         $c = new Criteria();
-        $c->addJoin(self::SCENE_ID, ScenePeer::ID, Criteria::INNER_JOIN);
-        $c->add(ScenePeer::SF_GUARD_USER_PROFILE_ID, $user_id);
+        $c->add(self::LIKE_SF_GUARD_USER_PROFILE_ID, $user_id);
         return self::doCount($c);
     }
 

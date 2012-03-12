@@ -29,6 +29,7 @@ class ScenePeer extends BaseScenePeer {
 		$c->add(ScenePeer::SF_GUARD_USER_PROFILE_ID, $user_id);
 		$c->addGroupByColumn(SceneTimePeer::RECLIP_ID);
 		$c->addDescendingOrderByColumn('max('.self::CREATED_AT.')');
+		$c->addDescendingOrderByColumn(SceneTimePeer::RECLIP_ID);
 
 		return $c;
 	}
@@ -44,7 +45,25 @@ class ScenePeer extends BaseScenePeer {
 		$c->addJoin(self::ID, SceneLikePeer::SCENE_ID, Criteria::INNER_JOIN);
 		$c->add(SceneLikePeer::LIKE_SF_GUARD_USER_PROFILE_ID, $user_id);
 		$c->addGroupByColumn(SceneTimePeer::RECLIP_ID);
-		$c->addDescendingOrderByColumn('max('.self::CREATED_AT.')');
+		$c->addDescendingOrderByColumn('max('.SceneLikePeer::CREATED_AT.')');
+		$c->addDescendingOrderByColumn(SceneTimePeer::RECLIP_ID);
+
+		return $c;
+	}
+
+	public static function retrieveReclipIdsByCommentsUserId($user_id)
+	{
+		$c = new Criteria();
+		$c->clearSelectColumns();
+		$c->addSelectColumn(SceneTimePeer::RECLIP_ID);
+		$c->addSelectColumn('max('.self::ID.') as scene_id');
+		$c->setPrimaryTableName(self::TABLE_NAME);
+		$c->addJoin(self::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
+		$c->addJoin(SceneTimePeer::ID, SceneCommentPeer::SCENE_TIME_ID, Criteria::INNER_JOIN);
+		$c->add(SceneCommentPeer::SF_GUARD_USER_PROFILE_ID, $user_id);
+		$c->addGroupByColumn(SceneTimePeer::RECLIP_ID);
+		$c->addDescendingOrderByColumn('max('.SceneCommentPeer::CREATED_AT.')');
+		$c->addDescendingOrderByColumn(SceneTimePeer::RECLIP_ID);
 
 		return $c;
 	}

@@ -193,11 +193,16 @@ my_likes_page:
   param: { module: user, action: likes, page: '' }
   options: { model: sfGuardUserProfile, type: object }
 
-
 my_comments:
   url:   /profile/:nick/comments
   class: sfPropelRoute
-  param: { module: user, action: scenes }
+  param: { module: user, action: comments }
+  options: { model: sfGuardUserProfile, type: object }
+
+my_comments_page:
+  url:   /profile/:nick/comments/page/:page
+  class: sfPropelRoute
+  param: { module: user, action: comments, page: '' }
   options: { model: sfGuardUserProfile, type: object }
 
 ### LISTINGS ###

@@ -34,7 +34,7 @@ function buildNavigationPath($subject)
         case 'Scene' :
             $slugs[] = link_to($subject->getSfGuardUserProfile()->getFullName(), array('sf_route' => 'user', 'nick' => $subject->getSfGuardUserProfile()->getNick()));
             $slugs[] = link_to($subject->getBoard(), array('sf_route' => 'board', 'username_slug' => $subject->getSfGuardUserProfile()->getNick(), 'id' => $subject->getBoardId()));
-            $slugs[] = link_to($subject->getSceneTime()->getReclip()->getClip()->getName(), array('sf_route' => 'scene', 'username_slug' => $subject->getSfGuardUserProfile()->getNick(), 'id' => $subject->getId(), 'board_id' => $subject->getBoardId()));
+            $slugs[] = link_to(truncate_text($subject->getSceneTime()->getReclip()->getClip()->getName(), 80, '…', true), array('sf_route' => 'scene', 'username_slug' => $subject->getSfGuardUserProfile()->getNick(), 'id' => $subject->getId(), 'board_id' => $subject->getBoardId()));
             $slugs[] = $subject->getSceneTime();
 
             return implode(' / ', $slugs);

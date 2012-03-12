@@ -64,6 +64,7 @@ class boardActions extends sfActions
 			'unique_comments_count' => $this->scene->getSceneTime()->getUniqueCommentsCount(),
 			'nick' => $this->scene->getSfGuardUserProfile()->getNick(),
 			'first_name' => $this->scene->getSfGuardUserProfile()->getFirstName(),
+			'last_name' => $this->scene->getSfGuardUserProfile()->getLastName(),
 			'user_id' => $this->scene->getSfGuardUserProfileId(),
 			'text' => $this->scene->getText(),
 		);

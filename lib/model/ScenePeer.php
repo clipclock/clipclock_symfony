@@ -63,6 +63,7 @@ class ScenePeer extends BaseScenePeer {
 		$c->addSelectColumn(ScenePeer::SF_GUARD_USER_PROFILE_ID. ' as user_id');
 		$c->addSelectColumn(SfGuardUserProfilePeer::NICK. ' as nick');
 		$c->addSelectColumn(SfGuardUserProfilePeer::FIRST_NAME . ' as first_name');
+		$c->addSelectColumn(SfGuardUserProfilePeer::LAST_NAME . ' as last_name');
 		$c->addSelectColumn(ReclipPeer::CLIP_ID);
 		$c->addSelectColumn(ClipPeer::NAME);
 

@@ -3,7 +3,7 @@
 <div class="welcome">
 	<div class="close"></div>
 	<div class="inner">
-		<h1>Are you new? We are glad to see you.</h1>
+		<h1>Are you new? We are glad to see you!</h1>
 		<h2>Here you can comment and publish best moments of any YouTube video.<br />Copy and paste video URL, choose the right moments and create your clips!<!--a href="#">How does it work?</a--></h2>
 	</div>
 </div>

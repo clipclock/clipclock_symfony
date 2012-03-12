@@ -95,8 +95,11 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		$c->setPrimaryTableName(SceneTimePeer::TABLE_NAME);
 		$c->clearSelectColumns();
 		$c->addSelectColumn(SceneTimePeer::RECLIP_ID);
+		$c->addJoin(SceneTimePeer::ID, ScenePeer::SCENE_TIME_ID, Criteria::INNER_JOIN);
+		$c->addJoin(ScenePeer::ID, SceneLikePeer::SCENE_ID, Criteria::LEFT_JOIN);
 		$c->addDescendingOrderByColumn('date_trunc(\'day\', max('.self::CREATED_AT.'))');
 		$c->addDescendingOrderByColumn('max('.self::UNIQUE_COMMENTS_COUNT.')');
+		$c->addDescendingOrderByColumn('count('.SceneLikePeer::SCENE_ID.')');
 		$c->addDescendingOrderByColumn('count('.SceneTimePeer::ID.')');
 		$c->addDescendingOrderByColumn('max('.self::CREATED_AT.')');
 		$c->addDescendingOrderByColumn(SceneTimePeer::RECLIP_ID);
@@ -143,7 +146,6 @@ class SceneTimePeer extends BaseSceneTimePeer {
 	public static function modifyCriteriaByFilter($criteria, $user_id, $category_id = false)
 	{
 		$criterions = array();
-		$criteria->addJoin(SceneTimePeer::ID, ScenePeer::SCENE_TIME_ID, Criteria::INNER_JOIN);
 
 		$criteria->addMultipleJoin(array(
 			array(ScenePeer::SF_GUARD_USER_PROFILE_ID, UserFollowerPeer::FOLLOWING_SF_GUARD_USER_PROFILE_ID),

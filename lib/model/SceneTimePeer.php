@@ -98,8 +98,8 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		$c->addJoin(SceneTimePeer::ID, ScenePeer::SCENE_TIME_ID, Criteria::INNER_JOIN);
 		$c->addJoin(ScenePeer::ID, SceneLikePeer::SCENE_ID, Criteria::LEFT_JOIN);
 		$c->addDescendingOrderByColumn('date_trunc(\'day\', max('.self::CREATED_AT.'))');
-		$c->addDescendingOrderByColumn('max('.self::UNIQUE_COMMENTS_COUNT.')');
 		$c->addDescendingOrderByColumn('count('.SceneLikePeer::SCENE_ID.')');
+		$c->addDescendingOrderByColumn('max('.self::UNIQUE_COMMENTS_COUNT.')');
 		$c->addDescendingOrderByColumn('count('.SceneTimePeer::ID.')');
 		$c->addDescendingOrderByColumn('max('.self::CREATED_AT.')');
 		$c->addDescendingOrderByColumn(SceneTimePeer::RECLIP_ID);

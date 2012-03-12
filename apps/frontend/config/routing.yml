@@ -144,13 +144,7 @@ scene_change:
 user:
   url:   /profile/:nick
   class: sfPropelRoute
-  param: { module: user, action: show }
-  options: { model: sfGuardUserProfile, type: object }
-
-user_page:
-  url:   /profile/:nick/page/:page
-  class: sfPropelRoute
-  param: { module: user, action: show, page: '' }
+  param: { module: user, action: scenes }
   options: { model: sfGuardUserProfile, type: object }
 
 edit_user:
@@ -161,22 +155,49 @@ edit_user:
   requirements:
     user_id: \d+
 
+### MY ###
+
 my_boards:
-  url:   /profile/:nick
+  url:   /profile/:nick/channels
   class: sfPropelRoute
-  param: { module: user, action: show }
+  param: { module: user, action: boards }
   options: { model: sfGuardUserProfile, type: object }
 
-my_pins:
-  url:   /profile/:nick
+my_boards_page:
+  url:   /profile/:nick/channels/page/:page
   class: sfPropelRoute
-  param: { module: user, action: show }
+  param: { module: user, action: boards, page: '' }
+  options: { model: sfGuardUserProfile, type: object }
+
+my_scenes:
+  url:   /profile/:nick/clips
+  class: sfPropelRoute
+  param: { module: user, action: scenes }
+  options: { model: sfGuardUserProfile, type: object }
+
+my_clips_page:
+  url:   /profile/:nick/clips/page/:page
+  class: sfPropelRoute
+  param: { module: user, action: scenes, page: '' }
   options: { model: sfGuardUserProfile, type: object }
 
 my_likes:
-  url:   /profile/:nick
+  url:   /profile/:nick/likes
   class: sfPropelRoute
-  param: { module: user, action: show }
+  param: { module: user, action: likes }
+  options: { model: sfGuardUserProfile, type: object }
+
+my_likes_page:
+  url:   /profile/:nick/likes/page/:page
+  class: sfPropelRoute
+  param: { module: user, action: likes, page: '' }
+  options: { model: sfGuardUserProfile, type: object }
+
+
+my_comments:
+  url:   /profile/:nick/comments
+  class: sfPropelRoute
+  param: { module: user, action: scenes }
   options: { model: sfGuardUserProfile, type: object }
 
 ### LISTINGS ###

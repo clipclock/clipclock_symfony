@@ -41,7 +41,7 @@ class BoardPeer extends BaseBoardPeer {
 		return parent::doSelectStmt( $c );
 	}
 
-	public static function retrieveIdsLinkedBoardsByUserId($board_id, $user_id)
+	public static function retrieveIdsLinkedBoardsByUserId($user_id, $board_id = null)
 	{
 		$c = new Criteria();
 
@@ -53,7 +53,10 @@ class BoardPeer extends BaseBoardPeer {
 
 		$c->add(BoardPeer::SF_GUARD_USER_PROFILE_ID, $user_id);
 		$c->addGroupByColumn(self::ID);
-		$c->addAscendingOrderByColumn(self::ID . ' is distinct from '.$board_id);
+		if($board_id)
+		{
+			$c->addAscendingOrderByColumn(self::ID . ' is distinct from '.$board_id);
+		}
 		$c->addDescendingOrderByColumn('sum(' . SceneTimePeer::UNIQUE_COMMENTS_COUNT . ')');
 
 		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);

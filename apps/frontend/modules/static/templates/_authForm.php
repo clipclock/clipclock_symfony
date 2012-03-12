@@ -22,7 +22,7 @@
 		<div class="sub">
 			<ul>
 				<li><a href="<?php echo url_for('my_boards', $user)?>">Channels</a></li>
-				<li><a href="<?php echo url_for('my_pins', $user)?>">Clips</a></li>
+				<li><a href="<?php echo url_for('my_scenes', $user)?>">Clips</a></li>
 				<li class="before-divider"><a href="<?php echo url_for('my_likes', $user)?>">Likes</a></li>
 				<li class="divider"><a href="<?php echo url_for('sf_guard_signout')?>">Logout</a></li>
 			</ul>

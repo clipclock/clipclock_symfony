@@ -1,5 +1,5 @@
 <div class="b-content">
-	<?php include_component('user', 'navigationPerson', array('subject' => $user, 'current_user' => $current_user, 'user' => $user,
+	<?php include_component('user', 'navigationPerson', array('subject' => $user, 'active' => 'likes', 'current_user' => $current_user, 'user' => $user,
            'follow_button' => $current_user->getId() && $user->getId() != $current_user->getId() ? get_component('user', 'follow', array(
                                 'state_names' => array('Follow Person', 'Unfollow Person', 'Edit'),
                                 'sf_routes' => array('follow_user', 'unfollow_user', 'edit_user'),
@@ -17,13 +17,16 @@
 			<?php include_component('user', 'followersList', array('user' => $user)) ?>
 			<?php include_component('user', 'history', array('user' => $user)) ?>
 		</div>
+		<?php include_component('board', 'boardsLinked', array('user' => $user, 'current_user' => $current_user)) ?>
 	</div>
 	<div class="long-col">
-		<ul id="container" class="follow-set" style="position: relative;">
-			<?php include_component('user', 'boards', array('user' => $user, 'pager' => $pager, 'current_user' => $current_user)) ?>
+		<div class="video-stickers">
+		<ul id="container" class="stickers-list" style="position: relative;">
+			<?php include_component('user', 'likes', array('user' => $user, 'pager' => $pager, 'current_user' => $current_user)) ?>
 		</ul>
+		</div>
 		<script type="text/javascript">
-			layoutAndScroll('<?php echo url_for('user_page', array('nick' => $user->getNick(), 'page' => $pager->getNextPage())) ?>', 'board_sticker');
+			layoutAndScroll('<?php echo url_for('my_likes_page', array('nick' => $user->getNick(), 'page' => $pager->getNextPage())) ?>');
 		</script>
 	</div>
 </div>

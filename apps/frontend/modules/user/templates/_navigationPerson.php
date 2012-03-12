@@ -13,7 +13,7 @@
         </div>
         <!-- /name-and-adress -->
         <!-- user-title-menu  -->
-        <?php echo buildNavigationPath($sf_data->getRaw('subject')); ?>
+        <?php echo buildNavigationPath($sf_data->getRaw('subject'), $active); ?>
         <!-- /user-title-menu -->
         <!-- b-btn  -->
         <?php echo $sf_data->getRaw('follow_button'); ?>

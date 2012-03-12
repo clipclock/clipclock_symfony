@@ -19,6 +19,36 @@
  */
 class ScenePeer extends BaseScenePeer {
 
+	public static function retrieveReclipIdsByUserId($user_id)
+	{
+		$c = new Criteria();
+		$c->clearSelectColumns();
+		$c->addSelectColumn(SceneTimePeer::RECLIP_ID);
+		$c->setPrimaryTableName(self::TABLE_NAME);
+		$c->addJoin(self::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
+		$c->add(ScenePeer::SF_GUARD_USER_PROFILE_ID, $user_id);
+		$c->addGroupByColumn(SceneTimePeer::RECLIP_ID);
+		$c->addDescendingOrderByColumn('max('.self::CREATED_AT.')');
+
+		return $c;
+	}
+
+	public static function retrieveReclipIdsByLikesUserId($user_id)
+	{
+		$c = new Criteria();
+		$c->clearSelectColumns();
+		$c->addSelectColumn(SceneTimePeer::RECLIP_ID);
+		$c->addSelectColumn('max('.self::ID.') as scene_id');
+		$c->setPrimaryTableName(self::TABLE_NAME);
+		$c->addJoin(self::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
+		$c->addJoin(self::ID, SceneLikePeer::SCENE_ID, Criteria::INNER_JOIN);
+		$c->add(SceneLikePeer::LIKE_SF_GUARD_USER_PROFILE_ID, $user_id);
+		$c->addGroupByColumn(SceneTimePeer::RECLIP_ID);
+		$c->addDescendingOrderByColumn('max('.self::CREATED_AT.')');
+
+		return $c;
+	}
+
 	public static function retrieveLatestByUserId($user_id)
 	{
 		$c = new Criteria();
@@ -49,7 +79,7 @@ class ScenePeer extends BaseScenePeer {
         return self::doCount($c);
     }
 
-	public static function retrieveFirstSceneTimeIdByClipIdBoardId($reclip_id, $user_id = null)
+	public static function retrieveFirstSceneTimeIdByClipIdBoardId($reclip_id, $user_id = null, $filter_user_id = null, $filter_scene_id = null)
 	{
 		$c = new Criteria();
 
@@ -73,10 +103,23 @@ class ScenePeer extends BaseScenePeer {
 		$c->addJoin(ReclipPeer::CLIP_ID, ClipPeer::ID, Criteria::INNER_JOIN);
 		$c->addJoin(ScenePeer::SF_GUARD_USER_PROFILE_ID, SfGuardUserProfilePeer::SF_GUARD_USER_ID, Criteria::INNER_JOIN);
 
-		$c->addDescendingOrderByColumn(SceneTimePeer::UNIQUE_COMMENTS_COUNT);
-		if($user_id)
+		if($filter_user_id)
 		{
-			$c->addAscendingOrderByColumn(ScenePeer::SF_GUARD_USER_PROFILE_ID . ' is distinct from '.$user_id);
+			$c->addAscendingOrderByColumn(ScenePeer::SF_GUARD_USER_PROFILE_ID . ' is distinct from '.$filter_user_id);
+			$c->addDescendingOrderByColumn(SceneTimePeer::UNIQUE_COMMENTS_COUNT);
+		}
+		elseif($filter_scene_id)
+		{
+			$c->addAscendingOrderByColumn(ScenePeer::ID . ' is distinct from '.$filter_scene_id);
+			$c->addDescendingOrderByColumn(SceneTimePeer::UNIQUE_COMMENTS_COUNT);
+		}
+		else
+		{
+			$c->addDescendingOrderByColumn(SceneTimePeer::UNIQUE_COMMENTS_COUNT);
+			if($user_id)
+			{
+				$c->addAscendingOrderByColumn(ScenePeer::SF_GUARD_USER_PROFILE_ID . ' is distinct from '.$user_id);
+			}
 		}
 		$c->setLimit(1);
 
@@ -120,6 +163,10 @@ class ScenePeer extends BaseScenePeer {
 		$c->setLimit(1);
 
 		return BasePeer::doSelect($c)->fetch(PDO::FETCH_ASSOC);
+	}
+
+	public static function doSelectForPager( $c ) {
+		return parent::doSelectStmt( $c );
 	}
 
 	public static function countRepinsLikesForSceneId($scene_id)

@@ -544,3 +544,7 @@ label {font-size:18px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 .stickers-list li .inner {padding-top: 7px;}
 .user-title .b-btn .default-un-follow-btn {width:130px;}
 .stickers-list li .inner .b-video .arrow {top: 61px;}
+
+.follow-user{
+    margin-bottom: 15px;
+}

@@ -4,6 +4,6 @@
 <?php include_partial('static/loadingMsg')?>
 <?php if($pager->getNextPage() != $pager->getPage()):?>
 <div class="pager_navigation">
-	<a href="<?php echo url_for('user_page', array('nick' => $user->getNick(), 'page' => $pager->getNextPage())) ?>"><?php echo $pager->getNext();?></a>
+	<a href="<?php echo url_for('my_boards_page', array('nick' => $user->getNick(), 'page' => $pager->getNextPage())) ?>"><?php echo $pager->getNext();?></a>
 </div>
 <?php endif;?>

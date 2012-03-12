@@ -10,9 +10,17 @@ class boardComponents extends sfComponents
 {
 	public function executeBoardsLinked()
 	{
-		$this->current_board = $this->getVar('current_board');
+		if($this->getVar('current_board'))
+		{
+			$this->current_board = $this->getVar('current_board');
+			$current_board_id = $this->current_board->getId();
+		}
+		else
+		{
+			$current_board_id = null;
+		}
 		$this->user = $this->getVar('user');
-		$this->linked_boards_ids = BoardPeer::retrieveIdsLinkedBoardsByUserId($this->current_board->getId(), $this->user->getId());
+		$this->linked_boards_ids = BoardPeer::retrieveIdsLinkedBoardsByUserId($this->user->getId(), $current_board_id);
 	}
 
 	public function executeBoardSticker()
@@ -51,8 +59,10 @@ class boardComponents extends sfComponents
 	public function executeClipSticker()
 	{
 		$this->reclip_id = $this->getVar('reclip_id');
+		$filter_user_id = $this->getVar('filter_user_id');
+		$filter_scene_id = $this->getVar('filter_scene_id');
 
-		$this->scene_info = ScenePeer::retrieveFirstSceneTimeIdByClipIdBoardId($this->reclip_id, $this->getVar('current_user')->getId());
+		$this->scene_info = ScenePeer::retrieveFirstSceneTimeIdByClipIdBoardId($this->reclip_id, $this->getVar('current_user')->getId(), $filter_user_id, $filter_scene_id);
 		$this->board = BoardPeer::retrieveJoinSfGuardById($this->scene_info['board_id']);
 	}
 

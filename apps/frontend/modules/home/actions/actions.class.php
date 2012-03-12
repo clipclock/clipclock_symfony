@@ -39,6 +39,7 @@ class homeActions extends sfActions
 		$this->pager->setPeerMethod('doSelectForPager');
 		$this->pager->setPage($request->getParameter('page', 1));
 
+		$this->welcome_close = (bool)$request->getCookie('welcome_close');
 		if($request->isXmlHttpRequest())
 		{
 			return $this->returnJSON($this->getComponent('home', 'clipList', array('pager' => $this->pager, 'current_user' => $this->user, 'source' => $this->source, 'category' => $this->category)));

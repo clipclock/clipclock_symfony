@@ -44,6 +44,7 @@ class userActions extends sfActions
 				)
 			);
 		}
+		$this->redirect('@homepage');
 	}
 
 	public function executeRegister(sfWebRequest $request)

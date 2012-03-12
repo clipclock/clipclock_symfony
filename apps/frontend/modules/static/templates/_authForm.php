@@ -18,7 +18,7 @@
 <ul class="autorized">
 	<li class="invite"><a id="fb_invite" href="#">Invite</a></li>
 	<li class="user">
-		<a href="<?php echo url_for('user', $user)?>"><span><img src="<?php echo $user_image?>" alt="" width="21" height="21" /></span><strong><?php echo $user->getNick()?></strong></a>
+		<a href="<?php echo url_for('user', $user)?>"><span><img src="<?php echo $user_image?>" alt="" width="21" height="21" /></span><strong><?php echo $user->getFirstName()?></strong></a>
 		<div class="sub">
 			<ul>
 				<li><a href="<?php echo url_for('my_boards', $user)?>">Channels</a></li>

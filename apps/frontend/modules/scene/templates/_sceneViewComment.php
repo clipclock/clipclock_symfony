@@ -4,7 +4,7 @@
 			<a href="<?php echo url_for('user', $comment->getSfGuardUserProfile())?>"><img src="<?php echo ImagePreview::c14n($comment->getSfGuardUserProfile()->getId(), 'medium', 'avatar');?>" alt="" width="50" height="50" /></a>
 		</div>
 		<p>
-			<a href="<?php echo url_for('user', $comment->getSfGuardUserProfile())?>"><?php echo $comment->getSfGuardUserProfile()?></a>
+			<a href="<?php echo url_for('user', $comment->getSfGuardUserProfile())?>"><?php echo $comment->getSfGuardUserProfile()->getFirstName()?></a>
 			<span class="text"><?php echo $comment->getText()?></span>
 		</p>
 		<!-- rating  -->

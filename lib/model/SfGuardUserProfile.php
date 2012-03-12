@@ -24,6 +24,11 @@ class SfGuardUserProfile extends BaseSfGuardUserProfile {
 		return $this->getNick();
 	}
 
+	public function getFullName()
+	{
+		return $this->getFirstName() . ' ' . $this->getLastName();
+	}
+
 	public function getId()
 	{
 		return $this->getSfGuardUserId();

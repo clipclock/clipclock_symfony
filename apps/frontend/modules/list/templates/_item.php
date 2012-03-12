@@ -2,7 +2,7 @@
 	<div class="user-pic">
 		<a href="<?php echo url_for('user', array('nick' => $scene_infos[0]['nick']))?>"><img src="<?php echo ImagePreview::c14n($user_id, 'medium', 'avatar');?>" alt="" width="50" height="50" /></a>
 	</div>
-	<div class="name"><a href="<?php echo url_for('user', array('nick' => $scene_infos[0]['nick']))?>"><?php echo $scene_infos[0]['nick']?></a></div>
+	<div class="name"><a href="<?php echo url_for('user', array('nick' => $scene_infos[0]['nick']))?>"><?php echo $scene_infos[0]['first_name'].' '.$scene_infos[0]['last_name']?></a></div>
 	<?php $user->getId() ? include_component('user', 'follow', array(
 		'state_names' => array('Follow Person', 'Unfollow Person', 'Edit'),
 		'sf_routes' => array('follow_user', 'unfollow_user', 'edit_user'),

@@ -1,10 +1,10 @@
 <?php slot('homepage_filter') ?>
-<?php if(!$user):?>
+<?php if(!$welcome_close):?>
 <div class="welcome">
 	<div class="close"></div>
 	<div class="inner">
-		<h1>Welcome, you're new, aren't you?</h1>
-		<h2>See and add a video, comment on the length of time. <a href="#">How does it work?</a></h2>
+		<h1>Are you new? We are glad to see you.</h1>
+		<h2>Here you can comment and publish best moments of any YouTube video.<br />Copy and paste video URL, choose the right moments and create your clips!<!--a href="#">How does it work?</a--></h2>
 	</div>
 </div>
 <?php endif; ?>

@@ -35,6 +35,8 @@ class ScenePeer extends BaseScenePeer {
 		$c->addSelectColumn(ReclipPeer::CLIP_ID);
 		$c->addSelectColumn(ScenePeer::BOARD_ID);
 		$c->addSelectColumn(SfGuardUserProfilePeer::NICK);
+		$c->addSelectColumn(SfGuardUserProfilePeer::FIRST_NAME);
+		$c->addSelectColumn(SfGuardUserProfilePeer::LAST_NAME);
 
 		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);
 	}
@@ -60,6 +62,7 @@ class ScenePeer extends BaseScenePeer {
 		$c->addSelectColumn(ScenePeer::TEXT);
 		$c->addSelectColumn(ScenePeer::SF_GUARD_USER_PROFILE_ID. ' as user_id');
 		$c->addSelectColumn(SfGuardUserProfilePeer::NICK. ' as nick');
+		$c->addSelectColumn(SfGuardUserProfilePeer::FIRST_NAME . ' as first_name');
 		$c->addSelectColumn(ReclipPeer::CLIP_ID);
 		$c->addSelectColumn(ClipPeer::NAME);
 

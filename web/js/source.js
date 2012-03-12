@@ -1,4 +1,12 @@
-﻿$(document).ready(function(){
+﻿function setCookie (name, value, expires, path, domain, secure) {
+	document.cookie = name + "=" + escape(value) +
+			((expires) ? "; expires=" + expires : "") +
+			((path) ? "; path=" + path : "") +
+			((domain) ? "; domain=" + domain : "") +
+			((secure) ? "; secure" : "");
+}
+
+$(document).ready(function(){
 
 	$('.brd input, .head-search .inside .b-input input, .b-filter form .search-col .b-search .b-input input').bind('focus', function(){
 		var title = $(this).attr('title');
@@ -20,6 +28,7 @@
 
 
 	$('.welcome .close').click (function() {
+		setCookie("welcome_close", "true", "Mon, 01-Jan-2091 00:00:00 GMT", "/");
 		$('.welcome, .welcome .inner').slideUp(700);
 	});
 

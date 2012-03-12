@@ -32,7 +32,7 @@ class ProfileMapper {
 
 		if(!$user_profile->getNick())
 		{
-			$action = self::$action_map[$melody->getName()]['nickname'];
+			$action = self::$action_map[$melody->getName()]['id'];
 			$user_profile->setNick($melody->getNickname()->$action);
 		}
 

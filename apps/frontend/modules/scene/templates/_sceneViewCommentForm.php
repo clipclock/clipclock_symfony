@@ -1,7 +1,7 @@
 <?php if($current_user->getId()):?>
 <div class="inside">
 	<div class="ph">
-		<a href="<?php echo url_for('user', $current_user)?>"><img src="<?php echo ImagePreview::c14n($current_user->getId(), 'medium', 'avatar');?>" alt="<?php echo $current_user?>" title="<?php echo $current_user?>" width="50" height="50" /></a>
+		<a href="<?php echo url_for('user', $current_user)?>"><img src="<?php echo ImagePreview::c14n($current_user->getId(), 'medium', 'avatar');?>" alt="<?php echo $current_user->getFullName()?>" title="<?php echo $current_user->getFullName()?>" width="50" height="50" /></a>
 	</div>
 	<?php echo jq_form_remote_tag(array(
 		'url' => 'scene_post_comment',

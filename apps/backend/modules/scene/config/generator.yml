@@ -1,0 +1,22 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           Scene
+    theme:                 admin15
+    non_verbose_templates: true
+    with_show:             false
+    singular:              Scene
+    plural:                Scenes
+    route_prefix:          scene
+    with_propel_route:     1
+    actions_base_class:    sfActions
+    css:                   nothing
+
+    config:
+      actions: ~
+      fields:  ~
+      list:    ~
+      filter:  ~
+      form:    ~
+      edit:    ~
+      new:     ~

@@ -12,5 +12,7 @@ class ProjectConfiguration extends sfProjectConfiguration
     $this->enablePlugins('sfPropelOAuthPlugin');
     $this->enablePlugins('sfMelodyPlugin');
     $this->enablePlugins('sfJqueryReloadedPlugin');
+    $this->enablePlugins('sfJqueryReloadedPlugin');
+    $this->enablePlugins('sfAdminDashPlugin');
   }
 }

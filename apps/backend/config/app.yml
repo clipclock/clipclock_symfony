@@ -1,0 +1,22 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/11-App
+
+# default values
+#all:
+all:
+  sf_admin_dash:
+    site: 'Админ. панель менеджера'
+    translator:
+      backendTender:
+        title: Заявки
+        actions:
+          rejected: Отказанные
+          approved: Подтвержденные
+          waiting: Ожидающие рассмотрения КП
+          reviewed: Ожидающие уточнения
+    categories:
+      Обслуживание:
+        items:
+          Тикеты:
+            url:          scene
+            image:        support.png

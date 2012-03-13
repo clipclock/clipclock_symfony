@@ -94,7 +94,7 @@ function downloadfile($filename,$time,$outputfile,$videoquality=false,$ffmpegqui
 			$hour = $time_start_int/3600;
 		}
 
-		exec("ffmpeg -i {$filename}{$ext} -ss ".sprintf("%02d:%02d:%06.3f",$hour,$min,$sec)." -frames 1 -f image2 $filename".directory_postfix.'/'.$outputfile.$ffmpeg_postfix_str);
+		exec("ffmpeg -i {$filename}{$ext} -ss ".sprintf("%02d:%02d:%06.3f",$hour,$min,$sec)." -r 1 -f image2 $filename".directory_postfix.'/'.$outputfile.$ffmpeg_postfix_str);
 
 		if(file_exists($filename.directory_postfix.'/'.$outputfile))
 		{
@@ -130,7 +130,7 @@ function downloadfile($filename,$time,$outputfile,$videoquality=false,$ffmpegqui
 			$time_offset_str = sprintf("%02d:%02d:%06.3f",$hour,$min,$sec);
 		}
 
-		exec("ffmpeg -i {$filename}{$ext} -ss ".$time_offset_str." -frames 1 -f image2 $filename".directory_postfix.'/'.$outputfile.$ffmpeg_postfix_str);
+		exec("ffmpeg -i {$filename}{$ext} -ss ".$time_offset_str." -r 1 -f image2 $filename".directory_postfix.'/'.$outputfile.$ffmpeg_postfix_str);
 		unlink($filename.$ext);
 		if(!file_exists($filename.directory_postfix.'/'.$outputfile)){
 			return ERROR_CANT_MAKE_THUMBNAIL;

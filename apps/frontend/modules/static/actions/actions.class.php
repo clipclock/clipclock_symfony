@@ -88,6 +88,11 @@ class staticActions extends sfActions
 
 			$this->form = new SceneTimeForm(null, array('reclip_id' => $this->reclip->getId(), 'sf_guard_user_profile_id' => $this->getUser()->getId()));
 		}
+		elseif(!$this->getUser()->getId())
+		{
+			$this->getUser()->setFlash('new_clip_form', 'Please login to the service!');
+			$this->redirect($request->getReferer());
+		}
 		else
 		{
 			$this->getUser()->setFlash('new_clip_form', 'Bad URL!');

@@ -549,6 +549,6 @@ label {font-size:18px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
     margin-bottom: 15px;
 }
 
-#description .b-tabs .tabs-items li .inside {
+#scene_info .b-tabs .tabs-items li .inside {
     min-height: 64px;
 }

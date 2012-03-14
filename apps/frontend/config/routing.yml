@@ -214,7 +214,7 @@ list_followers:
   options: { model: sfGuardUserProfile, type: object, segment_separators: [/] }
 
 list_followings:
-  url: /profile/:nick/list/followings
+  url: /profile/:nick/list/following
   class: sfPropelRoute
   param: { module: list, action: showListing, type: 'followings' }
   options: { model: sfGuardUserProfile, type: object, segment_separators: [/] }

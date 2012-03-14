@@ -39,7 +39,7 @@ board:
   url:   /:username_slug/board/:id
   class: sfPropelRoute
   param: { module: board, action: show }
-  options: { model: Board, type: object }
+  options: { model: Board, type: object, segment_separators: [/] }
   requirements:
     id: \d+
 
@@ -63,7 +63,7 @@ board_page:
   url:   /:username_slug/board/:id/page/:page
   class: sfPropelRoute
   param: { module: board, action: show, page: 0 }
-  options: { model: Board, type: object }
+  options: { model: Board, type: object, segment_separators: [/] }
   requirements:
     id: \d+
     page: \d+
@@ -100,7 +100,7 @@ scene:
   url:   /:username_slug/board/:board_id/scene/:id
   class: sfPropelRoute
   param: { module: scene, action: show }
-  options: { model: Scene, type: object }
+  options: { model: Scene, type: object, segment_separators: [/] }
   requirements:
     board_id: \d+
     id: \d+
@@ -224,7 +224,7 @@ list_likes:
   url:   /:username_slug/board/:board_id/scene/:id/list/likes
   class: sfPropelRoute
   param: { module: list, action: showListing, type: 'scene_likes' }
-  options: { model: Scene, type: object }
+  options: { model: Scene, type: object, segment_separators: [/] }
   requirements:
     board_id: \d+
     id: \d+
@@ -233,7 +233,7 @@ list_repins:
   url:   /:username_slug/board/:board_id/scene/:id/list/reclips
   class: sfPropelRoute
   param: { module: list, action: showListing, type: 'scene_repins' }
-  options: { model: Scene, type: object }
+  options: { model: Scene, type: object, segment_separators: [/] }
   requirements:
     board_id: \d+
     id: \d+
@@ -242,7 +242,7 @@ list_comments:
   url:   /:username_slug/board/:board_id/scene/:id/list/comments
   class: sfPropelRoute
   param: { module: list, action: showListing, type: 'scene_comments' }
-  options: { model: Scene, type: object }
+  options: { model: Scene, type: object, segment_separators: [/] }
   requirements:
     board_id: \d+
     id: \d+

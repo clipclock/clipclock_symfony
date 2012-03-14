@@ -7,6 +7,7 @@
  */
 current_scene_id = 0;
 first_scene = null;
+elems_scenes_ids = [];
 function stickerChange(data, clip_id, scene_id)
 {
 	var data = JSON.parse(data);
@@ -39,7 +40,6 @@ function toggleAjaxLoader(elem_id)
 function sceneChange(json_data, dont_history, url, json_url, secs, scene_id)
 {
 	var data = JSON.parse(json_data);
-	$('#description').html(data.scene_description);
 	$('#comment_form').html(data.scene_comment_form);
 	$('#comments').html(data.scene_comments_list);
 	$('#fun_buttons').html(data.scene_social_buttons);
@@ -60,9 +60,44 @@ function sceneChange(json_data, dont_history, url, json_url, secs, scene_id)
 	}
 }
 
+function showSceneDescription(scene_id)
+{
+	if(!$('#scene_description_'+scene_id+':visible').length)
+	{
+		$('#description div.scene_description:visible').hide().stop(true, true);
+		$('#scene_description_'+scene_id).fadeIn();
+	}
+}
+
+function bindSceneTextChangeHover()
+{
+	$('#scene_controls li').hover(function(){
+
+		if(!elems_scenes_ids[$(this).attr('id')])
+		{
+			elems_scenes_ids[$(this).attr('id')] = $(this).attr('id').replace('scene_', '');
+		}
+
+		showSceneDescription(elems_scenes_ids[$(this).attr('id')]);
+	}, function(e){
+		if($(e.relatedTarget).attr('id') != 'scene_controls')
+		{
+			showSceneDescription(
+					$('#scene_controls li.active').attr('id').replace('scene_', '')
+			);
+		}
+	});
+
+	$('#scene_controls').hover(function(){}, function(){
+		active_id = $('#scene_controls li.active').attr('id').replace('scene_', '');
+		showSceneDescription(active_id);
+	});
+}
+
 function bindSceneChangeBack(json_url, secs, scene_id)
 {
 	$().ready(function(){
+		bindSceneTextChangeHover();
 		window.addEventListener('popstate', function(e){
 			if(e.state)
 			{

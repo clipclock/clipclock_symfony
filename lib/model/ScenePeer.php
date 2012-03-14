@@ -152,12 +152,18 @@ class ScenePeer extends BaseScenePeer {
 		$c->clearSelectColumns();
 		$c->addSelectColumn(self::ID);
 		$c->addSelectColumn(SceneTimePeer::SCENE_TIME);
+		$c->addSelectColumn(ReclipPeer::CLIP_ID);
 		$c->addSelectColumn(SceneTimePeer::ID . ' as scene_time_id');
 		$c->addSelectColumn(ScenePeer::BOARD_ID);
+		$c->addSelectColumn(SfGuardUserProfilePeer::SF_GUARD_USER_ID . ' as user_id');
 		$c->addSelectColumn(SfGuardUserProfilePeer::NICK . ' as nick');
+		$c->addSelectColumn(SfGuardUserProfilePeer::FIRST_NAME . ' as first_name');
+		$c->addSelectColumn(SfGuardUserProfilePeer::LAST_NAME . ' as last_name');
+		$c->addSelectColumn(ScenePeer::TEXT . ' as text');
 
 		//$c->add(self::BOARD_ID, $board_id);
 		$c->addJoin(self::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
+		$c->addJoin(SceneTimePeer::RECLIP_ID, ReclipPeer::ID, Criteria::INNER_JOIN);
 		$c->addJoin(self::SF_GUARD_USER_PROFILE_ID, SfGuardUserProfilePeer::SF_GUARD_USER_ID, Criteria::INNER_JOIN);
 		$c->add(SceneTimePeer::RECLIP_ID, $reclip_id);
 		//$c->add(self::REPIN_ORIGIN_SCENE_ID, null, Criteria::ISNULL);

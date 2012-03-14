@@ -33,6 +33,8 @@ class sceneComponents extends sfComponents
 
 		$this->scene_time = $this->scene->getSceneTime();
 		$this->reclip = ReclipPeer::retrieveBySceneTimeId($this->scene->getSceneTimeId());
+
+		$this->control_scene_times = ScenePeer::retrieveAscSceneTimeIdByClipIdBoardId($this->reclip->getId(), $this->scene->getBoardId());
 	}
 
 	public function executeSceneViewEmbed()
@@ -41,18 +43,16 @@ class sceneComponents extends sfComponents
 
 	public function executeSceneViewControl()
 	{
-		$this->board_id = $this->getVar('board_id');
+		$this->scene_times = $this->getVar('control_scene_times');
 		$this->reclip_id = $this->getVar('reclip_id');
-		$this->scene_id = $this->getVar('scene_id');
-
-		$this->scene_times = ScenePeer::retrieveAscSceneTimeIdByClipIdBoardId($this->reclip_id, $this->board_id);
 
 		$this->form = new SceneTimeForm(null, array('reclip_id' => $this->reclip_id, 'sf_guard_user_profile_id' => $this->getUser()->getId()));
 	}
 
 	public function executeSceneViewDescription()
 	{
-        $this->scene = ScenePeer::retrieveByPK($this->scene_id);
+		$this->scene_id = $this->getVar('scene_id');
+		$this->scene_times = $this->getVar('control_scene_times');
 	}
 
 	public function executeSceneViewCommentForm()

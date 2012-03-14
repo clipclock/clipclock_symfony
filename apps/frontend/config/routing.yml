@@ -145,7 +145,7 @@ user:
   url:   /profile/:nick
   class: sfPropelRoute
   param: { module: user, action: scenes }
-  options: { model: sfGuardUserProfile, type: object }
+  options: { model: sfGuardUserProfile, type: object, segment_separators: [/] }
 
 edit_user:
   url:   /edit/profile/:user_id
@@ -161,49 +161,49 @@ my_boards:
   url:   /profile/:nick/channels
   class: sfPropelRoute
   param: { module: user, action: boards }
-  options: { model: sfGuardUserProfile, type: object }
+  options: { model: sfGuardUserProfile, type: object, segment_separators: [/] }
 
 my_boards_page:
   url:   /profile/:nick/channels/page/:page
   class: sfPropelRoute
   param: { module: user, action: boards, page: '' }
-  options: { model: sfGuardUserProfile, type: object }
+  options: { model: sfGuardUserProfile, type: object, segment_separators: [/] }
 
 my_scenes:
   url:   /profile/:nick/clips
   class: sfPropelRoute
   param: { module: user, action: scenes }
-  options: { model: sfGuardUserProfile, type: object }
+  options: { model: sfGuardUserProfile, type: object, segment_separators: [/] }
 
 my_clips_page:
   url:   /profile/:nick/clips/page/:page
   class: sfPropelRoute
   param: { module: user, action: scenes, page: '' }
-  options: { model: sfGuardUserProfile, type: object }
+  options: { model: sfGuardUserProfile, type: object, segment_separators: [/] }
 
 my_likes:
   url:   /profile/:nick/likes
   class: sfPropelRoute
   param: { module: user, action: likes }
-  options: { model: sfGuardUserProfile, type: object }
+  options: { model: sfGuardUserProfile, type: object, segment_separators: [/] }
 
 my_likes_page:
   url:   /profile/:nick/likes/page/:page
   class: sfPropelRoute
   param: { module: user, action: likes, page: '' }
-  options: { model: sfGuardUserProfile, type: object }
+  options: { model: sfGuardUserProfile, type: object, segment_separators: [/] }
 
 my_comments:
   url:   /profile/:nick/comments
   class: sfPropelRoute
   param: { module: user, action: comments }
-  options: { model: sfGuardUserProfile, type: object }
+  options: { model: sfGuardUserProfile, type: object, segment_separators: [/] }
 
 my_comments_page:
   url:   /profile/:nick/comments/page/:page
   class: sfPropelRoute
   param: { module: user, action: comments, page: '' }
-  options: { model: sfGuardUserProfile, type: object }
+  options: { model: sfGuardUserProfile, type: object, segment_separators: [/] }
 
 ### LISTINGS ###
 
@@ -211,13 +211,13 @@ list_followers:
   url: /profile/:nick/list/followers
   class: sfPropelRoute
   param: { module: list, action: showListing, type: 'followers' }
-  options: { model: sfGuardUserProfile, type: object }
+  options: { model: sfGuardUserProfile, type: object, segment_separators: [/] }
 
 list_followings:
   url: /profile/:nick/list/followings
   class: sfPropelRoute
   param: { module: list, action: showListing, type: 'followings' }
-  options: { model: sfGuardUserProfile, type: object }
+  options: { model: sfGuardUserProfile, type: object, segment_separators: [/] }
 
 
 list_likes:

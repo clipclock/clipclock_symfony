@@ -7,8 +7,8 @@ all:
   sf_admin_dash:
     site: 'Админ. панель менеджера'
     translator:
-      backendTender:
-        title: Заявки
+      scene:
+        title: Сцены
         actions:
           rejected: Отказанные
           approved: Подтвержденные
@@ -17,6 +17,6 @@ all:
     categories:
       Обслуживание:
         items:
-          Тикеты:
+          Сцены:
             url:          scene
             image:        support.png

@@ -21,6 +21,8 @@ class listComponents extends sfComponents
 		$this->user = $this->getVar('user');
 		$this->user_id = $this->getVar('user_id');
 
+		$this->target_user = SfGuardUserProfilePeer::retrieveByPK($this->user_id);
+
 		$this->scene_infos = ScenePeer::retrieveLatestByUserId($this->user_id);
 	}
 }

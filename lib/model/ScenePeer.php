@@ -155,16 +155,33 @@ class ScenePeer extends BaseScenePeer {
 		$c->addSelectColumn(ReclipPeer::CLIP_ID);
 		$c->addSelectColumn(SceneTimePeer::ID . ' as scene_time_id');
 		$c->addSelectColumn(ScenePeer::BOARD_ID);
+		$c->addSelectColumn(ScenePeer::CREATED_AT);
+		$c->addSelectColumn(ScenePeer::REPIN_ORIGIN_SCENE_ID);
 		$c->addSelectColumn(SfGuardUserProfilePeer::SF_GUARD_USER_ID . ' as user_id');
 		$c->addSelectColumn(SfGuardUserProfilePeer::NICK . ' as nick');
 		$c->addSelectColumn(SfGuardUserProfilePeer::FIRST_NAME . ' as first_name');
 		$c->addSelectColumn(SfGuardUserProfilePeer::LAST_NAME . ' as last_name');
 		$c->addSelectColumn(ScenePeer::TEXT . ' as text');
+		$c->addSelectColumn(ScenePeer::alias('repined_scene', ScenePeer::BOARD_ID) . ' as repined_board_id');
+		$c->addSelectColumn(BoardPeer::alias('repined_board', BoardPeer::NAME) . ' as repined_board_name');
+		$c->addSelectColumn(SfGuardUserProfilePeer::alias('repined_user', SfGuardUserProfilePeer::FIRST_NAME) . ' as repined_first_name');
+		$c->addSelectColumn(SfGuardUserProfilePeer::alias('repined_user', SfGuardUserProfilePeer::LAST_NAME) . ' as repined_last_name');
+		$c->addSelectColumn(SfGuardUserProfilePeer::alias('repined_user', SfGuardUserProfilePeer::NICK) . ' as repined_nick');
 
 		//$c->add(self::BOARD_ID, $board_id);
 		$c->addJoin(self::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
 		$c->addJoin(SceneTimePeer::RECLIP_ID, ReclipPeer::ID, Criteria::INNER_JOIN);
 		$c->addJoin(self::SF_GUARD_USER_PROFILE_ID, SfGuardUserProfilePeer::SF_GUARD_USER_ID, Criteria::INNER_JOIN);
+
+		$c->addAlias('repined_scene', ScenePeer::TABLE_NAME);
+		$c->addJoin(ScenePeer::REPIN_ORIGIN_SCENE_ID, ScenePeer::alias('repined_scene', ScenePeer::ID), Criteria::LEFT_JOIN);
+
+		$c->addAlias('repined_board', BoardPeer::TABLE_NAME);
+		$c->addJoin(ScenePeer::alias('repined_scene', ScenePeer::BOARD_ID), BoardPeer::alias('repined_board', BoardPeer::ID), Criteria::LEFT_JOIN);
+
+		$c->addAlias('repined_user', SfGuardUserProfilePeer::TABLE_NAME);
+		$c->addJoin(ScenePeer::alias('repined_scene', ScenePeer::SF_GUARD_USER_PROFILE_ID), SfGuardUserProfilePeer::alias('repined_user', SfGuardUserProfilePeer::SF_GUARD_USER_ID), Criteria::LEFT_JOIN);
+
 		$c->add(SceneTimePeer::RECLIP_ID, $reclip_id);
 		//$c->add(self::REPIN_ORIGIN_SCENE_ID, null, Criteria::ISNULL);
 		$c->addAscendingOrderByColumn(SceneTimePeer::SCENE_TIME);

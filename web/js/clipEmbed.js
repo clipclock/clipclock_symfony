@@ -38,6 +38,13 @@ function checkCurrentScene(scene_id, scene_time)
 	seekTo(scene_time);
 	highliteControlTab(scene_id);
 
+
+	if($('#scene_add_comment').hasClass('active'))
+	{
+		new_time_scene_pause_player();
+		showSceneDescription(scene_id);
+	}
+
 	if(current_scene_id != scene_id)
 	{
 		current_scene_id = scene_id;

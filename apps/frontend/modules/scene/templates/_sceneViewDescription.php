@@ -5,7 +5,7 @@
 		<a href="<?php echo url_for('user', array('nick' => $scene_time['nick']))?>"><img src="<?php echo ImagePreview::c14n($scene_time['user_id'], 'medium', 'avatar');?>" alt="" width="50" height="50" /></a>
 	</div>
 	<div style="float: right">
-		<img src="<?php echo ImagePreview::c14n($scene_time['clip_id'].$scene_time['scene_time']);?>" alt="" width="50" height="50" />
+		<img src="<?php echo ImagePreview::c14n($scene_time['clip_id'].$scene_time['scene_time']);?>" alt="" width="61" height="61" />
 	</div>
 	<p>
 		<span class="t-bl"><a href="<?php echo url_for('user', array('nick' => $scene_time['nick']))?>"><?php echo $scene_time['first_name'] . ' ' . $scene_time['last_name']?></a>, Clipped 2 hours ago from <strong>YouTube</strong></span>

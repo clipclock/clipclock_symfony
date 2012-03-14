@@ -49,11 +49,6 @@ function sceneChange(json_data, dont_history, url, json_url, secs, scene_id)
 	bindCommentRatingButtons(data.rating_url);
 	toggleAjaxLoader();
 
-	if($('#scene_add_comment').hasClass('active'))
-	{
-		new_time_scene_pause_player();
-	}
-
 	if(!dont_history)
 	{
 		history.pushState({json_url: json_url, secs: secs, scene_id: scene_id}, 'Title', url);
@@ -62,7 +57,7 @@ function sceneChange(json_data, dont_history, url, json_url, secs, scene_id)
 
 function showSceneDescription(scene_id)
 {
-	if(!$('#scene_description_'+scene_id+':visible').length)
+	if(!$('#scene_description_'+scene_id+':visible').length || $('#description div.scene_description:visible').length > 1)
 	{
 		$('#description div.scene_description:visible').hide().stop(true, true);
 		$('#scene_description_'+scene_id).fadeIn();

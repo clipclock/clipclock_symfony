@@ -11,7 +11,7 @@
 		'active' => $user->getId() == $user_id ? 'my' : UserFollowerPeer::isUserFollowedByUser($user_id, $user->getId())
 	)) : ''?>
 	<div class="gallery">
-		<div class="pins">Pins</div>
+		<div class="pins">Clips</div>
 		<ul class="gall-photos">
 			<?php foreach($scene_infos as $scene_info):?>
 				<li><a href="<?php echo url_for('scene', array('id' => $scene_info['scene_id'], 'board_id' => $scene_info['board_id'], 'username_slug' => $scene_info['nick']))?>">

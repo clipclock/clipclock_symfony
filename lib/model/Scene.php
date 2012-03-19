@@ -28,4 +28,36 @@ class Scene extends BaseScene {
 	{
 		return $this->getText();
 	}
+
+	public function getSceneTimeBackend()
+	{
+		return $this->getSceneTime()->getSceneTime();
+	}
+
+	public function getSfGuardUserProfileIdBackend()
+	{
+		return $this->getSfGuardUserProfile()->getFullName();
+	}
+
+	public function delete(PropelPDO $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(ScenePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+		}
+
+		$con->beginTransaction();
+		try {
+			SceneQuery::create()->filterByRepinOriginSceneId($this->id)->delete($con);
+			SceneLikeQuery::create()->filterBySceneId($this->id)->delete($con);
+			SceneRepinQuery::create()->filterBySceneId($this->id)->delete($con);
+			HistoryQuery::create()->filterBySceneId($this->id)->delete($con);
+			parent::delete($con);
+			$con->commit();
+		}
+		catch(Exception $e)
+		{
+			$con->rollBack();
+			throw $e;
+		}
+	}
 } // Scene

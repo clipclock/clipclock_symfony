@@ -14,10 +14,31 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
-      list:    ~
+      fields:
+        scene_time: {label: ' '}
+        created_at: {label: 'Дата создания', params: date_format='dd.mm.yyyy'}
+        board_id: {label: 'Набор'}
+        text: {label: 'Описание'}
+      list:
+        title: "Сцены"
+        max_per_page: 40
+        actions:
+          _create: -
+        display: [id, created_at, sf_guard_user_profile_id_backend, board, repin_origin_scene_id, scene_time, text]
+        fields:
+          created_at: {params: date_format='dd/mm/yy'}
+          sf_guard_user_profile_id_backend: {label: 'Пользователь'}
+          scene_time: {label: 'Время'}
+          repin_origin_scene_id: {label: 'Реклип?', type: Boolean}
       filter:  ~
       form:
+        fields:
+          sf_guard_user_profile_id: { attributes: { disabled: disabled }, label: 'Автор', type: plain }
+          repin_origin_scene_id: { attributes: { disabled: disabled }, label: 'Реклип сцены', type: plain }
         class: BackendSceneForm
+        display:
+          "Неизменяемые данные": [sf_guard_user_profile_id, repin_origin_scene_id]
+          "Описание сцены": [created_at, board_id, text]
+          "Технические детали сцены": [scene_time]
       edit:    ~
       new:     ~

@@ -23,6 +23,8 @@ propel:
     id:             ~
     username:       { type: varchar, size: 128, required: true, index: unique }
     algorithm:      { type: varchar, size: 128, required: true, default: sha1 }
+    salt:           { type: varchar, size: 128, required: false }
+    password:       { type: varchar, size: 128, required: false }
     created_at:     ~
     last_login:     { type: timestamp }
     is_active:      { type: boolean, required: true, default: 1 }

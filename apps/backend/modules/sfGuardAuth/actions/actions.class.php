@@ -5,6 +5,6 @@ class sfGuardAuthActions extends BasesfGuardAuthActions
   public function preExecute()
   {
 
-    sfForm::disableCSRFProtection();
+    //sfForm::disableCSRFProtection();
   }
 }

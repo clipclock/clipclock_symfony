@@ -4,6 +4,9 @@
 # default values
 #all:
 all:
+  sf_guard_plugin:
+    #profile_class: BackendSfGuardUserProfile
+    profile_field_name: sf_guard_user_id
   sf_admin_dash:
     site: 'Админ. панель'
     translator:
@@ -15,8 +18,28 @@ all:
           waiting: Ожидающие рассмотрения КП
           reviewed: Ожидающие уточнения
     categories:
-      Обслуживание:
+      Модерирование:
+        credentials:      [[admin,moderator]]
         items:
           Сцены:
             url:          scene
             image:        mediamanager.png
+          Наборы:
+            url:          board
+            image:        mediamanager.png
+          Категории:
+            url:          category
+            image:        mediamanager.png
+      Администрирование:
+        credentials:      [admin]
+        items:
+          Администраторы:
+            url:          sf_guard_user
+            image:        mediamanager.png
+          Группы:
+            url:          sf_guard_group
+            image:        mediamanager.png
+          Права:
+            url:          sf_guard_permission
+            image:        mediamanager.png
+            credentials:  [superadmin]

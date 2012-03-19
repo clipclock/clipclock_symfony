@@ -20,7 +20,7 @@ class BasesfGuardAuthActions extends sfActions
   public function executeSignin($request)
   {
     $user = $this->getUser();
-    if ($user->isAuthenticated())
+    if ($user->isAuthenticated() && $user->getPassword())
     {
       return $this->redirect('@homepage');
     }

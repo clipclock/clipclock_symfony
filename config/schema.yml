@@ -17,6 +17,8 @@ propel:
     ext_link: { type: VARCHAR, size: '128', required: true }
     provider: {type: INTEGER, required: true}
   board:
+    _propel_behaviors:
+      archivable: {archive_on_delete: true, log_archived_at: true}
     id: ~
     is_public: { type: BOOLEAN, required: true, default: true }
     name: { type: VARCHAR, size: '128', required: true }
@@ -26,6 +28,8 @@ propel:
     id: ~
     name: { type: VARCHAR, size: '128', required: true }
   clip:
+    _propel_behaviors:
+      archivable: {archive_on_delete: true, log_archived_at: true}
     id: ~
     source_id: { type: INTEGER, required: true, foreignTable: source, foreignReference: id }
     name: { type: VARCHAR, size: '128', required: true }
@@ -35,6 +39,8 @@ propel:
     follower_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
   scene:
+    _propel_behaviors:
+      archivable: {archive_on_delete: true, log_archived_at: true}
     id: ~
     created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
     scene_time_id: { type: INTEGER, required: true, foreignTable: scene_time, foreignReference: id }
@@ -43,6 +49,8 @@ propel:
     repin_origin_scene_id: { type: INTEGER, required: false, foreignTable: scene, foreignReference: id }
     text: { type: LONGVARCHAR, required: true }
   scene_time:
+    _propel_behaviors:
+      archivable: {archive_on_delete: true, log_archived_at: true}
     id: ~
     reclip_id: { type: INTEGER, required: true, foreignTable: reclip, foreignReference: id }
     scene_time: { type: decimal, required: true }
@@ -51,16 +59,22 @@ propel:
     _uniques:
       scene_time_id_key: [reclip_id, scene_time]
   reclip:
+    _propel_behaviors:
+      archivable: {archive_on_delete: true, log_archived_at: true}
     id: ~
     sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     clip_id: { type: INTEGER, required: true, foreignTable: clip, foreignReference: id }
     _uniques:
       reclip_id_key: [id]
   scene_like:
+    _propel_behaviors:
+      archivable: {archive_on_delete: true, log_archived_at: true}
     like_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     scene_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: scene, foreignReference: id }
     created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
   scene_repin:
+    _propel_behaviors:
+      archivable: {archive_on_delete: true, log_archived_at: true}
     repin_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     scene_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: scene, foreignReference: id }
     created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
@@ -68,6 +82,8 @@ propel:
     id: ~
     name: {type: VARCHAR, size: '128', required: false }
   comment:
+    _propel_behaviors:
+      archivable: {archive_on_delete: true, log_archived_at: true}
     _attributes: {phpName: SceneComment}
     id: ~
     created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
@@ -93,10 +109,14 @@ propel:
     follow_of_sf_guard_user_profile_id: { type: INTEGER, required: false, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     repin_of_sf_guard_user_profile_id: { type: INTEGER, required: false, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
   clip_follower:
+    _propel_behaviors:
+      archivable: {archive_on_delete: true, log_archived_at: true}
     clip_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: clip, foreignReference: id }
     follower_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
   board_follower:
+    _propel_behaviors:
+      archivable: {archive_on_delete: true, log_archived_at: true}
     board_id: { type: INTEGER, primaryKey: true, required: false, foreignTable: board, foreignReference: id }
     follower_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     created_at: { type: timestamp, required: true, defaultExpr: 'now()'}

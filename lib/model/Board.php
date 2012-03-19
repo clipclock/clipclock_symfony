@@ -28,4 +28,25 @@ class Board extends BaseBoard {
 	{
 		return slugify($this->getSfGuardUserProfile()->getNick());
 	}
+
+	public function delete(PropelPDO $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(ScenePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+		}
+
+		$con->beginTransaction();
+		try {
+			SceneQuery::create()->filterByBoardId($this->id)->delete($con);
+			BoardFollowerQuery::create()->filterByBoardId($this->id)->delete($con);
+			HistoryQuery::create()->filterByBoardId($this->id)->delete($con);
+			parent::delete($con);
+			$con->commit();
+		}
+		catch(Exception $e)
+		{
+			$con->rollBack();
+			throw $e;
+		}
+	}
 } // Board

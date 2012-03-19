@@ -13,4 +13,8 @@ require_once dirname(__FILE__).'/../lib/sceneGeneratorHelper.class.php';
  */
 class sceneActions extends autoSceneActions
 {
+	public function preExecute()
+	{
+		parent::preExecute();
+	}
 }

@@ -29,6 +29,11 @@ class SfGuardUserProfile extends BaseSfGuardUserProfile {
 		return $this->getFirstName() . ' ' . $this->getLastName();
 	}
 
+	public function getFullNameBackend()
+	{
+		return $this->getId() . '/' . $this->getFirstName() . ' ' . $this->getLastName();
+	}
+
 	public function getId()
 	{
 		return $this->getSfGuardUserId();

@@ -34,9 +34,14 @@ class Scene extends BaseScene {
 		return $this->getSceneTime()->getSceneTime();
 	}
 
+	public function getBoardBackend()
+	{
+		return $this->getBoardId() . '/' . $this->getBoard();
+	}
+
 	public function getSfGuardUserProfileIdBackend()
 	{
-		return $this->getSfGuardUserProfile()->getFullName();
+		return  $this->getSfGuardUserProfileId() . '/' . $this->getSfGuardUserProfile()->getFullName();
 	}
 
 	public function getTextShort()
@@ -57,10 +62,15 @@ class Scene extends BaseScene {
 
 		$con->beginTransaction();
 		try {
-			SceneQuery::create()->filterByRepinOriginSceneId($this->id)->delete($con);
+			SceneQuery::create()->filterByRepinOriginSceneId($this->id)->delete($con);//TODO: foreach
 			SceneLikeQuery::create()->filterBySceneId($this->id)->delete($con);
 			SceneRepinQuery::create()->filterBySceneId($this->id)->delete($con);
 			HistoryQuery::create()->filterBySceneId($this->id)->delete($con);
+			$c14n_id = $this->getSceneTime()->getReclip()->getClipId().$this->getSceneTime()->getSceneTime();
+			foreach(ImagePreview::$sizes['scene'] as $key => $sizes)
+			{
+				@unlink(ImagePreview::c14n($c14n_id, $key, 'scene'));
+			}
 			parent::delete($con);
 			$con->commit();
 		}

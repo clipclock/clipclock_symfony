@@ -39,7 +39,7 @@ generator:
         batch_actions:
           _delete: ~
           delete_clip: ~
-        display: [id, created_at, sf_guard_user_profile_id_backend, board, repin_origin_scene_id, scene_time, text_short, hide]
+        display: [id, created_at, sf_guard_user_profile_id_backend, board_backend, repin_origin_scene_id, scene_time, text_short, hide]
         fields:
           created_at: {params: date_format='dd/mm/yy'}
           sf_guard_user_profile_id_backend: {label: 'Пользователь'}

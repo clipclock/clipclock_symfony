@@ -15,7 +15,7 @@ class homeActions extends sfActions
 		$this->user = $this->getUser();
 
 		$this->form = new HomeFilterForm(null, array('user' => $this->user));
-		$this->criteria = SceneTimePeer::retrieveClipsIdsForMainByUserId();
+		$this->criteria = SceneTimePeer::retrieveClipsIdsForMainByUserId(null, $this->user->getId());
 	}
 	/**
 	 * Executes index action

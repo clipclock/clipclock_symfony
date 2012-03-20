@@ -88,7 +88,7 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		return $c;
 	}
 
-	public static function retrieveClipsIdsForMainByUserId(Criteria $c = null)
+	public static function retrieveClipsIdsForMainByUserId(Criteria $c = null, $user_id = null)
 	{
 		$c = !$c ? new Criteria() : $c;
 
@@ -96,6 +96,8 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		$c->clearSelectColumns();
 		$c->addSelectColumn(SceneTimePeer::RECLIP_ID);
 		$c->addJoin(SceneTimePeer::ID, ScenePeer::SCENE_TIME_ID, Criteria::INNER_JOIN);
+		$c->addJoin(SceneTimePeer::RECLIP_ID, ReclipPeer::ID, Criteria::INNER_JOIN);
+		$c->addJoin(ReclipPeer::CLIP_ID, ClipPeer::ID, Criteria::INNER_JOIN);
 		$c->addJoin(ScenePeer::ID, SceneLikePeer::SCENE_ID, Criteria::LEFT_JOIN);
 		$c->addDescendingOrderByColumn('date_trunc(\'day\', max('.self::CREATED_AT.'))');
 		$c->addDescendingOrderByColumn('count('.SceneLikePeer::SCENE_ID.')');
@@ -103,6 +105,12 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		$c->addDescendingOrderByColumn('count('.SceneTimePeer::ID.')');
 		$c->addDescendingOrderByColumn('max('.self::CREATED_AT.')');
 		$c->addDescendingOrderByColumn(SceneTimePeer::RECLIP_ID);
+
+		if($user_id)
+		{
+			$c->add(ClipPeer::HIDE, false);
+			$c->addOr(ScenePeer::SF_GUARD_USER_PROFILE_ID, $user_id);
+		}
 
 		$c->addGroupByColumn(SceneTimePeer::RECLIP_ID);
 		return $c;

@@ -19,4 +19,25 @@
  */
 class Reclip extends BaseReclip {
 
+	public function delete(PropelPDO $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(ScenePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+		}
+
+		$con->beginTransaction();
+		try {
+			foreach(SceneTimeQuery::create()->findByReclipId($this->id) as $scene_time)
+			{
+				$scene_time->delete($con);
+			}
+			parent::delete($con);
+			$con->commit();
+		}
+		catch(Exception $e)
+		{
+			$con->rollBack();
+			throw $e;
+		}
+	}
 } // Reclip

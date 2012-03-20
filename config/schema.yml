@@ -34,6 +34,7 @@ propel:
     source_id: { type: INTEGER, required: true, foreignTable: source, foreignReference: id }
     name: { type: VARCHAR, size: '128', required: true }
     url: { type: VARCHAR, required: true }
+    hide: { type: BOOLEAN, required: true, default: 'false' }
   user_follower:
     following_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     follower_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }

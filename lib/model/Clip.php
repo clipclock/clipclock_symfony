@@ -23,4 +23,26 @@ class Clip extends BaseClip {
 	{
 		return ScenePeer::retrieveFirstByClipIdBoardId($this->getId(), $board_id);
 	}
+
+	public function delete(PropelPDO $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(ScenePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+		}
+
+		$con->beginTransaction();
+		try {
+			foreach(ReclipQuery::create()->findByClipId($this->id) as $reclip)
+			{
+				$reclip->delete($con);
+			}
+			parent::delete($con);
+			$con->commit();
+		}
+		catch(Exception $e)
+		{
+			$con->rollBack();
+			throw $e;
+		}
+	}
 } // Clip

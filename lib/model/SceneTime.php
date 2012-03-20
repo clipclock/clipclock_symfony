@@ -23,4 +23,31 @@ class SceneTime extends BaseSceneTime {
     {
         return date('i:s', mktime(0, 0, $this->getSceneTime()));
     }
+
+	public function delete(PropelPDO $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(ScenePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+		}
+
+		$con->beginTransaction();
+		try {
+			foreach(SceneQuery::create()->findBySceneTimeId($this->id) as $scene)
+			{
+				$scene->delete($con);
+			}
+
+			foreach(SceneCommentQuery::create()->findBySceneTimeId($this->id) as $scene_comment)
+			{
+				$scene_comment->delete($con);
+			}
+			parent::delete($con);
+			$con->commit();
+		}
+		catch(Exception $e)
+		{
+			$con->rollBack();
+			throw $e;
+		}
+	}
 } // SceneTime

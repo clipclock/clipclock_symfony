@@ -39,6 +39,16 @@ class Scene extends BaseScene {
 		return $this->getSfGuardUserProfile()->getFullName();
 	}
 
+	public function getTextShort()
+	{
+		return substr($this->getText(), 0, 40).'..';
+	}
+
+	public function getHide()
+	{
+		return $this->getSceneTime()->getReclip()->getClip()->getHide();
+	}
+
 	public function delete(PropelPDO $con = null)
 	{
 		if ($con === null) {

@@ -40,4 +40,36 @@ class SceneComment extends BaseSceneComment {
 			$con->rollBack();
 		}
 	}
+
+	public function delete(PropelPDO $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(ScenePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+		}
+
+		$con->beginTransaction();
+		try {
+			foreach(SceneCommentQuery::create()->findByReplyToCommentId($this->id) as $replied_scene_comment)
+			{
+				$replied_scene_comment->delete($con);
+			}
+
+			foreach(SceneCommentRatingVotesQuery::create()->findByCommentId($this->id) as $rating_scene_comment)
+			{
+				$rating_scene_comment->delete($con);
+			}
+
+			foreach(HistoryQuery::create()->findByCommentId($this->id) as $history_comment)
+			{
+				$history_comment->delete($con);
+			}
+			parent::delete($con);
+			$con->commit();
+		}
+		catch(Exception $e)
+		{
+			$con->rollBack();
+			throw $e;
+		}
+	}
 }

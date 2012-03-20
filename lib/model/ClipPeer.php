@@ -29,4 +29,15 @@ class ClipPeer extends BaseClipPeer {
 
 		return self::doSelectOne($c);
 	}
+
+	public static function retrieveBySceneIds(array $ids)
+	{
+		$c = new Criteria();
+		$c->addJoin(self::ID, ReclipPeer::CLIP_ID, Criteria::INNER_JOIN);
+		$c->addJoin(ReclipPeer::ID, SceneTimePeer::RECLIP_ID, Criteria::INNER_JOIN);
+		$c->addJoin(SceneTimePeer::ID, ScenePeer::SCENE_TIME_ID, Criteria::INNER_JOIN);
+		$c->add(ScenePeer::ID, $ids, Criteria::IN);
+
+		return self::doSelect($c);
+	}
 } // ClipPeer

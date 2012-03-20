@@ -260,7 +260,7 @@ user_register_welcome:
 ### MELODY ROUTINE ###
 
 connect_fb:
-  url:   /connect_fb
+  url:   /connect_fb/*
   param: { module: user, action: connect }
 
 callback_fb:

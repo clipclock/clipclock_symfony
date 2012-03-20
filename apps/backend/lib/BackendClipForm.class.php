@@ -15,5 +15,6 @@ class BackendClipForm extends BaseClipForm
 		$this->widgetSchema->setLabel('url', 'Код');
 		$this->widgetSchema->setLabel('name', 'Название ролика');
 		$this->widgetSchema->setLabel('source_id', 'Источник');
+		$this->widgetSchema->setLabel('hide', 'Спрятанное видео');
 	}
 }

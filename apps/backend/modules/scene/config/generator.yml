@@ -20,6 +20,9 @@ generator:
         hide_clip:
           name: 'Скрыть видео с главной'
           action: hideClip
+        refresh_frame:
+          name: 'Обновить кадр'
+          action: refreshFrame
       fields:
         scene_time: {label: ' '}
         created_at: {label: 'Дата создания', params: date_format='dd.mm.yyyy'}
@@ -63,4 +66,5 @@ generator:
           _list: ~
           _save: ~
           hide_clip: ~
+          refresh_frame: ~
       new:     ~

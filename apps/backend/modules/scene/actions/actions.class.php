@@ -112,4 +112,16 @@ class sceneActions extends autoSceneActions
 
 		$this->redirect('@scene');
 	}
+
+	public function executeRefreshFrame(sfWebRequest $request)
+	{
+		$this->Scene = $this->getRoute()->getObject();
+
+		$c14n_id = $this->Scene->getSceneTime()->getReclip()->getClipId().$this->Scene->getSceneTime()->getSceneTime();
+		ImagePreview::deleteAllImages($c14n_id);
+
+		$publish_helper = new AMQPPublisher();
+		$publish_helper->jobScene($c14n_id, $this->Scene->getSceneTime()->getReclip()->getClip()->getUrl(), $this->Scene->getSceneTime()->getSceneTime());
+		$this->redirect('@scene');
+	}
 }

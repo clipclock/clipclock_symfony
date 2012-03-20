@@ -67,10 +67,8 @@ class Scene extends BaseScene {
 			SceneRepinQuery::create()->filterBySceneId($this->id)->delete($con);
 			HistoryQuery::create()->filterBySceneId($this->id)->delete($con);
 			$c14n_id = $this->getSceneTime()->getReclip()->getClipId().$this->getSceneTime()->getSceneTime();
-			foreach(ImagePreview::$sizes['scene'] as $key => $sizes)
-			{
-				@unlink(ImagePreview::c14n($c14n_id, $key, 'scene'));
-			}
+			ImagePreview::deleteAllImages($c14n_id);
+
 			parent::delete($con);
 			$con->commit();
 		}

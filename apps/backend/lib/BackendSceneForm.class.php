@@ -54,10 +54,8 @@ class BackendSceneForm extends BaseSceneForm
 					$this->getObject()->getSceneTime()->getReclip()->getClip()->getUrl() != $this->prev_clip_url)
 			{
 				$c14n_id = $this->getObject()->getSceneTime()->getReclip()->getClipId().$this->getObject()->getSceneTime()->getSceneTime();
-				foreach(ImagePreview::$sizes['scene'] as $key => $sizes)
-				{
-					@unlink(ImagePreview::c14n($c14n_id, $key, 'scene'));
-				}
+				ImagePreview::deleteAllImages($c14n_id);
+
 				$publish_helper = new AMQPPublisher();
 				$publish_helper->jobScene($c14n_id, $this->getObject()->getSceneTime()->getReclip()->getClip()->getUrl(), $this->getObject()->getSceneTime()->getSceneTime());
 			}

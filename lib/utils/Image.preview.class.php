@@ -49,6 +49,14 @@ class ImagePreview
 		return self::$sizes[$type][$size];
 	}
 
+	public static function deleteAllImages($c14n_id, $type = 'scene')
+	{
+		foreach(ImagePreview::$sizes[$type] as $key => $sizes)
+		{
+			@unlink(sfConfig::get('sf_web_dir') . ImagePreview::c14n($c14n_id, $key, $type));
+		}
+	}
+
 	public static function c14n($scene_id, $size = 'medium', $type = 'scene')
 	{
 		$scene_hash = md5($scene_id);

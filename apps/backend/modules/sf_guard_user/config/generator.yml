@@ -13,10 +13,18 @@ generator:
     css:                   nothing
 
     config:
-      actions: ~
+      actions:
+        refresh_avatar:
+          name: 'Обновить кадр'
+          action: refreshAvatar
       fields:  ~
       list:    ~
       filter:  ~
       form:    ~
-      edit:    ~
+      edit:
+        actions:
+          _delete: ~
+          _list: ~
+          _save: ~
+          refresh_avatar: ~
       new:     ~

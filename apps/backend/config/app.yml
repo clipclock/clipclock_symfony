@@ -4,6 +4,14 @@
 # default values
 #all:
 all:
+  melody:
+    facebook:
+      aliases:
+        nickname: 'me?fields=name'
+        id: 'me?fields=id'
+        link: 'me?fields=link'
+        photo: 'me?fields=picture&type=large'
+        avatar: 'me?fields=picture&type=square'
   sf_guard_plugin:
     #profile_class: BackendSfGuardUserProfile
     profile_field_name: sf_guard_user_id

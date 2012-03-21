@@ -35,6 +35,10 @@ class sceneComponents extends sfComponents
 		$this->reclip = ReclipPeer::retrieveBySceneTimeId($this->scene->getSceneTimeId());
 
 		$this->control_scene_times = ScenePeer::retrieveAscSceneTimeIdByClipIdBoardId($this->reclip->getId(), $this->scene->getBoardId());
+		$this->response->addMeta('og:url', $this->generateUrl('scene', array('username_slug' => $this->user, 'board_id' => $this->scene->getBoardId(), 'id' => $this->scene->getId()), true));
+		$this->response->addMeta('og:title', $this->reclip->getClip()->getName().' @ '.$this->scene_time);
+		$this->response->addMeta('og:video', 'http://youtube.com/watch?v='.$this->reclip->getClip()->getUrl().'#t='.$this->scene_time->getSceneTime().'s');
+		$this->response->addMeta('og:image', $this->generateUrl('homepage', array(), true).substr(ImagePreview::c14n($this->reclip->getClip()->getId().$this->scene_time->getSceneTime()), 1));
 	}
 
 	public function executeSceneViewEmbed()

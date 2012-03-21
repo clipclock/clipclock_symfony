@@ -6,8 +6,8 @@
 all:
   registration:
     confirm: true
-    robot_email:           "no-reply@viddii.com"
-    robot_name:            "Viddii.com"
+    robot_email:           "no-reply@clipclock.com"
+    robot_name:            "ClipClock.com"
   sf_guard_plugin:
    profile_class:      sfGuardUserProfile
    profile_field_name: sf_guard_user_id

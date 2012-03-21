@@ -437,7 +437,7 @@ function include_metas()
   $i18n = sfConfig::get('sf_i18n') ? $context->getI18N() : null;
   foreach ($context->getResponse()->getMetas() as $name => $content)
   {
-    echo tag('meta', array('name' => $name, 'content' => null === $i18n ? $content : $i18n->__($content)))."\n";
+    echo tag('meta', array('property' => $name, 'content' => null === $i18n ? $content : $i18n->__($content)))."\n";
   }
 }
 

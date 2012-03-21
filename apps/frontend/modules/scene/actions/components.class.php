@@ -38,6 +38,7 @@ class sceneComponents extends sfComponents
 
 		$fb = sfConfig::get('app_melody_facebook');
 		$this->response->addMeta('fb:app_id', $fb['key']);
+		$this->response->addMeta('og:locale', 'en_us');
 
 		$this->response->addMeta('og:url', $this->generateUrl('scene', array('username_slug' => $this->user, 'board_id' => $this->scene->getBoardId(), 'id' => $this->scene->getId()), true));
 		$this->response->addMeta('og:title', $this->reclip->getClip()->getName());

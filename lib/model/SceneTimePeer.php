@@ -88,7 +88,7 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		return $c;
 	}
 
-	public static function retrieveClipsIdsForMainByUserId(Criteria $c = null, $user_id = null)
+	public static function retrieveClipsIdsForMainByUserId(Criteria $c = null, $user_id = null, $category_id = null)
 	{
 		$c = !$c ? new Criteria() : $c;
 
@@ -99,6 +99,14 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		$c->addJoin(SceneTimePeer::RECLIP_ID, ReclipPeer::ID, Criteria::INNER_JOIN);
 		$c->addJoin(ReclipPeer::CLIP_ID, ClipPeer::ID, Criteria::INNER_JOIN);
 		$c->addJoin(ScenePeer::ID, SceneLikePeer::SCENE_ID, Criteria::LEFT_JOIN);
+
+		if($category_id != HomeFilterForm::ALL_CATEGORIES_ID)
+		{
+			$c->addJoin(ScenePeer::BOARD_ID, BoardRefsCategoryPeer::BOARD_ID, Criteria::INNER_JOIN);
+			$c->add(BoardRefsCategoryPeer::CATEGORY_ID, $category_id);
+			$c->addDescendingOrderByColumn('sum('.BoardRefsCategoryPeer::VOTES.')/max('.BoardRefsCategoryPeer::VOTES.')');
+		}
+
 		$c->addDescendingOrderByColumn('date_trunc(\'day\', max('.self::CREATED_AT.'))');
 		$c->addDescendingOrderByColumn('count('.SceneLikePeer::SCENE_ID.')');
 		$c->addDescendingOrderByColumn('max('.self::UNIQUE_COMMENTS_COUNT.')');
@@ -151,7 +159,7 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		return $unique_comments_count;
 	}
 
-	public static function modifyCriteriaByFilter($criteria, $user_id, $category_id = false)
+	public static function modifyCriteriaByFilter($criteria, $user_id)
 	{
 		$criterions = array();
 
@@ -185,11 +193,6 @@ class SceneTimePeer extends BaseSceneTimePeer {
 			$criteria->addOr($criterion);
 		}
 
-		if($category_id != HomeFilterForm::ALL_CATEGORIES_ID)
-		{
-			$criteria->addJoin(ScenePeer::BOARD_ID, BoardPeer::ID, Criteria::INNER_JOIN);
-			$criteria->add(BoardPeer::CATEGORY_ID, $category_id);
-		}
 		return $criteria;
 	}
 } // SceneTimePeer

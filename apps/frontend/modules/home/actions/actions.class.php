@@ -15,7 +15,7 @@ class homeActions extends sfActions
 		$this->user = $this->getUser();
 
 		$this->form = new HomeFilterForm(null, array('user' => $this->user));
-		$this->criteria = SceneTimePeer::retrieveClipsIdsForMainByUserId(null, $this->user->getId());
+		$this->criteria = SceneTimePeer::retrieveClipsIdsForMainByUserId(null, $this->user->getId(), $this->getRequest()->getParameter('category'));
 	}
 	/**
 	 * Executes index action
@@ -31,7 +31,7 @@ class homeActions extends sfActions
 			$this->form->setDefault('source', $request->getParameter('source'));
 			$this->form->setDefault('category', $request->getParameter('category'));
 
-			$this->criteria = SceneTimePeer::modifyCriteriaByFilter($this->criteria, $this->user->getId(), $request->getParameter('category'));
+			$this->criteria = SceneTimePeer::modifyCriteriaByFilter($this->criteria, $this->user->getId());
 		}
 
 		$this->pager = new sfPropelPager('SceneTime', 40);

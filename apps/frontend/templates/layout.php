@@ -1,5 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://opengraphprotocol.org/schema/" xml:lang="en" lang="en">
+
+<head prefix="og: http://ogp.me/ns# clipclock:
+                  http://ogp.me/ns/apps/clipclock#">
 <head>
 	<?php include_http_metas() ?>
 	<?php include_metas() ?>

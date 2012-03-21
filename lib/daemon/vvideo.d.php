@@ -27,7 +27,7 @@ $daemon_options = array(
 );
 
 $queue_max_workers = array(
-	'inbox.scene' => 1,
+	'inbox.scene' => 2,
 );
 
 $amqp_options = array(

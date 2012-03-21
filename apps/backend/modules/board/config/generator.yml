@@ -14,8 +14,14 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
-      list:    ~
+      fields:
+        name: {label: 'Название'}
+        sf_guard_user_profile_id: {label: 'Пользователь'}
+        board_refs_category_list: {label: 'Категория'}
+      list:
+        display: [id, name, sf_guard_user_profile_id_backend]
+        fields:
+          sf_guard_user_profile_id_backend: {label: 'Пользователь'}
       filter:  ~
       form:
         class: BackendBoardForm

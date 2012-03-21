@@ -24,6 +24,11 @@ class Board extends BaseBoard {
         return $this->getName();
     }
 
+	public function getSfGuardUserProfileIdBackend()
+	{
+		return  $this->getSfGuardUserProfileId() . '/' . $this->getSfGuardUserProfile()->getFullName();
+	}
+
 	public function getUsernameSlug()
 	{
 		return slugify($this->getSfGuardUserProfile()->getNick());

@@ -22,6 +22,15 @@ class BackendBoardForm extends BaseBoardForm
 		$this->setValidator('board_id', new sfValidatorPropelChoice(array('model' => 'Board', 'column' => 'id', 'criteria' => $c)));
 */
 		unset($this['scene_repost_list']);
+		unset($this['board_refs_category_list']);
 		unset($this['board_follower_list']);
+		//$this->embedRelation();
+		$this->embedRelation('BoardRefsCategory', array('title' => 'Категории', 'empty_label' => 'Новая категория', 'add_link' => 'Добавить'));
+		/*var_dump($this->getRelation());die();
+		foreach($this->embeddedRelation as $key => $value)
+		{
+
+		}
+		$this->widgetSchema->setLabel('delete', '123');*/
 	}
 }

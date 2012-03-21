@@ -16,6 +16,10 @@ propel:
     ext_id: { type: VARCHAR, size: '64', required: true }
     ext_link: { type: VARCHAR, size: '128', required: true }
     provider: {type: INTEGER, required: true}
+  board_refs_category:
+    board_id:  { type: INTEGER, required: true, foreignTable: board, primaryKey: true, foreignReference: id }
+    category_id: { type: INTEGER, required: true, foreignTable: category, primaryKey: true, foreignReference: id }
+    votes: { type: INTEGER, required: true, default: 1 }
   board:
     _propel_behaviors:
       archivable: {archive_on_delete: true, log_archived_at: true}
@@ -23,7 +27,6 @@ propel:
     is_public: { type: BOOLEAN, required: true, default: true }
     name: { type: VARCHAR, size: '128', required: true }
     sf_guard_user_profile_id: { type: INTEGER, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
-    category_id: { type: INTEGER, required: true, foreignTable: category, foreignReference: id }
   category:
     id: ~
     name: { type: VARCHAR, size: '128', required: true }

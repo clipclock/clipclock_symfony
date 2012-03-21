@@ -104,7 +104,7 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		{
 			$c->addJoin(ScenePeer::BOARD_ID, BoardRefsCategoryPeer::BOARD_ID, Criteria::INNER_JOIN);
 			$c->add(BoardRefsCategoryPeer::CATEGORY_ID, $category_id);
-			$c->addAscendingOrderByColumn('max(sum('.BoardRefsCategoryPeer::VOTES.')) OVER ()/max('.BoardRefsCategoryPeer::VOTES.')');
+			$c->addDescendingOrderByColumn('(order by max('.ScenePeer::BOARD_ID.') ASC)/min('. BoardRefsCategoryPeer::VOTES.')');
 		}
 
 		$c->addDescendingOrderByColumn('date_trunc(\'day\', max('.self::CREATED_AT.'))');

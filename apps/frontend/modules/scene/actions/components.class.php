@@ -45,7 +45,7 @@ class sceneComponents extends sfComponents
 		$this->response->addMeta('og:image', $this->generateUrl('homepage', array(), true).substr(ImagePreview::c14n($this->reclip->getClip()->getId().$this->scene_time->getSceneTime(), 'big'), 1));
 		$this->response->addMeta('og:description', 'At '.$this->scene_time . ' - '.$this->scene->getText());
 
-		$this->response->addMeta('og:type', 'website');
+		$this->response->addMeta('og:type', 'video');
 		$this->response->addMeta('og:video', 'http://youtube.com/watch?v='.$this->reclip->getClip()->getUrl()/*.'#t='.$this->scene_time->getSceneTime().'s'*/);
 		$this->response->addMeta('og:video:type', 'application/x-shockwave-flash');
 		$this->response->addMeta('og:video:width', '398');

@@ -35,10 +35,20 @@ class sceneComponents extends sfComponents
 		$this->reclip = ReclipPeer::retrieveBySceneTimeId($this->scene->getSceneTimeId());
 
 		$this->control_scene_times = ScenePeer::retrieveAscSceneTimeIdByClipIdBoardId($this->reclip->getId(), $this->scene->getBoardId());
+
+		$fb = sfConfig::get('app_melody_facebook');
+		$this->response->addMeta('fb:app_id', $fb['key']);
+
 		$this->response->addMeta('og:url', $this->generateUrl('scene', array('username_slug' => $this->user, 'board_id' => $this->scene->getBoardId(), 'id' => $this->scene->getId()), true));
-		$this->response->addMeta('og:title', $this->reclip->getClip()->getName().' @ '.$this->scene_time);
-		$this->response->addMeta('og:video', 'http://youtube.com/watch?v='.$this->reclip->getClip()->getUrl().'#t='.$this->scene_time->getSceneTime().'s');
-		$this->response->addMeta('og:image', $this->generateUrl('homepage', array(), true).substr(ImagePreview::c14n($this->reclip->getClip()->getId().$this->scene_time->getSceneTime()), 1));
+		$this->response->addMeta('og:title', $this->reclip->getClip()->getName());
+		$this->response->addMeta('og:image', $this->generateUrl('homepage', array(), true).substr(ImagePreview::c14n($this->reclip->getClip()->getId().$this->scene_time->getSceneTime(), 'big'), 1));
+		$this->response->addMeta('og:description', 'At '.$this->scene_time . ' - '.$this->scene->getText());
+
+		$this->response->addMeta('og:type', 'video');
+		$this->response->addMeta('og:video', 'http://youtube.com/watch?v='.$this->reclip->getClip()->getUrl()/*.'#t='.$this->scene_time->getSceneTime().'s'*/);
+		$this->response->addMeta('og:video:type', 'application/x-shockwave-flash');
+		$this->response->addMeta('og:video:width', '398');
+		$this->response->addMeta('og:video:height', '224');
 	}
 
 	public function executeSceneViewEmbed()

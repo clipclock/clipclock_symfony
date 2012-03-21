@@ -41,18 +41,18 @@ class sceneComponents extends sfComponents
 		$this->response->addMeta('og:locale', 'en_US');
 
 		$this->response->addMeta('og:url', $this->generateUrl('scene', array('username_slug' => $this->user, 'board_id' => $this->scene->getBoardId(), 'id' => $this->scene->getId()), true));
-		$this->response->addMeta('og:title', $this->reclip->getClip()->getName());
+		$this->response->addMeta('og:title', $this->scene->getText());
 		$this->response->addMeta('og:image', $this->generateUrl('homepage', array(), true).substr(ImagePreview::c14n($this->reclip->getClip()->getId().$this->scene_time->getSceneTime(), 'big'), 1));
-		$this->response->addMeta('og:description', 'At '.$this->scene_time . ' - '.$this->scene->getText());
+		$this->response->addMeta('og:description', $this->reclip->getClip()->getName().' at '.$this->scene_time);
 		$this->response->addMeta('og:site_name', 'ClipClock.com');
 		$this->response->addMeta('og:type', 'clipclock:clip');
-/*
+
 		//$this->response->addMeta('og:type', 'video.other');
 		$this->response->addMeta('og:type', 'clipclock:clip');
 		$this->response->addMeta('og:video', 'http://www.youtube.com/v/'.$this->reclip->getClip()->getUrl().'?enablejsapi=1&playerapiid=ytplayer&start='.$this->scene_time->getSceneTime().'&autoplay=1&version=3&feature=player_embedded&fs=1&rel=0&showsearch=0&showinfo=0');
 		$this->response->addMeta('og:video:type', 'application/x-shockwave-flash');
 		$this->response->addMeta('og:video:width', '398');
-		$this->response->addMeta('og:video:height', '224');*/
+		$this->response->addMeta('og:video:height', '224');
 	}
 
 	public function executeSceneViewEmbed()

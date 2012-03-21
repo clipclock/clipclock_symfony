@@ -44,8 +44,9 @@ class sceneComponents extends sfComponents
 		$this->response->addMeta('og:title', $this->reclip->getClip()->getName());
 		$this->response->addMeta('og:image', $this->generateUrl('homepage', array(), true).substr(ImagePreview::c14n($this->reclip->getClip()->getId().$this->scene_time->getSceneTime(), 'big'), 1));
 		$this->response->addMeta('og:description', 'At '.$this->scene_time . ' - '.$this->scene->getText());
+		$this->response->addMeta('og:site_name', 'ClipClock.com');
 
-		$this->response->addMeta('og:type', 'video');
+		$this->response->addMeta('og:type', 'video.other');
 		$this->response->addMeta('og:video', 'http://youtube.com/watch?v='.$this->reclip->getClip()->getUrl()/*.'#t='.$this->scene_time->getSceneTime().'s'*/);
 		$this->response->addMeta('og:video:type', 'application/x-shockwave-flash');
 		$this->response->addMeta('og:video:width', '398');

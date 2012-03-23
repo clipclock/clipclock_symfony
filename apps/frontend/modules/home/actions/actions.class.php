@@ -26,11 +26,12 @@ class homeActions extends sfActions
 	{
 		$this->source = $request->getParameter('source');
 		$this->category = $request->getParameter('category');
+
+		$this->form->setDefault('source', $request->getParameter('source'));
+		$this->form->setDefault('category', $request->getParameter('category'));
+
 		if($request->getParameter('source') && $request->getParameter('source') == 2)
 		{
-			$this->form->setDefault('source', $request->getParameter('source'));
-			$this->form->setDefault('category', $request->getParameter('category'));
-
 			$this->criteria = SceneTimePeer::modifyCriteriaByFilter($this->criteria, $this->user->getId());
 		}
 

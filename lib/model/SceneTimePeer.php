@@ -100,23 +100,26 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		$c->addJoin(ReclipPeer::CLIP_ID, ClipPeer::ID, Criteria::INNER_JOIN);
 		$c->addJoin(ScenePeer::ID, SceneLikePeer::SCENE_ID, Criteria::LEFT_JOIN);
 
+		$c->addAlias('repin_scene', ScenePeer::TABLE_NAME);
+		$c->addJoin(ScenePeer::ID, ScenePeer::alias('repin_scene', ScenePeer::REPIN_ORIGIN_SCENE_ID), Criteria::LEFT_JOIN);
+
 		if($category_id != HomeFilterForm::ALL_CATEGORIES_ID)
 		{
 			$c->addJoin(ScenePeer::BOARD_ID, BoardRefsCategoryPeer::BOARD_ID, Criteria::INNER_JOIN);
 			$c->add(BoardRefsCategoryPeer::CATEGORY_ID, $category_id);
 			$c->addDescendingOrderByColumn('avg('. BoardRefsCategoryPeer::VOTES.')/avg(avg('. BoardRefsCategoryPeer::VOTES.')) OVER (order by max('.ScenePeer::BOARD_ID.') ASC)');
 		}
-
-		$c->addDescendingOrderByColumn('date_trunc(\'day\', max('.self::CREATED_AT.'))');
+		$c->addDescendingOrderByColumn('date_trunc(\'day\', coalesce(max('.ScenePeer::alias('repin_scene', ScenePeer::CREATED_AT).'), max('.self::CREATED_AT.')))');
 		$c->addDescendingOrderByColumn('count('.SceneLikePeer::SCENE_ID.')');
 		$c->addDescendingOrderByColumn('max('.self::UNIQUE_COMMENTS_COUNT.')');
 		$c->addDescendingOrderByColumn('count('.SceneTimePeer::ID.')');
 		$c->addDescendingOrderByColumn('max('.self::CREATED_AT.')');
 		$c->addDescendingOrderByColumn(SceneTimePeer::RECLIP_ID);
 
+		$c->add(ScenePeer::REPIN_ORIGIN_SCENE_ID, null, Criteria::ISNULL);
+		$c->add(ClipPeer::HIDE, false);
 		if($user_id)
 		{
-			$c->add(ClipPeer::HIDE, false);
 			$c->addOr(ScenePeer::SF_GUARD_USER_PROFILE_ID, $user_id);
 		}
 
@@ -188,10 +191,19 @@ class SceneTimePeer extends BaseSceneTimePeer {
 
 		$criterions[] = $criteria->getNewCriterion(ClipFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, null, Criteria::ISNOTNULL);
 
+		$final_criterion = null;
 		foreach($criterions as $criterion)
 		{
-			$criteria->addOr($criterion);
+			if(!$final_criterion)
+			{
+				$final_criterion = $criterion;
+			}
+			else
+			{
+				$final_criterion->addOr($criterion);
+			}
 		}
+		$criteria->addAnd($final_criterion);
 
 		return $criteria;
 	}

@@ -6,8 +6,8 @@ default:
     content-type: text/html
 
   metas:
-    title:        'ClipClock.com'
-    #description:  symfony project
+    title:         'ClipClock.com - publish and comment great video moments.'
+    description:   'ClipClock.com - publish and comment great video moments.'
     #keywords:     symfony, project
     #language:     en
     #robots:       index, follow

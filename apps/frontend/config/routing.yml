@@ -155,6 +155,11 @@ edit_user:
   requirements:
     user_id: \d+
 
+invites_callback:
+  url: /invites/send
+  param: { module: user, action: invites }
+  sf_method: [post]
+
 ### MY ###
 
 my_boards:

@@ -6,6 +6,7 @@
 all:
   registration:
     confirm: true
+    invites: true
     robot_email:           "no-reply@clipclock.com"
     robot_name:            "ClipClock.com"
   sf_guard_plugin:

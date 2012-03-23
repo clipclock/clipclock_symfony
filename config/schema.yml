@@ -20,6 +20,13 @@ propel:
     board_id:  { type: INTEGER, required: true, foreignTable: board, primaryKey: true, foreignReference: id }
     category_id: { type: INTEGER, required: true, foreignTable: category, primaryKey: true, foreignReference: id }
     votes: { type: INTEGER, required: true, default: 1 }
+  board_refs_user_votes:
+    board_id:  { type: INTEGER, required: true, foreignTable: board, primaryKey: true, foreignReference: id }
+    sf_guard_user_profile_id: { type: INTEGER, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
+  invites:
+    created_at: ~
+    sf_guard_user_profile_id: { type: INTEGER, required: true, primaryKey: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
+    ext_id: { type: VARCHAR, size: '80', required: true, primaryKey: true }
   board:
     _propel_behaviors:
       archivable: {archive_on_delete: true, log_archived_at: true}

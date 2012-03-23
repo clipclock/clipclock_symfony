@@ -38,8 +38,7 @@ class ProfileMapper {
 
 		$user_ext_profile = new extProfile();
 
-		$action = self::$action_map[$melody->getName()]['id'];
-		$user_ext_profile->setExtId($melody->getLink()->$action);
+		$user_ext_profile->setExtId(self::getExtId($melody));
 		$action = self::$action_map[$melody->getName()]['link'];
 		$user_ext_profile->setExtLink($melody->getLink()->$action);
 
@@ -54,6 +53,12 @@ class ProfileMapper {
 		}
 
 		return $user;
+	}
+
+	public static function getExtId($melody)
+	{
+		$action = self::$action_map[$melody->getName()]['id'];
+		return $melody->getLink()->$action;
 	}
 
 	public static function retrieveAvatarsAndPublish($user, $melody)

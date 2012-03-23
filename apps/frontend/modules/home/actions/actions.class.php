@@ -40,6 +40,12 @@ class homeActions extends sfActions
 		$this->pager->setPeerMethod('doSelectForPager');
 		$this->pager->setPage($request->getParameter('page', 1));
 
+		$this->error = false;
+		if($this->getUser()->getFlash('registration_error'))
+		{
+			$this->error = $this->getUser()->getFlash('registration_error');
+		}
+
 		$this->welcome_close = (bool)$request->getCookie('welcome_close');
 		if($request->isXmlHttpRequest())
 		{

@@ -22,6 +22,34 @@ class userActions extends sfActions
 		return sfView::NONE;
 	}
 
+	public function executeInvites(sfWebRequest $request)
+	{
+		$user_id = $this->getUser()->getId();
+		$timestamp = date('Y-m-d H:i:s');
+		$result = $request->getParameter('result');
+
+		$amqp_publisher = new AMQPPublisher();
+		$invites_ids = array();
+		foreach($result['to'] as $invited_id)
+		{
+			if(count($invites_ids) < 30)
+			{
+				$invites_ids[] = $invited_id;
+			}
+			else
+			{
+				$amqp_publisher->jobInvites($invites_ids, $user_id, $timestamp);
+			}
+		}
+
+		if(count($invites_ids))
+		{
+			$amqp_publisher->jobInvites($invites_ids, $user_id, $timestamp);
+		}
+
+		return $this->returnJSON(array('success' => true));
+	}
+
 	public function executeWelcome(sfWebRequest $request)
 	{
 		if(!$this->getUser()->getAttribute('melody'))
@@ -53,7 +81,22 @@ class userActions extends sfActions
 		$user = unserialize($this->getUser()->getAttribute('melody_user'));
 		$melody = unserialize($this->getUser()->getAttribute('melody'));
 
-		ProfileMapper::mapFrom($user, $user_profile, $melody)->save();
+		$user = ProfileMapper::mapFrom($user, $user_profile, $melody);
+
+		if(sfConfig::get('app_registration_invites', 'false'))
+		{
+			$invite = InvitesPeer::retrieveNewestByExtId(ProfileMapper::getExtId($melody));
+			if(!$invite)
+			{
+				$this->getUser()->setFlash('registration_error', 'no_invite');
+				$this->redirect($this->generateUrl('homepage'));
+				return sfView::NONE;
+			}
+
+			$user->setRefUserId($invite->getSfGuardUserProfileId());
+		}
+
+		$user->save();
 
 		$access_token = $melody->getToken();
 		$access_token->setUserId($user->getId());

@@ -10,7 +10,7 @@ spl_autoload_register(array('daemonAutoload', 'loadClass'), true, true);
 class daemonAutoload{
 
 	protected static $valid_types = array(
-		'helper', 'exception', 'worker', 'driver', 'interface'
+		'helper', 'exception', 'worker', 'driver', 'model', 'interface'
 	);
 
 	public static function loadClass($class)

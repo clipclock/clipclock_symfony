@@ -12,7 +12,8 @@ class AMQPPublisher
 
 	protected $amqp_queue_names = array(
 		'scene' => 'inbox.scene',
-		'avatar' => 'inbox.avatar'
+		'avatar' => 'inbox.avatar',
+		'invites' => 'inbox.invites'
 	);
 
 	public function __construct()
@@ -40,6 +41,16 @@ class AMQPPublisher
 			'time' => $time,
 			'c14n_id' => $scene_time_id,
 		), $this->amqp_queue_names['scene']);
+	}
+
+	public function jobInvites($invited_ids, $author_id, $timestamp)
+	{
+		return $this->publishJob(array(
+			'task_type' => 5,
+			'invited_ids' => $invited_ids,
+			'author_id' => $author_id,
+			'timestamp' => $timestamp,
+		), $this->amqp_queue_names['invites']);
 	}
 
 	public function jobAvatar($user_id, $photo_url, $avatar_url)

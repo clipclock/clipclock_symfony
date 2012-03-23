@@ -12,9 +12,9 @@ require dirname(__FILE__) . '/classes/daemon.bootstrap.php';
 //$amqp_queues_routings = $configuration['options']['resize']['queues'];
 
 $daemon_options = array(
-	'appName' => 'vdaemon-resizes',
+	'appName' => 'vdaemon-invites',
 	'appDir' => dirname(__FILE__),
-	'appDescription' => 'Maintains image resizes queues',
+	'appDescription' => 'Maintains invites queue',
 	'logVerbosity' => System_Daemon::LOG_INFO,
 	'authorName' => 'madesst',
 	'authorEmail' => 'madesst@gmail.com',
@@ -27,10 +27,7 @@ $daemon_options = array(
 );
 
 $queue_max_workers = array(
-	'inbox.avatar' => 5,
-	/*'inbox.frame' => 30,*/
-	'outbox.avatar' => 5,
-	/*'outbox.frame' => 30*/
+	'inbox.invites' => 1,
 );
 
 $amqp_options = array(
@@ -39,18 +36,13 @@ $amqp_options = array(
 	'user' => 'videopin',
 	'pass' => 'welc0me2IT',
 
-	'consume_exchange_name' => 'resizes.exchanger',
-	'repeat_exchange_name' => 'resizes.repeat',
-
-	'amqp_outbox_avatar_queue_name' => 'outbox.avatar'
+	'consume_exchange_name' => 'invites.exchanger',
+	'repeat_exchange_name' => 'invites.repeat',
 );
 
 $amqp_queues_routings = array(
-	'inbox.avatar',
-	/*'inbox.frame',*/
-	'outbox.avatar',
-	/*'outbox.frame'*/
+	'inbox.invites',
 );
 
-$daemon = new daemonResizes($daemon_options, $amqp_options, $amqp_queues_routings, $queue_max_workers, $argv);
+$daemon = new daemonInvites($daemon_options, $amqp_options, $amqp_queues_routings, $queue_max_workers, $argv);
 $daemon->start();

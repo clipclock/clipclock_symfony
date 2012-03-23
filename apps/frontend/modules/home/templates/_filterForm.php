@@ -1,10 +1,15 @@
 <?php slot('homepage_filter') ?>
-<?php if(!$welcome_close):?>
+<?php if(!$welcome_close || $error):?>
 <div class="welcome">
 	<div class="close"></div>
 	<div class="inner">
+		<?php if(!$error):?>
 		<h1>Are you new? We are glad to see you!</h1>
 		<h2>Here you can comment and publish best moments of any YouTube video.<br />Copy and paste video URL, choose the right moments and create your clips!<!--a href="#">How does it work?</a--></h2>
+		<?php else:?>
+		<h1 class="invite">We are invite only for now.</h1>
+		<h2>Please request an invite from your friends who are already clipping with us.<br />Thank you!</h2>
+		<?php endif;?>
 	</div>
 </div>
 <?php endif; ?>

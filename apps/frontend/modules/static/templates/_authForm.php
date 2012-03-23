@@ -41,6 +41,6 @@
 	</li>
 </ul>
 <script type="text/javascript">
-	fbHooks(<?php echo $fb_app_id?>);
+	fbHooks(<?php echo $fb_app_id?>, false, false, false, '<?php echo url_for('invites_callback')?>');
 </script>
 <?php endif;?>

@@ -17,7 +17,7 @@ function toggleFBLikeButton(scene_id, user_id, state, url) {
 	});
 }
 
-function fbHooks(app_id, scene_id, user_id, url)
+function fbHooks(app_id, scene_id, user_id, url, requests_url)
 {
 	window.fbAsyncInit = function() {
 		FB.init({
@@ -44,7 +44,17 @@ function fbHooks(app_id, scene_id, user_id, url)
 			FB.ui({method: 'apprequests',
 				message: 'Invite to something',
 				filters: ["app_non_users"]
-			}, function(response){console.log(response)});
+			}, function(response){
+				$.ajax({
+					url: requests_url,
+					type: "POST",
+					data: {result: response},
+					/*beforeSend: function(){highliteControlTab(scene_id);seekTo(secs);},*/
+					success: function(result){
+						console.log(result);
+					}
+				});
+			});
 		}
 		$('#fb_invite').click(function(){
 			sendRequestViaMultiFriendSelector();

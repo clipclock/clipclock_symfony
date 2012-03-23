@@ -44,8 +44,7 @@ class sceneComponents extends sfComponents
 		$this->response->addMeta('og:title', $this->scene->getText());
 		$this->response->addMeta('og:image', $this->generateUrl('homepage', array(), true).substr(ImagePreview::c14n($this->reclip->getClip()->getId().$this->scene_time->getSceneTime(), 'big'), 1));
 		$this->response->addMeta('og:description', $this->reclip->getClip()->getName().' at '.$this->scene_time);
-		$this->response->addMeta('og:site_name', 'ClipClock.com');
-		$this->response->addMeta('og:type', 'clipclock:clip');
+		$this->response->addMeta('og:site_name', $this->getResponse()->getTitle());
 
 		//$this->response->addMeta('og:type', 'video.other');
 		$this->response->addMeta('og:type', 'clipclock:clip');

@@ -14,7 +14,7 @@
 	<div class="long-col">
 		<div class="video-stickers">
 			<ul id="container" class="stickers-list" style="position: relative;">
-				<?php include_component('board', 'boardClipsList', array('current_board' => $current_board, 'pager' => $pager, 'current_user' => $current_user)) ?>
+				<?php include_component('board', 'boardClipsList', array('current_board' => $current_board, 'pager' => $pager, 'current_user' => $current_user, 'user' => $user)) ?>
 			</ul>
 			<script type="text/javascript">
 				layoutAndScroll('<?php echo url_for('board_page', array('id' => $current_board->getId(), 'username_slug' => $user->getNick(), 'page' => $pager->getNextPage())) ?>');

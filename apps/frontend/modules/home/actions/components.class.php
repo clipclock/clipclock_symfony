@@ -15,7 +15,7 @@ class homeComponents extends sfComponents
 		$this->pager->init();
 		$this->results = $this->pager->getResults()->fetchAll(PDO::FETCH_ASSOC);
 		$this->getContext()->getConfiguration()->loadHelpers(array('Comment'));
-		var_dump(url_for('board_page', array('id' => $this->current_board->getId(), 'username_slug' => $this->current_user->getNick(), 'page' => $this->pager->getNextPage())));
+		var_dump(url_for('board_page', array('id' => $this->current_board->getId(), 'username_slug' => $this->current_user->getNick(), 'page' => $this->pager->getNextPage())));die();
 	}
 
 	public function executeFilterForm()

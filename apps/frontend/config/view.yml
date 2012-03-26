@@ -6,8 +6,8 @@ default:
     content-type: text/html
 
   metas:
-    title:         'ClipClock.com - publish and comment great video moments.'
-    description:   'ClipClock.com - publish and comment great video moments.'
+    title:         'ClipClock.com - great video moments publishing, commenting, and searching in social environment'
+    description:   'ClipClock.com - publish, comment, share and search your great video scenes and best moments. Take any video from YouTube, Vimeo, Dailymotion or other video hostings, add a time tag to the right moment on the video timeline and share your clip on Facebook or other social platforms. You would gift your friends extra life time, they could spend on the important things rather than scanning the video for the relevant content.'
     #keywords:     symfony, project
     #language:     en
     #robots:       index, follow

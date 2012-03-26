@@ -5,7 +5,7 @@
 </div>
 <h4>Or create new:</h4>
 <?php else:?>
-<h4>Create new board:</h4>
+<h4>Create new channel:</h4>
 <?php endif;?>
 <div class="inside">
 

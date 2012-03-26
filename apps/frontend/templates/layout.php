@@ -11,6 +11,8 @@
 	<?php include_javascripts() ?>
 </head>
 <body>
+<script type="text/javascript">var _kiq = _kiq || [];</script>
+<script type="text/javascript" src="//s3.amazonaws.com/ki.js/33264/6tl.js" async="true"></script>
 <div id="shadow" class="shadow" style="display: none;"></div>
 <!-- ****************** WRAPPER START **************************** -->
 <div id="wrapper">

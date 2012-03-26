@@ -7,8 +7,8 @@
 		<h1>Are you new? We are glad to see you!</h1>
 		<h2>Here you can comment and publish best moments of any YouTube video.<br />Copy and paste video URL, choose the right moments and create your clips!<!--a href="#">How does it work?</a--></h2>
 		<?php else:?>
-		<h1 class="invite">We are invite only for now.</h1>
-		<h2>Please request an invite from your friends who are already clipping with us.<br />Thank you!</h2>
+		<h1 class="invite">At the moment login is for invited persons only.</h1>
+		<h2>You can watch the clips and comments, but to make and share your own clips please request an invitation from your friends already clipping with us.<br />Thank you!</h2>
 		<?php endif;?>
 	</div>
 </div>

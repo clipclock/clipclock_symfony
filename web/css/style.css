@@ -634,3 +634,4 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 
 
 .stickers-list li .inner, .follow-set li .inner  {min-height:50px;}
+.b-tabs .tabs-items li .inside a {font-size: 12px}

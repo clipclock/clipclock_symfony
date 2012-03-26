@@ -58,6 +58,10 @@ function cuselActivate(visRows, elems)
 		elems = ".line-form select";
 	}
 	$().ready(function(){
+		$(elems).change(function(){
+			console.log($(this));
+			$(this).parents('form').submit();
+		});
 		jQuery(".cusel").each(
 				function(){
 					var w = parseInt(jQuery(this).width()),
@@ -75,10 +79,6 @@ function cuselActivate(visRows, elems)
 			scrollArrows: true
 		}
 		cuSel(params);
-
-		$(elems).change(function(){
-			$(this).parents('form').submit();
-		});
 	});
 }
 

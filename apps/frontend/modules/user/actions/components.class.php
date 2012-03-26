@@ -83,7 +83,7 @@ class userComponents extends sfComponents
 
     private function executeNavigation()
     {
-		$this->avatar_img = ImagePreview::c14n($this->user->getId(), 'medium', 'avatar');
+		$this->avatar_img = ImagePreview::c14n($this->user->getId(), 'small', 'avatar');
         $this->nick = $this->user->getNick();
         $this->getContext()->getConfiguration()->loadHelpers(array('Navigation'));
     }

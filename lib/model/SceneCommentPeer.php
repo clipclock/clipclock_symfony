@@ -85,7 +85,7 @@ class SceneCommentPeer extends BaseSceneCommentPeer {
 		$c = new Criteria();
 
 		$c->add(self::SCENE_TIME_ID, $scene_time_id);
-		$c->addAscendingOrderByColumn(self::CREATED_AT);
+		$c->addDescendingOrderByColumn(self::CREATED_AT);
 		$c->setLimit($max_limit);
 
 		return self::doSelectJoinSfGuardUserProfile($c);

@@ -33,24 +33,6 @@ homepage_search_page:
   requirements:
     page: \d+
 
-### BOARD ###
-
-board:
-  url:   /:username_slug/board/:id
-  class: sfPropelRoute
-  param: { module: board, action: show }
-  options: { model: Board, type: object, segment_separators: [/] }
-  requirements:
-    id: \d+
-
-edit_board:
-  url:   /edit/board/:board_id
-  class: sfPropelRoute
-  param: { module: board, action: show }
-  options: { model: Board, type: object }
-  requirements:
-    board_id: \d+
-
 ### STICKER AJAX ###
 
 sticker_scene_change:
@@ -58,15 +40,6 @@ sticker_scene_change:
   param: { module: board, action: showSceneAjax }
   requirements:
     scene_id: \d+
-
-board_page:
-  url:   /:username_slug/board/:id/page/:page
-  class: sfPropelRoute
-  param: { module: board, action: show, page: 0 }
-  options: { model: Board, type: object, segment_separators: [/] }
-  requirements:
-    id: \d+
-    page: \d+
 
 ### FOLLOW ###
 
@@ -95,15 +68,6 @@ unfollow_board:
   param: { module: user, action: unfollowBoard }
 
 ### SCENE ###
-
-scene:
-  url:   /:username_slug/board/:board_id/scene/:id
-  class: sfPropelRoute
-  param: { module: scene, action: show }
-  options: { model: Scene, type: object, segment_separators: [/] }
-  requirements:
-    board_id: \d+
-    id: \d+
 
 scene_unrepin:
   url: /scene/unreclip
@@ -159,6 +123,12 @@ invites_callback:
   url: /invites/send
   param: { module: user, action: invites }
   sf_method: [post]
+
+board_vote:
+  url:   /vote/board/:id
+  param: { module: board, action: vote }
+  requirements:
+    id: \d+
 
 ### MY ###
 
@@ -289,3 +259,43 @@ new_clip_scene_post:
 facebook_canvas:
   url:   /canvas/facebook/*
   param: { module: static, action: facebookCanvas }
+
+
+### BOARD ###
+
+edit_board:
+  url:   /edit/board/:board_id
+  class: sfPropelRoute
+  param: { module: board, action: show }
+  options: { model: Board, type: object }
+  requirements:
+    board_id: \d+
+
+board:
+  url:   /:username_slug/board/:id
+  class: sfPropelRoute
+  param: { module: board, action: show }
+  options: { model: Board, type: object, segment_separators: [/] }
+  requirements:
+    id: \d+
+
+board_page:
+  url:   /:username_slug/board/:id/page/:page
+  class: sfPropelRoute
+  param: { module: board, action: show, page: 0 }
+  options: { model: Board, type: object, segment_separators: [/] }
+  requirements:
+    id: \d+
+    page: \d+
+
+
+### SCENE ###
+
+scene:
+  url:   /:username_slug/board/:board_id/scene/:id
+  class: sfPropelRoute
+  param: { module: scene, action: show }
+  options: { model: Scene, type: object, segment_separators: [/] }
+  requirements:
+    board_id: \d+
+    id: \d+

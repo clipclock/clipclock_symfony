@@ -44,28 +44,6 @@
 	</form>
 </div>
 <script type="text/javascript">
-	$().ready(function(){
-		jQuery(".cusel").each(
-				function(){
-					var w = parseInt(jQuery(this).width()),
-							scrollPanel = jQuery(this).find(".cusel-scroll-pane");
-					if(w>=scrollPanel.width())
-					{
-						jQuery(this).find(".jScrollPaneContainer").width(w);
-						scrollPanel.width(w);
-					}
-				});
-
-		var params = {
-			changedEl: ".line-form select",
-			visRows: 10,
-			scrollArrows: true
-		}
-		cuSel(params);
-
-		$('.line-form input').change(function(){
-			$(this).parents('form').submit();
-		});
-	});
+	cuselActivate(10);
 </script>
 <?php end_slot()?>

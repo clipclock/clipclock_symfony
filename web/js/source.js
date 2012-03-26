@@ -6,6 +6,16 @@
 			((secure) ? "; secure" : "");
 }
 
+function closeWelcome(cookie)
+{
+	if(cookie)
+	{
+		setCookie("welcome_close", "true", "Mon, 01-Jan-2091 00:00:00 GMT", "/");
+	}
+
+	$('.welcome, .welcome .inner').slideUp(700);
+}
+
 $(document).ready(function(){
 
 	$('.brd input, .head-search .inside .b-input input, .b-filter form .search-col .b-search .b-input input').bind('focus', function(){
@@ -28,8 +38,7 @@ $(document).ready(function(){
 
 
 	$('.welcome .close').click (function() {
-		setCookie("welcome_close", "true", "Mon, 01-Jan-2091 00:00:00 GMT", "/");
-		$('.welcome, .welcome .inner').slideUp(700);
+		closeWelcome(true);
 	});
 
 	$().UItoTop({ easingType: 'easeOutQuart', scrollSpeed: 200, containerID: 'scroll-to-top' });
@@ -42,6 +51,36 @@ $(document).ready(function(){
 
 });
 
+function cuselActivate(visRows, elems)
+{
+	if(!elems)
+	{
+		elems = ".line-form select";
+	}
+	$().ready(function(){
+		jQuery(".cusel").each(
+				function(){
+					var w = parseInt(jQuery(this).width()),
+							scrollPanel = jQuery(this).find(".cusel-scroll-pane");
+					if(w>=scrollPanel.width())
+					{
+						jQuery(this).find(".jScrollPaneContainer").width(w);
+						scrollPanel.width(w);
+					}
+				});
+
+		var params = {
+			changedEl: elems,
+			visRows: visRows,
+			scrollArrows: true
+		}
+		cuSel(params);
+
+		$(elems).change(function(){
+			$(this).parents('form').submit();
+		});
+	});
+}
 
 function layoutAndScroll(path, elem, width)
 {

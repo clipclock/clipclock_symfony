@@ -20,6 +20,23 @@ function stickerChange(data, clip_id, scene_id)
 	$('.clip_sticker').wookmark('update');
 }
 
+function boardCategoryChangeComplete(data)
+{
+	var data = JSON.parse(data);
+	if(data.success)
+	{
+		closeWelcome(false);
+	}
+}
+
+function boardCategoryChange()
+{
+	$('#board_category').change(function(){
+		console.log($(this).parents('form'));
+		$(this).parents('form').submit();
+	});
+}
+
 function checkCurrentSticker(clip_id, scene_id)
 {
 	toggleAjaxLoader('_'+clip_id);

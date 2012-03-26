@@ -1,3 +1,4 @@
+<?php include_component('board', 'categoryPanel', array('board_id' => $current_board->getId(), 'user_id' => $current_user->getId()))?>
 <div class="b-content">
 <?php include_component('user', 'navigationPath', array('subject' => $current_board, 'current_user' => $current_user, 'user' => $user,
            'follow_button' => $current_user->getId() && $user->getId() != $current_user->getId() ? get_component('user', 'follow', array(

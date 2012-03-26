@@ -554,6 +554,10 @@ label {font-size:18px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 }
 
 #head .header {background-color: #333333;}
+.welcome .inner .b-filter
+{
+    text-align: left;
+}
 .welcome h1.invite
 {
     color: #b00400;

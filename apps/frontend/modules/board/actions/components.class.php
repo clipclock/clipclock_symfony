@@ -8,6 +8,19 @@
  */
 class boardComponents extends sfComponents
 {
+	public function executeCategoryPanel()
+	{
+		$this->user_id = $this->getVar('user_id');
+		$this->board_id = $this->getVar('board_id');
+
+		$this->category_form = false;
+		if(sfConfig::get('app_boards_voting', 'false'))
+		{
+			$this->category_form = $this->user_id && BoardRefsUserVotesQuery::create()->filterBySfGuardUserProfileId($this->user_id)->findOneByBoardId($this->board_id)
+				? false : new FrontendBoardRefsCategoryForm(new BoardRefsCategory(), array('board_id' => $this->board_id));
+		}
+	}
+
 	public function executeBoardsLinked()
 	{
 		if($this->getVar('current_board'))

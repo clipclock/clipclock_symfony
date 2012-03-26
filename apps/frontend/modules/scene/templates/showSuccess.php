@@ -1,3 +1,4 @@
+<?php include_component('board', 'categoryPanel', array('board_id' => $current_scene->getBoardId(), 'user_id' => $current_user->getId()))?>
 <div class="b-content">
 <?php include_component('user', 'navigationPath', array('subject' => $current_scene, 'current_user' => $current_user, 'user' => $user,
            'follow_button' => $current_user->getId() && $current_user->getId() != $user->getId() ? get_component('user', 'follow', array(
@@ -38,23 +39,5 @@
 </div>
 </div>
 <script type="text/javascript">
-	$().ready(function(){
-		jQuery(".cusel").each(
-				function(){
-					var w = parseInt(jQuery(this).width()),
-							scrollPanel = jQuery(this).find(".cusel-scroll-pane");
-					if(w>=scrollPanel.width())
-					{
-						jQuery(this).find(".jScrollPaneContainer").width(w);
-						scrollPanel.width(w);
-					}
-				});
-
-		var params = {
-			changedEl: ".line-form select",
-			visRows: 4,
-			scrollArrows: true
-		}
-		cuSel(params);
-	});
+	cuselActivate(4);
 </script>

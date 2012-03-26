@@ -19,4 +19,16 @@
  */
 class BoardRefsCategoryPeer extends BaseBoardRefsCategoryPeer {
 
+	public static function getVotesCount($board_id, $category_id)
+	{
+		$c = new Criteria();
+		$c->add(self::BOARD_ID, $board_id);
+		$c->add(self::CATEGORY_ID, $category_id);
+		$c->clearSelectColumns();
+		$c->addSelectColumn(self::VOTES);
+		$c->setLimit(1);
+
+		$votes = BasePeer::doSelect($c)->fetch(PDO::FETCH_COLUMN);
+		return $votes ? $votes : 0;
+	}
 } // BoardRefsCategoryPeer

@@ -24,6 +24,26 @@ class boardActions extends sfActions
 		$this->forward('default', 'module');
 	}
 
+	public function executeVote(sfWebRequest $request)
+	{
+		$this->forward404Unless($this->getUser()->getId());
+		$this->forward404If(BoardRefsUserVotesQuery::create()->filterBySfGuardUserProfileId($this->getUser()->getId())->findOneByBoardId($request->getParameter('id')));
+
+		$form = new FrontendBoardRefsCategoryForm(new BoardRefsCategory(), array('user_id' => $this->getUser()->getId()));
+		$form->bind($request->getParameter($form->getName()));
+
+		$result = array('success' => false);
+		if($form->isValid())
+		{
+			if($form->save())
+			{
+				$result = array('success' => true);
+			}
+		}
+
+		return $this->returnJSON($result);
+	}
+
 	public function executeShow(sfWebRequest $request)
 	{
 		$this->current_board = $this->getRoute()->getObject();

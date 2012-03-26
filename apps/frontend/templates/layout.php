@@ -35,6 +35,7 @@
 		<!-- /head-search -->
 	</div>
 	<?php include_slot('homepage_filter') ?>
+	<?php include_slot('nav_bar') ?>
 	<!-- /header -->
 </div>
 <!-- ******************		HEADE END ******************************** -->
@@ -42,7 +43,9 @@
 <!-- ******************		CONTENT START *************************** -->
 <div id="content">
 <div class="wrapper-auto-size">
+	<div class="b-content">
 	<?php echo $sf_content ?>
+	</div>
 </div>
 </div>
 <!-- ******************		CONTENT END ***************************** -->

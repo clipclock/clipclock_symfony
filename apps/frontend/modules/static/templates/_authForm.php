@@ -2,6 +2,7 @@
 <ul class="autorizing">
 	<li class="login"><a href="<?php echo url_for('connect_fb')?>">Login</a></li>
 	<li class="about">
+		<div class="arrow"></div>
 		<a href="">About</a>
 		<div class="sub">
 			<ul>
@@ -16,8 +17,9 @@
 </ul>
 <?php else: ?>
 <ul class="autorized">
-	<li class="invite"><a id="fb_invite" href="#">Invite</a></li>
+	<li class="invite"><a id="fb_invite" href="#">Ask friends</a></li>
 	<li class="user">
+		<div class="arrow"></div>
 		<a href="<?php echo url_for('user', $user)?>"><span><img src="<?php echo $user_image?>" alt="" width="21" height="21" /></span><strong><?php echo $user->getFirstName()?></strong></a>
 		<div class="sub">
 			<ul>
@@ -31,6 +33,7 @@
 		</div>
 	</li>
 	<li class="about">
+		<div class="arrow"></div>
 		<a href="">About</a>
 		<div class="sub">
 			<ul>

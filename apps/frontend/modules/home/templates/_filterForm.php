@@ -29,7 +29,7 @@
 				<?php echo $form['category']->render(array('class' => 'size289'))?>
 			</div>
 		</div>
-		<div class="search-col">
+		<!--div class="search-col">
 			<div class="b-search">
 				<div class="inside">
 					<div class="b-btn">
@@ -40,10 +40,10 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div-->
 	</form>
 </div>
 <script type="text/javascript">
-	cuselActivate(10);
+	cuselActivate(15);
 </script>
 <?php end_slot()?>

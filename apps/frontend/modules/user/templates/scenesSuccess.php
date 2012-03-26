@@ -1,4 +1,4 @@
-<div class="b-content">
+
 	<?php include_component('user', 'navigationPerson', array('subject' => $user, 'active' => 'scenes', 'current_user' => $current_user, 'user' => $user,
            'follow_button' => $current_user->getId() && $user->getId() != $current_user->getId() ? get_component('user', 'follow', array(
                                 'state_names' => array('Follow Person', 'Unfollow Person', 'Edit'),
@@ -29,5 +29,4 @@
 			layoutAndScroll('<?php echo url_for('my_clips_page', array('nick' => $user->getNick(), 'page' => $pager->getNextPage())) ?>');
 		</script>
 	</div>
-</div>
 </div>

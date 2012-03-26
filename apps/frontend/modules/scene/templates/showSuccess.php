@@ -1,5 +1,5 @@
 <?php include_component('board', 'categoryPanel', array('board_id' => $current_scene->getBoardId(), 'user_id' => $current_user->getId()))?>
-<div class="b-content">
+
 <?php include_component('user', 'navigationPath', array('subject' => $current_scene, 'current_user' => $current_user, 'user' => $user,
            'follow_button' => $current_user->getId() && $current_user->getId() != $user->getId() ? get_component('user', 'follow', array(
                                 'state_names' => array('Follow Video', 'Unfollow Video'),
@@ -20,7 +20,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="long-col">
+	<div class="long-col-origin">
 		<div class="long-col-inside">
 			<?php if($current_user->getId()):?>
 			<div class="right-mini-coll ajax_toogle_container">
@@ -37,7 +37,7 @@
 		</div>
 	</div>
 </div>
-</div>
+
 <script type="text/javascript">
-	cuselActivate(4);
+	cuselActivate(6);
 </script>

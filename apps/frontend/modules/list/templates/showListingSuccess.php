@@ -1,5 +1,4 @@
-<div class="wrapper-auto-size">
-	<div class="b-content">
+
 		<!-- b-user-list  -->
 		<div class="b-user-list round-b-default">
 			<!-- title  -->
@@ -15,5 +14,3 @@
 				</ul>
 			</div>
 		</div>
-	</div>
-</div>

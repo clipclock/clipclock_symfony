@@ -2,6 +2,9 @@
 	<a href="<?php echo url_for('user', $user)?>"><img src="<?php echo $avatar_img?>" alt="" /></a>
 </div>
 <!-- /ph -->
+<div class="adress">
+	Moscow, Russia
+</div>
 <!-- social  -->
 <ul class="social">
 <?php foreach($ext_profiles as $ext_profile):?>

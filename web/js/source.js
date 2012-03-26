@@ -91,7 +91,7 @@ function layoutAndScroll(path, elem, width)
 
 	if(!width)
 	{
-		width = 235;
+		width = 232;
 	}
 	$(document).ready(function(){
 		$('#container').infinitescroll({

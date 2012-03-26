@@ -1,0 +1,97 @@
+
+.add-video-scene .inside {border:1px solid #d8d8d8; height:31px; background:#fff; position:relative; border-radius:4px; -moz-border-radius:4px; -webkit-border-radius:4px; -khtml-border-radius:4px; behavior: url(js/PIE.htc);}
+.add-video-scene .b-input {margin:0 35px 0 0; padding:7px;}
+.add-video-scene .b-input input {color:#bdbdbd; font-size:14px; width:100%; border:0;}
+.add-video-scene h4 {padding: 12px 0 6px 0;text-align: left;}
+.user-title .person .name-and-adress span { color:#a7a7a7;}
+.long-col .video-stickers .stickers-list, .long-col .follow-set {padding-bottom: 50px; }
+#container{
+    padding-bottom: 130px;
+}
+#infscr-loading {
+    /*position: fixed; left: 40%; bottom: 40px;*/
+
+    text-align: center;
+    position: absolute;
+    bottom: 40px;
+    left: 40%;
+    clear: both;
+    display: inline-block;
+    padding: 1.5em 1.5em 1.25em;
+    background: rgba(0,0,0,0.8);
+    -webkit-box-shadow: 1px 1px 1px #000;
+    -webkit-border-radius: 1em;
+    z-index: 1000;
+    width: 220px;
+    color: rgb(222, 222, 222);
+    font-weight: normal;
+}
+
+#content { min-height: auto !important;}
+.pager_navigation { display: none; }
+
+.header .head-menu .autorizing li.login {border:1px solid #073f0a; background:#1aa410 0 -62px;}
+.header .head-menu .autorizing li.login a {color:#fff; text-shadow:0 -1px 1px #000;}
+.header .head-menu .autorizing li.login a:hover {color:#fff;}
+
+
+.b-user-list .list li .b-btn {width:140px;}
+.stickers-list li .inner, .follow-set li .inner  {min-height:50px;}
+
+.size300 {width:428px;}
+.cusel span {height: 26px;}
+.scroll-to-top {display:none;}
+
+#scene_embed_video span
+{
+    display: block;
+    margin: 0 auto;
+    width: 533px;
+    height: 330px;
+    background-image: url('../images/ajax-loader.gif');
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.ajax_loader
+{
+    background-image: url('../images/ajax-loader.gif');
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.ajax_hider
+{
+    visibility: hidden;
+}
+.b-tabs .tabs-items li .b-comment .inside .rating li.arrow { height:21px;}
+.b-tabs .tabs-items li .b-comment .inside .rating li.txt {margin-left:8px;}
+.clip_sticker p.scene_description
+{
+    padding: 0;
+    padding-bottom: 7px;
+    font-size: 11px;
+    text-align: left;
+}
+.stickers-list li .inner .b-video {height: auto;}
+.stickers-list li .inner {padding-top: 7px;}
+.user-title .b-btn .default-un-follow-btn {width:130px;}
+.stickers-list li .inner .b-video .arrow {top: 61px;}
+
+.follow-user{
+    margin-bottom: 15px;
+}
+
+#viewport .b-tabs .tabs-items li .inside {
+    min-height: 64px;
+}
+
+#head .header {background-color: #333333;}
+.welcome .inner .b-filter
+{
+    text-align: left;
+}
+.welcome h1.invite
+{
+    color: #b00400;
+    font-size: 32px;
+}

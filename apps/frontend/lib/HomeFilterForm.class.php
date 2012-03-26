@@ -64,7 +64,9 @@ class HomeFilterForm extends sfForm
 		$choices = array(
 			self::ALL_CATEGORIES_ID => 'Everything'
 		);
-		$categories = CategoryPeer::doSelect(new Criteria());
+		$c = new Criteria();
+		$c->addAscendingOrderByColumn(CategoryPeer::NAME);
+		$categories = CategoryPeer::doSelect($c);
 		foreach($categories as $category)
 		{
 			$choices[$category->getId()] = $category->getName();

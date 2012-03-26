@@ -1,3 +1,4 @@
+<?php slot('nav_bar') ?>
 <div class="user-title">
     <!-- user-like  -->
     <div class="person">
@@ -7,9 +8,8 @@
         </div>
         <!-- /ph -->
         <!-- name-and-adress  -->
-        <div class="name-and-adress">
+        <div class="name">
             <?php echo link_to($fullname, array('sf_route' => 'user', 'nick' => $nick)); ?>
-            <span>Moscow, Russia</span>
         </div>
         <!-- /name-and-adress -->
         <!-- user-title-menu  -->
@@ -23,3 +23,4 @@
     </div>
     <!-- /user-like -->
 </div>
+<?php end_slot()?>

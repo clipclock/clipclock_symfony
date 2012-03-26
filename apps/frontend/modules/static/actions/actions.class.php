@@ -20,6 +20,11 @@ class staticActions extends sfActions
 		$this->forward('default', 'module');
 	}
 
+	public function executeError404(sfWebRequest $request)
+	{
+
+	}
+
 	public function executePreviewNew(sfWebRequest $request)
 	{
 		$this->form = new NewClipForm();

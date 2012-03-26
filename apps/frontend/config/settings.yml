@@ -23,6 +23,9 @@ test:
     etag:                   false
 
 all:
+  .actions:
+    error_404_module:       static
+    error_404_action:       error404
   .settings:
     # Form security secret (CSRF protection)
     csrf_secret:            false

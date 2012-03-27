@@ -23,7 +23,7 @@ function stickerControlScrollers(elem)
 			var siblings = $(this).siblings('.sticker-tab');
 			if($(this).hasClass('next'))
 			{
-				if($(siblings).length - $(siblings).filter(':not(:visible)').length > 4)
+				if($(this).offset().top != $(siblings).filter(':visible').last().offset().top)
 				{
 					$(siblings).filter(':visible').first().hide();
 				}

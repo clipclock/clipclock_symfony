@@ -7,6 +7,32 @@
  * To change this template use File | Settings | File Templates.
  */
 
+function getTabsHideOffset($tabs, $tab_array_key, $active_tab, $visible_row_lentgh = 4)
+{
+	$active_key = 0;
+	$tabs_from_left = 1;
+	$tabs_to_hide = 0;
+	foreach($tabs as $key => $tab)
+	{
+		if($tab[$tab_array_key] == $active_tab)
+		{
+			$active_key = $key;
+			break;
+		}
+		else
+		{
+			$tabs_from_left++;
+		}
+	}
+	$tabs_to_hide = $tabs_from_left-$visible_row_lentgh > 0 ? $tabs_from_left-$visible_row_lentgh : 0;
+	if($tabs_from_left > $visible_row_lentgh - $visible_row_lentgh/4 && count($tabs) > $visible_row_lentgh && count($tabs) > $tabs_from_left)
+	{
+		$tabs_to_hide++;
+	}
+
+	return array($active_key, $tabs_to_hide);
+}
+
 function time_ago($date,$granularity=2) {
 	$date = strtotime($date);
 	$difference = time() - $date;

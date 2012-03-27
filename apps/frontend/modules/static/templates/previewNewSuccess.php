@@ -1,3 +1,6 @@
+<script type="text/javascript">
+	_kmq.push(['record', 'Upload new video']);
+</script>
 <div class="content-wrap-in">
 	<div class="long-col">
 		<div class="long-col-inside">

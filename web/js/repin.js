@@ -49,7 +49,7 @@ function newRepinContainer()
                 type: "GET",
                 dataType: 'json',
                 success: function(data, textStatus, jqXHR) {
-                    console.log(data);
+					_kmq.push(['record', 'Reclip exists scene']);
                     if (data.result == 'success')
                         document.location.href = data.location;
                 }

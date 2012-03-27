@@ -1,3 +1,7 @@
+<?php if($sf_user->getId() != $user->getId()):?><script type="text/javascript">
+	_kmq.push(['record', 'viewed someone else\'s profile']);
+</script>
+<?php endif;?>
 <div class="ph">
 	<a href="<?php echo url_for('user', $user)?>"><img src="<?php echo $avatar_img?>" alt="" /></a>
 </div>

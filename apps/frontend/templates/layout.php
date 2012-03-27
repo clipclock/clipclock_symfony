@@ -9,6 +9,16 @@
 	<link rel="shortcut icon" href="/favicon.ico" />
 	<?php include_stylesheets() ?>
 	<?php include_javascripts() ?>
+	<script type="text/javascript">
+		var _kmq = _kmq || [];
+		function _kms(u){
+			setTimeout(function(){
+				var s = document.createElement('script'); var f = document.getElementsByTagName('script')[0]; s.type = 'text/javascript'; s.async = true;
+				s.src = u; f.parentNode.insertBefore(s, f);
+			}, 1);
+		}
+		_kms('//i.kissmetrics.com/i.js');_kms('//doug1izaerwt3.cloudfront.net/572923c43021801f02ed554e056687be886506ba.1.js');
+	</script>
 </head>
 <body>
 <script type="text/javascript">var _kiq = _kiq || [];</script>

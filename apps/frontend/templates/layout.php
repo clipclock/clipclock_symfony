@@ -10,7 +10,7 @@
 				s.src = u; f.parentNode.insertBefore(s, f);
 			}, 1);
 		}
-		_kms('//i.kissmetrics.com/i.js');_kms('//doug1izaerwt3.cloudfront.net/572923c43021801f02ed554e056687be886506ba.1.js');
+		_kms('//i.kissmetrics.com/i.js');_kms('//doug1izaerwt3.cloudfront.net/<?php echo sfConfig::get('app_kiss_key')?>.1.js');
 	</script>
 
 	<?php include_http_metas() ?>

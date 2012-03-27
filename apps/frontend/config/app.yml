@@ -4,6 +4,8 @@
 # default values
 #all:
 all:
+  kiss:
+    key: '1aa5caf92bb95c578572665690bb8908c08fac30'
   registration:
     confirm: true
     invites: false
@@ -55,3 +57,5 @@ prod:
     facebook:                       #http://dev.viddii.com/frontend_dev.php/access/facebook
       key: 398827136799487
       secret: 6db3eb2142819ee6e5f87ed9b97af946
+  kiss:
+    key: '572923c43021801f02ed554e056687be886506ba'

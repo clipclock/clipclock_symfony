@@ -14,7 +14,7 @@ default:
 
   stylesheets:    [style.css?2, cusel.css]
 
-  javascripts:    [swfobject.js, clipEmbed.js?1, ajaxCallbacks.js?1, fb.js?1, repin.js, follow.js, cusel.js, source.js?1, jquery.wookmark.min.js,  jquery.infinitescroll.js, follow.js, jquery.easing.1.3.js, jquery.ui.totop.js, jquery-ui-1.8.18.custom.min.js]
+  javascripts:    [swfobject.js, clipEmbed.js?1, ajaxCallbacks.js?1, fb.js?1, repin.js, follow.js, cusel.js, source.js?2, jquery.wookmark.min.js,  jquery.infinitescroll.js, follow.js, jquery.easing.1.3.js, jquery.ui.totop.js, jquery-ui-1.8.18.custom.min.js]
 
   has_layout:     true
   layout:         layout

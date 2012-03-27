@@ -42,7 +42,7 @@ function fbHooks(app_id, scene_id, user_id, url, requests_url)
 
 		function sendRequestViaMultiFriendSelector() {
 			FB.ui({method: 'apprequests',
-				message: 'Ask friends for comments to your video clips!',
+				message: 'Ask friends to comment your video clips!',
 				filters: ["app_non_users"]
 			}, function(response){
 				$.ajax({

@@ -8,7 +8,7 @@
         </div>
         -->
 		<div class="info">
-			<fb:like send="false" layout="box_count" width="60" height="29" show_faces="true"></fb:like>
+			<fb:like send="true" layout="box_count" width="60" height="29" show_faces="true"></fb:like>
 			<!-- <a href="#"><img src="images/likes-2.jpg" alt="" width="60" height="29"></a> -->
 		</div>
 	</div>

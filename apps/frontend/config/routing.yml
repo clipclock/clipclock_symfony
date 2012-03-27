@@ -82,8 +82,8 @@ scene_post:
   param: { module: scene, action: postScene }
 
 scene_post_comment:
-  url: /post/scene/comment
-  param: { module: scene, action: postComment }
+  url: /post/scene/comment/:sticker
+  param: { module: scene, action: postComment, sticker: '' }
 
 scene_change_liked_state:
   url: /change/scene/like/state

@@ -92,7 +92,7 @@ class boardActions extends sfActions
 		return $this->returnJSON(array(
 			'scene_id' => $this->scene->getId(),
 			'scene_image' => $this->getComponent('board', 'clipStickerSceneTimePreview', array('scene_info' => $scene_info, 'reclip_id' => $this->scene->getSceneTime()->getReclipId(), 'board' => $this->scene->getBoard())),
-			'scene_comments_list' => $this->getComponent('board', 'clipStickerSceneTimeCommentsListShort', array('scene_info' => $scene_info)),
+			'scene_comments_list' => $this->getComponent('board', 'clipStickerSceneTimeCommentsListShort', array('reclip_id' => $this->scene->getSceneTime()->getReclipId(), 'scene_info' => $scene_info, 'user' => $this->getUser())),
 			'scene_footer' => $this->getComponent('board', 'clipStickerFooter', array('scene_info' => $scene_info))
 		));
 	}

@@ -99,6 +99,15 @@ class boardComponents extends sfComponents
 	{
 		$this->scene_info = $this->getVar('scene_info');
 		$this->unique_comments_count = $this->scene_info['unique_comments_count'];
+		$this->user = $this->getVar('user');
+		if($this->user->getId())
+		{
+			$scene_comment = new SceneComment();
+			$scene_comment->setSceneTimeId($this->scene_info['scene_time_id']);
+			$scene_comment->setSfGuardUserProfileId($this->user->getId());
+
+			$this->form = new SceneCommentForm($scene_comment);
+		}
 
 		$this->comments = SceneCommentPeer::retrieveShortBySceneId(
 			$this->scene_info['scene_time_id'],

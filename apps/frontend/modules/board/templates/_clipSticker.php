@@ -13,7 +13,7 @@
 
 			<div class="ajax_toogle_<?php echo $reclip_id ?>">
 				<div id="comments_list_<?php echo $reclip_id ?>">
-					<?php include_component('board', 'clipStickerSceneTimeCommentsListShort', array('scene_info' => $scene_info))?>
+					<?php include_component('board', 'clipStickerSceneTimeCommentsListShort', array('scene_info' => $scene_info, 'user' => $sf_user, 'reclip_id' => $reclip_id))?>
 				</div>
 				<div id="comments_list_footer_<?php echo $reclip_id ?>">
 					<?php include_component('board', 'clipStickerFooter', array('scene_info' => $scene_info))?>

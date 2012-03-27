@@ -80,8 +80,14 @@ class sceneActions extends sfActions
 
 		$this->scene_comment_form->save();
 
+		$partial = 'scene/sceneViewComment';
+		if($request->getParameter('sticker'))
+		{
+			$partial = 'board/clipStickerSceneTimeComment';
+		}
+
 		return $this->returnJSON(array(
-			'scene_new_comment' => $this->getPartial('scene/sceneViewComment', array('comment' => $this->scene_comment_form->getObject(), 'current_user' => $this->getUser(), 'ajax' => true, 'has_voted' => true)),
+			'scene_new_comment' => $this->getPartial($partial, array('comment' => $this->scene_comment_form->getObject(), 'current_user' => $this->getUser(), 'ajax' => true, 'has_voted' => true)),
 		));
 	}
 

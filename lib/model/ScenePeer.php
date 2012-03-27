@@ -117,6 +117,7 @@ class ScenePeer extends BaseScenePeer {
 		$c->addSelectColumn(ClipPeer::NAME);
 
 		$c->add(SceneTimePeer::RECLIP_ID, $reclip_id);
+		$c->add(SceneTimePeer::ID, SceneTimePeer::ID.'='.ScenePeer::SCENE_TIME_ID, Criteria::CUSTOM);
 		$c->addJoin(self::SCENE_TIME_ID, SceneTimePeer::ID, Criteria::INNER_JOIN);
 		$c->addJoin(SceneTimePeer::RECLIP_ID, ReclipPeer::ID, Criteria::INNER_JOIN);
 		$c->addJoin(ReclipPeer::CLIP_ID, ClipPeer::ID, Criteria::INNER_JOIN);

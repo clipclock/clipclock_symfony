@@ -85,8 +85,8 @@ P { padding:0 0 13px 0;}
 .stickers-list li .inner .b-tabs .tabs-items li .b-comment .inside form .b-btn {margin:6px 0 0 0;overflow:hidden;}
 .stickers-list li .inner .b-tabs .tabs-items li .b-comment .inside form .b-btn input {padding:4px 0; width:80px; font-size:12px; cursor:pointer; float:right;}
 .stickers-list li .inner .b-tabs .tabs-items li.active {display:block;}
-.stickers-list li .inner .b-tabs .tabs-items li .b-comment:first-child {border:0;  background:#f6f5f5;}
-.stickers-list li .inner .b-tabs .tabs-items li .b-comment:first-child .inside {border:0;}
+/*.stickers-list li .inner .b-tabs .tabs-items li .b-comment:first-child {border:0;  background:#f6f5f5;}
+.stickers-list li .inner .b-tabs .tabs-items li .b-comment:first-child .inside {border:0;}*/
 
 .stickers-list li .inner .management-sticker {height:25px; background:#fff; padding-top:11px; text-align:center;}
 .stickers-list li .inner .management-sticker li {display:inline-block; width:auto; padding:0; float:none; margin:0 2px;}
@@ -626,7 +626,7 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 {
     text-align: left;
 }
-#viewport .b-tabs .tabs-items li .inside {
+#viewport #description .inside {
     min-height: 70px;
 }
 
@@ -639,3 +639,10 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 {
     min-width: 1079px;
 }
+
+.stickers-list li .inner .b-tabs .tabs-items li .description
+{
+    border: 0;
+    background: #F6F5F5;
+}
+.stickers-list li .inner .b-tabs .tabs-items li .description .inside {border:0;}

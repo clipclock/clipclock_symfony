@@ -32,7 +32,6 @@ function boardCategoryChangeComplete(data)
 function boardCategoryChange()
 {
 	$('#board_category').change(function(){
-		console.log($(this).parents('form'));
 		$(this).parents('form').submit();
 	});
 }
@@ -237,9 +236,13 @@ function newSceneTimeDescriptionContainer()
 	});
 }
 
-function checkCommentForm()
+function checkCommentForm(elem)
 {
-	return $('#comment_form form textarea').val() ? true : false;
+	if(!elem)
+	{
+		elem = 'comment_form';
+	}
+	return $('#'+elem+' form textarea').val() ? true : false;
 }
 
 function prependNewComments(data, list_id, comment_text_area_id, scroll_to_id)
@@ -254,7 +257,12 @@ function prependNewComments(data, list_id, comment_text_area_id, scroll_to_id)
 	if($(new_comment).is(":hidden"))
 	{
 		$(new_comment).css('background-color', '#ffff99');
-		$(new_comment).slideDown("slow");
+		$(new_comment).slideDown("slow", function(){
+			if(!scroll_to_id)
+			{
+				$(".clip_sticker").wookmark("update");
+			}
+		});
 		$(new_comment).animate({
 			'background-color': '#ffffff'
 		}, 3000, function(){
@@ -262,14 +270,27 @@ function prependNewComments(data, list_id, comment_text_area_id, scroll_to_id)
 		});
 	}
 
-	$('html, body').animate({scrollTop:$('#'+scroll_to_id).offset().top - 5}, 600, 'easeOutQuart');
+	if(scroll_to_id)
+	{
+		$('html, body').animate({scrollTop:$('#'+scroll_to_id).offset().top - 5}, 600, 'easeOutQuart');
+	}
+}
+
+function submitButtonSticker(root_elem)
+{
+	$('#'+root_elem+' textarea').keypress(function(event){
+		if(event.which == 13 ) {
+			event.preventDefault();
+			$('#'+root_elem+' form').trigger('onsubmit');
+		}
+	});
 }
 
 function submitButton(submit_id, form_id)
 {
 	$().ready(function(){
 		$('#'+submit_id).click(function(){
-			$('#'+form_id).trigger('onsubmit');
+			$('#comment_form form').trigger('onsubmit');
 			$('#comment_form').addClass('ajax_load');
 			return false;
 		});

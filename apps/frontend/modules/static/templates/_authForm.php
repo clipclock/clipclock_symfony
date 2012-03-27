@@ -17,7 +17,7 @@
 </ul>
 <?php else: ?>
 <script type="text/javascript">
-	_kmq.push(['<?php echo $user->getId()?>', '<?php echo $user->getGuardUser()->getEmail()?>']);
+	_kmq.push(['identify', '<?php echo $user->getFullName()?>']);
 </script>
 <ul class="autorized">
 	<li class="invite"><a id="fb_invite" href="#">Ask friends</a></li>

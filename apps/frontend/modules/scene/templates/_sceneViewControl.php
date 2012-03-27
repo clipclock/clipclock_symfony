@@ -1,6 +1,6 @@
 <?php if($current_user->getId()):?>
 <?php slot('scene_modal') ?>
-<?php include_partial('scene/modalForm', array('form' => $form, 'form_url' => url_for('scene_post'), 'form_partial' => 'scene/modalFormFields'))?>
+<?php include_partial('scene/modalForm', array('exists' => true, 'form' => $form, 'form_url' => url_for('scene_post'), 'form_partial' => 'scene/modalFormFields'))?>
 <?php end_slot(); ?>
 <?php endif?>
 <ul id="scene_controls" class="tabs<?php if(count($scene_times) > 12):?> wide<?php endif;?>">

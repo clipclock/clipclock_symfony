@@ -1,5 +1,5 @@
 <div id='<?php echo (isset($id)) ? $id : 'new_time_scene_modal' ; ?>' style="display: none;" class="pop-window">
-	<form method="post" action="<?php echo $form_url;?>">
+	<form id="<?php echo (isset($exists)) ? 'new_clip_exists_video' : 'new_clip_new_video' ; ?>" method="post" action="<?php echo $form_url;?>">
 		<div class="close"></div>
 		<!-- b-header  -->
 		<div class="b-header">

@@ -19,7 +19,7 @@
 					'url' => '@scene_post_comment?sticker=true',
 					'update' => array('success_callback' => 'prependNewComments(data, "comments_list_'.$reclip_id.' .list", "comments_list_'.$reclip_id.'", null);', 'failure' => "alert('HTTP Error ' + XMLHttpRequest.status + '!')"),
 					'condition' => 'checkCommentForm("comments_list_'.$reclip_id.'")',
-				))?>
+				), array('id' => 'new_scene_comment'))?>
 					<div class="brd">
 						<?php echo $form['text']?><?php echo $form->renderHiddenFields()?>
 					</div>

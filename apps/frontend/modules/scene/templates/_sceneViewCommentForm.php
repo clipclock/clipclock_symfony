@@ -7,7 +7,7 @@
 		'url' => 'scene_post_comment',
 		'update' => array('success_callback' => 'prependNewComments(data, "comments", "comment_form_text", "scene_controls");', 'failure' => "alert('HTTP Error ' + XMLHttpRequest.status + '!')"),
 		'condition' => 'checkCommentForm()',
-	))?>
+	), array('id' => 'new_scene_comment'))?>
 		<div id="comment_form_text" class="brd">
 			<?php echo $form['text']?><?php echo $form->renderHiddenFields()?>
 		</div>

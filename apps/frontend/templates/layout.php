@@ -17,8 +17,8 @@
 	<?php include_metas() ?>
 	<?php include_title() ?>
 	<link rel="shortcut icon" href="/favicon.ico" />
-	<?php include_stylesheets() ?>
-	<?php include_javascripts() ?>
+	<?php include_combined_stylesheets() ?>
+	<?php include_combined_javascripts() ?>
 </head>
 <body>
 <script type="text/javascript">var _kiq = _kiq || [];</script>

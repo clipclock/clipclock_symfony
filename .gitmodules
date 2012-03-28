@@ -13,3 +13,6 @@
 [submodule "plugins/sfJqueryReloadedPlugin"]
 	path = plugins/sfJqueryReloadedPlugin
 	url = git://github.com/madesst/sfJqueryReloadedPlugin.git
+[submodule "plugins/sfCombinePlugin"]
+	path = plugins/sfCombinePlugin
+	url = git://github.com/madesst/sfCombinePlugin.git

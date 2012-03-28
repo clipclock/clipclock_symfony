@@ -15,5 +15,6 @@ class ProjectConfiguration extends sfProjectConfiguration
     $this->enablePlugins('sfJqueryReloadedPlugin');
     $this->enablePlugins('sfAdminDashPlugin');
     $this->enablePlugins('sfFormExtraPlugin');
+    $this->enablePlugins('sfCombinePlugin');
   }
 }

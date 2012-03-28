@@ -4,6 +4,10 @@
 # default values
 #all:
 all:
+  sfCombinePlugin:
+    enabled:        false
+    timestamp:
+      enabled:      false
   kiss:
     key: '1aa5caf92bb95c578572665690bb8908c08fac30'
   registration:
@@ -59,3 +63,7 @@ prod:
       secret: 6db3eb2142819ee6e5f87ed9b97af946
   kiss:
     key: '572923c43021801f02ed554e056687be886506ba'
+  sfCombinePlugin:
+    enabled:        true
+    timestamp:
+      enabled:      true

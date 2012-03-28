@@ -22,7 +22,7 @@ class staticActions extends sfActions
 
 	public function executeError404(sfWebRequest $request)
 	{
-
+		$this->setLayout(false);
 	}
 
 	public function executePreviewNew(sfWebRequest $request)

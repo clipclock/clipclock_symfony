@@ -17,6 +17,7 @@ function stickerChange(data, clip_id, scene_id)
 	$('#clip_control_'+clip_id+' li').removeClass('active');
 	$('#sticker_'+clip_id+'_'+scene_id).addClass('active');
 	toggleAjaxLoader('_'+clip_id);
+	$('#comments_list_'+clip_id+' .sticker_new_comment').removeClass('hidden');
 	$('.clip_sticker').wookmark('update');
 }
 

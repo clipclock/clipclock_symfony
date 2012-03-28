@@ -646,3 +646,4 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
     background: #F6F5F5;
 }
 .stickers-list li .inner .b-tabs .tabs-items li .description .inside {border:0;}
+.stickers-list li .inner .b-tabs .tabs-items li .b-comment .inside form .brd textarea {font-size: 12px;}

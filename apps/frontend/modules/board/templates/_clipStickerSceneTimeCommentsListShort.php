@@ -12,7 +12,7 @@
 	<?php endforeach;?>
 	</div>
 	<?php if($user->getId()):?>
-		<div class="b-comment">
+		<div class="b-comment sticker_new_comment hidden">
 			<div class="inside">
 				<div class="ph"><a href="<?php echo url_for('user', $sf_user)?>"><img src="<?php echo ImagePreview::c14n($sf_user->getId(), 'small', 'avatar');?>" alt="" width="30" height="30" /></a></div>
 				<?php echo jq_form_remote_tag(array(

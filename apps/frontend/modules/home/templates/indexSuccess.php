@@ -5,9 +5,6 @@
 	</ul>
 	<script type="text/javascript">
 		_kmq.push(['record', 'Viewed Homepage']);
-		_kmq.push(function()
-				{ console.log(KM); } // Display an alert box with your current KM identity
-		);
 		layoutAndScroll('<?php echo url_for('homepage_page', array('page' => $pager->getNextPage(), 'source' => $source, 'category' => $category)) ?>');
 	</script>
 </div>

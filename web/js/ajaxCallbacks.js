@@ -82,6 +82,8 @@ function sceneChange(json_data, dont_history, url, json_url, secs, scene_id, mod
 	{
 		history.pushState({json_url: json_url, secs: secs, scene_id: scene_id}, 'Title', url);
 	}
+
+	_kmq.push(['record', 'Viewed scene']);
 }
 
 function showSceneDescription(scene_id)

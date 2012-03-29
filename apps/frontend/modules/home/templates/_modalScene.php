@@ -103,6 +103,13 @@
 		$('#clip_modal_close').click(function(){
 			toggleModalScene('<?php echo $current_url?>');
 		});
+
+		$(document).keyup(function(e) {
+			if(event.which == 27 && $('#clip_modal:visible').length) {
+				event.preventDefault();
+				toggleModalScene('<?php echo $current_url?>');
+			}
+		});
 	});
 	</script>
 <?php end_slot()?>

@@ -39,7 +39,9 @@
 	<?php if($user->getId()):?>
 		$().ready(function(){
 			fbHooks(<?php echo $fb_app_id?>, <?php echo sprintf('%d, %d', $scene_id, $current_user->getId()) ?>, "<?php echo url_for('@scene_change_liked_state'); ?>");
-			repinClip();
+			if(!$('#clip_modal').length){
+				repinClip();
+			}
 		});
     <?php endif;?>
 </script>

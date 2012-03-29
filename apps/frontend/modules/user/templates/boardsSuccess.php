@@ -27,3 +27,4 @@
 		</script>
 	</div>
 </div>
+	<?php include_partial('home/modalScene', array('current_user' => $user, 'current_url' => $current_url));?>

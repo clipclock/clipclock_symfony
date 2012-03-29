@@ -5,9 +5,6 @@
 		<?php include_partial('scene/modalForm', array('exists' => true, 'form_url' => url_for('scene_post'), 'form_partial' => 'scene/modalFormFields'))?>
 	<?php end_slot(); ?>
 <?php endif?>
-<script type="text/javascript">
-	closeModalScene();
-</script>
 <div id="clip_modal" class="modal-window" style="display: none;">
 	<!--div class="arrows prev"><span></span></div>
 	<div class="arrows next"><span></span></div-->
@@ -56,7 +53,7 @@
 							<?php include_partial('scene/sceneViewNewSceneForm', array('current_user' => $current_user))?>
 						</li>
 						<?php endif?>
-						<li class="active ajax_toogle_container">
+						<li id="scene_info" class="active ajax_toogle_container">
 							<!-- b-autor-text  -->
 							<div id="description" class="b-autor-text">
 								<div class="inside">
@@ -98,4 +95,14 @@
 	</div>
 	<!-- /modal-wrap -->
 </div>
+	<script type="text/javascript">newSceneTimeModalShow('scene_time_scene_time', 'scene_time_scene_text');
+	$().ready(function(){
+		$('#shadow').click(function(){
+			toggleModalScene('<?php echo $current_url?>');
+		});
+		$('#clip_modal_close').click(function(){
+			toggleModalScene('<?php echo $current_url?>');
+		});
+	});
+	</script>
 <?php end_slot()?>

@@ -23,5 +23,5 @@
 	</div>
 </li>
 	<script type="text/javascript">
-		stickerClick('<?php echo $reclip_id ?>', '<?php echo url_for('scene_change', array('scene_id' => $scene_info['scene_id'], 'modal' => true)); ?>', '<?php echo url_for('scene', array('id' => $scene_info['scene_id'], 'board_id' => $board->getId(), 'username_slug' => $board->getSfGuardUserProfile())); ?>');
+		stickerClick('<?php echo $reclip_id ?>', '<?php echo url_for('scene_change', array('scene_id' => $scene_info['scene_id'], 'modal' => true)); ?>', '<?php echo url_for('scene', array('id' => $scene_info['scene_id'], 'board_id' => $board->getId(), 'username_slug' => $board->getSfGuardUserProfile())); ?>', '<?php echo url_for('@scene_change?scene_id='.$scene_info['scene_id'])?>', '<?php echo $scene_info['scene_time']?>', '<?php echo $scene_info['scene_id']?>');
 	</script>

@@ -16,6 +16,11 @@ class userActions extends sfActions
   * @param sfRequest $request A request object
   */
 
+	public function preExecute()
+	{
+		$this->current_url = $this->getRequest()->getUri();
+	}
+
 	public function executeConnect(sfWebRequest $request)
 	{
 		$this->getUser()->connect('facebook');

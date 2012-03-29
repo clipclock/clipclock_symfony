@@ -47,6 +47,8 @@ class homeActions extends sfActions
 		}
 
 		$this->welcome_close = (bool)$request->getCookie('welcome_close');
+
+		$this->current_url = $request->getUri();
 		if($request->isXmlHttpRequest())
 		{
 			return $this->returnJSON($this->getComponent('home', 'clipList', array('pager' => $this->pager, 'current_user' => $this->user, 'source' => $this->source, 'category' => $this->category)));

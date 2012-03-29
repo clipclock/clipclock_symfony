@@ -72,6 +72,8 @@ function sceneChange(json_data, dont_history, url, json_url, secs, scene_id, mod
 		$('#owner_button').html(data.owner_button);
 		$('#channel').html(data.board);
 		$('#people_modal').html(data.people_modal);
+		/*$('#new_repin_modal .modal_form').html(data.repin_form);
+		$('#new_time_scene_modal .modal_form').html(data.new_scene_form);*/
 		bindFollow();
 	}
 
@@ -125,20 +127,19 @@ function bindSceneChangeBack(json_url, secs, scene_id)
 	$().ready(function(){
 		bindSceneTextChangeHover();
 		window.addEventListener('popstate', function(e){
-			if(e.state)
+			if(e.state && e.state.json_url)
 			{
 				json_url = e.state.json_url;
 				secs = e.state.secs;
 				scene_id = e.state.scene_id;
 			}
-			else if(first_scene)
+			else if($('#clip_modal').length)
 			{
-				scene_id = first_scene.scene_id;
-				secs = first_scene.secs;
-				json_url = first_scene.json_url;
+				toggleModalScene();
+				return true;
 			}
 
-			if(first_scene)
+			if(scene_id && secs && json_url)
 			{
 				$.ajax({
 					url: json_url,
@@ -148,14 +149,17 @@ function bindSceneChangeBack(json_url, secs, scene_id)
 						sceneChange(data, true);
 					}
 				});
-				scene_id = null;
-				secs = null;
-				json_url = null;
 			}
-			else
+
+			if(!first_scene)
 			{
 				first_scene = {scene_id: scene_id, secs: secs, json_url: json_url};
 			}
+
+			scene_id = null;
+			secs = null;
+			json_url = null;
+
 		}, false);
 	});
 }
@@ -169,7 +173,10 @@ function highliteControlTab(scene_id)
 function newSceneTimeModalHide()
 {
 	$('#new_time_scene_modal').toggle();
-	$('#shadow').toggle();
+	if(!$('#clip_modal:visible').length)
+	{
+		$('#shadow').toggle();
+	}
 
 	new_time_scene_pause_player();
 }
@@ -185,8 +192,6 @@ function newSceneTimeModalShow(scene_time_id, scene_text_id)
 			newSceneTimeModalHide();
 		});
 
-		console.log($('#new_time_scene_description_container_submit'));
-
 		$('#new_time_scene_description_container_submit').click(function(){
 			if($('#new_time_scene_description').val().length > 3)
 			{
@@ -199,7 +204,11 @@ function newSceneTimeModalShow(scene_time_id, scene_text_id)
 				}
 
 				$('#new_time_scene_modal').toggle();
-				$('#shadow').toggle();
+				$('#new_time_scene_modal').offset({top: $(window).scrollTop()+80});
+				if(!$('#clip_modal:visible').length)
+				{
+					$('#shadow').toggle();
+				}
 
 				$('#new_time_scene_modal #'+scene_text_id).val($('#new_time_scene_description').val());
 			}
@@ -244,8 +253,10 @@ function secondsToTime(secs)
 function newSceneTimeDescriptionContainer()
 {
 	$().ready(function(){
-		console.log($('#new_time_scene'));
-		newSceneTimeModalShow('scene_time_scene_time', 'scene_time_scene_text');
+		if(!$('#clip_modal:visible').length)
+		{
+			newSceneTimeModalShow('scene_time_scene_time', 'scene_time_scene_text');
+		}
 
 		$('#new_time_scene').click(function(){
 			new_time_scene_pause_player()
@@ -315,23 +326,18 @@ function submitButton(submit_id, form_id)
 	});
 }
 
-function closeModalScene()
-{
-	$().ready(function(){
-		$('#clip_modal_close').click(function(){
-			toggleModalScene();
-		});
-	});
-}
-
-function toggleModalScene()
+function toggleModalScene(url)
 {
 	$('#shadow').toggle();
 	$('#clip_modal').toggle();
 	$('#clip_modal').offset({top: $(window).scrollTop()+30, left: 0});
+	if(url)
+	{
+		history.pushState({}, 'Title', url);
+	}
 }
 
-function stickerClick(reclip_id, url, history_url)
+function stickerClick(reclip_id, url, history_url, json_url, secs, scene_id)
 {
 	$().ready(function(){
 		$('#image_'+reclip_id+' a.sticker_image').click(function(){
@@ -340,7 +346,7 @@ function stickerClick(reclip_id, url, history_url)
 				beforeSend: function(xhr){
 					toggleModalScene();
 					toggleAjaxLoader(null, '#clip_modal ');
-					history.pushState({}, 'Title', history_url);
+					history.pushState({json_url: json_url, secs: secs, scene_id: scene_id}, 'Title', history_url);
 				},
 				success: function(data){
 
@@ -359,9 +365,10 @@ function stickerClick(reclip_id, url, history_url)
 					$('#new_time_scene_modal .modal_form').html(data.new_scene_form);
 
 					toggleAjaxLoader(null, '#clip_modal ');
-					//newSceneTimeDescriptionContainer();
+					cuselActivate(6);
 					bindCommentRatingButtons(data.rating_url);
 					bindFollow();
+					repinClip();
 				}
 			});
 			return false;

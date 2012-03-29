@@ -8,4 +8,4 @@
 		layoutAndScroll('<?php echo url_for('homepage_page', array('page' => $pager->getNextPage(), 'source' => $source, 'category' => $category)) ?>');
 	</script>
 </div>
-	<?php include_partial('home/modalScene', array('current_user' => $user));?>
+	<?php include_partial('home/modalScene', array('current_user' => $user, 'current_url' => $current_url));?>

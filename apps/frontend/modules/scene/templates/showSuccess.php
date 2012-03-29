@@ -11,7 +11,7 @@
 
 <div class="content-wrap-in" id="viewport">
 	<div class="side-left-col">
-		<ul class="follow-set">
+		<ul id="boards_stickers" class="follow-set">
 			<?php include_component('board', 'boardSticker', array('board_id' => $current_scene->getBoardId(), 'user' => $user, 'current_user' => $current_user))?>
 		</ul>
 		<div class="ajax_toogle_container">

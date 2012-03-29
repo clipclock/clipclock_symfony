@@ -23,14 +23,20 @@ class SceneRepinPeer extends BaseSceneRepinPeer {
     const UN_PINNED = 0xEE;
     const NOT_BEEN_PINNED = 0xBB;
 
-	public static function retrieveIdsBySceneId($scene_id)
+	public static function retrieveIdsBySceneId($scene_id, $limit = 12, $with_board = false)
 	{
 		$c = new Criteria();
 		$c->add(self::SCENE_ID, $scene_id);
 		$c->clearSelectColumns();
 		$c->addSelectColumn(self::REPIN_SF_GUARD_USER_PROFILE_ID);
+		if($with_board)
+		{
+			$c->addSelectColumn(BoardPeer::NAME);
+			$c->addJoin(self::SCENE_ID, ScenePeer::ID, Criteria::INNER_JOIN);
+			$c->addJoin(ScenePeer::BOARD_ID, BoardPeer::ID, Criteria::INNER_JOIN);
+		}
 		$c->addDescendingOrderByColumn(self::CREATED_AT);
-		$c->setLimit(12);
+		$c->setLimit($limit);
 
 		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);
 	}

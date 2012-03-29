@@ -2,26 +2,9 @@
 <div class="b-tabs">
 	<?php include_component('scene', 'sceneViewControl', array('control_scene_times' => $control_scene_times, 'board_id' => $scene->getBoardId(), 'reclip_id' => $reclip->getId(), 'scene_id' => $scene->getId(), 'current_user' => $current_user))?>
 	<ul class="tabs-items">
-<?php if($current_user->getId()):?>
+		<?php if($current_user->getId()):?>
 		<li id='scene_add_comment' class="tag-new-cont">
-			<!-- b-add-comment  -->
-			<div class="b-add-comment">
-				<div class="inside">
-					<div class="ph">
-						<a href="<?php echo url_for('user', $current_user)?>"><img src="<?php echo ImagePreview::c14n($current_user->getId(), 'medium', 'avatar');?>" alt="<?php echo $current_user->getFirstName()?>" title="<?php echo $current_user->getFirstName()?>" width="50" height="50" /></a>
-					</div>
-					<form method="get">
-						<div class="brd">
-							<span id="new_time_scene_time" style="display: none;"></span>
-							<textarea id="new_time_scene_description" name="" cols="" rows=""></textarea>
-						</div>
-						<div class="b-btn">
-							<input id="new_time_scene_description_container_submit" class="default-follow-btn" name="" type="button" value="Create clip" />
-						</div>
-					</form>
-				</div>
-			</div>
-			<!-- /b-add-comment -->
+			<?php include_partial('scene/sceneViewNewSceneForm', array('current_user' => $current_user))?>
 		</li>
 		<?php endif?>
 		<li id="scene_info" class="active">

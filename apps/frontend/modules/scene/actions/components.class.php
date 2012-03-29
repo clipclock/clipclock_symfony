@@ -8,18 +8,41 @@
  */
 class sceneComponents extends sfComponents
 {
-	public function executePeopleForSceneSticker()
+	protected function preparePeople($modal = false)
 	{
 		$this->scene = ScenePeer::retrieveByPK($this->getVar('scene_id'));
-		$this->liked_user_ids = SceneLikePeer::retrieveIdsBySceneId($this->scene->getId());
-		$this->repined_user_ids = SceneRepinPeer::retrieveIdsBySceneId($this->scene->getId());
+		$this->liked_user_ids = SceneLikePeer::retrieveIdsBySceneId($this->scene->getId(), $modal ? 10 : null);
+		$this->repined_user_ids = SceneRepinPeer::retrieveIdsBySceneId($this->scene->getId(), $modal ? 8 : null, true);
+	}
+
+	public function executePeopleForSceneSticker()
+	{
+		$this->preparePeople();
+	}
+
+	public function executePeopleForSceneModal()
+	{
+		$this->preparePeople(true);
+		$this->repins_count = count($this->repined_user_ids);
+	}
+
+	protected function prepareUserForPeopleSticker($modal = false)
+	{
+		$this->user_id = $this->getVar('user_id');
+		$this->modal = $this->getVar('modal');
+
+		$this->user = SfGuardUserProfilePeer::retrieveByPK($this->user_id);
 	}
 
 	public function executePeopleForSceneStickerUser()
 	{
-		$this->user_id = $this->getVar('user_id');
+		$this->prepareUserForPeopleSticker();
+	}
 
-		$this->user = SfGuardUserProfilePeer::retrieveByPK($this->user_id);
+	public function executePeopleForSceneStickerUserReclip()
+	{
+		//$this->board_name = $this->getVar('board_name');
+		$this->prepareUserForPeopleSticker();
 	}
 
     public function executeFacebookLikeButton($render = array())
@@ -100,6 +123,7 @@ class sceneComponents extends sfComponents
 		$counts = ScenePeer::countRepinsLikesForSceneId($this->origin_scene_id);
 		$this->repins_count = $counts['repins_count'];
 		$this->likes_count = $counts['likes_count'];
+
 		$new_scene = clone($this->scene);
 
         $new_scene->setNew(true);

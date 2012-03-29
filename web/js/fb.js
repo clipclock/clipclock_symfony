@@ -1,4 +1,4 @@
-
+var fb_already_inited = false;
 // Load the SDK Asynchronously
 $().ready(function(){
 	var d = document;
@@ -19,10 +19,25 @@ function toggleFBLikeButton(scene_id, user_id, state, url) {
 
 function fbHooks(app_id, scene_id, user_id, url, requests_url)
 {
-	window.fbAsyncInit = function() {
+	if(!fb_already_inited)
+	{
+		window.fbAsyncInit = function() {
+			fbHooksRoutine(app_id, scene_id, user_id, url, requests_url);
+			fb_already_inited = true;
+		};
+	}
+	else
+	{
+		fbHooksRoutine(app_id, scene_id, user_id, url, requests_url);
+	}
+}
+
+
+function fbHooksRoutine(app_id, scene_id, user_id, url, requests_url)
+{
 		FB.init({
 			appId      : app_id,
-			channelUrl : '//dev.viddii.com/channel.html',
+			channelUrl : '//clipclock.com/channel.html',
 			status     : true, // check login status
 			cookie     : true, // enable cookies to allow the server to access the session
 			xfbml      : true, // parse XFBML
@@ -60,5 +75,4 @@ function fbHooks(app_id, scene_id, user_id, url, requests_url)
 			sendRequestViaMultiFriendSelector();
 			return false;
 		});
-	};
 }

@@ -36,21 +36,40 @@ class boardComponents extends sfComponents
 		$this->linked_boards_ids = BoardPeer::retrieveIdsLinkedBoardsByUserId($this->user->getId(), $current_board_id);
 	}
 
-	public function executeBoardSticker()
+	protected function prepareBoardSticker($modal = false)
 	{
 		$this->getContext()->getConfiguration()->loadHelpers(array('Comment'));
 		$this->board_id = $this->getVar('board_id');
 		$this->user = $this->getVar('user');
 		$this->board = BoardPeer::retrieveByPK($this->board_id);
-		$this->clips_count = SceneTimePeer::retrieveClipsCount($this->board_id);
-		$limit = calculateBoardStickerLength($this->clips_count['count']);
+
+		if(!$modal)
+		{
+			$this->clips_count = SceneTimePeer::retrieveClipsCount($this->board_id);
+			$limit = calculateBoardStickerLength($this->clips_count['count']);
+		}
+		else
+		{
+			$limit = 9;
+		}
 
 		$this->clips_ids = SceneTimePeer::retrieveClipsIdsByBoard($this->board_id, $limit);
+	}
+
+	public function executeBoardSticker()
+	{
+		$this->prepareBoardSticker();
+	}
+
+	public function executeBoardStickerModal()
+	{
+		$this->prepareBoardSticker(true);
 	}
 
 	public function executeBoardStickerSceneTimePreview()
 	{
 		$this->clip_id = $this->getVar('clip_id');
+		$this->last = $this->getVar('last');
 		$this->board = $this->getVar('board');
 
 		$scene_info = ScenePeer::retrieveBestByClipId($this->clip_id, $this->board->getId());

@@ -29,6 +29,7 @@
 <div id="scroll-to-top" class="scroll-to-top"></div>
 <?php include_slot('scene_modal') ?>
 <?php include_slot('repin_modal') ?>
+<?php include_slot('clip_modal') ?>
 <!-- ******************		HEAD START ****************************** -->
 <div id="head">
 	<div id="fb-root"></div>

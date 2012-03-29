@@ -26,14 +26,14 @@ class SceneLikePeer extends BaseSceneLikePeer {
         return self::doCount($c);
     }
 
-	public static function retrieveIdsBySceneId($scene_id)
+	public static function retrieveIdsBySceneId($scene_id, $limit = 12)
 	{
 		$c = new Criteria();
 		$c->add(self::SCENE_ID, $scene_id);
 		$c->clearSelectColumns();
 		$c->addSelectColumn(self::LIKE_SF_GUARD_USER_PROFILE_ID);
 		$c->addDescendingOrderByColumn(self::CREATED_AT);
-		$c->setLimit(12);
+		$c->setLimit($limit);
 
 		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);
 	}

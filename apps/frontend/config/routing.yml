@@ -81,10 +81,6 @@ scene_post:
   url: /post/scene
   param: { module: scene, action: postScene }
 
-scene_post_comment:
-  url: /post/scene/comment/:sticker
-  param: { module: scene, action: postComment, sticker: '' }
-
 scene_change_liked_state:
   url: /change/scene/like/state
   param: { module: scene, action: toggleFBLikeState }
@@ -95,11 +91,15 @@ scene_post_comment_rating:
   requirements:
     id: \d+
 
+scene_post_comment:
+  url: /post/scene/comment/:sticker
+  param: { module: scene, action: postComment, sticker: '' }
+
 ### STICKER AJAX ###
 
 scene_change:
-  url:   /scene/:scene_id
-  param: { module: scene, action: showSceneAjax }
+  url:   /scene/:scene_id/:modal
+  param: { module: scene, action: showSceneAjax, modal: false }
   requirements:
     scene_id: \d+
 

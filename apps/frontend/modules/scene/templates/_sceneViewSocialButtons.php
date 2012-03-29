@@ -35,9 +35,11 @@
 </div>
 <?php endif; ?>
 
-<script>
+<script type="text/javascript">
 	<?php if($user->getId()):?>
-		fbHooks(<?php echo $fb_app_id?>, <?php echo sprintf('%d, %d', $scene_id, $current_user->getId()) ?>, "<?php echo url_for('@scene_change_liked_state'); ?>");
-        repinClip();
+		$().ready(function(){
+			fbHooks(<?php echo $fb_app_id?>, <?php echo sprintf('%d, %d', $scene_id, $current_user->getId()) ?>, "<?php echo url_for('@scene_change_liked_state'); ?>");
+			repinClip();
+		});
     <?php endif;?>
 </script>

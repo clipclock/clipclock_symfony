@@ -34,18 +34,64 @@ class sceneActions extends sfActions
 		$scene = ScenePeer::retrieveByPK($this->scene_id);
 
 		$this->forward404Unless($this->scene_id);
+		$this->control_scene_times = ScenePeer::retrieveAscSceneTimeIdByClipIdBoardId($scene->getSceneTime()->getReclipId(), $scene->getBoardId());
 
 		$this->getContext()->getConfiguration()->loadHelpers(array('Navigation', 'Comment'));
-		return $this->returnJSON(array(
+
+		/**
+		 * Это жесть. Надо придумать как сделать нормально.
+		 */
+		$return_array = array(
 			'scene_comments_list' => $this->getComponent('scene', 'sceneViewComments', array('scene_time_id' => $scene->getSceneTimeId(), 'current_user' => $this->getUser())),
 			'scene_comment_form' => $this->getComponent('scene', 'sceneViewCommentForm', array('scene_time_id' => $scene->getSceneTimeId(), 'current_user' => $this->getUser())),
-			'scene_description' => $this->getComponent('scene', 'sceneViewDescription', array('scene_id' => $this->scene_id)),
-			'scene_people_sticker' => $this->getComponent('scene', 'peopleForSceneSticker', array('scene_id' => $this->scene_id)),
+			'scene_description' => $this->getComponent('scene', 'sceneViewDescription', array('control_scene_times' => $this->control_scene_times, 'scene_id' => $this->scene_id)),
 			'scene_social_buttons' => $this->getComponent('scene', 'sceneViewSocialButtons', array('scene_id' => $this->scene_id, 'user' => $scene->getSfGuardUserProfile(), 'current_user' => $this->getUser())),
-			'nav_path' => buildNavigationPath($scene),
-			'nav_avatar' => link_to(image_tag(ImagePreview::c14n($scene->getSfGuardUserProfileId(), 'medium', 'avatar')), array('sf_route' => 'user', 'nick' => $scene->getSfGuardUserProfile()->getNick())),
 			'rating_url' => $this->generateUrl('scene_post_comment_rating')
-		));
+		);
+
+		if($request->getParameter('modal'))
+		{
+			$return_array['scene_embed'] = $this->getComponent('scene', 'sceneViewEmbed', array('scene_time' => $scene->getSceneTime()->getSceneTime(), 'reclip' => $scene->getSceneTime()->getReclip(), 'modal' => true));
+			$return_array['scene_controls'] = $this->getComponent('scene', 'sceneViewControl', array('control_scene_times' => $this->control_scene_times, 'board_id' => $scene->getBoardId(), 'reclip_id' => $scene->getSceneTime()->getReclipId(), 'scene_id' => $scene->getId(), 'current_user' => $this->getUser(), 'modal' => true));
+			$return_array['owner_text'] = link_to($scene->getSfGuardUserProfile()->getFullName(), array('sf_route' => 'user', 'nick' => $scene->getSfGuardUserProfile()->getNick()));
+			$return_array['owner_avatar'] = link_to(image_tag(ImagePreview::c14n($scene->getSfGuardUserProfileId(), 'medium', 'avatar')), array('sf_route' => 'user', 'nick' => $scene->getSfGuardUserProfile()->getNick()));
+			$return_array['owner_button'] = $this->getUser()->getId() && $scene->getSfGuardUserProfileId() != $this->getUser()->getId() ? $this->getComponent('user', 'follow', array(
+					'state_names' => array('Follow Person', 'Unfollow Person', 'Edit'),
+					'sf_routes' => array('follow_user', 'unfollow_user', 'edit_user'),
+					'id_key' => 'user_id',
+					'id' => $scene->getSfGuardUserProfileId(),
+					'active' => $this->getUser()->getId() == $scene->getSfGuardUserProfileId() ? 'my' : UserFollowerPeer::isUserFollowedByUser($scene->getSfGuardUserProfileId(), $this->getUser()->getId())
+				)) : '';
+
+			$return_array['board'] = $this->getComponent('board', 'boardStickerModal', array('board_id' => $scene->getBoardId(), 'current_user' => $this->getUser(), 'user' => $scene->getSfGuardUserProfile()));
+			$return_array['people_modal'] = $this->getComponent('scene', 'peopleForSceneModal', array('scene_id' => $this->scene_id));
+
+
+			///////////////
+			$new_scene = clone($scene);
+			$new_scene->setNew(true);
+			$new_scene->fromArray(array(
+				'Id' => null,
+				'CreatedAt' => time(),
+				'SfGuardUserProfileId' => $this->getUser()->getId(),
+				'RepinOriginSceneId' => ($new_scene->getRepinOriginSceneId()) ? $new_scene->getRepinOriginSceneId() : $scene->getId()
+			));
+
+			$repin_form = new RepinModalForm($new_scene, array('sf_guard_user_profile_id' => $this->getUser()->getId()));
+			///////////////
+			$return_array['repin_form'] = $this->getPartial('scene/repinFormFields', array('form' => $repin_form));
+
+			$new_scene_form = new SceneTimeForm(null, array('reclip_id' => $scene->getSceneTime()->getReclipId(), 'sf_guard_user_profile_id' => $this->getUser()->getId()));
+			$return_array['new_scene_form'] = $this->getPartial('scene/modalFormFields', array('form' => $new_scene_form));
+		}
+		else
+		{
+			$return_array['nav_path'] = buildNavigationPath($scene);
+			$return_array['nav_avatar'] = link_to(image_tag(ImagePreview::c14n($scene->getSfGuardUserProfileId(), 'medium', 'avatar')), array('sf_route' => 'user', 'nick' => $scene->getSfGuardUserProfile()->getNick()));
+			$return_array['scene_people_sticker'] = $this->getComponent('scene', 'peopleForSceneSticker', array('scene_id' => $this->scene_id));
+		}
+
+		return $this->returnJSON($return_array);
 	}
 
 	public function executePostScene(sfWebRequest $request)

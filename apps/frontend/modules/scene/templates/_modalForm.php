@@ -9,10 +9,9 @@
 		<!-- b-content  -->
 		<div class="b-content">
 			<div class="add-video-scene">
-				<?php echo $form->renderHiddenFields()?>
 				<!-- video-descriptions  -->
 				<div class="video-descriptions">
-					<div class="line-form">
+					<div class="modal_form line-form">
 						<?php include_partial($form_partial, array('form' => $form))?>
 					</div>
 				</div>

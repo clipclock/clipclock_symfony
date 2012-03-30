@@ -109,5 +109,9 @@ class staticActions extends sfActions
 	{
 		$this->setLayout(false);
 		$this->url = $this->generateUrl('connect_fb');
+		if($this->getRequest()->getParameter('fb_source'))
+		{
+			$this->getResponse()->setCookie('fb_notifications', 'true');
+		}
 	}
 }

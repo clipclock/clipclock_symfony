@@ -12,7 +12,15 @@ class homeActions extends sfActions
 {
 	public function preExecute()
 	{
-		$this->source = $this->getRequest()->getParameter('source') ? $this->getRequest()->getParameter('source') : $this->getRequest()->getCookie('source');
+		if($this->getRequest()->getCookie('fb_notifications'))
+		{
+			$this->getResponse()->setCookie('fb_notifications', '');
+			$this->source = 2;
+		}
+		else
+		{
+			$this->source = $this->getRequest()->getParameter('source') ? $this->getRequest()->getParameter('source') : $this->getRequest()->getCookie('source');
+		}
 		$this->category = $this->getRequest()->getParameter('category') != null ? $this->getRequest()->getParameter('category') : $this->getRequest()->getCookie('category');
 
 		$this->user = $this->getUser();

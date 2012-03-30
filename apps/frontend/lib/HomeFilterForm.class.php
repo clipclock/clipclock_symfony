@@ -9,6 +9,7 @@
 class HomeFilterForm extends sfForm
 {
 	const ALL_CATEGORIES_ID = 0;
+	const I_FOLLOW_ID = 2;
 
 	public function configure()
 	{
@@ -36,7 +37,7 @@ class HomeFilterForm extends sfForm
 	{
 		$choices = array(
 			'1' => 'Everything',
-			'2' => 'I Follow',
+			self::I_FOLLOW_ID => 'I Follow',
 		);
 
 		if(!$this->getOption('user') || !$this->getOption('user')->getId())

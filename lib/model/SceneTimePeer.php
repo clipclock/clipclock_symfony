@@ -131,6 +131,15 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		return parent::doSelectStmt( $c );
 	}
 
+	public static function doCountForPager(Criteria $c ) {
+		$c->clearSelectColumns();
+		$c->addSelectColumn('count('.SceneTimePeer::RECLIP_ID.') as count');
+		$c->clearGroupByColumns();
+		$c->clearOrderByColumns();
+
+		return parent::doSelectStmt( $c )->fetch(PDO::FETCH_ASSOC);
+	}
+
 	public static function countCommentsForSceneTimeId($scene_time_id)
 	{
 		$c = new Criteria();

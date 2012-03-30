@@ -15,13 +15,23 @@ class homeActions extends sfActions
 		if($this->getRequest()->getCookie('fb_notifications'))
 		{
 			$this->getResponse()->setCookie('fb_notifications', '');
-			$this->source = 2;
+			$this->source = HomeFilterForm::I_FOLLOW_ID;
+			//Временное решение
+			$this->category = HomeFilterForm::ALL_CATEGORIES_ID;
+			$this->criteria = SceneTimePeer::retrieveClipsIdsForMainByUserId(null, $this->getUser()->getId(), $this->category);
+			$this->criteria = SceneTimePeer::modifyCriteriaByFilter($this->criteria, $this->getUser()->getId());
+			$count = SceneTimePeer::doCountForPager($this->criteria);
+			if($count['count'] < 40 / 4)
+			{
+				$this->redirect($this->generateUrl('homepage'));
+				return sfView::NONE;
+			}
 		}
 		else
 		{
 			$this->source = $this->getRequest()->getParameter('source') ? $this->getRequest()->getParameter('source') : $this->getRequest()->getCookie('source');
+			$this->category = $this->getRequest()->getParameter('category') != null ? $this->getRequest()->getParameter('category') : $this->getRequest()->getCookie('category');
 		}
-		$this->category = $this->getRequest()->getParameter('category') != null ? $this->getRequest()->getParameter('category') : $this->getRequest()->getCookie('category');
 
 		$this->user = $this->getUser();
 
@@ -38,7 +48,7 @@ class homeActions extends sfActions
 		$this->form->setDefault('source', $this->source);
 		$this->form->setDefault('category', $this->category);
 
-		if($this->source && $this->source == 2)
+		if($this->source && $this->source == HomeFilterForm::I_FOLLOW_ID)
 		{
 			$this->criteria = SceneTimePeer::modifyCriteriaByFilter($this->criteria, $this->user->getId());
 		}

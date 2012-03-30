@@ -26,7 +26,7 @@
 <ul class="autorized">
 	<li class="invite">
 		<div class="arrow"></div>
-		<a href="">Ask friends</a>
+		<a id="fb_invite_some" href="#">Ask friends</a>
 		<div class="sub">
 			<ul>
 				<li><a id="fb_invite_many" href="#">Many</a></li>

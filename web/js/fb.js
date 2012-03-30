@@ -110,6 +110,11 @@ function fbHooksRoutine(app_id, scene_id, user_id, url, requests_url)
 			return false;
 		});
 
+		$('#fb_invite_some').click(function(){
+			sendRequestViaMultiFriendSelector();
+			return false;
+		});
+
 		$('#fb_invite_many').click(function(){
 			sendRequestViaMultiFriendSelectorMany();
 			return false;

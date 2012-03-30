@@ -66,7 +66,10 @@ function fbHooksRoutine(app_id, scene_id, user_id, url, requests_url)
 					data: {result: response},
 					/*beforeSend: function(){highliteControlTab(scene_id);seekTo(secs);},*/
 					success: function(result){
-						console.log(result);
+						console.log(response);
+						$.each(response.to, function(index, value){
+							_kmq.push(['record', 'Invited friend', {'Where':'facebook', 'friend':value}]);
+						});
 					}
 				});
 			});

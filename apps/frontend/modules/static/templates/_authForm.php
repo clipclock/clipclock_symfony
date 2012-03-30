@@ -1,4 +1,7 @@
 <?php if(!$user->getId()):?>
+<script type="text/javascript">
+	_kmq.push(['set', {'guest':'true'}]);
+</script>
 <ul class="autorizing">
 	<li class="login"><a href="<?php echo url_for('connect_fb')?>">Login</a></li>
 	<li class="about">
@@ -17,6 +20,7 @@
 </ul>
 <?php else: ?>
 <script type="text/javascript">
+	_kmq.push(['set', {'guest':'false'}]);
 	_kmq.push(['identify', '<?php echo $user->getFullName()?>']);
 </script>
 <ul class="autorized">

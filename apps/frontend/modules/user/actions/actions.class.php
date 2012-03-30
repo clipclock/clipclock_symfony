@@ -115,6 +115,14 @@ class userActions extends sfActions
 
 		$this->getUser()->addToken($access_token);
 
+		foreach(array('Sport', 'Business', 'Style', 'Fun') as $name)
+		{
+			$board = new Board();
+			$board->setSfGuardUserProfileId($this->getUser()->getId());
+			$board->setName($name);
+			$board->save();
+		}
+
 		FriendsMapper::mapFrom($melody, $user);
 
 		$this->redirect('@user_register_welcome');

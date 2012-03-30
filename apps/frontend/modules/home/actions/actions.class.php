@@ -14,7 +14,6 @@ class homeActions extends sfActions
 	{
 		$this->source = $this->getRequest()->getParameter('source') ? $this->getRequest()->getParameter('source') : $this->getRequest()->getCookie('source');
 		$this->category = $this->getRequest()->getParameter('category') != null ? $this->getRequest()->getParameter('category') : $this->getRequest()->getCookie('category');
-		var_dump($this->getRequest()->getParameter('category') != null);
 
 		$this->user = $this->getUser();
 

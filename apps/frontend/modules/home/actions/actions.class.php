@@ -13,7 +13,8 @@ class homeActions extends sfActions
 	public function preExecute()
 	{
 		$this->source = $this->getRequest()->getParameter('source') ? $this->getRequest()->getParameter('source') : $this->getRequest()->getCookie('source');
-		$this->category = $this->getRequest()->getParameter('category') >= 0 ? $this->getRequest()->getParameter('category') : $this->getRequest()->getCookie('category');
+		$this->category = $this->getRequest()->getParameter('category') != null ? $this->getRequest()->getParameter('category') : $this->getRequest()->getCookie('category');
+		var_dump($this->getRequest()->getParameter('category') != null);
 
 		$this->user = $this->getUser();
 
@@ -40,7 +41,7 @@ class homeActions extends sfActions
 			$this->response->setCookie('source', $request->getParameter('source'));
 		}
 
-		if($request->getParameter('category') >= 0)
+		if($request->getParameter('category') != null)
 		{
 			$this->response->setCookie('category', $request->getParameter('category'));
 		}

@@ -43,5 +43,6 @@ class SceneForm extends BaseSceneForm
 
 		$this->getObject()->setSfGuardUserProfileId($this->getOption('sf_guard_user_profile_id'));
 		$this->getObject()->setCreatedAt($this->getOption('created_at'));
+		$this->setDefault('text', 'Pause the video on the moment you want to clip, enter the description text and hit the "create clip" button.');
 	}
 }

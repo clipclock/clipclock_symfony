@@ -57,6 +57,18 @@ $(document).ready(function(){
 		}
 	});
 
+	$('textarea').focus(function(){
+		if($(this).attr('defaultText') == $(this).html())
+		{
+			$(this).html('');
+		}
+	});
+	$('textarea').blur(function(){
+		if(!$(this).val().length)
+		{
+			$(this).html($(this).attr('defaultText'));
+		}
+	});
 
 	$('.welcome .close').click (function() {
 		closeWelcome(true);

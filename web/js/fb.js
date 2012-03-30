@@ -58,7 +58,7 @@ function fbHooksRoutine(app_id, scene_id, user_id, url, requests_url)
 
 		function sendRequestViaMultiFriendSelector() {
 			FB.ui({method: 'apprequests',
-				message: 'Ask friends to comment your video clips!',
+				message: 'Please comment my new video clips!',
 				filters: ["app_non_users"]
 			}, function(response){
 				$.ajax({
@@ -85,7 +85,7 @@ function fbHooksRoutine(app_id, scene_id, user_id, url, requests_url)
 					return (Math.round(Math.random())-0.5); }
 				user_ids = user_ids.sort( randOrd );
 				FB.ui({method: 'apprequests',
-					message: 'Ask friends to comment your video clips!',
+					message: 'Please comment my new video clips!',
 					filters: ["app_non_users"],
 					to: user_ids.slice(0, 50)
 				}, function(response){

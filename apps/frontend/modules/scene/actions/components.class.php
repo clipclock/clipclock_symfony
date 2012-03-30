@@ -87,7 +87,7 @@ class sceneComponents extends sfComponents
 		$this->reclip_id = $this->getVar('reclip_id');
 
 		$this->modal = $this->getVar('modal');
-		$this->tab_limit = $this->modal ? 5 : 12;
+		$this->tab_limit = $this->modal ? 5 : 7;
 
 		$this->form = new SceneTimeForm(null, array('reclip_id' => $this->reclip_id, 'sf_guard_user_profile_id' => $this->getUser()->getId()));
 	}

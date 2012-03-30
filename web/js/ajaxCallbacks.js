@@ -334,6 +334,9 @@ function toggleModalScene(url)
 	if(url)
 	{
 		history.pushState({}, 'Title', url);
+		$('#clip_embed h2').html('&nbsp;');
+		$('#description .inside').html('');
+		$('#clip_controls').html('');
 	}
 }
 

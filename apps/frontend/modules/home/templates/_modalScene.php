@@ -25,12 +25,14 @@
 			<!-- b-main-video  -->
 			<div class="b-main-video">
 				<!-- scence-autor  -->
-				<div class="scence-autor">
-					<div id="owner_avatar" class="user-pic"></div>
-					<div id='owner_text' class="name">
-						<!--div class="date">Upload 5 days ago</div-->
-					</div>
-					<div id="owner_button" class="b-btn">
+				<div class="ajax_toogle_container">
+					<div class="scence-autor ajax_toogle">
+						<div id="owner_avatar" class="user-pic"></div>
+						<div id='owner_text' class="name">
+							<!--div class="date">Upload 5 days ago</div-->
+						</div>
+						<div id="owner_button" class="b-btn">
+						</div>
 					</div>
 				</div>
 				<!-- /scence-autor -->

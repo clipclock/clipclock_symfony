@@ -12,10 +12,13 @@ class homeActions extends sfActions
 {
 	public function preExecute()
 	{
+		$this->source = $this->getRequest()->getParameter('source') ? $this->getRequest()->getParameter('source') : $this->getRequest()->getCookie('source');
+		$this->category = $this->getRequest()->getParameter('category') >= 0 ? $this->getRequest()->getParameter('category') : $this->getRequest()->getCookie('category');
+
 		$this->user = $this->getUser();
 
 		$this->form = new HomeFilterForm(null, array('user' => $this->user));
-		$this->criteria = SceneTimePeer::retrieveClipsIdsForMainByUserId(null, $this->user->getId(), $this->getRequest()->getParameter('category'));
+		$this->criteria = SceneTimePeer::retrieveClipsIdsForMainByUserId(null, $this->user->getId(), $this->category);
 	}
 	/**
 	 * Executes index action
@@ -24,15 +27,22 @@ class homeActions extends sfActions
 	 */
 	public function executeIndex(sfWebRequest $request)
 	{
-		$this->source = $request->getParameter('source');
-		$this->category = $request->getParameter('category');
+		$this->form->setDefault('source', $this->source);
+		$this->form->setDefault('category', $this->category);
 
-		$this->form->setDefault('source', $request->getParameter('source'));
-		$this->form->setDefault('category', $request->getParameter('category'));
-
-		if($request->getParameter('source') && $request->getParameter('source') == 2)
+		if($this->source && $this->source == 2)
 		{
 			$this->criteria = SceneTimePeer::modifyCriteriaByFilter($this->criteria, $this->user->getId());
+		}
+
+		if($request->getParameter('source'))
+		{
+			$this->response->setCookie('source', $request->getParameter('source'));
+		}
+
+		if($request->getParameter('category') >= 0)
+		{
+			$this->response->setCookie('category', $request->getParameter('category'));
 		}
 
 		$this->pager = new sfPropelPager('SceneTime', 40);

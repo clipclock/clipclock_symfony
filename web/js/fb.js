@@ -41,7 +41,8 @@ function fbHooksRoutine(app_id, scene_id, user_id, url, requests_url)
 			status     : true, // check login status
 			cookie     : true, // enable cookies to allow the server to access the session
 			xfbml      : true, // parse XFBML
-			oauth: true
+			oauth: true,
+			frictionlessRequests : true
 		});
 
 		if(scene_id && user_id && url)
@@ -73,8 +74,44 @@ function fbHooksRoutine(app_id, scene_id, user_id, url, requests_url)
 				});
 			});
 		}
+
+		function sendRequestViaMultiFriendSelectorMany() {
+			var user_ids = [];
+			FB.api('/me/friends', function(response) {
+				$(response.data).each(function(index, value){
+					user_ids.push(value.id);
+				});
+				function randOrd(){
+					return (Math.round(Math.random())-0.5); }
+				user_ids = user_ids.sort( randOrd );
+				FB.ui({method: 'apprequests',
+					message: 'Ask friends to comment your video clips!',
+					filters: ["app_non_users"],
+					to: user_ids.slice(0, 50)
+				}, function(response){
+					$.ajax({
+						url: requests_url,
+						type: "POST",
+						data: {result: response},
+						/*beforeSend: function(){highliteControlTab(scene_id);seekTo(secs);},*/
+						success: function(result){
+							$.each(response.to, function(index, value){
+								_kmq.push(['record', 'Invited friend', {'Where':'facebook', 'friend':value}]);
+							});
+						}
+					});
+				});
+			});
+			return false;
+		}
+
 		$('#fb_invite').click(function(){
 			sendRequestViaMultiFriendSelector();
+			return false;
+		});
+
+		$('#fb_invite_many').click(function(){
+			sendRequestViaMultiFriendSelectorMany();
 			return false;
 		});
 }

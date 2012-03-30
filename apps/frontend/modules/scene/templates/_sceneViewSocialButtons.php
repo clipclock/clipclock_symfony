@@ -35,6 +35,16 @@
 </div>
 <?php endif; ?>
 
+<div class="likes">
+	<div class="rep-like">
+		<div class="info">
+			<div id="d_clip_container" style="position:relative">
+				<a id="copy_link" href="javascript:return;">&nbsp;</a>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script type="text/javascript">
 	<?php if($user->getId()):?>
 		$().ready(function(){

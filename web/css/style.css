@@ -651,3 +651,6 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 .stickers-list li .inner .b-tabs .tabs-items li .description .inside {border:0;}
 .stickers-list li .inner .b-tabs .tabs-items li .b-comment .inside form .brd textarea {font-size: 12px;}
 .modal-window {z-index: 99;}
+.likes .rep-like .info a#copy_link {display:block; height:24px; background:url(../images/link-bg.jpg) no-repeat;}
+.likes .rep-like .info a#copy_link.hover { background-position:0 100%;}
+.likes .rep-like .info a#copy_link:hover { background-position:0 100%;}

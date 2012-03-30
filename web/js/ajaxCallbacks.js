@@ -79,6 +79,7 @@ function sceneChange(json_data, dont_history, url, json_url, secs, scene_id, mod
 
 	bindCommentRatingButtons(data.rating_url);
 	toggleAjaxLoader();
+	bindClipboardCopy(url);
 
 	if(!dont_history)
 	{
@@ -122,10 +123,11 @@ function bindSceneTextChangeHover()
 	});
 }
 
-function bindSceneChangeBack(json_url, secs, scene_id)
+function bindSceneChangeBack(json_url, secs, scene_id, current_url)
 {
 	$().ready(function(){
 		bindSceneTextChangeHover();
+		bindClipboardCopy(current_url);
 		window.addEventListener('popstate', function(e){
 			if(e.state && e.state.json_url)
 			{
@@ -354,9 +356,9 @@ function stickerClick(reclip_id, url, history_url, json_url, secs, scene_id)
 				},
 				success: function(data){
 
+					$('#fun_buttons').html(data.scene_social_buttons);
 					$('#clip_controls').html(data.scene_controls);
 					$('#clip_embed').html(data.scene_embed);
-					$('#fun_buttons').html(data.scene_social_buttons);
 					$('#description').html(data.scene_description);
 					$('#comment_form').html(data.scene_comment_form);
 					$('#comments').html(data.scene_comments_list);
@@ -378,6 +380,21 @@ function stickerClick(reclip_id, url, history_url, json_url, secs, scene_id)
 			return false;
 		});
 	});
+}
+
+function bindClipboardCopy(url)
+{
+	var clip = null;
+	ZeroClipboard.setMoviePath( '/js/ZeroClipboard.swf' );
+	clip = new ZeroClipboard.Client();
+	clip.setHandCursor( true );
+	clip.addEventListener('mouseOver', function (client) {
+		// update the text on mouse over
+		clip.setText(url);
+	});
+
+	clip.glue( 'copy_link', 'd_clip_container' );
+	$('#d_clip_container').hover(function(){$(this).find('a').toggleClass('hover');});
 }
 
 function bindCommentRatingButtons(url)

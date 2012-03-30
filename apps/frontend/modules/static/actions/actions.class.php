@@ -109,7 +109,8 @@ class staticActions extends sfActions
 	{
 		$this->setLayout(false);
 		$this->url = $this->generateUrl('connect_fb');
-		if($this->getRequest()->getParameter('fb_source') && $this->getRequest()->getParameter('fb_source') == 'notification')
+		if($this->getRequest()->getParameter('fb_source') && ($this->getRequest()->getParameter('fb_source') == 'notification' ||
+				($this->getRequest()->getParameter('fb_source') == 'bookmark_apps' && $this->getRequest()->getParameter('count') > 0)))
 		{
 			$this->getResponse()->setCookie('fb_notifications', 'true');
 		}

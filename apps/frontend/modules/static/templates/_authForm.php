@@ -6,14 +6,11 @@
 	<li class="login"><a href="<?php echo url_for('connect_fb')?>">Login</a></li>
 	<li class="about">
 		<div class="arrow"></div>
-		<a href="">About</a>
+		<a href="<?php echo $fb_page_url?>">About</a>
 		<div class="sub">
 			<ul>
-				<li><a href="">Help</a></li>
-				<li class="before-divider"><a href="">Copyright</a></li>
-				<li class="divider"><a href="">Careers</a></li>
-				<li><a href="">Team</a></li>
-				<li><a href="">Blog</a></li>
+				<li><a href="">Copyright</a></li>
+				<li><a href="<?php echo $fb_page_url?>">Blog</a></li>
 			</ul>
 		</div>
 	</li>
@@ -50,11 +47,11 @@
 	</li>
 	<li class="about">
 		<div class="arrow"></div>
-		<a href="">About</a>
+		<a href="<?php echo $fb_page_url?>">About</a>
 		<div class="sub">
 			<ul>
 				<li><a href="">Copyright</a></li>
-				<li><a href="">Blog</a></li>
+				<li><a href="<?php echo $fb_page_url?>">Blog</a></li>
 			</ul>
 		</div>
 	</li>

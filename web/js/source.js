@@ -124,7 +124,7 @@ function layoutAndScroll(path, elem, width)
 
 	if(!width)
 	{
-		width = 230;
+		width = 222;
 	}
 	$(document).ready(function(){
 		$('#container').infinitescroll({
@@ -152,14 +152,14 @@ function layoutAndScroll(path, elem, width)
 		},function(arrayOfNewElems){
 			$('.'+elem).wookmark({
 				container: $('#container'),
-				offset: 5,
+				offset: 12,
 				itemWidth: width,
 				autoResize: true
 			});
 		} );
 		var handler = $('.'+elem).wookmark({
 			container: $('#container'),
-			offset: 5,
+			offset: 12,
 			itemWidth: width,
 			autoResize: true
 		});

@@ -31,5 +31,8 @@ class staticComponents extends sfComponents
 
 		$fb = sfConfig::get('app_melody_facebook');
 		$this->fb_app_id = $fb['key'];
+
+		$fb_page = sfConfig::get('app_facebook_page');
+		$this->fb_page_url = $fb_page;
 	}
 }

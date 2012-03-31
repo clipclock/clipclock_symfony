@@ -76,6 +76,11 @@ class homeActions extends sfActions
 
 		$this->welcome_close = (bool)$request->getCookie('welcome_close');
 
+		$this->new_user = false;
+		if($this->getUser()->getAttribute('new_user'))
+		{
+			$this->new_user = $this->getUser()->getAttribute('new_user');
+		}
 		$this->current_url = $request->getUri();
 		if($request->isXmlHttpRequest())
 		{

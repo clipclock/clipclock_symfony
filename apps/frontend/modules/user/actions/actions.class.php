@@ -77,6 +77,7 @@ class userActions extends sfActions
 				)
 			);
 		}
+		$this->getUser()->setAttribute('new_user', true);
 		$this->redirect('@homepage');
 	}
 

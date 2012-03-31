@@ -10,6 +10,10 @@ $().ready(function(){
 });
 
 function toggleFBLikeButton(scene_id, user_id, state, url) {
+	if(state)
+	{
+		_kmq.push(['record', 'Shared', {'share_type':'FB Like'}]);
+	}
 	$.ajax({
 		url: url,
 		type: "GET",

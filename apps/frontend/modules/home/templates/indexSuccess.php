@@ -5,6 +5,9 @@
 	</ul>
 	<script type="text/javascript">
 		_kmq.push(['record', 'Viewed Homepage']);
+		<?php if($new_user):?>
+		_kmq.push(['record', 'Signed Up']);
+		<?php endif;?>
 		layoutAndScroll('<?php echo url_for('homepage_page', array('page' => $pager->getNextPage(), 'source' => $source, 'category' => $category)) ?>');
 	</script>
 </div>

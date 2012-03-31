@@ -4,6 +4,7 @@
 prod:
   .settings:
     no_script_name:         true
+    cache:                  true
     logging_enabled:        false
 
 dev:
@@ -42,4 +43,4 @@ all:
     # Enable the database manager
     use_database:           true
     enabled_modules:        [default, sfGuardGroup, sfGuardUser, sfCombine, sfGuardAuth, sfGuardPermission, sfMelody, sfPropelOAuthPlugin]
-    standard_helpers:       [Partial, Cache, Slug, jQuery, Text, sfCombine]
+    standard_helpers:       [Partial, Cache, Slug, jQuery, Text, sfCombine, Comment, Navigation, Url]

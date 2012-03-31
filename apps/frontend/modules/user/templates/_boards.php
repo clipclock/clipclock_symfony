@@ -1,5 +1,5 @@
 <?php foreach($boards_ids as $board_id):?>
-	<?php include_component('board', 'boardSticker', array('board_id' => $board_id['id'], 'user' => $user, 'current_user' => $current_user))?>
+	<?php include_component('board', 'boardSticker', array('board_id' => $board_id['id'], 'user' => $user, 'current_user' => $current_user, 'sf_cache_key' => $board_id['id'].$current_user->getId()))?>
 <?php endforeach?>
 <?php include_partial('static/loadingMsg')?>
 <?php if($pager->getNextPage() != $pager->getPage()):?>

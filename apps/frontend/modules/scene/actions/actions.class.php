@@ -36,8 +36,6 @@ class sceneActions extends sfActions
 		$this->forward404Unless($this->scene_id);
 		$this->control_scene_times = ScenePeer::retrieveAscSceneTimeIdByClipIdBoardId($scene->getSceneTime()->getReclipId(), $scene->getBoardId());
 
-		$this->getContext()->getConfiguration()->loadHelpers(array('Navigation', 'Comment'));
-
 		/**
 		 * Это жесть. Надо придумать как сделать нормально.
 		 */
@@ -105,6 +103,12 @@ class sceneActions extends sfActions
 
 		$this->scene_time_form->save();
 
+		if($cache = $this->getContext()->getViewCacheManager())
+		{
+			$cache->remove('@sf_cache_partial?module=board&action=_clipSticker&sf_cache_key='.$this->scene_time_form->getObject()->getReclipId().'*');
+			$cache->remove('@sf_cache_partial?module=board&action=_boardSticker&sf_cache_key='.$this->scene_time_form->getEmbeddedForm('scene')->getObject()->getBoardId().'*');
+		}
+
 		$this->redirect($this->generateUrl('scene', array(
 			'username_slug' => $this->getUser()->getNick(),
 			'board_id' => $this->scene_time_form->getEmbeddedForm('scene')->getObject()->getBoardId(),
@@ -122,9 +126,13 @@ class sceneActions extends sfActions
 		$this->scene_comment_form->bind($request->getParameter($this->scene_comment_form->getName()));
 
 		$this->forward404Unless($this->scene_comment_form->isValid());
-		$this->getContext()->getConfiguration()->loadHelpers(array('Comment'));
 
 		$this->scene_comment_form->save();
+
+		if($cache = $this->getContext()->getViewCacheManager())
+		{
+			$cache->remove('@sf_cache_partial?module=board&action=_clipSticker&sf_cache_key='.$this->scene_comment_form->getObject()->getSceneTime()->getReclipId().'*');
+		}
 
 		$partial = 'scene/sceneViewComment';
 		if($request->getParameter('sticker'))
@@ -140,8 +148,6 @@ class sceneActions extends sfActions
 	public function executePostCommentRating(sfWebRequest $request)
 	{
 		$this->forward404Unless($request->getMethod() == sfRequest::POST && $this->getUser()->getId());
-
-		$this->getContext()->getConfiguration()->loadHelpers(array('Comment'));
 
 		$rating = SceneCommentPeer::addRatingByIdAndUserId($request->getParameter('id'), $this->getUser()->getId(), (bool)$request->getParameter('sign'));
 
@@ -162,7 +168,6 @@ class sceneActions extends sfActions
 	public function executeUnrepin(sfWebRequest $request)
 	{
 		$origin_scene = ScenePeer::retrieveByPK($request->getParameter('scene_id'));
-		$this->getContext()->getConfiguration()->loadHelpers(array('Url'));
 
 		if(SceneRepinPeer::toggleBySceneIdAndUserIdByState($request->getParameter('scene_id'), $this->getUser()->getId(), false)
 				== SceneRepinPeer::UN_PINNED)
@@ -172,6 +177,10 @@ class sceneActions extends sfActions
 										'username_slug' => $origin_scene->getSfGuardUserProfile()->getNick(),
 										'board_id' => $origin_scene->getBoardId(),
 										'id' => $origin_scene->getId())), 'content' => 'toggled successfully');
+			if($cache = $this->getContext()->getViewCacheManager())
+			{
+				$cache->remove('@sf_cache_partial?module=board&action=_clipSticker&sf_cache_key='.$origin_scene->getSceneTime()->getReclipId().'*');
+			}
 		}
 		else
 		{
@@ -190,6 +199,11 @@ class sceneActions extends sfActions
 
 		$this->scene_form->save();
 
+		if($cache = $this->getContext()->getViewCacheManager())
+		{
+			$cache->remove('@sf_cache_partial?module=board&action=_clipSticker&sf_cache_key='.$this->scene_form->getObject()->getSceneTime()->getReclipId().'*');
+		}
+
 		$this->redirect($this->generateUrl('scene', array(
 			'username_slug' => $this->getUser()->getNick(),
 			'board_id' => $this->scene_form->getObject()->getBoardId(),
@@ -199,6 +213,13 @@ class sceneActions extends sfActions
 
 	public function executeToggleFBLikeState(sfWebRequest $request)
 	{
+		if($cache = $this->getContext()->getViewCacheManager())
+		{
+			$origin_scene = ScenePeer::retrieveByPK($request->getParameter('scene_id'));
+			$cache->remove('@sf_cache_partial?module=board&action=_clipSticker&sf_cache_key='.$origin_scene->getSceneTime()->getReclipId().'*');
+		}
+
+		//Блядь, Максим, я тебя ненавижу, бочарик блядь.
 		if ($this->getUser()->getId() != $request->getParameter('user_id'))
 			return $this->returnJSON(array('code' => 403, 'content' => 'forbidden'));
 

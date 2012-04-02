@@ -7,3 +7,4 @@ _filterForm:
   enabled:     true
 _clipList:
   enabled:     true
+  lifetime:    60

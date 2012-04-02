@@ -5,6 +5,6 @@ default:
   enabled:     false
   lifetime:    86400
 _clipSticker:
-  enabled: false
+  enabled: true
 _boardSticker:
   enabled: true

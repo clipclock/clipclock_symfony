@@ -7,6 +7,30 @@ prod:
     param:
       level:   err
       loggers: ~
+  storage:
+    class: sfCacheSessionStorage
+    param:
+      session_name: clipclock.com #[required] name of session to use
+      session_cookie_path: / #[required] cookie path
+      session_cookie_domain: clipclock.com #[required] cookie domain
+      session_cookie_lifetime: +30 days #[required] liftime of cookie
+      session_cookie_secure: false #[required] send only if secure connection
+      session_cookie_http_only: true #[required] accessible only via http protocol
+      cache:
+        class: sfMemcacheCache #[required] define the cache strategy
+        param:
+          servers: # Array of servers
+            localserver:
+              host: localhost # hostname or IP of mamcache server
+              port: 11211 # default memcache port
+  view_cache:
+    class: sfMemcacheCache
+    param:
+      lifetime:                  86400
+      servers:
+        server_01:
+          host: localhost
+          post: 11211
 
 test:
   storage:
@@ -48,9 +72,6 @@ all:
         param:
           automatic_cleaning_factor: 0
           lifetime:                  31556926
-
-  view_cache:
-    class: sfAPCCache
 
   view_cache_manager:
     class: sfViewCacheManager

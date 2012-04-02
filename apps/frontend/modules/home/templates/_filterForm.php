@@ -1,4 +1,3 @@
-<?php slot('homepage_filter') ?>
 <?php if(!$welcome_close || $error):?>
 <div class="welcome">
 	<div class="close"></div>
@@ -46,4 +45,3 @@
 <script type="text/javascript">
 	cuselActivate(15);
 </script>
-<?php end_slot()?>

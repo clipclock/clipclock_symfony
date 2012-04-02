@@ -35,7 +35,7 @@ class homeActions extends sfActions
 
 		$this->user = $this->getUser();
 
-		$this->form = new HomeFilterForm(null, array('user' => $this->user));
+
 		$this->criteria = SceneTimePeer::retrieveClipsIdsForMainByUserId(null, $this->user->getId(), $this->category);
 	}
 	/**
@@ -45,9 +45,6 @@ class homeActions extends sfActions
 	 */
 	public function executeIndex(sfWebRequest $request)
 	{
-		$this->form->setDefault('source', $this->source);
-		$this->form->setDefault('category', $this->category);
-
 		if($this->source && $this->source == HomeFilterForm::I_FOLLOW_ID)
 		{
 			$this->criteria = SceneTimePeer::modifyCriteriaByFilter($this->criteria, $this->user->getId());
@@ -63,11 +60,6 @@ class homeActions extends sfActions
 			$this->response->setCookie('category', $request->getParameter('category'));
 		}
 
-		$this->pager = new sfPropelPager('SceneTime', 40);
-		$this->pager->setCriteria($this->criteria);
-		$this->pager->setPeerMethod('doSelectForPager');
-		$this->pager->setPage($request->getParameter('page', 1));
-
 		$this->error = false;
 		if($this->getUser()->getFlash('registration_error'))
 		{
@@ -82,14 +74,18 @@ class homeActions extends sfActions
 			$this->new_user = $this->getUser()->getAttribute('new_user');
 		}
 		$this->current_url = $request->getUri();
+
+		$this->page = $request->getParameter('page', 1);
+
 		if($request->isXmlHttpRequest())
 		{
-			return $this->returnJSON($this->getComponent('home', 'clipList', array('pager' => $this->pager, 'current_user' => $this->user, 'source' => $this->source, 'category' => $this->category)));
+			return $this->returnJSON($this->getComponent('home', 'clipList', array('criteria' => $this->criteria, 'page' => $this->page, 'current_user' => $this->user, 'source' => $this->source, 'category' => $this->category)));
 		}
 	}
 
 	public function executeBindForm(sfWebRequest $request)
 	{
+		$this->form = new HomeFilterForm(null, array('user' => $this->user));
 		$this->form->bind($request->getParameter($this->form->getName()));
 		$request->getParameter($this->form->getName());
 

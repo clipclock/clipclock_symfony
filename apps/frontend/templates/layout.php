@@ -38,11 +38,11 @@
 		<a href="<?php echo url_for('homepage')?>" class="logo"></a>
 		<!-- head-menu  -->
 		<div class="head-menu">
-			<?php include_component('static', 'authForm', array('user' => $sf_user))?>
+			<?php include_component('static', 'authForm', array('user' => $sf_user, 'sf_cache_key' => $sf_user->getId()))?>
 		</div>
 		<!-- /head-menu -->
 		<!-- head-search  -->
-		<?php include_component('static', 'clipForm', array('user' => $sf_user)) ?>
+		<?php include_component('static', 'clipForm', array('user' => $sf_user, 'sf_cache_key' => $sf_user->getId())) ?>
 		<!-- /head-search -->
 	</div>
 	<?php include_slot('homepage_filter') ?>

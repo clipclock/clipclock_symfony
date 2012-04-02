@@ -9,6 +9,10 @@ homepage:
     source: \d+
     category: \d+
 
+static:
+  url:   /static
+  param: { module: static, action: index }
+
 homepage_bind:
   url:   /form
   param: { module: home, action: bindForm }

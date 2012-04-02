@@ -10,18 +10,23 @@ class homeComponents extends sfComponents
 {
 	public function executeClipList()
 	{
-		$this->pager = $this->getVar('pager');
+		$this->pager = new sfPropelPager('SceneTime', 40);
+		$this->pager->setCriteria($this->getVar('criteria'));
+		$this->pager->setPeerMethod('doSelectStmt');
+		$this->pager->setPage($this->getVar('page', 1));
+
 		$this->current_user = $this->getVar('current_user');
 		$this->user = $this->getVar('user');
 		$this->pager->init();
 		$this->results = $this->pager->getResults()->fetchAll(PDO::FETCH_ASSOC);
-		$this->getContext()->getConfiguration()->loadHelpers(array('Comment'));
-		//var_dump(url_for('board_page', array('id' => $this->current_board->getId(), 'username_slug' => $this->current_user->getNick(), 'page' => $this->pager->getNextPage())));die();
 	}
 
 	public function executeFilterForm()
 	{
 		$this->user = $this->getVar('current_user');
-		$this->form = $this->getVar('form');
+
+		$this->form = new HomeFilterForm(null, array('user' => $this->user));
+		$this->form->setDefault('source', $this->getVar('source'));
+		$this->form->setDefault('category', $this->getVar('category'));
 	}
 }

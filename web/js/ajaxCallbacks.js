@@ -141,11 +141,11 @@ function bindSceneChangeBack(json_url, secs, scene_id, current_url)
 				return true;
 			}
 
-			if(scene_id && secs && json_url && first_scene)
+			if(scene_id && secs && json_url)
 			{
 				$.ajax({
 					url: json_url,
-					beforeSend: function(){highliteControlTab(scene_id);seekTo(secs);},
+					beforeSend: function(){highliteControlTab(scene_id);seekTo(secs);toggleAjaxLoader();},
 					dataType: 'text',
 					success: function(data){
 						sceneChange(data, true);
@@ -195,7 +195,7 @@ function newSceneTimeModalShow(scene_time_id, scene_text_id)
 		});
 
 		$('#new_time_scene_description_container_submit').click(function(){
-			if($('#new_time_scene_description').val().length > 3)
+			if($('#new_time_scene_description').val().length > 3 && $('#new_time_scene_description').val() != $('#new_time_scene_description').attr('defaulttext'))
 			{
 				if(getPlayer())
 				{

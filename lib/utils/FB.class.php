@@ -27,7 +27,7 @@ class FB {
 	{
 		$result = $this->browser->post($this->urls['facebook']['post'], array(
 			'access_token' => $this->access_token,
-			'link' => $url
+			'link' => 'http://clipclock.com/madesst/board/50/scene/2448'
 		))->getResponseText();
 
 		$result = json_decode($result);

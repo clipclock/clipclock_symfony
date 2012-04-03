@@ -63,7 +63,7 @@ class sceneComponents extends sfComponents
 		$this->response->addMeta('fb:app_id', $fb['key']);
 		$this->response->addMeta('og:locale', 'en_US');
 
-		$this->post_facebook = $this->getRequest()->getCookie('post_facebook');
+		$this->post_facebook = $this->getRequest()->getCookie('post_facebook', 'true');
 
 		$this->response->addMeta('og:url', $this->generateUrl('scene', array('username_slug' => $this->user, 'board_id' => $this->scene->getBoardId(), 'id' => $this->scene->getId()), true));
 		$this->response->addMeta('og:title', $this->scene->getText());

@@ -40,7 +40,7 @@ class sceneActions extends sfActions
 		 * Это жесть. Надо придумать как сделать нормально.
 		 */
 		$return_array = array(
-			'scene_comments_list' => '&nbsp;',
+			'scene_comments_list' => $this->getComponent('scene', 'sceneViewComments', array('scene_time_id' => $scene->getSceneTimeId(), 'current_user' => $this->getUser())),
 			'scene_comment_form' => $this->getComponent('scene', 'sceneViewCommentForm', array('scene_time_id' => $scene->getSceneTimeId(), 'current_user' => $this->getUser())),
 			'scene_description' => $this->getComponent('scene', 'sceneViewDescription', array('control_scene_times' => $this->control_scene_times, 'scene_id' => $this->scene_id)),
 			'scene_social_buttons' => $this->getComponent('scene', 'sceneViewSocialButtons', array('scene_id' => $this->scene_id, 'user' => $scene->getSfGuardUserProfile(), 'current_user' => $this->getUser())),

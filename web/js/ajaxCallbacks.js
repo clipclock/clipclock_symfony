@@ -141,7 +141,7 @@ function bindSceneChangeBack(json_url, secs, scene_id, current_url)
 				return true;
 			}
 
-			if(scene_id && secs && json_url)
+			if(scene_id && secs && json_url && first_scene)
 			{
 				$.ajax({
 					url: json_url,

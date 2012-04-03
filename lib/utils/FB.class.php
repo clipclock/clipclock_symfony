@@ -23,11 +23,12 @@ class FB {
 		$this->access_token = $user->getMelody('facebook')->getToken('facebook')->getTokenKey();
 	}
 
-	public function postLink($url)
+	public function postLink($url, $name)
 	{
 		$result = $this->browser->post($this->urls['facebook']['post'], array(
 			'access_token' => $this->access_token,
-			'link' => 'http://clipclock.com/madesst/board/50/scene/2448'
+			'link' => $url,
+			'name' => $name
 		))->getResponseText();
 
 		$result = json_decode($result);

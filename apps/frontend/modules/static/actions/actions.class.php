@@ -91,6 +91,7 @@ class staticActions extends sfActions
 			}
 			$this->reclip = $reclip;
 
+			$this->post_facebook = $this->getRequest()->getCookie('post_facebook', true);
 			$this->form = new SceneTimeForm(null, array('reclip_id' => $this->reclip->getId(), 'sf_guard_user_profile_id' => $this->getUser()->getId()));
 		}
 		elseif(!$this->getUser()->getId())

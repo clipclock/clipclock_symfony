@@ -14,7 +14,7 @@ class FB {
 
 	protected $urls = array(
 		'facebook' => array(
-			'post' => 'https://graph.facebook.com/me/feed'
+				'post' => 'https://graph.facebook.com/me/feed'
 		)
 	);
 
@@ -30,7 +30,7 @@ class FB {
 			'link' => $url,
 			'name' => $name,
 			'source' => 'http://www.youtube.com/v/'.$source.'?enablejsapi=1&playerapiid=ytplayer&start='.$scene_time.'&autoplay=1&version=3&feature=player_embedded&fs=1&rel=0&showsearch=0&showinfo=0',
-			'picture' => 'http://clipclock.com'.ImagePreview::c14n($clip_id.$scene_time)
+			'picture' => 'http://clipclock.com'.ImagePreview::c14n($clip_id.$scene_time, 'big')
 		))->getResponseText();
 
 		$result = json_decode($result);

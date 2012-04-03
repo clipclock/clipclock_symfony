@@ -14,7 +14,7 @@ class FB {
 
 	protected $urls = array(
 		'facebook' => array(
-			'post' => 'https://graph.facebook.com/me/feed'
+			'post' => 'https://graph.facebook.com/me/links'
 		)
 	);
 

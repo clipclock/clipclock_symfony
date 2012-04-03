@@ -10,7 +10,7 @@ prod:
   storage:
     class: sfCacheSessionStorage
     param:
-      session_name: clipclock.com #[required] name of session to use
+      session_name: something #[required] name of session to use
       session_cookie_path: / #[required] cookie path
       session_cookie_domain: clipclock.com #[required] cookie domain
       session_cookie_lifetime: +30 days #[required] liftime of cookie
@@ -63,6 +63,9 @@ all:
       extra_parameters_as_query_string: true
 
 all:
+  storage:
+    param:
+      session_name: something
   routing:
     class: sfPatternRouting
     param:

@@ -212,6 +212,7 @@ function newSceneTimeModalShow(scene_time_id, scene_text_id)
 					$('#shadow').toggle();
 				}
 
+				$('#new_time_scene_modal #scene_time_post_facebook').val($('#facebook_checkbox input').is(':checked'));
 				$('#new_time_scene_modal #'+scene_text_id).val($('#new_time_scene_description').val());
 			}
 			return false;

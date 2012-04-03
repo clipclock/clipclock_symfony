@@ -11,7 +11,10 @@
 					<textarea id="new_time_scene_description" defaultText='Pause the video on the moment you want to clip, enter the description text and hit the "Create Clip" button' name="" cols="" rows="">Pause the video on the moment you want to clip, enter the description text and hit the "Create Clip" button</textarea>
 				</div>
 				<div class="b-btn">
-					<input id="new_time_scene_description_container_submit" class="default-follow-btn" name="" type="button" value="Create clip" />
+					<input style="float: left;" id="new_time_scene_description_container_submit" class="default-follow-btn" name="" type="button" value="Create clip" />
+					<div id="facebook_checkbox" class="facebook_checkbox">
+						<span>Facebook</span><input name="" type="checkbox" class="default-un-follow-btn"<?php if($post_facebook):?> checked="checked"<?php endif;?> value="1" />
+					</div>
 				</div>
 			</form>
 		</div>

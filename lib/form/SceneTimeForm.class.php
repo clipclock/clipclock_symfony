@@ -15,6 +15,9 @@ class SceneTimeForm extends BaseSceneTimeForm
 		unset($this['created_at']);
 		unset($this['unique_comments_count']);
 
+		$this->setWidget('post_facebook', new sfWidgetFormInputHidden());
+		$this->setValidator('post_facebook', new sfValidatorBoolean());
+
 		$this->setWidget('scene_time', new sfWidgetFormInputHidden());
 		$this->setWidget('reclip_id', new sfWidgetFormInputHidden());
 

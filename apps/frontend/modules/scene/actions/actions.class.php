@@ -101,6 +101,10 @@ class sceneActions extends sfActions
 
 		$this->scene_time_form->bind($request->getParameter($this->scene_time_form->getName()));
 
+		$this->forward404Unless($this->scene_time_form->isValid());
+
+		$binded_values = $this->scene_time_form->getValues();
+		$this->getResponse()->setCookie('post_facebook', $binded_values['post_facebook']);
 		$this->scene_time_form->save();
 
 		if($cache = $this->getContext()->getViewCacheManager())
@@ -109,10 +113,28 @@ class sceneActions extends sfActions
 			$cache->remove('@sf_cache_partial?module=board&action=_boardSticker&sf_cache_key='.$this->scene_time_form->getEmbeddedForm('scene')->getObject()->getBoardId().'*');
 		}
 
+		$scene = $this->scene_time_form->getEmbeddedForm('scene')->getObject();
+
+		if($binded_values['post_facebook'])
+		{
+			$fb_helper = new FB($this->getUser());
+			$ext_id = $fb_helper->postLink($this->generateUrl('scene', array(
+				'username_slug' => $this->getUser()->getNick(),
+				'board_id' => $scene->getBoardId(),
+				'id' => $scene->getId()
+			), true));
+
+			if($ext_id)
+			{
+				$scene->setExtId($ext_id);
+				$scene->save();
+			}
+		}
+
 		$this->redirect($this->generateUrl('scene', array(
 			'username_slug' => $this->getUser()->getNick(),
-			'board_id' => $this->scene_time_form->getEmbeddedForm('scene')->getObject()->getBoardId(),
-			'id' => $this->scene_time_form->getEmbeddedForm('scene')->getObject()->getId()
+			'board_id' => $scene->getBoardId(),
+			'id' => $scene->getId()
 		)));
 	}
 

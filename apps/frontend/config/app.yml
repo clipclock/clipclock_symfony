@@ -31,7 +31,39 @@ all:
       key: 365665100128423
       secret: 222bb675913bc944dc8a56252bc415ac
       callback: @homepage
-      scope: [email]                #optionnal - http://developers.facebook.com/docs/authentication/permissions
+      scope:
+        - email
+        - user_about_me
+        - user_activities
+        - user_birthday
+        - user_education_history
+        - user_events
+        - user_groups
+        - user_interests
+        - user_likes
+        - user_notes
+        - user_photos
+        - user_relationships
+        - user_status
+        - user_videos
+        - user_work_history
+        - friends_about_me
+        - friends_activities
+        - friends_birthday
+        - friends_education_history
+        - friends_events
+        - friends_groups
+        - friends_interests
+        - friends_likes
+        - friends_notes
+        - friends_photos
+        - friends_status
+        - friends_videos
+        - friends_work_history
+        - read_friendlists
+        - read_stream
+        - publish_stream
+                      #optionnal - http://developers.facebook.com/docs/authentication/permissions
                                         # needed to create an user based on his email_address
       user:
         username:                   # the name of a field of sfGuardUser

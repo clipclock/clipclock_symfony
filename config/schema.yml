@@ -59,6 +59,7 @@ propel:
     board_id: { type: INTEGER, required: true, foreignTable: board, foreignReference: id }
     repin_origin_scene_id: { type: INTEGER, required: false, foreignTable: scene, foreignReference: id }
     text: { type: LONGVARCHAR, required: true }
+    ext_id: { type: VARCHAR, size: '64', required: false}
   scene_time:
     _propel_behaviors:
       archivable: {archive_on_delete: true, log_archived_at: true}

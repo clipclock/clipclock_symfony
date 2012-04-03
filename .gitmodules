@@ -16,3 +16,6 @@
 [submodule "plugins/sfCombinePlugin"]
 	path = plugins/sfCombinePlugin
 	url = git://github.com/madesst/sfCombinePlugin.git
+[submodule "plugins/sfWebBrowserPlugin"]
+	path = plugins/sfWebBrowserPlugin
+	url = git://github.com/madesst/sfWebBrowserPlugin.git

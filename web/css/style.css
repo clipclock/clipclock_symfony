@@ -673,3 +673,15 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
     -webkit-box-shadow:0 3px 2px #b6b6b6;
     -khtml-box-shadow:0 3px 2px #b6b6b6;
 }
+.facebook_checkbox
+{
+    float: right;
+    width: 100px;
+}
+.facebook_checkbox span
+{
+    display: block;
+    padding-left: 5px;
+    padding-top: 7px;
+}
+.facebook_checkbox input, .facebook_checkbox span {float: right;}

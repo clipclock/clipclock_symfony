@@ -29,6 +29,9 @@ dev:
       delivery_strategy: none
 
 all:
+  storage:
+    param:
+      session_name: symfony
   routing:
     class: sfPatternRouting
     param:

@@ -45,6 +45,7 @@ class homeActions extends sfActions
 	 */
 	public function executeIndex(sfWebRequest $request)
 	{
+		$this->post_facebook = $request->getCookie('post_facebook', true);
 		if($this->source && $this->source == HomeFilterForm::I_FOLLOW_ID)
 		{
 			$this->criteria = SceneTimePeer::modifyCriteriaByFilter($this->criteria, $this->user->getId());
@@ -54,7 +55,6 @@ class homeActions extends sfActions
 		{
 			$this->response->setCookie('source', $request->getParameter('source'));
 		}
-
 		if($request->getParameter('category') != null)
 		{
 			$this->response->setCookie('category', $request->getParameter('category'));

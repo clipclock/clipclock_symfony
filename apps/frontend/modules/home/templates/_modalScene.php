@@ -52,7 +52,7 @@
 					<ul class="tabs-items">
 						<?php if($current_user->getId()):?>
 						<li id='scene_add_comment' class="tag-new-cont">
-							<?php include_partial('scene/sceneViewNewSceneForm', array('current_user' => $current_user))?>
+							<?php include_partial('scene/sceneViewNewSceneForm', array('current_user' => $current_user, 'post_facebook' => $post_facebook))?>
 						</li>
 						<?php endif?>
 						<li id="scene_info" class="active ajax_toogle_container">

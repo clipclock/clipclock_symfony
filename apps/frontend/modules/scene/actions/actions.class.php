@@ -122,7 +122,7 @@ class sceneActions extends sfActions
 				'username_slug' => $this->getUser()->getNick(),
 				'board_id' => $scene->getBoardId(),
 				'id' => $scene->getId()
-			), true), $scene->getText() );
+			), true), $scene->getText(), $scene->getSceneTime()->getReclip()->getClip()->getUrl(), $scene->getSceneTime()->getSceneTime());
 
 			if($ext_id)
 			{

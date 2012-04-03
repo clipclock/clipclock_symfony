@@ -23,12 +23,13 @@ class FB {
 		$this->access_token = $user->getMelody('facebook')->getToken('facebook')->getTokenKey();
 	}
 
-	public function postLink($url, $name)
+	public function postLink($url, $name, $source, $scene_time)
 	{
 		$result = $this->browser->post($this->urls['facebook']['post'], array(
 			'access_token' => $this->access_token,
 			'link' => $url,
-			'name' => $name
+			'name' => $name,
+			'source' => 'http://www.youtube.com/v/'.$source.'?enablejsapi=1&playerapiid=ytplayer&start='.$scene_time.'&autoplay=1&version=3&feature=player_embedded&fs=1&rel=0&showsearch=0&showinfo=0'
 		))->getResponseText();
 
 		$result = json_decode($result);

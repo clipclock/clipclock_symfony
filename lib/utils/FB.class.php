@@ -23,13 +23,14 @@ class FB {
 		$this->access_token = $user->getMelody('facebook')->getToken('facebook')->getTokenKey();
 	}
 
-	public function postLink($url, $name, $source, $scene_time)
+	public function postLink($url, $name, $source, $scene_time, $clip_id)
 	{
 		$result = $this->browser->post($this->urls['facebook']['post'], array(
 			'access_token' => $this->access_token,
 			'link' => $url,
 			'name' => $name,
-			'source' => 'http://www.youtube.com/v/'.$source.'?enablejsapi=1&playerapiid=ytplayer&start='.$scene_time.'&autoplay=1&version=3&feature=player_embedded&fs=1&rel=0&showsearch=0&showinfo=0'
+			'source' => 'http://www.youtube.com/v/'.$source.'?enablejsapi=1&playerapiid=ytplayer&start='.$scene_time.'&autoplay=1&version=3&feature=player_embedded&fs=1&rel=0&showsearch=0&showinfo=0',
+			'picture' => 'http://clipclock.com'.ImagePreview::c14n($clip_id.$scene_time)
 		))->getResponseText();
 
 		$result = json_decode($result);

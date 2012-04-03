@@ -26,6 +26,7 @@ prod:
   view_cache:
     class: sfMemcacheCache
     param:
+      storeCacheInfo:          true
       lifetime:                  86400
       servers:
         server_01:

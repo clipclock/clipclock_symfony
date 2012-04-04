@@ -54,6 +54,15 @@ dev:
       delivery_strategy: none
       transport:
         class: Swift_MailTransport
+  routing:
+      class: sfPatternRouting
+      param:
+        generate_shortest_url:            true
+        extra_parameters_as_query_string: true
+        cache:
+          class: sfFileCache
+          param:
+            cache_dir: cache
 
 all:
   routing:

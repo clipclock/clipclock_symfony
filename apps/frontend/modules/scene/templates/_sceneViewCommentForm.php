@@ -9,7 +9,7 @@
 		'condition' => 'checkCommentForm()',
 	), array('id' => 'new_scene_comment'))?>
 		<div id="comment_form_text" class="brd">
-			<?php echo $form['text']?><?php echo $form->renderHiddenFields()?>
+			<?php echo $form['text']->render(array('class' => 'typing'))?><?php echo $form->renderHiddenFields()?>
 		</div>
 		<div class="b-btn">
 			<input id="submit_comment" class="default-un-follow-btn" name="" type="button" value="Comment" />

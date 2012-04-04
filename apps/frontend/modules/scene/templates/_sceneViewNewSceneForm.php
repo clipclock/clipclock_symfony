@@ -13,7 +13,7 @@
 				<div class="b-btn">
 					<input style="float: left;" id="new_time_scene_description_container_submit" class="default-follow-btn" name="" type="button" value="Create clip" />
 					<div id="facebook_checkbox" class="facebook_checkbox">
-						<span>Facebook</span><input name="" type="checkbox" class="default-un-follow-btn"<?php if($post_facebook):?> checked="checked"<?php endif;?> value="1" />
+						<span>Post on Facebook</span><input name="" type="checkbox" class="default-un-follow-btn"<?php if($post_facebook):?> checked="checked"<?php endif;?> value="1" />
 					</div>
 				</div>
 			</form>

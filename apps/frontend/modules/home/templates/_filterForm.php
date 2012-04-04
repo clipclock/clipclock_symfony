@@ -4,8 +4,43 @@
 	<div class="close"></div>
 	<div class="inner">
 		<?php if(!$error):?>
-		<h1>Are you new? We are glad to see you!</h1>
-		<h2>Here you can comment and publish best moments of any YouTube video.<br />Copy and paste video URL, choose the right moments and create your clips!<!--a href="#">How does it work?</a--></h2>
+			<h1>Are you new? We are glad to see you!</h1>
+			<!-- wel-list  -->
+			<ul class="wel-list">
+				<li>
+					<div class="ins">
+						<div class="ico">
+							<img src="/images/wel-list-icons/ico-1.png" alt="" width="86" height="63">
+						</div>
+						<p>
+							Copy URL of any YouTube video and enterit in the ClipClock upper field.
+						</p>
+					</div>
+				</li>
+				<li>
+					<div class="ins">
+						<div class="ico">
+							<img src="/images/wel-list-icons/ico-2.png" alt="" width="85" height="63">
+						</div>
+						<p>
+							Create your clips of best video moments and comment other clips.
+						</p>
+					</div>
+				</li>
+				<li>
+					<div class="ins">
+						<div class="ico">
+							<img src="/images/wel-list-icons/ico-3.png" alt="" width="85" height="63">
+						</div>
+						<p>
+							Follow your facebook friends's clips and share yours in a second.
+						</p>
+						<div class="b-link close_link">
+							<a href="#">GO!</a>
+						</div>
+					</div>
+				</li>
+			</ul>
 		<?php else:?>
 		<h1 class="invite">At the moment login is for invited persons only.</h1>
 		<h2>You can watch the clips and comments, but to make and share your own clips please request an invitation from your friends already clipping with us.<br />Thank you!</h2>

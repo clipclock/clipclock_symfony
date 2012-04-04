@@ -2,12 +2,12 @@
 
 <head prefix="og: http://ogp.me/ns# clipclock:
                   http://ogp.me/ns/apps/clipclock#">
-	<?php include_http_metas() ?>
-	<?php include_metas() ?>
-	<?php include_title() ?>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta property="title" content="ClipClock.com - great video moments publishing, commenting, and searching in social environment" />
+	<meta property="description" content="ClipClock.com - publish, comment, share and search your great video scenes and best moments. Take any video from YouTube, Vimeo, Dailymotion or other video hostings, add a time tag to the right moment on the video timeline and share your clip on Facebook or other social platforms. You would gift your friends extra life time, they could spend on the important things rather than scanning the video for the relevant content." />
+	<title>ClipClock.com - great video moments publishing, commenting, and searching in social environment</title>
 	<link rel="shortcut icon" href="/favicon.ico" />
-	<?php include_combined_stylesheets() ?>
-	<?php include_combined_javascripts() ?>
+	<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 </head>
 <body>
 <!-- b-erorr  -->

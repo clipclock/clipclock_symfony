@@ -68,7 +68,7 @@
 					<div class="cuselText"><?php echo $categories_selected_text?></div></div>
 			</div>
 		</div>
-		<!--div class="search-col">
+		<div class="search-col">
 			<div class="b-search">
 				<div class="inside">
 					<div class="b-btn">
@@ -79,7 +79,7 @@
 					</div>
 				</div>
 			</div>
-		</div-->
+		</div>
 	</form>
 </div>
 <script type="text/javascript">

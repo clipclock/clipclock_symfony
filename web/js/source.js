@@ -119,7 +119,6 @@ function cuselActivate(visRows, elems)
 	}
 	$().ready(function(){
 		$(elems).change(function(){
-			console.log($(this));
 			$(this).parents('form').submit();
 		});
 		jQuery(".cusel").each(
@@ -216,7 +215,6 @@ function categoryMultiSelect()
 		});
 
 		$('#categories_selected .line-form .cusel').click(function(){
-			console.log('123');
 			categoryMultiSelectorModalToggle();
 		});
 

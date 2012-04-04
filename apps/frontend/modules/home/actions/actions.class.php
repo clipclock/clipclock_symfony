@@ -10,8 +10,14 @@
  */
 class homeActions extends sfActions
 {
-	public function preExecute()
+	/**
+	 * Executes index action
+	 *
+	 * @param sfRequest $request A request object
+	 */
+	public function executeIndex(sfWebRequest $request)
 	{
+		$this->search_string = null;
 		if($this->getUser()->getAttribute('new_user'))
 		{
 			$this->getUser()->setAttribute('new_user', false);
@@ -52,7 +58,12 @@ class homeActions extends sfActions
 		}
 		else
 		{
-			if($this->getUser()->getAttribute('source'))
+			if($request->getParameter('search_string'))
+			{
+				$this->search_string = $request->getParameter('search_string');
+			}
+
+			if($this->getUser()->hasAttribute('source'))
 			{
 				$this->source = $this->getUser()->getAttribute('source');
 				$this->categories = $this->getUser()->hasAttribute('categories') ? @unserialize($this->getUser()->getAttribute('categories')) : null;
@@ -73,20 +84,21 @@ class homeActions extends sfActions
 		$this->user = $this->getUser();
 
 		$this->criteria = SceneTimePeer::retrieveClipsIdsForMainByUserId(null, $this->user->getId(), $this->categories);
-	}
-	/**
-	 * Executes index action
-	 *
-	 * @param sfRequest $request A request object
-	 */
-	public function executeIndex(sfWebRequest $request)
-	{
-		//$this->getUser()->setAttribute('new_user', true);
-		$this->post_facebook = $request->getCookie('post_facebook', true);
+
+		$this->page = $request->getParameter('page', 1);
+		$this->next_url = $this->generateUrl('homepage_page', array('page' => $this->page+1));
 		if($this->source && $this->source == HomeFilterForm::I_FOLLOW_ID)
 		{
-			$this->criteria = SceneTimePeer::modifyCriteriaByFilter($this->criteria, $this->user->getId());
+			$this->criteria = SceneTimePeer::modifyCriteriaByFilter($this->criteria, $this->user->getId(), $this->search_string ? false : true);
 		}
+
+		if($this->search_string)
+		{
+			$this->criteria = SceneTimePeer::modifyCriteriaBySearchFilter($this->criteria, $this->search_string);
+			$this->next_url = $this->generateUrl('homepage_search_page', array('search_string' => $this->search_string, 'page' => $this->page+1));
+		}
+
+		$this->post_facebook = $request->getCookie('post_facebook', true);
 
 		$this->error = false;
 		if($this->getUser()->getFlash('registration_error'))
@@ -97,25 +109,24 @@ class homeActions extends sfActions
 		$this->welcome_close = (bool)$request->getCookie('welcome-close');
 
 		$this->new_user = false;
-		if($this->getUser()->getAttribute('new_user'))
+		if($this->getUser()->hasAttribute('new_user'))
 		{
 			$this->new_user = $this->getUser()->getAttribute('new_user');
 		}
-		$this->current_url = $request->getUri();
 
-		$this->page = $request->getParameter('page', 1);
+		$this->current_url = $request->getUri();
 
 		$this->categories = $this->categories ? array_flip($this->categories) : null;
 
 		if($request->isXmlHttpRequest())
 		{
-			return $this->returnJSON($this->getComponent('home', 'clipList', array('criteria' => $this->criteria, 'page' => $this->page, 'current_user' => $this->user, 'source' => $this->source, 'categories' => $this->categories)));
+			return $this->returnJSON($this->getComponent('home', 'clipList', array('criteria' => $this->criteria, 'next_url' => $this->next_url, 'page' => $this->page, 'current_user' => $this->user, 'source' => $this->source, 'categories' => $this->categories)));
 		}
 	}
 
 	public function executeBindForm(sfWebRequest $request)
 	{
-		$this->form = new HomeFilterForm(null, array('user' => $this->user));
+		$this->form = new HomeFilterForm(null, array('user' => $this->getUser()));
 		$this->form->bind($request->getParameter($this->form->getName()));
 		$request->getParameter($this->form->getName());
 
@@ -156,6 +167,10 @@ class homeActions extends sfActions
 		$this->getUser()->setAttribute('source', $this->form->getValue('source'));
 		$this->getUser()->setAttribute('categories', serialize($category_array));
 
+		if($this->form->getValue('search'))
+		{
+			$this->redirect($this->generateUrl('homepage_search', array('search_string' => $this->form->getValue('search'))));
+		}
 		$this->redirect($this->generateUrl('homepage'));
 		return sfView::NONE;
 	}

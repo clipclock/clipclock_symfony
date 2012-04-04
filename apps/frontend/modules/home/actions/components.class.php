@@ -17,6 +17,7 @@ class homeComponents extends sfComponents
 
 		$this->current_user = $this->getVar('current_user');
 		$this->user = $this->getVar('user');
+		$this->next_url = $this->getVar('next_url');
 		$this->pager->init();
 		$this->results = $this->pager->getResults()->fetchAll(PDO::FETCH_ASSOC);
 	}
@@ -41,6 +42,10 @@ class homeComponents extends sfComponents
 
 		$this->form = new HomeFilterForm(null, array('user' => $this->user));
 		$this->form->setDefault('source', $this->getVar('source'));
+		if($this->getVar('search_string'))
+		{
+			$this->form->setDefault('search', $this->getVar('search_string'));
+		}
 	}
 
 	public function executeCategoriesSelector()

@@ -187,6 +187,10 @@ function layoutAndScroll(path, elem, width)
 function categoryMultiSelectorModalToggle()
 {
 	$('#interests').toggle();
+	if($('#interests:visible').length)
+	{
+		$('#interests').offset({top: $(window).scrollTop()+40});
+	}
 	$('#shadow_interests').toggle();
 }
 

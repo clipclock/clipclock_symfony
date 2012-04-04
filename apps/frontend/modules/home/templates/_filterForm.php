@@ -49,7 +49,7 @@
 <?php endif; ?>
 <!-- /welcome -->
 <?php slot('category_modal') ?>
-<?php include_component('home', 'categoriesSelector', array('current_user' => $current_user, 'categories' => $categories, 'sf_cache_key' => serialize($categories)))?>
+<?php include_component('home', 'categoriesSelector', array('current_user' => $current_user, 'categories' => $categories, 'sf_cache_key' => $current_user->getId().md5(serialize($categories))))?>
 <?php end_slot()?>
 <!-- b-filter  -->
 <div class="b-filter">

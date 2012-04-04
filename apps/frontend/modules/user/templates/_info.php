@@ -7,7 +7,7 @@
 </div>
 <!-- /ph -->
 <div class="adress">
-	Moscow, Russia
+	<?php if($user->getCountry() || $user->getCity()):?><?php echo $user->getCity()?>, <?php echo $user->getCountry()?><?php endif;?>
 </div>
 <!-- social  -->
 <ul class="social">

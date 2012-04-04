@@ -212,7 +212,9 @@ class SceneTimePeer extends BaseSceneTimePeer {
 				$final_criterion->addOr($criterion);
 			}
 		}
+		//$final_criterion->addOr($criteria->getNewCriterion(ScenePeer::SF_GUARD_USER_PROFILE_ID, $user_id));
 		$criteria->addAnd($final_criterion);
+		$criteria->addOr($criteria->getNewCriterion(ScenePeer::SF_GUARD_USER_PROFILE_ID, $user_id));
 
 		return $criteria;
 	}

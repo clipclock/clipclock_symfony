@@ -94,7 +94,7 @@ class homeActions extends sfActions
 			$this->error = $this->getUser()->getFlash('registration_error');
 		}
 
-		$this->welcome_close = (bool)$request->getCookie('welcome_close');
+		$this->welcome_close = (bool)$request->getCookie('welcome-close');
 
 		$this->new_user = false;
 		if($this->getUser()->getAttribute('new_user'))

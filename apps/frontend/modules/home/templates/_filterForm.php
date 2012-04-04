@@ -1,4 +1,3 @@
-
 <?php if(!$welcome_close || $error):?>
 <div class="welcome">
 	<div class="close"></div>

@@ -11,7 +11,7 @@ function closeWelcome(cookie)
 {
 	if(cookie)
 	{
-		setCookie("welcome_close", "true", "Mon, 01-Jan-2091 00:00:00 GMT", "/");
+		setCookie("welcome-close", "true", "Mon, 01-Jan-2091 00:00:00 GMT", "/");
 	}
 
 	$('.welcome, .welcome .inner').slideUp(700);

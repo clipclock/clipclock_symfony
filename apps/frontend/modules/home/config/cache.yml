@@ -5,6 +5,8 @@ default:
   lifetime:    86400
 _filterForm:
   enabled:     true
+_categoriesSelector:
+  enabled:     true
 _clipList:
   enabled:     true
   lifetime:    60

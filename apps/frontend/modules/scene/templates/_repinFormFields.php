@@ -1,7 +1,7 @@
 <?php if($form):?>
 <?php echo $form->renderHiddenFields()?>
 <?php if(isset($form['board_id'])):?>
-<h4>Choose channel:</h4>
+<h4>Choose channel (<em>your thematic set of video clips</em>):</h4>
 <div class="line-form">
 	<?php echo $form['board_id']->render(array('class' => 'size300'))?>
 </div>
@@ -12,7 +12,7 @@
 <div class="inside">
 
 	<div class="b-input">
-		<?php echo $form['board']['name']?>
+		<?php echo $form['board']['name']->render(array('class' => 'typing'))?>
 	</div>
 </div>
 <?php endif;?>

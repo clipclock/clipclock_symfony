@@ -9,7 +9,6 @@
 		<a href="<?php echo $fb_page_url?>">About</a>
 		<div class="sub">
 			<ul>
-				<li><a href="">Copyright</a></li>
 				<li><a href="<?php echo $fb_page_url?>">Blog</a></li>
 			</ul>
 		</div>
@@ -23,11 +22,11 @@
 <ul class="autorized">
 	<li class="invite">
 		<div class="arrow"></div>
-		<a id="fb_invite_some" href="#">Ask friends</a>
+		<a id="fb_invite_some" href="#">My friends</a>
 		<div class="sub">
 			<ul>
-				<li><a id="fb_invite_many" href="#">Many</a></li>
-				<li><a id="fb_invite" href="#">Some</a></li>
+				<li><a id="fb_invite_many" href="#">Invite many</a></li>
+				<li><a id="fb_invite" href="#">Ask some</a></li>
 			</ul>
 		</div>
 	</li>

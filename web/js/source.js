@@ -43,6 +43,7 @@ $(document).ready(function(){
 		var title = $(this).attr('title');
 		if (title != '') {
 			if ($(this).val() == title) {
+				$(this).addClass('typing');
 				$(this).val('');
 			}
 		}
@@ -52,6 +53,7 @@ $(document).ready(function(){
 		var title = $(this).attr('title');
 		if (title != '') {
 			if ($(this).val() == '') {
+				$(this).removeClass('typing');
 				$(this).val(title);
 			}
 		}
@@ -60,6 +62,7 @@ $(document).ready(function(){
 	$('textarea').focus(function(){
 		if($(this).attr('defaultText') == $(this).html())
 		{
+			$(this).addClass('typing');
 			$(this).html('');
 		}
 	});
@@ -67,7 +70,13 @@ $(document).ready(function(){
 		if(!$(this).val().length)
 		{
 			$(this).html($(this).attr('defaultText'));
+			$(this).removeClass('typing');
 		}
+	});
+
+	$('.welcome .close_link').click(function(){
+		closeWelcome(true);
+		return false;
 	});
 
 	$('.welcome .close').click (function() {

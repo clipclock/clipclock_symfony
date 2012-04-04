@@ -23,7 +23,7 @@
 							<img src="/images/wel-list-icons/ico-2.png" alt="" width="85" height="63">
 						</div>
 						<p>
-							Pause the best video moment, click to make a clip, and share it in a second
+							Pause the best video moment, make a clip, and share it in a second
 						</p>
 					</div>
 				</li>
@@ -50,7 +50,7 @@
 <?php endif; ?>
 <!-- /welcome -->
 <?php slot('category_modal') ?>
-<?php include_component('home', 'categoriesSelector', array('current_user' => $current_user, 'categories' => $categories, 'sf_cache_key' => $categories))?>
+<?php include_component('home', 'categoriesSelector', array('current_user' => $current_user, 'categories' => $categories, 'sf_cache_key' => serialize($categories)))?>
 <?php end_slot()?>
 <!-- b-filter  -->
 <div class="b-filter">

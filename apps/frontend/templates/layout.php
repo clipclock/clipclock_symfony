@@ -44,7 +44,7 @@
 		</div>
 		<!-- /head-menu -->
 		<!-- head-search  -->
-		<?php include_component('static', 'clipForm', array('user' => $sf_user, 'sf_cache_key' => $sf_user->getId())) ?>
+		<?php include_component('static', 'clipForm', array('user' => $sf_user, 'sf_cache_key' => $sf_user->getId().$sf_user->getFlash('new_clip_form', ''))) ?>
 		<!-- /head-search -->
 	</div>
 	<?php include_slot('homepage_filter') ?>

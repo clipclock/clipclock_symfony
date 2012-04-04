@@ -724,3 +724,6 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 .stickers-list li .inner .b-tabs .tabs-items li.active > .b-comment:first-child .inside {border:0;}
 
 .typing {color: #5B5B5B !important;}
+
+.welcome .wel-list {padding-bottom: 40px;}
+.welcome .wel-list li p {height: 25px;}

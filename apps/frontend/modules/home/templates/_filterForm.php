@@ -4,7 +4,7 @@
 	<div class="close"></div>
 	<div class="inner">
 		<?php if(!$error):?>
-			<h1>Are you new? We are glad to see you!</h1>
+			<h1>Hi! Here you can mark and share with friends best moments of any YouTube video.</h1>
 			<!-- wel-list  -->
 			<ul class="wel-list">
 				<li>
@@ -13,7 +13,7 @@
 							<img src="/images/wel-list-icons/ico-1.png" alt="" width="86" height="63">
 						</div>
 						<p>
-							Copy URL of any YouTube video and enterit in the ClipClock upper field.
+							Copy URL link of any YouTube video and enter it in the upper field
 						</p>
 					</div>
 				</li>
@@ -23,7 +23,7 @@
 							<img src="/images/wel-list-icons/ico-2.png" alt="" width="85" height="63">
 						</div>
 						<p>
-							Create your clips of best video moments and comment other clips.
+							Pause the best video moment, click to make a clip, and share it in a second
 						</p>
 					</div>
 				</li>
@@ -33,7 +33,7 @@
 							<img src="/images/wel-list-icons/ico-3.png" alt="" width="85" height="63">
 						</div>
 						<p>
-							Follow your facebook friends's clips and share yours in a second.
+							Follow your friends' clips, add yours and comment best moments
 						</p>
 						<div class="b-link close_link">
 							<a href="#">GO!</a>

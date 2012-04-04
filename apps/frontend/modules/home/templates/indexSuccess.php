@@ -1,7 +1,7 @@
 <?php slot('homepage_filter') ?>
 <?php include_component('home', 'filterForm', array('current_user' => $user, 'source' => $source, 'categories' => $categories,
 	'welcome_close' => $welcome_close, 'error' => $error,
-	'sf_cache_key' => $source.serialize($categories).$user->getId().$welcome_close.$error))?>
+	'sf_cache_key' => $source.serialize($categories).$user->getId().($welcome_close ? '1' : '0').$error))?>
 <?php end_slot()?>
 <div class="video-stickers">
 	<ul id="container" class="stickers-list" style="position: relative;">

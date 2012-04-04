@@ -88,7 +88,7 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		return $c;
 	}
 
-	public static function retrieveClipsIdsForMainByUserId(Criteria $c = null, $user_id = null, array $categories_id = null)
+	public static function retrieveClipsIdsForMainByUserId(Criteria $c = null, $user_id = null, $categories_id = null)
 	{
 		$c = !$c ? new Criteria() : $c;
 

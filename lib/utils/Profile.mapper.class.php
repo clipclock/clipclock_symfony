@@ -20,6 +20,8 @@ class ProfileMapper {
 			'link' => 'link',
 			'photo' => 'picture',
 			'avatar' => 'picture',
+			'gender' => 'gender',
+			'country' => 'name',
 		)
 	);
 
@@ -41,6 +43,19 @@ class ProfileMapper {
 		$user_ext_profile->setExtId(self::getExtId($melody));
 		$action = self::$action_map[$melody->getName()]['link'];
 		$user_ext_profile->setExtLink($melody->getLink()->$action);
+
+		$action = self::$action_map[$melody->getName()]['gender'];
+		$user_profile->setGender($melody->getGender()->$action != 'male' ? 0 : 1 );
+
+		$string = $melody->getCountry()->location->name;
+
+		if(strpos($string, ', '))
+		{
+			$country_city = explode(', ', $string);
+
+			$user_profile->setCity($country_city[0]);
+			$user_profile->setCountry($country_city[1]);
+		}
 
 		$user_ext_profile->setProvider(self::$provider_map[$melody->getName()]);
 

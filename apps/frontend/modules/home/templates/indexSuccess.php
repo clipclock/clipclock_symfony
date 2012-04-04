@@ -12,7 +12,7 @@
 		<?php if($new_user):?>
 		_kmq.push(['record', 'Signed Up']);
 		<?php endif;?>
-		layoutAndScroll('<?php echo url_for('homepage_page', array('page' => ++$page, 'source' => $source, 'categories' => $categories)) ?>');
+		layoutAndScroll('<?php echo url_for('homepage_page', array('page' => ++$page)) ?>');
 	</script>
 </div>
 	<?php include_partial('home/modalScene', array('current_user' => $user, 'current_url' => $current_url, 'post_facebook' => $post_facebook));?>

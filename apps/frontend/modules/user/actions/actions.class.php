@@ -116,7 +116,12 @@ class userActions extends sfActions
 
 		$this->getUser()->addToken($access_token);
 
-		foreach(array('Sport', 'Business', 'Style', 'Fun') as $name)
+		$boards = array('Travel & Places', 'Favorite recipes', 'My style', 'Fitness');
+		if($this->getUser()->getProfile()->getGender())
+		{
+			$boards = array('Sport', 'Business', 'Cars', 'Fun');
+		}
+		foreach($boards as $name)
 		{
 			$board = new Board();
 			$board->setSfGuardUserProfileId($this->getUser()->getId());

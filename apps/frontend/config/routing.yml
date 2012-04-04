@@ -3,10 +3,8 @@
 
 # default rules
 homepage:
-  url:   /:source/:categories
-  param: { module: home, action: index, source: '', categories: '' }
-  requirements:
-    source: \d+
+  url:   /
+  param: { module: home, action: index }
 
 static:
   url:   /static
@@ -25,6 +23,8 @@ homepage_search:
 homepage_page:
   url:   /page/:page
   param: { module: home, action: index }
+  requirements:
+    page: \d+
 
 homepage_search_page:
   url:   /search/:search_string/page/:page

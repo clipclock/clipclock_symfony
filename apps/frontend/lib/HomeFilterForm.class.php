@@ -37,8 +37,8 @@ class HomeFilterForm extends sfForm
 	protected  function getSources()
 	{
 		$choices = array(
-			'1' => 'Everything',
 			self::I_FOLLOW_ID => 'I Follow',
+			1 => 'Everything',
 		);
 
 		if(!$this->getOption('user') || !$this->getOption('user')->getId())

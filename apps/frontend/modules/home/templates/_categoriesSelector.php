@@ -21,7 +21,7 @@
 <ul>
 <li>
 	<?php foreach($all_categories as $key => $category):?>
-	<div id="category_<?php echo $category->getId()?>" class="rowElem<?php if(!count($categories) || $categories[$category->getId()]):?> active<?php endif?>">
+	<div id="category_<?php echo $category->getId()?>" class="rowElem<?php if(!count($categories) || isset($categories[$category->getId()])):?> active<?php endif?>">
 		<div class="top"></div>
 		<input type="checkbox" />
 		<label><?php echo $category->getName()?></label>

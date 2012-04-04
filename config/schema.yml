@@ -9,6 +9,7 @@ propel:
     nick: { type: VARCHAR, size: '64', required: true }
     city: { type: VARCHAR, size: '64', required: false }
     country: { type: VARCHAR, size: '64', required: false }
+    gender: { type: BOOLEAN, required: true, default: true }
   ext_profile:
     id: ~
     created_at: { type: timestamp, required: true, defaultExpr: 'now()'}

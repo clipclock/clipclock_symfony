@@ -15,7 +15,7 @@ all:
   registration:
     confirm: true
     invites: false
-    robot_email:           "no-reply@clipclock.com"
+    robot_email:           "feedback@clipclock.com"
     robot_name:            "ClipClock.com"
   boards:
     voting: false
@@ -47,6 +47,7 @@ all:
         - user_status
         - user_videos
         - user_work_history
+        - user_location
         - friends_about_me
         - friends_activities
         - friends_birthday
@@ -60,6 +61,7 @@ all:
         - friends_status
         - friends_videos
         - friends_work_history
+        - friends_location
         - read_friendlists
         - read_stream
         - publish_stream
@@ -83,12 +85,17 @@ all:
         nick:
           call: me
           path: username
+        nick:
+          call: me
+          path: username
       aliases:
         nickname: 'me?fields=name'
         id: 'me?fields=id'
         link: 'me?fields=link'
         photo: 'me?fields=picture&type=large'
         avatar: 'me?fields=picture&type=square'
+        gender: 'me?fields=gender'
+        country: 'me?fields=location'
 
 prod:
   melody:

@@ -154,6 +154,7 @@ function layoutAndScroll(path, elem, width)
 		width = 223;
 	}
 	$(document).ready(function(){
+
 		$('#container').infinitescroll({
 
 			navSelector  : "div.pager_navigation",

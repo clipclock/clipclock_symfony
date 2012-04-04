@@ -12,19 +12,42 @@ class homeActions extends sfActions
 {
 	public function preExecute()
 	{
-		if($this->getRequest()->getCookie('fb_notifications'))
+		if($this->getUser()->getAttribute('new_user'))
 		{
-			$this->getResponse()->setCookie('fb_notifications', '');
+			$this->getUser()->setAttribute('new_user', false);
 			$this->source = HomeFilterForm::I_FOLLOW_ID;
 			//Временное решение
-			$this->categories = HomeFilterForm::ALL_CATEGORIES_ID;
+			$this->categories = array(HomeFilterForm::ALL_CATEGORIES_ID);
 			$this->criteria = SceneTimePeer::retrieveClipsIdsForMainByUserId(null, $this->getUser()->getId(), $this->categories);
 			$this->criteria = SceneTimePeer::modifyCriteriaByFilter($this->criteria, $this->getUser()->getId());
 			$count = SceneTimePeer::doCountForPager($this->criteria);
 			if($count['count'] < 40 / 4)
 			{
+				$categories_names = array('Dance', 'Events', 'Films & Movies', 'Fitness', 'Recipes', 'People', 'Serials', 'Style', 'Travel & Places');
+				if($this->getUser()->getProfile()->getGender())
+				{
+					$categories_names = array('Business', 'Cars & Motorcycles', 'Education', 'Films & Movies', 'Music', 'News', 'Sports', 'Technology');
+				}
+
+				$categories_ids = array();
+				foreach($categories_names as $category_name)
+				{
+					$cat = CategoryQuery::create()->findOneByName($category_name);
+					if($cat)
+					{
+						$categories_ids[] = $cat->getId();
+					}
+				}
+
+				$this->getUser()->setAttribute('categories', serialize($categories_ids));
+				$this->getUser()->setAttribute('source', 1);
 				$this->redirect($this->generateUrl('homepage'));
 				return sfView::NONE;
+			}
+			else
+			{
+				$this->getResponse()->setCookie('source', $this->source);
+				$this->getResponse()->setCookie('categories', null);
 			}
 		}
 		else
@@ -33,9 +56,12 @@ class homeActions extends sfActions
 			{
 				$this->source = $this->getUser()->getAttribute('source');
 				$this->categories = $this->getUser()->getAttribute('categories') ? @unserialize($this->getUser()->getAttribute('categories')) : null;
-
+				if(!$this->categories)
+				{
+					$this->categories = @unserialize(base64_decode($this->getRequest()->getCookie('categories'))) ? @unserialize(base64_decode($this->getRequest()->getCookie('categories'))) : null;
+				}
 				$this->getResponse()->setCookie('source', $this->source);
-				$this->getResponse()->setCookie('categories', $this->categories ? base64_encode($this->getUser()->getAttribute('categories')) : null);
+				$this->getResponse()->setCookie('categories', $this->categories ? base64_encode(serialize($this->categories)) : null);
 			}
 			else
 			{
@@ -55,6 +81,7 @@ class homeActions extends sfActions
 	 */
 	public function executeIndex(sfWebRequest $request)
 	{
+		//$this->getUser()->setAttribute('new_user', true);
 		$this->post_facebook = $request->getCookie('post_facebook', true);
 		if($this->source && $this->source == HomeFilterForm::I_FOLLOW_ID)
 		{
@@ -77,6 +104,8 @@ class homeActions extends sfActions
 		$this->current_url = $request->getUri();
 
 		$this->page = $request->getParameter('page', 1);
+
+		$this->categories = $this->categories ? array_flip($this->categories) : null;
 
 		if($request->isXmlHttpRequest())
 		{

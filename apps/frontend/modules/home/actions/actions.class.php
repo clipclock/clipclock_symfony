@@ -17,8 +17,8 @@ class homeActions extends sfActions
 			$this->getResponse()->setCookie('fb_notifications', '');
 			$this->source = HomeFilterForm::I_FOLLOW_ID;
 			//Временное решение
-			$this->category = HomeFilterForm::ALL_CATEGORIES_ID;
-			$this->criteria = SceneTimePeer::retrieveClipsIdsForMainByUserId(null, $this->getUser()->getId(), $this->category);
+			$this->categories = HomeFilterForm::ALL_CATEGORIES_ID;
+			$this->criteria = SceneTimePeer::retrieveClipsIdsForMainByUserId(null, $this->getUser()->getId(), $this->categories);
 			$this->criteria = SceneTimePeer::modifyCriteriaByFilter($this->criteria, $this->getUser()->getId());
 			$count = SceneTimePeer::doCountForPager($this->criteria);
 			if($count['count'] < 40 / 4)
@@ -29,14 +29,24 @@ class homeActions extends sfActions
 		}
 		else
 		{
-			$this->source = $this->getRequest()->getParameter('source') ? $this->getRequest()->getParameter('source') : $this->getRequest()->getCookie('source');
-			$this->category = $this->getRequest()->getParameter('category') != null ? $this->getRequest()->getParameter('category') : $this->getRequest()->getCookie('category');
+			if($this->getUser()->getAttribute('source'))
+			{
+				$this->source = $this->getUser()->getAttribute('source');
+				$this->categories = $this->getUser()->getAttribute('categories') ? @unserialize($this->getUser()->getAttribute('categories')) : null;
+
+				$this->getResponse()->setCookie('source', $this->source);
+				$this->getResponse()->setCookie('categories', $this->categories ? base64_encode($this->getUser()->getAttribute('categories')) : null);
+			}
+			else
+			{
+				$this->source = $this->getRequest()->getCookie('source');
+				$this->categories = @unserialize(base64_decode($this->getRequest()->getCookie('categories'))) ? @unserialize(base64_decode($this->getRequest()->getCookie('categories'))) : null;
+			}
 		}
 
 		$this->user = $this->getUser();
 
-
-		$this->criteria = SceneTimePeer::retrieveClipsIdsForMainByUserId(null, $this->user->getId(), $this->category);
+		$this->criteria = SceneTimePeer::retrieveClipsIdsForMainByUserId(null, $this->user->getId(), $this->categories);
 	}
 	/**
 	 * Executes index action
@@ -49,15 +59,6 @@ class homeActions extends sfActions
 		if($this->source && $this->source == HomeFilterForm::I_FOLLOW_ID)
 		{
 			$this->criteria = SceneTimePeer::modifyCriteriaByFilter($this->criteria, $this->user->getId());
-		}
-
-		if($request->getParameter('source'))
-		{
-			$this->response->setCookie('source', $request->getParameter('source'));
-		}
-		if($request->getParameter('category') != null)
-		{
-			$this->response->setCookie('category', $request->getParameter('category'));
 		}
 
 		$this->error = false;
@@ -79,7 +80,7 @@ class homeActions extends sfActions
 
 		if($request->isXmlHttpRequest())
 		{
-			return $this->returnJSON($this->getComponent('home', 'clipList', array('criteria' => $this->criteria, 'page' => $this->page, 'current_user' => $this->user, 'source' => $this->source, 'category' => $this->category)));
+			return $this->returnJSON($this->getComponent('home', 'clipList', array('criteria' => $this->criteria, 'page' => $this->page, 'current_user' => $this->user, 'source' => $this->source, 'categories' => $this->categories)));
 		}
 	}
 
@@ -95,7 +96,39 @@ class homeActions extends sfActions
 			return sfView::NONE;
 		}
 
-		$this->redirect($this->generateUrl('homepage', array('source' => $this->form->getValue('source'), 'category' => $this->form->getValue('category'))));
+		/**
+		 * Я знаю
+		 */
+
+		if($this->form->getValue('categories') == 'all')
+		{
+			$category_array = null;
+		}
+		else
+		{
+			$category_array = array();
+			foreach(explode(',', $this->form->getValue('categories')) as $category_id)
+			{
+				if((int)$category_id && !isset($category_array[$category_id]))
+				{
+					$category_array[$category_id] = (int)$category_id;
+				}
+			}
+
+			if(count($category_array))
+			{
+				if(CategoryQuery::create()->count() <= count($category_array))
+				{
+					$category_array = null;
+				}
+			}
+		}
+
+		$this->getUser()->setAttribute('source', $this->form->getValue('source'));
+		$this->getUser()->setAttribute('categories', serialize($category_array));
+
+		$this->redirect($this->generateUrl('homepage'));
+		return sfView::NONE;
 	}
 
 

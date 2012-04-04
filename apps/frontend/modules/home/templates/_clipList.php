@@ -4,6 +4,6 @@
 <?php if($pager->getNextPage() != $pager->getPage()):?>
 <?php include_partial('static/loadingMsg')?>
 <div class="pager_navigation">
-	<a href="<?php echo url_for('homepage_page', array('page' => $pager->getNextPage(), 'source' => $source, 'category' => $category)) ?>"><?php echo $pager->getNext();?></a>
+	<a href="<?php echo url_for('homepage_page', array('page' => $pager->getNextPage())) ?>"><?php echo $pager->getNext();?></a>
 </div>
 <?php endif;?>

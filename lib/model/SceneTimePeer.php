@@ -88,7 +88,7 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		return $c;
 	}
 
-	public static function retrieveClipsIdsForMainByUserId(Criteria $c = null, $user_id = null, $category_id = null)
+	public static function retrieveClipsIdsForMainByUserId(Criteria $c = null, $user_id = null, array $categories_id = null)
 	{
 		$c = !$c ? new Criteria() : $c;
 
@@ -103,10 +103,10 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		$c->addAlias('repin_scene', ScenePeer::TABLE_NAME);
 		$c->addJoin(ScenePeer::ID, ScenePeer::alias('repin_scene', ScenePeer::REPIN_ORIGIN_SCENE_ID), Criteria::LEFT_JOIN);
 
-		if($category_id != HomeFilterForm::ALL_CATEGORIES_ID)
+		if($categories_id)
 		{
 			$c->addJoin(ScenePeer::BOARD_ID, BoardRefsCategoryPeer::BOARD_ID, Criteria::INNER_JOIN);
-			$c->add(BoardRefsCategoryPeer::CATEGORY_ID, $category_id);
+			$c->add(BoardRefsCategoryPeer::CATEGORY_ID, $categories_id, Criteria::IN);
 			$c->addDescendingOrderByColumn('avg('. BoardRefsCategoryPeer::VOTES.')/avg(avg('. BoardRefsCategoryPeer::VOTES.')) OVER (order by max('.ScenePeer::BOARD_ID.') ASC)');
 		}
 		$c->addDescendingOrderByColumn('date_trunc(\'day\', coalesce(max('.ScenePeer::alias('repin_scene', ScenePeer::CREATED_AT).'), max('.self::CREATED_AT.')))');

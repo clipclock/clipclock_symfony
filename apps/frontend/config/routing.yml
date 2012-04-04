@@ -3,11 +3,10 @@
 
 # default rules
 homepage:
-  url:   /:source/:category
-  param: { module: home, action: index, source: '', category: '' }
+  url:   /:source/:categories
+  param: { module: home, action: index, source: '', categories: '' }
   requirements:
     source: \d+
-    category: \d+
 
 static:
   url:   /static
@@ -24,12 +23,8 @@ homepage_search:
 ### HOMEPAGE AJAX ###
 
 homepage_page:
-  url:   /page/:page/:source/:category
-  param: { module: home, action: index, source: '', category: '' }
-  requirements:
-    source: \d+
-    category: \d+
-    page: \d+
+  url:   /page/:page
+  param: { module: home, action: index }
 
 homepage_search_page:
   url:   /search/:search_string/page/:page

@@ -24,12 +24,14 @@
 <script type="text/javascript">var _kiq = _kiq || [];</script>
 <script type="text/javascript" src="//s3.amazonaws.com/ki.js/33264/6tl.js" async="true"></script>
 <div id="shadow" class="shadow" style="display: none;"></div>
+<div id="shadow_interests" class="shadow" style="display: none;"></div>
 <!-- ****************** WRAPPER START **************************** -->
 <div id="wrapper">
 <div id="scroll-to-top" class="scroll-to-top"></div>
 <?php include_slot('scene_modal') ?>
 <?php include_slot('repin_modal') ?>
 <?php include_slot('clip_modal') ?>
+<?php include_slot('category_modal') ?>
 <!-- ******************		HEAD START ****************************** -->
 <div id="head">
 	<div id="fb-root"></div>

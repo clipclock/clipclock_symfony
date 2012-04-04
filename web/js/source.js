@@ -81,7 +81,25 @@ $(document).ready(function(){
 		$('html, body').animate({scrollTop:$('div#viewport').offset().top - 3}, 500, 'easeOutQuart');
 	}
 
+	$('.b-interests-list form ul li .rowElem').click( function(){
+		$(this).toggleClass('active');
+		$(this).find('.jqTransformCheckbox').toggleClass('jqTransformChecked');
+		//$(this).find('input').toggle('checked');
+	});
 
+	$('.b-interests-list .b-btn #reset').click( function(){
+		$('.b-interests-list form ul li .rowElem').removeClass('active');
+		$('.b-interests-list form ul li .rowElem .jqTransformCheckbox').removeClass('jqTransformChecked');
+		return false;
+	});
+// end выделение всех списков интересов
+
+
+	$('.b-interests-list .b-btn #slct-all').click( function(){
+		$('.b-interests-list form ul li .rowElem').addClass('active');
+		$('.b-interests-list form ul li .rowElem .jqTransformCheckbox').addClass('jqTransformChecked');
+		return false;
+	});
 });
 
 function cuselActivate(visRows, elems)
@@ -164,4 +182,45 @@ function layoutAndScroll(path, elem, width)
 			autoResize: true
 		});
 	});
+}
+
+function categoryMultiSelectorModalToggle()
+{
+	$('#interests').toggle();
+	$('#shadow_interests').toggle();
+}
+
+function categoryMultiSelect()
+{
+	$(function(){
+		$('#interests .close').click(function(){
+			categoryMultiSelectorModalToggle();
+		});
+
+		$('#shadow_interests').click(function(){
+			categoryMultiSelectorModalToggle();
+		});
+
+		$('#categories_selected .line-form .cusel').click(function(){
+			console.log('123');
+			categoryMultiSelectorModalToggle();
+		});
+
+		$('#interests .frm').jqTransform({imgPath: 'images/'});
+		$('.b-interests-list form ul li .active').each( function(){
+			$(this).find('.jqTransformCheckbox').toggleClass('jqTransformChecked');
+		});
+
+		$('#interests form').submit(function(){
+			var choices = [];
+			$('#interests .frm .active').each(function(){
+				choices.push($(this).attr('id').replace('category_', ''));
+			});
+
+			$('#home_filter_categories').val(choices.length >= $('#interests .frm .rowElem').length ? 'all' : choices.join(','));
+			$('#filter_form').trigger('submit');
+			return false;
+		});
+		$('#interests :submit').click(function(){$('#interests form').trigger('submit');});
+	})
 }

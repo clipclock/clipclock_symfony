@@ -1,3 +1,4 @@
+
 <?php if(!$welcome_close || $error):?>
 <div class="welcome">
 	<div class="close"></div>
@@ -13,19 +14,24 @@
 </div>
 <?php endif; ?>
 <!-- /welcome -->
+<?php slot('category_modal') ?>
+<?php include_component('home', 'categoriesSelector', array('current_user' => $current_user, 'categories' => $categories, 'sf_cache_key' => $categories))?>
+<?php end_slot()?>
 <!-- b-filter  -->
 <div class="b-filter">
-	<form action="<?php echo url_for('homepage_bind')?>" method="post">
+	<form id="filter_form" action="<?php echo url_for('homepage_bind')?>" method="post">
 		<div class="col">
 			<label>Show me</label>
 			<div class="line-form">
+				<?php echo $form->renderHiddenFields()?>
 				<?php echo $form['source']->render(array('class' => 'size164'))?>
 			</div>
 		</div>
-		<div class="col">
+		<div id="categories_selected" class="col">
 			<label>Interest</label>
 			<div class="line-form">
-				<?php echo $form['category']->render(array('class' => 'size289'))?>
+				<div class="cusel size289" id="cuselFrame-home_filter_source" style="width:164px" tabindex="0"><div class="cuselFrameRight"></div>
+					<div class="cuselText"><?php echo $categories_selected_text?></div></div>
 			</div>
 		</div>
 		<!--div class="search-col">

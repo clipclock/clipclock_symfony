@@ -1,0 +1,23 @@
+/* -------------
+ * Checkboxes
+ * ------------- */
+span.jqTransformCheckboxWrapper{
+	display:block;
+	float:left;
+	margin-right:10px;
+}
+a.jqTransformCheckbox {	
+	background:url(../images/check-icons.png) no-repeat 0 -20px;
+	height:20px;
+	width:20px;
+	display:block;/*display: -moz-inline-block;*/
+}
+
+/* -------------
+ * Checked - Used for both Radio and Checkbox
+ * ------------- */
+a.jqTransformChecked { background-position:0 0;}
+/* -------------
+ * Hidden - used to hide the original form elements
+ * ------------- */
+.jqTransformHidden {display: none;}

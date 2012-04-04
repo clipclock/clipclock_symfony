@@ -24,9 +24,29 @@ class homeComponents extends sfComponents
 	public function executeFilterForm()
 	{
 		$this->user = $this->getVar('current_user');
+		$this->categories = $this->getVar('categories');
+
+		if(!$this->categories)
+		{
+			$this->categories_selected_text = 'All';
+		}
+		elseif(count($this->categories) > 1)
+		{
+			$this->categories_selected_text = 'My set';
+		}
+		else
+		{
+			$this->categories_selected_text = CategoryQuery::create()->findOneById(current($this->categories))->getName();
+		}
 
 		$this->form = new HomeFilterForm(null, array('user' => $this->user));
 		$this->form->setDefault('source', $this->getVar('source'));
-		$this->form->setDefault('category', $this->getVar('category'));
+	}
+
+	public function executeCategoriesSelector()
+	{
+		$this->categories = $this->getVar('categories');
+
+		$this->all_categories = CategoryQuery::create()->orderByName()->find();
 	}
 }

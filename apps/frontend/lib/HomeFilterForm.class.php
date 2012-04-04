@@ -19,10 +19,11 @@ class HomeFilterForm extends sfForm
 		$this->setWidget('source', new sfWidgetFormChoice(array('choices' => $choices)));
 		$this->setValidator('source', new sfValidatorChoice(array('choices' => array_keys($choices), 'required' => false)));
 
-		$choices = $this->getCategories();
+		$this->setWidget('categories', new sfWidgetFormInputHidden());
+		$this->setValidator('categories', new sfValidatorString(array('required' => false)));
 
-		$this->setWidget('category', new sfWidgetFormChoice(array('choices' => $choices)));
-		$this->setValidator('category', new sfValidatorChoice(array('choices' => array_keys($choices), 'required' => false)));
+		$this->setWidget('categories_selected', new sfWidgetFormInput());
+		$this->setValidator('categories_selected', new sfValidatorString(array('required' => false)));
 
 		$this->setWidget('search', new sfWidgetFormInput());
 		$this->setValidator('search', new sfValidatorString(array('required' => false)));
@@ -58,21 +59,5 @@ class HomeFilterForm extends sfForm
 			}
 		}
 		parent::bind($taintedValues, $taintedFiles);
-	}
-
-	protected function getCategories()
-	{
-		$choices = array(
-			self::ALL_CATEGORIES_ID => 'Everything'
-		);
-		$c = new Criteria();
-		$c->addAscendingOrderByColumn(CategoryPeer::NAME);
-		$categories = CategoryPeer::doSelect($c);
-		foreach($categories as $category)
-		{
-			$choices[$category->getId()] = $category->getName();
-		}
-
-		return $choices;
 	}
 }

@@ -1,4 +1,4 @@
-<?php slot('homepage_filter') ?>
+<?php slot('homepage_filter')?>
 <?php include_component('home', 'filterForm', array('current_user' => $user, 'source' => $source, 'categories' => $categories,
 	'welcome_close' => $welcome_close, 'error' => $error,
 	'sf_cache_key' => $user->getId().$source.md5(serialize($categories)).($welcome_close ? '1' : '0').$error))?>

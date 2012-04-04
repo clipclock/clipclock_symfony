@@ -17,6 +17,7 @@ data/sql
 /plugins/\.registry/\.channel\.pear\.symfony-project\.com/*
 lib/vendor/symfony/test/functional/fixtures/cache/*
 web/uploads/*
+web/sf*
 .buildpath
 .project
 .settings

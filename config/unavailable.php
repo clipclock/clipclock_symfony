@@ -15,8 +15,7 @@
 	<div class="wrap-in">
 		<a href="/" class="er-logo"></a>
 		<ul class="er-txt">
-			<li class="not">Sorry, we are closed untill 12:00 A.M. April 5th.</li>
-			<li>We are moving to the cloud to handle you and millions of your friends!</li>
+			<li class="not">Sorry, we are deploying a new version right now.</li>
 		</ul>
 	</div>
 </div>

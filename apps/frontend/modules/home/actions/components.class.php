@@ -30,6 +30,7 @@ class homeComponents extends sfComponents
 		if(!$this->categories)
 		{
 			$this->categories_selected_text = 'All';
+			$this->categories = array();
 		}
 		elseif(count($this->categories) > 1)
 		{
@@ -42,7 +43,7 @@ class homeComponents extends sfComponents
 
 		$this->form = new HomeFilterForm(null, array('user' => $this->user));
 		$this->form->setDefault('source', $this->getVar('source') ? $this->getVar('source') : 1);
-		$this->form->setDefault('categories', implode(',', $this->getVar('categories')));
+		$this->form->setDefault('categories', implode(',', $this->categories));
 		if($this->getVar('search_string'))
 		{
 			$this->form->setDefault('search', $this->getVar('search_string'));

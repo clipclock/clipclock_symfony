@@ -67,10 +67,10 @@ class homeActions extends sfActions
 			{
 				$this->source = $this->getUser()->getAttribute('source');
 				$this->categories = $this->getUser()->hasAttribute('categories') ? @unserialize($this->getUser()->getAttribute('categories')) : null;
-				if($this->categories === null)
+				/*if($this->categories === null)
 				{
 					$this->categories = $this->getRequest()->getCookie('categories') ? @unserialize(base64_decode($this->getRequest()->getCookie('categories'))) : null;
-				}
+				}*/
 				$this->getResponse()->setCookie('source', $this->source);
 				$this->getResponse()->setCookie('categories', $this->categories ? base64_encode(serialize($this->categories)) : null);
 			}

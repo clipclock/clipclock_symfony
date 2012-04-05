@@ -10,12 +10,6 @@ prod:
   storage:
     class: sfCacheSessionStorage
     param:
-      session_name: something #[required] name of session to use
-      session_cookie_path: / #[required] cookie path
-      session_cookie_domain: clipclock.com #[required] cookie domain
-      session_cookie_lifetime: +30 days #[required] liftime of cookie
-      session_cookie_secure: false #[required] send only if secure connection
-      session_cookie_http_only: true #[required] accessible only via http protocol
       cache:
         class: sfMemcacheCache #[required] define the cache strategy
         param:

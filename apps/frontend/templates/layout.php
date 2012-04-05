@@ -8,13 +8,20 @@
 	<link rel="shortcut icon" href="/favicon.ico" />
 	<?php include_combined_stylesheets() ?>
 	<?php include_combined_javascripts() ?>
-	<script type="text/javascript">var _kiq = _kiq || [];</script>
-	<script type="text/javascript" src="//s3.amazonaws.com/ki.js/33264/6tl.js" async="true"></script>
 	<script type="text/javascript">
-		kissmetricsLoad('<?php echo sfConfig::get('app_kiss_key')?>');
+		var _kmq = _kmq || [];
+		function _kms(u){
+			setTimeout(function(){
+				var s = document.createElement('script'); var f = document.getElementsByTagName('script')[0]; s.type = 'text/javascript'; s.async = true;
+				s.src = u; f.parentNode.insertBefore(s, f);
+			}, 1);
+		}
+		_kms('//i.kissmetrics.com/i.js');_kms('//doug1izaerwt3.cloudfront.net/<?php echo sfConfig::get('app_kiss_key')?>.1.js');
 	</script>
 </head>
 <body>
+<script type="text/javascript">var _kiq = _kiq || [];</script>
+<script type="text/javascript" src="//s3.amazonaws.com/ki.js/33264/6tl.js" async="true"></script>
 <div id="shadow" class="shadow" style="display: none;"></div>
 <div id="shadow_interests" class="shadow" style="display: none;"></div>
 <!-- ****************** WRAPPER START **************************** -->

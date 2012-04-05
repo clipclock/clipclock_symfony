@@ -37,7 +37,7 @@ P { padding:0 0 13px 0;}
 #wrapper {min-width:980px; max-width:1920px; margin:0 auto;}
 .container { overflow:hidden; zoom:1;}
 .clr {clear:both; font-size:0;line-height:0; height:0;}
-.scroll-to-top {height:73px;width:76px; background:url(../images/scroll-to-top-ico.png); position:fixed; z-index:100; right:9px; bottom:0; cursor:pointer;}
+.scroll-to-top {height:73px;width:76px; background:url(../images/scroll-to-top-ico.png); position:fixed; z-index:1200; right:9px; bottom:0; cursor:pointer;}
 
 
 /* visibility */
@@ -115,7 +115,7 @@ P { padding:0 0 13px 0;}
 
 
 /* pront-window" */
-.pop-window {width:480px; min-height:150px; border:1px solid #e1e1e1; background:#fff; position:absolute; z-index:100; left:50%; top:95px; margin-left:-386px; border-radius:4px; -moz-border-radius:4px; -webkit-border-radius:4px; -khtml-border-radius:4px; box-shadow:0 1px 3px #d4d4d4; -moz-box-shadow:0 1px 3px #d4d4d4; -webkit-box-shadow:0 1px 3px #d4d4d4; -khtml-box-shadow:0 1px 3px #d4d4d4; behavior: url(js/PIE.htc);}
+.pop-window {width:480px; min-height:150px; border:1px solid #e1e1e1; background:#fff; position:absolute; z-index:1200; left:50%; top:95px; margin-left:-386px; border-radius:4px; -moz-border-radius:4px; -webkit-border-radius:4px; -khtml-border-radius:4px; box-shadow:0 1px 3px #d4d4d4; -moz-box-shadow:0 1px 3px #d4d4d4; -webkit-box-shadow:0 1px 3px #d4d4d4; -khtml-box-shadow:0 1px 3px #d4d4d4; behavior: url(js/PIE.htc);}
 .pop-window .close {position:absolute; top:0; right:-46px; height:23px; width:23px; background:url(../images/modal-close.png); cursor:pointer;}
 .pop-window .b-header { padding:22px 0 0 25px; background:url(../images/b-header-bg.jpg) repeat-x; border-bottom:1px solid #d1cdcd;  border-radius:4px 4px 0 0; -moz-border-radius:4px 4px 0 0; -webkit-border-radius:4px 4px 0 0; -khtml-border-radius:4px 4px 0 0; behavior: url(js/PIE.htc);}
 .pop-window .b-header h2 {font-weight:bold;}

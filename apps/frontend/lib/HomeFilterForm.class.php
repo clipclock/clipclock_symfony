@@ -29,6 +29,7 @@ class HomeFilterForm extends sfForm
 		$this->setValidator('search', new sfValidatorString(array('required' => false)));
 
 		$this->setDefault('search', 'Search');
+		$this->setDefault('source', 1);
 		$this->widgetSchema->setNameFormat( 'home_filter[%s]' );
 
 		$this->disableCSRFProtection();

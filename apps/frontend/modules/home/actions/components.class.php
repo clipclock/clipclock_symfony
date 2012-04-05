@@ -41,7 +41,7 @@ class homeComponents extends sfComponents
 		}
 
 		$this->form = new HomeFilterForm(null, array('user' => $this->user));
-		$this->form->setDefault('source', $this->getVar('source'));
+		$this->form->setDefault('source', $this->getVar('source') ? $this->getVar('source') : 1);
 		$this->form->setDefault('categories', implode(',', $this->getVar('categories')));
 		if($this->getVar('search_string'))
 		{

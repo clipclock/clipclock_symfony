@@ -111,7 +111,7 @@ P { padding:0 0 13px 0;}
 .pront-window .inside {color:#5b5b5b; font-weight:bold; font-size:13px;}
 
 
-.shadow { width:100%; height:100%; position:fixed; background:url(../images/shadow-bg.png); border:1px solid #000; z-index:99; top:0; left:0;}
+.shadow { width:100%; height:100%; position:fixed; background:url(../images/shadow-bg.png); border:1px solid #000; z-index:1050; top:0; left:0;}
 
 
 /* pront-window" */
@@ -543,7 +543,7 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 .modal-window .arrows.next {right:0;}
 .modal-window .arrows.next span {left:440px; background-position:100% 0;}
 
-.modal-window .modal-wrap { width:707px; position:absolute; left:50%; margin-left:-290px; padding-bottom:50px; z-index:102;}
+.modal-window .modal-wrap { width:707px; position:absolute; left:50%; margin-left:-290px; padding-bottom:50px; z-index:100;}
 .modal-window .modal-wrap .close {position:absolute; top:0; right:-46px; height:23px; width:23px; background:url(../images/modal-close.png); cursor:pointer;}
 .modal-window .modal-wrap .right-mini-coll {margin:0;}
 .modal-window .modal-wrap .center-col {margin-right:110px;}
@@ -665,6 +665,16 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
     min-height: 73px;
 }
 
+.clip_modal_fixed
+{
+    position: fixed;
+    top:0;
+    bottom: 0;
+    width: 100%;
+    overflow-y: scroll;
+    z-index: 1100;
+}
+
 #head .header {background-color: #333333;}
 
 
@@ -682,7 +692,7 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 }
 .stickers-list li .inner .b-tabs .tabs-items li .description .inside {border:0;}
 .stickers-list li .inner .b-tabs .tabs-items li .b-comment .inside form .brd textarea {font-size: 12px;}
-.modal-window {z-index: 99;}
+.modal-window {z-index: 110;}
 .likes .rep-like .info a#copy_link {display:block; height:24px; background:url(../images/link-bg.jpg) no-repeat;}
 .likes .rep-like .info a#copy_link.hover { background-position:0 100%;}
 

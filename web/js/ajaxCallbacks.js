@@ -329,11 +329,32 @@ function submitButton(submit_id, form_id)
 	});
 }
 
+var scrollTopState = false;
+
 function toggleModalScene(url)
 {
+	var overflowValue = $('.clip_modal_fixed:visible').length ? 'auto' : 'hidden';
+	$('body').css({
+		overflow: overflowValue
+	});
+
+	if (!$('.clip_modal_fixed:visible').length)
+	{
+		scrollTopState = $('#scroll-to-top').css('display');
+		$('#scroll-to-top').hide();
+	}
+	else
+	{
+		if (scrollTopState == 'block'){
+			$('#scroll-to-top').show();
+			scrollTopState = false;
+		}
+	}
+
 	$('#shadow').toggle();
-	$('#clip_modal').toggle();
+	$('.clip_modal_fixed').toggle();
 	$('#clip_modal').offset({top: $(window).scrollTop()+30, left: 0});
+
 	if(url)
 	{
 		history.pushState({}, 'Title', url);

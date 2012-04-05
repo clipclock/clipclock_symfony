@@ -8,6 +8,11 @@
 	<link rel="shortcut icon" href="/favicon.ico" />
 	<?php include_combined_stylesheets() ?>
 	<?php include_combined_javascripts() ?>
+	<script type="text/javascript">var _kiq = _kiq || [];</script>
+	<script type="text/javascript" src="//s3.amazonaws.com/ki.js/33264/6tl.js" async="true"></script>
+	<script type="text/javascript">
+		kissmetricsLoad('<?php echo sfConfig::get('app_kiss_key')?>');
+	</script>
 </head>
 <body>
 <div id="shadow" class="shadow" style="display: none;"></div>
@@ -52,10 +57,5 @@
 
 </div>
 <!-- ****************** WRAPPER END ****************************** -->
-<script type="text/javascript">var _kiq = _kiq || [];</script>
-<script type="text/javascript" src="//s3.amazonaws.com/ki.js/33264/6tl.js" async="true"></script>
-<script type="text/javascript">
-	kissmetricsLoad('<?php echo sfConfig::get('app_kiss_key')?>');
-</script>
 </body>
 </html>

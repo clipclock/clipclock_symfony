@@ -48,21 +48,21 @@ all:
         - user_videos
         - user_work_history
         - user_location
-        - friends_about_me
-        - friends_activities
-        - friends_birthday
-        - friends_education_history
-        - friends_events
-        - friends_groups
-        - friends_interests
-        - friends_likes
-        - friends_notes
-        - friends_photos
-        - friends_status
-        - friends_videos
-        - friends_work_history
-        - friends_location
-        - read_friendlists
+#        - friends_about_me
+#        - friends_activities
+#        - friends_birthday
+#        - friends_education_history
+#        - friends_events
+#        - friends_groups
+#        - friends_interests
+#        - friends_likes
+#        - friends_notes
+#        - friends_photos
+#        - friends_status
+#        - friends_videos
+#        - friends_work_history
+#        - friends_location
+#        - read_friendlists
         - read_stream
         - publish_stream
                       #optionnal - http://developers.facebook.com/docs/authentication/permissions

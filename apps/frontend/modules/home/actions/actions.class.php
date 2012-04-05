@@ -120,7 +120,7 @@ class homeActions extends sfActions
 
 		if($request->isXmlHttpRequest())
 		{
-			return $this->returnJSON($this->getComponent('home', 'clipList', array('criteria' => $this->criteria, 'next_url' => $this->next_url, 'page' => $this->page, 'current_user' => $this->user, 'source' => $this->source, 'categories' => $this->categories)));
+			return $this->returnJSON($this->getComponent('home', 'clipList', array('criteria' => $this->criteria, 'next_url' => $this->next_url, 'page' => $this->page, 'current_user' => $this->user, 'source' => $this->source, 'categories' => $this->categories, 'sf_cache_key' => $this->user->getId().$this->page.md5($this->criteria->toString()))));
 		}
 	}
 

@@ -8,6 +8,7 @@
 current_scene_id = 0;
 first_scene = null;
 elems_scenes_ids = [];
+
 function stickerChange(data, clip_id, scene_id)
 {
 	var data = JSON.parse(data);
@@ -20,6 +21,33 @@ function stickerChange(data, clip_id, scene_id)
 	$('#comments_list_'+clip_id+' .sticker_new_comment').removeClass('hidden');
 	$('.clip_sticker').wookmark('update');
 }
+
+/* live override click event for sticker tabs */
+
+var stickerChangeCache = {}; // will be removed then we will add namespaces
+
+$('.sticker-tab a').live('click', function(){
+
+	var el = this;
+
+	if (checkCurrentSticker($(el).attr('data-reclip-id'), $(el).attr('data-scene-id'))) {
+
+		if (stickerChangeCache[$(el).attr('href')] != undefined)
+			stickerChange(stickerChangeCache[$(el).attr('href')], $(el).attr('data-reclip-id'), $(el).attr('data-scene-id'));
+		else
+			jQuery.ajax({
+				url: $(el).attr('href'),
+				type: 'GET',
+				dataType: 'html',
+				success:function(d){
+					stickerChangeCache[$(el).attr('href')] = d;
+					stickerChange(d, $(el).attr('data-reclip-id'), $(el).attr('data-scene-id'));
+				}
+			});
+	};
+
+	return false;
+});
 
 function boardCategoryChangeComplete(data)
 {
@@ -364,45 +392,59 @@ function toggleModalScene(url)
 	}
 }
 
-function stickerClick(reclip_id, url, history_url, json_url, secs, scene_id)
-{
-	$().ready(function(){
-		$('#image_'+reclip_id+' a.sticker_image').click(function(){
-			$.ajax({
-				url: url,
-				beforeSend: function(xhr){
-					toggleModalScene();
-					toggleAjaxLoader(null, '#clip_modal ');
-					history.pushState({json_url: json_url, secs: secs, scene_id: scene_id}, 'Title', history_url);
-					_kmq.push(['record', 'Viewed video']);
-				},
-				success: function(data){
+function stickerClick(reclip_id, url, history_url, json_url, secs, scene_id) {
 
-					$('#fun_buttons').html(data.scene_social_buttons);
-					$('#clip_controls').html(data.scene_controls);
-					$('#clip_embed').html(data.scene_embed);
-					$('#description').html(data.scene_description);
-					$('#comment_form').html(data.scene_comment_form);
-					$('#comments').html(data.scene_comments_list);
-					$('#owner_text').html(data.owner_text);
-					$('#owner_avatar').html(data.owner_avatar);
-					$('#owner_button').html(data.owner_button);
-					$('#channel').html(data.board);
-					$('#people_modal').html(data.people_modal);
-					$('#new_repin_modal .modal_form').html(data.repin_form);
-					$('#new_time_scene_modal .modal_form').html(data.new_scene_form);
+	$.ajax({
+		url:url,
+		beforeSend:function (xhr) {
+			toggleModalScene();
+			toggleAjaxLoader(null, '#clip_modal ');
+			history.pushState({json_url:json_url, secs:secs, scene_id:scene_id}, 'Title', history_url);
+			_kmq.push(['record', 'Viewed video']);
+		},
+		success:function (data) {
 
-					toggleAjaxLoader(null, '#clip_modal ');
-					cuselActivate(6);
-					bindCommentRatingButtons(data.rating_url);
-					bindFollow();
-					repinClip();
-				}
-			});
-			return false;
-		});
+			$('#fun_buttons').html(data.scene_social_buttons);
+			$('#clip_controls').html(data.scene_controls);
+			$('#clip_embed').html(data.scene_embed);
+			$('#description').html(data.scene_description);
+			$('#comment_form').html(data.scene_comment_form);
+			$('#comments').html(data.scene_comments_list);
+			$('#owner_text').html(data.owner_text);
+			$('#owner_avatar').html(data.owner_avatar);
+			$('#owner_button').html(data.owner_button);
+			$('#channel').html(data.board);
+			$('#people_modal').html(data.people_modal);
+			$('#new_repin_modal .modal_form').html(data.repin_form);
+			$('#new_time_scene_modal .modal_form').html(data.new_scene_form);
+
+			toggleAjaxLoader(null, '#clip_modal ');
+			cuselActivate(6);
+			bindCommentRatingButtons(data.rating_url);
+			bindFollow();
+			repinClip();
+		}
 	});
+
+	return false;
 }
+
+/* live wrapper for stickerClick */
+
+$('.clip_sticker a.sticker_image').live('click', function () {
+
+	var clipSticker = $(this).parents('.clip_sticker');
+
+	return stickerClick(
+			$(clipSticker).attr('data-reclip-id'),
+			$(clipSticker).attr('data-url'),
+			$(clipSticker).attr('data-history-url'),
+			$(clipSticker).attr('data-json-url'),
+			$(clipSticker).attr('data-secs'),
+			$(clipSticker).attr('data-scene-id')
+	);
+
+});
 
 function bindClipboardCopy(url)
 {

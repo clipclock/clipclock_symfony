@@ -39,25 +39,22 @@ function closeWelcome(cookie)
 	$('.welcome, .welcome .inner').slideUp(700);
 }
 
-function stickerControlScrollers(elem)
-{
-	$().ready(function(){
-		$('#'+elem+' .arrow').click(function(){
-			var siblings = $(this).siblings('.sticker-tab');
-			if($(this).hasClass('next'))
-			{
-				if($(this).offset().top != $(siblings).filter(':visible').last().offset().top)
-				{
-					$(siblings).filter(':visible').first().hide();
-				}
-			}
-			else
-			{
-				$(siblings).filter(':not(:visible)').last().show();
-			}
-		});
+/* live override for stickerControlScrollers */
+
+$(function(){
+
+	$('.clip_sticker .arrow').live('click', function(){
+
+		var siblings = $(this).siblings('.sticker-tab');
+
+		if($(this).hasClass('next')){
+			if($(this).offset().top != $(siblings).filter(':visible').last().offset().top)
+				$(siblings).filter(':visible').first().hide();
+		} else {
+			$(siblings).filter(':not(:visible)').last().show();
+		}
 	});
-}
+});
 
 $(document).ready(function(){
 

@@ -1,4 +1,4 @@
-<li class="clip_sticker">
+<li class="clip_sticker" data-reclip-id="<?php echo $reclip_id ?>" data-url="<?php echo url_for('scene_change', array('scene_id' => $scene_info['scene_id'], 'modal' => true)); ?>" data-history-url="<?php echo url_for('scene', array('id' => $scene_info['scene_id'], 'board_id' => $board->getId(), 'username_slug' => $board->getSfGuardUserProfile()), true); ?>" data-secs="<?php echo $scene_info['scene_time']?>" data-scene-id="<?php echo $scene_info['scene_id']?>">
 	<div class="inner">
 		<p class="name-of-scence"><a href="<?php echo url_for('scene', array('id' => $scene_info['scene_id'], 'board_id' => $board->getId(), 'username_slug' => $board->getSfGuardUserProfile()))?>"><?php echo truncate_text($scene_info['name'], 32, '…', true)?></a></p>
 
@@ -22,6 +22,3 @@
 		</div>
 	</div>
 </li>
-	<script type="text/javascript">
-		stickerClick('<?php echo $reclip_id ?>', '<?php echo url_for('scene_change', array('scene_id' => $scene_info['scene_id'], 'modal' => true)); ?>', '<?php echo url_for('scene', array('id' => $scene_info['scene_id'], 'board_id' => $board->getId(), 'username_slug' => $board->getSfGuardUserProfile()), true); ?>', '<?php echo url_for('@scene_change?scene_id='.$scene_info['scene_id'])?>', '<?php echo $scene_info['scene_time']?>', '<?php echo $scene_info['scene_id']?>');
-	</script>

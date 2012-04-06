@@ -32,8 +32,8 @@ $('.sticker-tab a').live('click', function(){
 
 	if (checkCurrentSticker($(el).attr('data-reclip-id'), $(el).attr('data-scene-id'))) {
 
-		if (stickerChangeCache[$(el).attr('href')] != undefined)
-			stickerChange(stickerChangeCache[$(el).attr('href')], $(el).attr('data-reclip-id'), $(el).attr('data-scene-id'));
+		if (stickerChangeCache[$(el).attr('data-url')] != undefined)
+			stickerChange(stickerChangeCache[$(el).attr('data-url')], $(el).attr('data-reclip-id'), $(el).attr('data-scene-id'));
 		else
 			jQuery.ajax({
 				url: $(el).attr('data-url'),

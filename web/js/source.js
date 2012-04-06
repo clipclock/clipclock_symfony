@@ -56,6 +56,26 @@ $(function(){
 	});
 });
 
+function stickerControlScrollers(elem)
+{
+	$().ready(function(){
+		$('#'+elem+' .arrow').click(function(){
+			var siblings = $(this).siblings('.sticker-tab');
+			if($(this).hasClass('next'))
+			{
+				if($(this).offset().top != $(siblings).filter(':visible').last().offset().top)
+				{
+					$(siblings).filter(':visible').first().hide();
+				}
+			}
+			else
+			{
+				$(siblings).filter(':not(:visible)').last().show();
+			}
+		});
+	});
+}
+
 $(document).ready(function(){
 
 	$('.brd input, .head-search .inside .b-input input, .b-filter form .search-col .b-search .b-input input').bind('focus', function(){

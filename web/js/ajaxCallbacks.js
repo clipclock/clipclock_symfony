@@ -36,11 +36,11 @@ $('.sticker-tab a').live('click', function(){
 			stickerChange(stickerChangeCache[$(el).attr('href')], $(el).attr('data-reclip-id'), $(el).attr('data-scene-id'));
 		else
 			jQuery.ajax({
-				url: $(el).attr('href'),
+				url: $(el).attr('data-url'),
 				type: 'GET',
 				dataType: 'html',
 				success:function(d){
-					stickerChangeCache[$(el).attr('href')] = d;
+					stickerChangeCache[$(el).attr('data-url')] = d;
 					stickerChange(d, $(el).attr('data-reclip-id'), $(el).attr('data-scene-id'));
 				}
 			});

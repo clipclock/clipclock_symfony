@@ -43,6 +43,7 @@ generator:
           _delete: ~
           delete_clip: ~
         display: [id, created_at, _sceneInfo, sf_guard_user_profile_id_backend, board_backend, repin_origin_scene_id, text_short, hide]
+        sort: [id, desc]
         fields:
           created_at: {params: date_format='dd/mm/yy'}
           sf_guard_user_profile_id_backend: {label: 'Пользователь'}

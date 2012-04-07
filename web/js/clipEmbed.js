@@ -10,6 +10,11 @@
 })();
 
 var ytplayer;
+var youTubeApiLoaded = 0;
+
+function onYouTubePlayerAPIReady() {
+	youTubeApiLoaded = 1;
+}
 
 function preparePlayer(scene_time, video_id, source, modal)
 {

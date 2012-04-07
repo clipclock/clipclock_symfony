@@ -8,4 +8,7 @@
 	function onYouTubePlayerAPIReady() {
 		embedClip(<?php echo $scene_time?>, '<?php echo $reclip->getClip()->getUrl()?>', '<?php echo $reclip->getClip()->getSource()->getName()?>', 'true');
 	}
+	if (youTubeApiLoaded == 1){
+		embedClip(<?php echo $scene_time?>, '<?php echo $reclip->getClip()->getUrl()?>', '<?php echo $reclip->getClip()->getSource()->getName()?>', 'true');
+	}
 </script>

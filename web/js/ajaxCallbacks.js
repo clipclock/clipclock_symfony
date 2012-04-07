@@ -379,6 +379,7 @@ function toggleModalScene(url)
 		}
 	}
 
+	$('.clip_modal_fixed #scene_embed_video_player').remove();
 	$('#shadow').toggle();
 	$('.clip_modal_fixed').toggle();
 	$('#clip_modal').offset({top: $(window).scrollTop()+30, left: 0});

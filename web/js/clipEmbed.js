@@ -23,7 +23,8 @@ function preparePlayer(scene_time, video_id, source, modal)
 		height: 387,
 		playerVars: {
 			autoplay: 1,
-			start: scene_time
+			start: scene_time,
+			wmode: "opaque"
 		},
 		videoId: video_id
 	});

@@ -10,12 +10,10 @@
 					<div class="viewing">
 						<div id="scene_embed_video">
 							<div id="scene_embed_video_player">
-							<img src="/images/video.jpg" alt="" width="533" height="330" />
 							</div>
 						</div>
 					</div>
 					<script type="text/javascript">
-						//embedClip(0, '<?php echo $clip_url?>', '<?php echo $source_name?>');
 						function onYouTubePlayerAPIReady() {
 							embedClip(0, '<?php echo $clip_url?>', '<?php echo $source_name?>', 'true');
 						}

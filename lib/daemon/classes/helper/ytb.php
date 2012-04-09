@@ -49,21 +49,18 @@ function downloadfile($filename,$time,$outputfile,$videoquality=false/*,$ffmpegq
 		$start_time_str = '';
 		if($mp4)
 		{
-			var_dump($file_size);
-			var_dump($file_time_length);
 			//if mp4 and detected video size & length
 			if($file_size && $file_time_length)//from third iteration: 1-detect mp4,second - detect size & length
 				$size = floor($file_size/$file_time_length*$time + $file_size/100*($count)*2);
 			else
 				$size = $size + ($default_size*pow($count-1,4));
 		}
-		elseif($mp4 !== null)
+		elseif(!is_null($mp4))
 		{
 			$start_time_str = ' --start-time '.$time;
 		}
 
 		//try download video fragment
-		var_dump('python '.youtube_dl_path." {$you_tube_base_url}{$original_filename}".$start_time_str." -o '".upload_path."/{$original_filename}.%(ext)s' --download-length $size --show-content-length".$youtube_postfix_str);
 		$command_str = 'python '.youtube_dl_path." {$you_tube_base_url}{$original_filename}".$start_time_str." -o '".upload_path."/{$original_filename}.%(ext)s' --download-length $size --show-content-length".$youtube_postfix_str;
 		$output_str = `$command_str`;
 		//if(vdaemon_downloader)error_log($output_str,3,vdaemon_downloader);
@@ -88,7 +85,6 @@ function downloadfile($filename,$time,$outputfile,$videoquality=false/*,$ffmpegq
 		if(!$time_start)
 		{
 			$output_str = `ffmpeg -i {$filename}{$ext} 2>&1`;
-			$time_start = $time;
 
 			//if not detected video format mp4/not mp4 (first step) then detect video format
 			if(is_null($mp4))
@@ -96,27 +92,34 @@ function downloadfile($filename,$time,$outputfile,$videoquality=false/*,$ffmpegq
 				$mp4 = (bool)preg_match('*mp4*',$output_str,$mp4_matches);
 			}
 
-			if($output_str && preg_match('!,[\s]*start:[\s]*([0-9\.]+)!si',$output_str,$matches)){
-				////if detect start time then calculate offset
-				if(floatval($matches[1])>0 && $time>floatval($matches[1]))
-				{
-					$time_start = $time - floatval($matches[1]);
+			if($mp4 || (!$mp4 && $count > 1))
+			{
+				$time_start = $time;
+				if($output_str && preg_match('!,[\s]*start:[\s]*([0-9\.]+)!si',$output_str,$matches)){
+					////if detect start time then calculate offset
+					if(floatval($matches[1])>0 && $time>floatval($matches[1]))
+					{
+						$time_start = $time - floatval($matches[1]);
+					}
+					//if can't detect start time or first frame set offset $time_start = 0
 				}
-				//if can't detect start time or first frame set offset $time_start = 0
-			}
 
-			$time_start_int = intval($time_start);
-			$sec = $time_start_int%60+($time_start-$time_start_int);
-			$min = $time_start_int/60 % 60;
-			$hour = $time_start_int/3600;
+				$time_start_int = intval($time_start);
+				$sec = $time_start_int%60+($time_start-$time_start_int);
+				$min = $time_start_int/60 % 60;
+				$hour = $time_start_int/3600;
+			}
 		}
 
-		$command_str = "ffmpeg -i {$filename}{$ext} -ss ".sprintf("%02d:%02d:%06.3f",$hour,$min,$sec)." -frames 1 -f image2 $filename".directory_postfix.'/'.$outputfile.$ffmpeg_postfix_str;
-		$output_str = `$command_str`;
-		if(vdaemon_ffmpeg)error_log($output_str,3,vdaemon_ffmpeg);
+		if($time_start)
+		{
+			$command_str = "ffmpeg -i {$filename}{$ext} -ss ".sprintf("%02d:%02d:%06.3f",$hour,$min,$sec)." -frames 1 -f image2 $filename".directory_postfix.'/'.$outputfile.$ffmpeg_postfix_str;
+			$output_str = `$command_str`;
+			if(vdaemon_ffmpeg)error_log($output_str,3,vdaemon_ffmpeg);
 
-		if($mp4 && is_null($file_time_length) && preg_match('!Duration:[\s]*([0-9]{2}):([0-9]{2}):([0-9\.]{2,5}),!si',$output_str,$matches)) {
-			$file_time_length = floatval($matches[1]*3600+$matches[2]*60+$matches[3]);
+			if($mp4 && is_null($file_time_length) && preg_match('!Duration:[\s]*([0-9]{2}):([0-9]{2}):([0-9\.]{2,5}),!si',$output_str,$matches)) {
+				$file_time_length = floatval($matches[1]*3600+$matches[2]*60+$matches[3]);
+			}
 		}
 
 		if(file_exists($filename.directory_postfix.'/'.$outputfile))

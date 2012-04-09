@@ -1,7 +1,7 @@
 <h2><?php echo $reclip->getClip()->getName()?></h2>
 <div class="viewing">
 <div id="scene_embed_video">
-	<div id="scene_embed_video_player"></div>
+	<div id="scene_embed_video_player"><span></span></div>
 </div>
 </div>
 <script type="text/javascript">

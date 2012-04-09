@@ -78,9 +78,15 @@ class ProfileMapper {
 
 	public static function retrieveAvatarsAndPublish($user, $melody)
 	{
-		$amqp_publisher = new AMQPPublisher();
-		$photo_action = self::$action_map[$melody->getName()]['photo'];
-		$avatar_action = self::$action_map[$melody->getName()]['avatar'];
-		$amqp_publisher->jobAvatar($user->getId(), $melody->getPhoto()->$photo_action, $melody->getAvatar()->$avatar_action);
+		try{
+			$amqp_publisher = new AMQPPublisher();
+				$photo_action = self::$action_map[$melody->getName()]['photo'];
+				$avatar_action = self::$action_map[$melody->getName()]['avatar'];
+				$amqp_publisher->jobAvatar($user->getId(), $melody->getPhoto()->$photo_action, $melody->getAvatar()->$avatar_action);
+		}
+		catch(Exception $e)
+		{
+			return true;
+		}
 	}
 }

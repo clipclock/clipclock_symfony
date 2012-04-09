@@ -87,6 +87,10 @@ class AMQPPublisher
 	{
 		$this->amqp_publisher_exchange_name = $this->amqp_publisher_exchange_name.'.'.$queue_name;
 		$ex = new AMQPExchange($this->connection);
+		if(!$ex)
+		{
+			throw new AMQPException('No amqp extension');
+		}
 		$ex->declare($this->amqp_publisher_exchange_name, AMQP_EX_TYPE_FANOUT);
 
 		return $ex;

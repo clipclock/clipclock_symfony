@@ -42,7 +42,7 @@
 
 						<div class="viewing">
 							<div id="scene_embed_video">
-								<span></span>
+								<div id="scene_embed_video_player"></div>
 							</div>
 						</div>
 					</div>

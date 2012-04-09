@@ -19,11 +19,10 @@ homepage_search:
   param: { module: home, action: index }
 
 homepage_modal:
-  url:   /:username_slug/board/:board_id/scene/:id/modal
+  url:   /scene/:scene_id
   param: { module: home, action: index, modal: true }
   requirements:
-    board_id: \d+
-    id: \d+
+    scene_id: \d+
 
 ### HOMEPAGE AJAX ###
 
@@ -108,6 +107,7 @@ scene_change:
   param: { module: scene, action: showSceneAjax, modal: false }
   requirements:
     scene_id: \d+
+    modal: \d+
 
 ### USER ###
 

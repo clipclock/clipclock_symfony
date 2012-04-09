@@ -163,7 +163,7 @@ function bindSceneChangeBack(json_url, secs, scene_id, current_url)
 				secs = e.state.secs;
 				scene_id = e.state.scene_id;
 			}
-			else if($('#clip_modal').length)
+			else if($('#clip_modal').length && e.state)
 			{
 				toggleModalScene();
 				return true;
@@ -384,7 +384,7 @@ function toggleModalScene(url)
 	$('.clip_modal_fixed').toggle();
 	$('#clip_modal').offset({top: $(window).scrollTop()+30, left: 0});
 
-	if(url)
+	if(url && url != window.location.href)
 	{
 		history.pushState({}, 'Title', url);
 		$('#clip_embed h2').html('&nbsp;');

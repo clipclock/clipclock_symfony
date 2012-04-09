@@ -81,14 +81,17 @@ class homeActions extends sfActions
 			}
 		}
 
+		$this->current_url = $request->getUri();
+
 		// for modal link [homepage_modal]
 
-		$this->modal = false;
+		$this->modal = 0;
 
 		if ($request->getParameter('modal'))
 		{
-			$this->modal = true;
+			$this->modal = 1;
 			$this->scene_id = $request->getParameter('scene_id');
+			$this->current_url = $this->generateUrl('homepage');
 		}
 
 		$this->user = $this->getUser();
@@ -123,8 +126,6 @@ class homeActions extends sfActions
 		{
 			$this->new_user = $this->getUser()->getAttribute('new_user');
 		}
-
-		$this->current_url = $request->getUri();
 
 		$this->categories = $this->categories ? array_flip($this->categories) : null;
 

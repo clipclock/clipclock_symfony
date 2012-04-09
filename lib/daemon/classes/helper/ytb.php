@@ -9,6 +9,9 @@ define('directory_postfix','.dir');
 define('default_thumbnail_filename','original.jpg');
 define('default_youtube_quality',null);//if NULL then will use default youtube quality
 
+define('vdaemon_downloader','/var/log/vdaemon-downloader.log');//set null for no output
+define('vdaemon_ffmpeg','/var/log/vdaemon-ffmpeg.log');//set null for no output
+
 $you_tube_base_url = 'http://www.youtube.com/watch?v=';
 
 function is_ClipExists($filename)
@@ -20,41 +23,55 @@ function is_ClipExists($filename)
 	else return false;
 }
 
-function downloadfile($filename,$time,$outputfile,$videoquality=false,$ffmpegquietmode=false)
+function downloadfile($filename,$time,$outputfile,$videoquality=false/*,$ffmpegquietmode=false*/)
 {
 	global $you_tube_base_url;
 
-	$youtube_postfix_str = '';
+	$youtube_postfix_str = ' 2> '.vdaemon_downloader;
 	if($videoquality)$youtube_postfix_str .= ' --format '.$videoquality;
-	$youtube_postfix_str = $youtube_postfix_str . ' > /var/log/vdaemon-downloader.log';
 
-	$ffmpeg_postfix_str = ' 2> /var/log/vdaemon-ffmpeg.log';
-	if($ffmpegquietmode)$ffmpeg_postfix_str .= ' 2>&1';
+	$ffmpeg_postfix_str = '';
+	/*if($ffmpegquietmode)*/
+	$ffmpeg_postfix_str .= ' 2>&1';
 
 	$stopped = false;
 	$mp4 = null;
 	$time_start = null;
 	$count=1;
-	$default_size = 30000;
+	$default_size = 400000;
 	$original_filename = $filename;
+	$file_size = null;
+	$file_time_length = null;
 	while (!$stopped && ($count<=12)) {
 
-		/**
-		 * problem
-		 */
 		$size = $count*$default_size;
 
-		$start_time_str = ' --start-time '.$time;
+		$start_time_str = '';
 		if($mp4)
 		{
-			$start_time_str = '';
-			$size = $size + ($default_size*pow($count-1,4));
+			var_dump($file_size);
+			var_dump($file_time_length);
+			//if mp4 and detected video size & length
+			if($file_size && $file_time_length)//from third iteration: 1-detect mp4,second - detect size & length
+				$size = floor($file_size/$file_time_length*$time + $file_size/100*($count)*2);
+			else
+				$size = $size + ($default_size*pow($count-1,4));
 		}
-		/**
-		 * /problem
-		 */
+		elseif($mp4 !== null)
+		{
+			$start_time_str = ' --start-time '.$time;
+		}
 
-		exec('python '.youtube_dl_path." {$you_tube_base_url}{$original_filename}".$start_time_str." -o '".upload_path."/{$original_filename}.%(ext)s' --download-length $size".$youtube_postfix_str);
+		//try download video fragment
+		var_dump('python '.youtube_dl_path." {$you_tube_base_url}{$original_filename}".$start_time_str." -o '".upload_path."/{$original_filename}.%(ext)s' --download-length $size --show-content-length".$youtube_postfix_str);
+		$command_str = 'python '.youtube_dl_path." {$you_tube_base_url}{$original_filename}".$start_time_str." -o '".upload_path."/{$original_filename}.%(ext)s' --download-length $size --show-content-length".$youtube_postfix_str;
+		$output_str = `$command_str`;
+		//if(vdaemon_downloader)error_log($output_str,3,vdaemon_downloader);
+
+		if(preg_match('!Content-length: ([0-9]+)!si',$output_str,$output_str)){
+			$file_size=$output_str[1];
+		}
+
 		$filename = upload_path."/".$original_filename;
 
 		if(!($ext = is_ClipExists($filename)))return ERROR_FILE_NOT_FOUND;
@@ -73,10 +90,10 @@ function downloadfile($filename,$time,$outputfile,$videoquality=false,$ffmpegqui
 			$output_str = `ffmpeg -i {$filename}{$ext} 2>&1`;
 			$time_start = $time;
 
-			preg_match('*mp4*',$output_str,$mp4_matches);
-			if(count($mp4_matches) > 0)
+			//if not detected video format mp4/not mp4 (first step) then detect video format
+			if(is_null($mp4))
 			{
-				$mp4 = true;
+				$mp4 = (bool)preg_match('*mp4*',$output_str,$mp4_matches);
 			}
 
 			if($output_str && preg_match('!,[\s]*start:[\s]*([0-9\.]+)!si',$output_str,$matches)){
@@ -94,7 +111,13 @@ function downloadfile($filename,$time,$outputfile,$videoquality=false,$ffmpegqui
 			$hour = $time_start_int/3600;
 		}
 
-		exec("ffmpeg -i {$filename}{$ext} -ss ".sprintf("%02d:%02d:%06.3f",$hour,$min,$sec)." -frames 1 -f image2 $filename".directory_postfix.'/'.$outputfile.$ffmpeg_postfix_str);
+		$command_str = "ffmpeg -i {$filename}{$ext} -ss ".sprintf("%02d:%02d:%06.3f",$hour,$min,$sec)." -frames 1 -f image2 $filename".directory_postfix.'/'.$outputfile.$ffmpeg_postfix_str;
+		$output_str = `$command_str`;
+		if(vdaemon_ffmpeg)error_log($output_str,3,vdaemon_ffmpeg);
+
+		if($mp4 && is_null($file_time_length) && preg_match('!Duration:[\s]*([0-9]{2}):([0-9]{2}):([0-9\.]{2,5}),!si',$output_str,$matches)) {
+			$file_time_length = floatval($matches[1]*3600+$matches[2]*60+$matches[3]);
+		}
 
 		if(file_exists($filename.directory_postfix.'/'.$outputfile))
 		{
@@ -107,7 +130,10 @@ function downloadfile($filename,$time,$outputfile,$videoquality=false,$ffmpegqui
 		if(file_exists($filename.$ext))unlink($filename.$ext);
 	}
 	if($count>12){
-		exec('python '.youtube_dl_path." {$you_tube_base_url}{$original_filename} -o '".upload_path."/{$original_filename}.%(ext)s'".$youtube_postfix_str, $output, $return_val);
+		$command_str = 'python '.youtube_dl_path." {$you_tube_base_url}{$original_filename} -o '".upload_path."/{$original_filename}.%(ext)s'".$youtube_postfix_str;
+		$output_str = `$command_str`;
+		if(vdaemon_downloader)error_log($output_str,3,vdaemon_downloader);
+
 		$filename = upload_path."/".$original_filename;
 
 		if(!($ext = is_ClipExists($filename)))return ERROR_FILE_NOT_FOUND;
@@ -130,7 +156,9 @@ function downloadfile($filename,$time,$outputfile,$videoquality=false,$ffmpegqui
 			$time_offset_str = sprintf("%02d:%02d:%06.3f",$hour,$min,$sec);
 		}
 
-		exec("ffmpeg -i {$filename}{$ext} -ss ".$time_offset_str." -frames 1 -f image2 $filename".directory_postfix.'/'.$outputfile.$ffmpeg_postfix_str);
+		exec("ffmpeg -i {$filename}{$ext} -ss ".$time_offset_str." -frames 1 -f image2 $filename".directory_postfix.'/'.$outputfile.$ffmpeg_postfix_str,$output_str);
+		if(vdaemon_ffmpeg)error_log(implode("\n",$output_str),3,vdaemon_ffmpeg);
+
 		unlink($filename.$ext);
 		if(!file_exists($filename.directory_postfix.'/'.$outputfile)){
 			return ERROR_CANT_MAKE_THUMBNAIL;
@@ -149,27 +177,26 @@ Parameters:
 -f - short filename youtubefile
 -t - time in second (float)
 -o - output file, default - clip.png
--q - ffmpeg quiet mode
--Q - video quality of download video (worst | default | high), default worst
+-Q - video quality of download video (worst | default | high), default default
 OUTPUT;
-	//TODO -p - if p = 1  - print file to console
+	//-q - ffmpeg quiet mode //not use
 	echo $output_str;
 }
 else{
 
 	$time = isset($options['t'])&&is_numeric($options['t'])?floatval($options['t']):0;
 	$outputfile = isset($options['o'])&&$options['o']?$options['o']:default_thumbnail_filename;
-	$ffmpegquietmode = isset($options['q']);
+	//$ffmpegquietmode = isset($options['q']);
 	$quality = isset($options['Q'])&&$options['Q']?($options['Q']=='default'?'':$options['Q']):default_youtube_quality;
 	$pint_body_thumbnail_to_colsole = false;//TODO
 
-	$result = downloadfile($options['f'],$time,$outputfile,$quality,$ffmpegquietmode);
+	$result = downloadfile($options['f'],$time,$outputfile,$quality/*,$ffmpegquietmode*/);
 	if($result===0){
 		//COMPLETE
 	}else{
 		//TODO
 		switch ($result){
-			case ERROR_FILE_NOT_FOUND: echo "Cant' download video file or file is unknown extension";break;
+			case ERROR_FILE_NOT_FOUND: echo "Cant' download video file or file extension is unknown";break;
 			case ERROR_CANT_MAKE_THUMBNAIL:  echo "Cant' make thumbnail file"; break;
 			case ERROR_CANT_CREATE_OUTPUT_PATH: echo "Can't create directory"; break;
 		}

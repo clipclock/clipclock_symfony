@@ -15,4 +15,13 @@
 		layoutAndScroll('<?php echo $next_url ?>');
 	</script>
 </div>
-	<?php include_partial('home/modalScene', array('current_user' => $user, 'current_url' => $current_url, 'post_facebook' => $post_facebook));?>
+
+<?php include_partial('home/modalScene', array('current_user' => $user, 'current_url' => $current_url, 'post_facebook' => $post_facebook));?>
+
+<?php if ($modal): ?>
+<script type="text/javascript">
+	$(function(){
+		stickerClick('<?php echo $board_id?>', '<?php echo url_for('scene_change', array('scene_id' => $scene_id, 'modal' => 1)) ?>', '<?php echo $current_url ?>', '<?php echo url_for('scene_change', array('scene_id' => $scene_id, 'modal' => 1)) ?>', 0, '<?php echo $scene_id ?>');
+	});
+</script>
+<?php endif ?>

@@ -79,6 +79,15 @@ class homeActions extends sfActions
 				$this->source = $this->getRequest()->getCookie('source');
 				$this->categories = @unserialize(base64_decode($this->getRequest()->getCookie('categories'))) ? @unserialize(base64_decode($this->getRequest()->getCookie('categories'))) : null;
 			}
+
+			$this->modal = false;
+
+			if ($request->getParameter('modal'))
+			{
+				$this->modal = true;
+				$this->board_id = $request->getParameter('board_id');
+				$this->scene_id = $request->getParameter('id');
+			}
 		}
 
 		$this->user = $this->getUser();

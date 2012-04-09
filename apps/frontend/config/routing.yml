@@ -18,6 +18,13 @@ homepage_search:
   url:   /search/:search_string
   param: { module: home, action: index }
 
+homepage_modal:
+  url:   /:username_slug/board/:board_id/scene/:id/modal
+  param: { module: home, action: index, modal: true }
+  requirements:
+    board_id: \d+
+    id: \d+
+
 ### HOMEPAGE AJAX ###
 
 homepage_page:

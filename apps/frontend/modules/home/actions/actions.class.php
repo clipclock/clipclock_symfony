@@ -17,6 +17,11 @@ class homeActions extends sfActions
 	 */
 	public function executeIndex(sfWebRequest $request)
 	{
+		if(!$this->getUser()->hasAttribute('new_user'))
+		{
+			$this->getUser()->setAttribute('new_user', true);
+		}
+
 		$this->search_string = null;
 		if($this->getUser()->getAttribute('new_user') && !$this->getUser()->getAttribute('categories', null) && $this->getUser()->getProfile())
 		{
@@ -48,7 +53,9 @@ class homeActions extends sfActions
 
 				$this->getUser()->setAttribute('categories', serialize($categories_ids));
 				$this->getUser()->setAttribute('source', 1);
+
 				$this->redirect($this->generateUrl('homepage'));
+
 				return sfView::NONE;
 				//Завершение процесса и редирект на страницу просмотра всего контента с выборкой по предустановленным категориям
 			}
@@ -127,6 +134,7 @@ class homeActions extends sfActions
 			$this->new_user = (bool)$this->getUser()->getAttribute('new_user');
 			$this->getUser()->setAttribute('new_user', false);
 		}
+
 //		$this->getUser()->setAttribute('new_user', true);
 //		$this->new_user = true;
 

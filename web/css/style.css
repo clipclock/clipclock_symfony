@@ -739,3 +739,18 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 
 .welcome .wel-list {padding-bottom: 40px;}
 .welcome .wel-list li p {height: 25px;}
+
+#scene_embed_video_player .fb_button
+{
+    display: none;
+    position: absolute;
+    width: 189px;
+    height: 40px;
+    border: 0;
+    background: none;
+    background-image: url('../images/fb_login.png');
+    background-repeat: no-repeat;
+    background-position: top left;
+    top: 33%;
+    left: 28%;
+}

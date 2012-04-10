@@ -17,9 +17,7 @@
 <?php if ($modal): ?>
 
 	$(function(){
-		console.log('dsadasdasdasdasd');
-		console.log('<?php echo $new_user?>');
-		stickerClick(0, '<?php echo url_for('scene_change', array('scene_id' => $scene_id, 'modal' => 1)) ?>', '<?php echo $current_url ?>', '<?php echo url_for('scene_change', array('scene_id' => $scene_id, 'modal' => 1)) ?>', 0, '<?php echo $scene_id ?>', '<?php echo $new_user && $user->getId() ? $new_user : false?>');
+		stickerClick(0, '<?php echo url_for('scene_change', array('scene_id' => $scene_id, 'modal' => 1)) ?>', '<?php echo $current_url ?>', '<?php echo url_for('scene_change', array('scene_id' => $scene_id, 'modal' => 1)) ?>', 0, '<?php echo $scene_id ?>', '<?php echo $new_user?>');
 	});
 	<?php elseif($new_user && $user->getId()): ?>
 			categoryMultiSelectorModalToggle();

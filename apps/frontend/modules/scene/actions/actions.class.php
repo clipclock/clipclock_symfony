@@ -50,7 +50,7 @@ class sceneActions extends sfActions
 		if($request->getParameter('modal'))
 		{
 			$stop_and_auth = false;
-			if($request->getParameter('modal') && !$this->getUser()->getId())
+			if($request->getParameter('new_user') && !$this->getUser()->getId())
 			{
 				$stop_and_auth = true;
 			}

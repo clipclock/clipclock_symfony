@@ -172,14 +172,17 @@ function bindSceneChangeBack(json_url, secs, scene_id, current_url)
 
 			if(scene_id && secs && json_url)
 			{
-				$.ajax({
-					url: json_url,
-					beforeSend: function(){highliteControlTab(scene_id);seekTo(secs);toggleAjaxLoader();},
-					dataType: 'text',
-					success: function(data){
-						sceneChange(data, true);
-					}
-				});
+				if(!new_user)
+				{
+					$.ajax({
+						url: json_url,
+						beforeSend: function(){if(getPlayer()){highliteControlTab(scene_id);seekTo(secs);toggleAjaxLoader();}},
+						dataType: 'text',
+						success: function(data){
+							sceneChange(data, true);
+						}
+					});
+				}
 			}
 
 			if(!first_scene)
@@ -378,7 +381,7 @@ function toggleModalScene(url)
 	}
 	else
 	{
-		if(window.new_user)
+		if(window.new_user && !redirectAterClose)
 		{
 			categoryMultiSelectorModalToggle();
 		}
@@ -414,6 +417,7 @@ function stickerClick(reclip_id, url, history_url, json_url, secs, scene_id, new
 	window.new_user = new_user;
 	$.ajax({
 		url:url,
+		data: {new_user: new_user},
 		beforeSend:function (xhr) {
 			toggleModalScene(history_url);
 			toggleAjaxLoader(null, '#clip_modal ');

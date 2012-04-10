@@ -10,6 +10,16 @@
  */
 class homeActions extends sfActions
 {
+
+	protected function checkLanding()
+	{
+		if(is_null($this->new_user))
+		{
+			$this->new_user = $this->getContext()->getRouting()->getCurrentRouteName() == 'homepage_modal' ? true : false;
+		}
+
+		return $this->new_user;
+	}
 	/**
 	 * Executes index action
 	 *
@@ -17,13 +27,8 @@ class homeActions extends sfActions
 	 */
 	public function executeIndex(sfWebRequest $request)
 	{
-		if(!$this->getUser()->hasAttribute('new_user'))
-		{
-			$this->getUser()->setAttribute('new_user', true);
-		}
-
 		$this->search_string = null;
-		if($this->getUser()->getAttribute('new_user') && !$this->getUser()->getAttribute('categories', null) && $this->getUser()->getProfile())
+		if($this->checkLanding() && !$this->getUser()->getAttribute('categories', null) && $this->getUser()->getProfile())
 		{
 			$this->source = HomeFilterForm::I_FOLLOW_ID;
 			//Временное решение
@@ -128,12 +133,7 @@ class homeActions extends sfActions
 
 		$this->welcome_close = (bool)$request->getCookie('welcome-close');
 
-		$this->new_user = false;
-		if($this->getUser()->hasAttribute('new_user'))
-		{
-			$this->new_user = (bool)$this->getUser()->getAttribute('new_user');
-			$this->getUser()->setAttribute('new_user', false);
-		}
+		//$this->getUser()->setAttribute('new_user', false);
 
 //		$this->getUser()->setAttribute('new_user', true);
 //		$this->new_user = true;

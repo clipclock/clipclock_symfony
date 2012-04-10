@@ -1,5 +1,9 @@
 <?php slot('clip_modal') ?>
-
+<div id="infscr-loading-register" style="display: none; ">
+	<img alt="Loading..." src="/images/ajax-loader-horizontal.gif">
+	<div><em>Please wait..<br />
+		It takes some time when registering for the first time..</em></div>
+</div>
 <?php if($current_user->getId()):?>
 	<?php slot('scene_modal') ?>
 		<?php include_partial('scene/modalForm', array('exists' => true, 'form_url' => url_for('scene_post'), 'form_partial' => 'scene/modalFormFields'))?>

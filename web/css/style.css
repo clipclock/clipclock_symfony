@@ -607,7 +607,7 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 {
     color: #116ce8;
 }
-#infscr-loading {
+#infscr-loading, #infscr-loading-register {
     /*position: fixed; left: 40%; bottom: 40px;*/
 
     text-align: center;
@@ -624,6 +624,12 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
     width: 220px;
     color: rgb(222, 222, 222);
     font-weight: normal;
+}
+
+#infscr-loading-register
+{
+    z-index: 1051;
+    bottom: 55%;
 }
 
 #content { min-height: auto !important;}

@@ -6,12 +6,12 @@ function preparePlayer(scene_time, video_id, source, modal, stop_and_auth)
 	ytplayer = new YT.Player('scene_embed_video_player', {
 		width:  (modal ? 541 : 640),
 		height: 387,
+		videoId: video_id,
 		playerVars: {
 			autoplay: 1,
 			start: scene_time,
 			wmode: "opaque"
-		},
-		videoId: video_id
+		}
 	});
 
 	newSceneTimeDescriptionContainer();

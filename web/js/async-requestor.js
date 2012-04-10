@@ -19,23 +19,24 @@ var __youtubeAsyncLoad = function()
 var asyncRequestor = function(){};
 
 asyncRequestor.prototype = {
-	callbacks: [],
+	callbacks:{},
 	loaded: {},
 	called: {},
 	call: function(type, callback){
-
-		console.log('called ' + type);
 
 		var obj = this;
 
 		if (this.loaded[type] != undefined){
 
-			console.log('call simple callback');
 			callback();
 
 		} else {
 
-			this.callbacks.push(callback);
+			if (this.callbacks[type] == undefined){
+				this.callbacks[type] = {};
+				this.callbacks[type].arr = [];
+			}
+			this.callbacks[type].arr.push(callback);
 
 			if (this.called[type] == undefined){
 
@@ -46,11 +47,7 @@ asyncRequestor.prototype = {
 
 						window.fb_already_loaded = false;
 
-						console.log('im in facebook');
-
 						window.fbAsyncInit = function() {
-
-							console.log('im in facebook async');
 
 							FB.init({
 								appId      : '365665100128423',
@@ -66,7 +63,7 @@ asyncRequestor.prototype = {
 							obj.loaded[type] = true;
 
 							var func;
-							while((func = obj.callbacks.pop()) != null)
+							while((func = obj.callbacks[type].arr.pop()) != null)
 								func();
 						}
 
@@ -79,7 +76,8 @@ asyncRequestor.prototype = {
 						window.onYouTubePlayerAPIReady = function(){
 							obj.loaded[type] = true;
 							var func;
-							while((func = obj.callbacks.pop()) != null)
+
+							while((func = obj.callbacks[type].arr.pop()) != null)
 								func();
 						}
 

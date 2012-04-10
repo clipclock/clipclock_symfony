@@ -113,13 +113,14 @@ $(document).ready(function(){
 		}
 	});
 
-	$('.welcome .close_link').click(function(){
+	$('.welcome .close_link, .welcome .close').click(function(){
 		closeWelcome(true);
 		return false;
 	});
 
 	$('.welcome .close').click (function() {
 		closeWelcome(true);
+		console.log('closing');
 	});
 
 	$().UItoTop({ easingType: 'easeOutQuart', scrollSpeed: 200, containerID: 'scroll-to-top' });

@@ -201,7 +201,7 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 /* welcome правки */
 .welcome {border-bottom:1px solid #fff; position:relative; background:url(../images/welcome-bg.jpg);} /* + */
 .welcome .inner { text-align:center; padding:25px 0 1px; position:relative;} /*+*/
-.welcome .close {height:10px;width:9px; background:url(../images/close-ico.png); position:absolute; top:17px; right:16px; cursor:pointer;} /* + */
+.welcome .close {height:10px;width:9px; background:url(../images/close-ico.png); position:absolute; top:17px; right:16px; cursor:pointer; z-index: 999} /* + */
 .welcome .wel-list {overflow:hidden; margin-top:15px; position:relative; padding-bottom:20px;}
 .welcome .wel-list li {display:inline-block; width:25%; position:relative;}
 .welcome .wel-list li .ins {padding:5px 0 0 100px; width:200px; text-align:left; margin:0 auto;}

@@ -131,6 +131,14 @@ class userActions extends sfActions
 
 		FriendsMapper::mapFrom($melody, $user);
 
+		// for users who go from homepage_modal
+		// redirect them to homepage_modal back
+		$routeData = $this->getContext()->getRouting()->findRoute(
+			str_replace($this->getController()->genUrl('@homepage', true), '', $request->getReferer())
+		);
+		if ($routeData && $routeData['name'] == 'homepage_modal')
+			$this->redirect($request->getReferer());
+
 		$this->redirect('@user_register_welcome');
 	}
 

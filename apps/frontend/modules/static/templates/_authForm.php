@@ -56,6 +56,71 @@
 	</li>
 </ul>
 <script type="text/javascript">
-	fbHooks(<?php echo $fb_app_id?>, false, false, false, '<?php echo url_for('invites_callback')?>');
+	//fbHooks(<?php echo $fb_app_id?>, false, false, false, '<?php echo url_for('invites_callback')?>');
+
+	asyncRequestor.call('facebook', function(){
+		function sendRequestViaMultiFriendSelector() {
+			FB.ui({method: 'apprequests',
+				message: 'Please comment my new video clips!',
+				filters: ["app_non_users"]
+			}, function(response){
+				$.ajax({
+					url: '<?php echo url_for('invites_callback')?>',
+					type: "POST",
+					data: {result: response},
+					/*beforeSend: function(){highliteControlTab(scene_id);seekTo(secs);},*/
+					success: function(result){
+						$.each(response.to, function(index, value){
+							_kmq.push(['record', 'Invited friend', {'Where':'facebook', 'friend':value}]);
+						});
+					}
+				});
+			});
+		}
+
+		function sendRequestViaMultiFriendSelectorMany() {
+			var user_ids = [];
+			FB.api('/me/friends', function(response) {
+				$(response.data).each(function(index, value){
+					user_ids.push(value.id);
+				});
+				function randOrd(){
+					return (Math.round(Math.random())-0.5); }
+				user_ids = user_ids.sort( randOrd );
+				FB.ui({method: 'apprequests',
+					message: 'Please comment my new video clips!',
+					filters: ["app_non_users"],
+					to: user_ids.slice(0, 50)
+				}, function(response){
+					$.ajax({
+						url: '<?php echo url_for('invites_callback')?>',
+						type: "POST",
+						data: {result: response},
+						/*beforeSend: function(){highliteControlTab(scene_id);seekTo(secs);},*/
+						success: function(result){
+							$.each(response.to, function(index, value){
+								_kmq.push(['record', 'Invited friend', {'Where':'facebook', 'friend':value}]);
+							});
+						}
+					});
+				});
+			});
+			return false;
+		}
+		$('#fb_invite').click(function(){
+			sendRequestViaMultiFriendSelector();
+			return false;
+		});
+
+		$('#fb_invite_some').click(function(){
+			sendRequestViaMultiFriendSelector();
+			return false;
+		});
+
+		$('#fb_invite_many').click(function(){
+			sendRequestViaMultiFriendSelectorMany();
+			return false;
+		});
+	});
 </script>
 <?php endif;?>

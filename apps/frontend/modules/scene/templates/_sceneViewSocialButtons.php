@@ -48,7 +48,30 @@
 <script type="text/javascript">
 	<?php if($user->getId()):?>
 		$().ready(function(){
-			fbHooks(<?php echo $fb_app_id?>, <?php echo sprintf('%d, %d', $scene_id, $current_user->getId()) ?>, "<?php echo url_for('@scene_change_liked_state'); ?>");
+			//fbHooks(<?php echo $fb_app_id?>, <?php echo sprintf('%d, %d', $scene_id, $current_user->getId()) ?>, "<?php echo url_for('@scene_change_liked_state'); ?>");
+			asyncRequestor.call('facebook', function(){
+				function toggleFBLikeButton(scene_id, user_id, state, url) {
+					if(state)
+					{
+						_kmq.push(['record', 'Shared', {'share_type':'FB Like'}]);
+					}
+					$.ajax({
+						url: url,
+						type: "GET",
+						data: { user_id : user_id, scene_id : scene_id, state: state }
+					});
+				}
+
+				FB.Event.subscribe('edge.create',
+						function(response) { toggleFBLikeButton(<?php echo $scene_id?>, <?php echo $current_user->getId()?>, 1, "<?php echo url_for('@scene_change_liked_state'); ?>"); }
+				);
+
+				FB.Event.subscribe('edge.remove',
+						function(response) { toggleFBLikeButton(<?php echo $scene_id?>, <?php echo $current_user->getId()?>, 0, "<?php echo url_for('@scene_change_liked_state'); ?>"); }
+				);
+			});
+
+
 			if(!$('#clip_modal').length){
 				repinClip();
 			}

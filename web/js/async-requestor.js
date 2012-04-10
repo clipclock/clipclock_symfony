@@ -25,9 +25,9 @@ asyncRequestor.prototype = {
 
 		var obj = this;
 
-		console.log('asyncRequestor: loading ' + type);
-		console.log('asyncRequestor: facebook ' + this.loaded.facebook);
-		console.log('asyncRequestor: youtube ' + this.loaded.youtube);
+//		console.log('asyncRequestor: loading ' + type);
+//		console.log('asyncRequestor: facebook ' + this.loaded.facebook);
+//		console.log('asyncRequestor: youtube ' + this.loaded.youtube);
 
 		if (this.loaded[type] != undefined){
 
@@ -58,7 +58,7 @@ asyncRequestor.prototype = {
 							frictionlessRequests : true
 						});
 
-						console.log(FB);
+						//console.log(FB);
 
 						function fbEnsureInit(callback, obj) {
 

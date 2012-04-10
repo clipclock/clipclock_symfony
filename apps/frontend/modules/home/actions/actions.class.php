@@ -127,6 +127,8 @@ class homeActions extends sfActions
 			$this->new_user = (bool)$this->getUser()->getAttribute('new_user');
 			$this->getUser()->setAttribute('new_user', false);
 		}
+//		$this->getUser()->setAttribute('new_user', true);
+//		$this->new_user = true;
 
 		$this->categories = $this->categories ? array_flip($this->categories) : null;
 

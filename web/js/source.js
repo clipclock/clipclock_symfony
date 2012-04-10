@@ -239,6 +239,10 @@ function categoryMultiSelectorModalToggle()
 	{
 		$('#interests').offset({top: $(window).scrollTop()+40});
 	}
+	else
+	{
+		window.new_user = false;
+	}
 	$('#shadow_interests').toggle();
 }
 

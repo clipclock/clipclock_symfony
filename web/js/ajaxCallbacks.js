@@ -8,6 +8,7 @@
 current_scene_id = 0;
 first_scene = null;
 elems_scenes_ids = [];
+var new_user = false;
 
 function stickerChange(data, clip_id, scene_id)
 {
@@ -373,6 +374,10 @@ function toggleModalScene(url)
 	}
 	else
 	{
+		if(window.new_user)
+		{
+			categoryMultiSelectorModalToggle();
+		}
 		if (scrollTopState == 'block'){
 			$('#scroll-to-top').show();
 			scrollTopState = false;
@@ -399,8 +404,9 @@ function toggleModalScene(url)
 	}
 }
 
-function stickerClick(reclip_id, url, history_url, json_url, secs, scene_id) {
+function stickerClick(reclip_id, url, history_url, json_url, secs, scene_id, new_user) {
 
+	window.new_user = new_user;
 	$.ajax({
 		url:url,
 		beforeSend:function (xhr) {

@@ -21,72 +21,60 @@ var asyncRequestor = function(){};
 asyncRequestor.prototype = {
 	callbacks: [],
 	loaded: {},
+	called: {},
 	call: function(type, callback){
+
+		console.log('called ' + type);
 
 		var obj = this;
 
-//		console.log('asyncRequestor: loading ' + type);
-//		console.log('asyncRequestor: facebook ' + this.loaded.facebook);
-//		console.log('asyncRequestor: youtube ' + this.loaded.youtube);
-
 		if (this.loaded[type] != undefined){
 
+			console.log('call simple callback');
 			callback();
 
 		} else {
 
 			this.callbacks.push(callback);
 
-			switch(type){
-				case 'facebook':
+			if (this.called[type] == undefined){
 
-					window.fb_already_loaded = false;
+				this.called[type] = true;
 
-					console.log('im in facebook');
+				switch(type){
+					case 'facebook':
 
-					window.fbAsyncInit = function() {
+						window.fb_already_loaded = false;
 
-						console.log('im in facebook async');
+						console.log('im in facebook');
 
-						FB.init({
-							appId      : '365665100128423',
-							channelUrl : '//clipclock.com/channel.html',
-							status     : true, // check login status
-							cookie     : true, // enable cookies to allow the server to access the session
-							xfbml      : true, // parse XFBML
-							oauth: true,
-							frictionlessRequests : true
-						});
+						window.fbAsyncInit = function() {
 
-						//console.log(FB);
+							console.log('im in facebook async');
 
-						function fbEnsureInit(callback, obj) {
+							FB.init({
+								appId      : '365665100128423',
+								channelUrl : '//clipclock.com/channel.html',
+								status     : true, // check login status
+								cookie     : true, // enable cookies to allow the server to access the session
+								xfbml      : true, // parse XFBML
+								oauth: true,
+								frictionlessRequests : true
+							});
 
-							if(!window.fb_already_loaded) {
+							window.fb_already_loaded = true;
+							obj.loaded[type] = true;
 
-								setTimeout(function(){
-									fbEnsureInit(callback);
-								}, 50);
-
-							} else {
-
-								window.fb_already_loaded = true;
-								obj.loaded[type] = true;
-
-								var func;
-								while((func = obj.callbacks.pop()) != null)
-									func();
-							}
+							var func;
+							while((func = obj.callbacks.pop()) != null)
+								func();
 						}
 
-						fbEnsureInit(callback, obj);
-					}
+						__fbAsyncLoad();
 
-					__fbAsyncLoad();
+						break;
 
-					break;
-
-				case 'youtube':
+					case 'youtube':
 
 						window.onYouTubePlayerAPIReady = function(){
 							obj.loaded[type] = true;
@@ -97,7 +85,9 @@ asyncRequestor.prototype = {
 
 						__youtubeAsyncLoad();
 
-					break;
+						break;
+				}
+
 			}
 		}
 	}

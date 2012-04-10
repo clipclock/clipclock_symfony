@@ -50,7 +50,7 @@ asyncRequestor.prototype = {
 						window.fbAsyncInit = function() {
 
 							FB.init({
-								appId      : '365665100128423',
+								appId      : $('#site-data').attr('data-fb-app-id'),
 								channelUrl : '//clipclock.com/channel.html',
 								status     : true, // check login status
 								cookie     : true, // enable cookies to allow the server to access the session

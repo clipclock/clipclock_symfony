@@ -380,9 +380,15 @@ function toggleModalScene(url)
 	}
 
 	$('.clip_modal_fixed #scene_embed_video_player').replaceWith('<span></span>');
-	$('#shadow').toggle();
 	$('.clip_modal_fixed').toggle();
 	$('#clip_modal').offset({top: $(window).scrollTop()+30, left: 0});
+
+	if(redirectAterClose)
+	{
+		window.location.href = redirectAterClose;
+		return false;
+	}
+	$('#shadow').toggle();
 
 	if(url && url != window.location.href)
 	{
@@ -398,9 +404,9 @@ function stickerClick(reclip_id, url, history_url, json_url, secs, scene_id) {
 	$.ajax({
 		url:url,
 		beforeSend:function (xhr) {
-			toggleModalScene();
+			toggleModalScene(history_url);
 			toggleAjaxLoader(null, '#clip_modal ');
-			history.pushState({json_url:json_url, secs:secs, scene_id:scene_id}, 'Title', history_url);
+			//history.pushState({json_url:json_url, secs:secs, scene_id:scene_id}, 'Title', history_url);
 			_kmq.push(['record', 'Viewed video']);
 		},
 		success:function (data) {

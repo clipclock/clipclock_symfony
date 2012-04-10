@@ -134,7 +134,7 @@ class userActions extends sfActions
 		// for users who go from homepage_modal
 		// redirect them to homepage_modal back
 		$routeData = $this->getContext()->getRouting()->findRoute(
-			str_replace($this->getController()->genUrl('@homepage', true), '', $request->getReferer())
+			str_replace($this->generateUrl('homepage', array(), true), '', $request->getReferer())
 		);
 		if ($routeData && $routeData['name'] == 'homepage_modal')
 			$this->redirect($request->getReferer());

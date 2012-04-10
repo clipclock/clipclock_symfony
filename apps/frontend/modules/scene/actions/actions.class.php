@@ -49,7 +49,13 @@ class sceneActions extends sfActions
 
 		if($request->getParameter('modal'))
 		{
-			$return_array['scene_embed'] = $this->getComponent('scene', 'sceneViewEmbed', array('scene_time' => $scene->getSceneTime()->getSceneTime(), 'reclip' => $scene->getSceneTime()->getReclip(), 'modal' => 1));
+			$stop_and_auth = false;
+			if($request->getParameter('modal') && !$this->getUser()->getId())
+			{
+				$stop_and_auth = true;
+			}
+
+			$return_array['scene_embed'] = $this->getComponent('scene', 'sceneViewEmbed', array('scene_time' => $scene->getSceneTime()->getSceneTime(), 'reclip' => $scene->getSceneTime()->getReclip(), 'modal' => 1, 'stop_and_auth' => $stop_and_auth));
 			$return_array['scene_controls'] = $this->getComponent('scene', 'sceneViewControl', array('control_scene_times' => $this->control_scene_times, 'board_id' => $scene->getBoardId(), 'reclip_id' => $scene->getSceneTime()->getReclipId(), 'scene_id' => $scene->getId(), 'current_user' => $this->getUser(), 'modal' => 1));
 			$return_array['owner_text'] = link_to($scene->getSfGuardUserProfile()->getFullName(), array('sf_route' => 'user', 'nick' => $scene->getSfGuardUserProfile()->getNick()));
 			$return_array['owner_avatar'] = link_to(image_tag(ImagePreview::c14n($scene->getSfGuardUserProfileId(), 'medium', 'avatar')), array('sf_route' => 'user', 'nick' => $scene->getSfGuardUserProfile()->getNick()));

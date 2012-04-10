@@ -16,7 +16,7 @@
 	</script>
 </div>
 
-<?php include_partial('home/modalScene', array('current_user' => $user, 'current_url' => $current_url, 'post_facebook' => $post_facebook));?>
+<?php include_partial('home/modalScene', array('current_user' => $user, 'current_url' => isset($bug_current_url) ? $bug_current_url : $current_url , 'post_facebook' => $post_facebook));?>
 
 <?php if ($modal): ?>
 <script type="text/javascript">

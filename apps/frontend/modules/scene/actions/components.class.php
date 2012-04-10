@@ -81,6 +81,8 @@ class sceneComponents extends sfComponents
 
 	public function executeSceneViewEmbed()
 	{
+		$fb = sfConfig::get('app_melody_facebook');
+		$this->fb_app_id = $fb['key'];
 	}
 
 	public function executeSceneViewControl()

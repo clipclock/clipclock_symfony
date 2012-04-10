@@ -23,9 +23,47 @@ function toggleFBLikeButton(scene_id, user_id, state, url) {
 
 function fbHooks(app_id, scene_id, user_id, url, requests_url)
 {
+	var callback = function(){
+		if(redirectAterClose)
+		{
+			FB.login(function(response) {
+				if (response.authResponse) {
+					toggleModalScene();
+					window.location.href = redirectAterClose;
+					return true;
+				} else {
+					preparePlayer(scene_time, video_id, source, modal, stop_and_auth);
+				}
+			}, {scope: 'publish_actions,email'});
+		}
+	};
+
 	if(!fb_already_inited)
 	{
 		window.fbAsyncInit = function() {
+			FB.init({
+				appId      : app_id,
+				channelUrl : '//clipclock.com/channel.html',
+				status     : true, // check login status
+				cookie     : true, // enable cookies to allow the server to access the session
+				xfbml      : true, // parse XFBML
+				oauth: true,
+				frictionlessRequests : true
+			});
+
+			function fbEnsureInit(callback) {
+				console.log(fb_already_inited);
+				if(!window.fb_already_inited) {
+					setTimeout(function() {fbEnsureInit(callback);}, 50);
+				} else {
+					if(callback) {
+						callback();
+					}
+				}
+			}
+
+			fbEnsureInit(callback);
+
 			fbHooksRoutine(app_id, scene_id, user_id, url, requests_url);
 			fb_already_inited = true;
 		};
@@ -39,16 +77,6 @@ function fbHooks(app_id, scene_id, user_id, url, requests_url)
 
 function fbHooksRoutine(app_id, scene_id, user_id, url, requests_url)
 {
-		FB.init({
-			appId      : app_id,
-			channelUrl : '//clipclock.com/channel.html',
-			status     : true, // check login status
-			cookie     : true, // enable cookies to allow the server to access the session
-			xfbml      : true, // parse XFBML
-			oauth: true,
-			frictionlessRequests : true
-		});
-
 		if(scene_id && user_id && url)
 		{
 			FB.Event.subscribe('edge.create',

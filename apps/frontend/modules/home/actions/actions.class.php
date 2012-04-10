@@ -18,17 +18,18 @@ class homeActions extends sfActions
 	public function executeIndex(sfWebRequest $request)
 	{
 		$this->search_string = null;
-		if($this->getUser()->getAttribute('new_user'))
+		if($this->getUser()->getAttribute('new_user') && !$this->getUser()->getAttribute('categories', null) && $this->getUser()->getProfile())
 		{
-			$this->getUser()->setAttribute('new_user', false);
 			$this->source = HomeFilterForm::I_FOLLOW_ID;
 			//Временное решение
 			$this->categories = array(HomeFilterForm::ALL_CATEGORIES_ID);
 			$this->criteria = SceneTimePeer::retrieveClipsIdsForMainByUserId(null, $this->getUser()->getId(), $this->categories);
 			$this->criteria = SceneTimePeer::modifyCriteriaByFilter($this->criteria, $this->getUser()->getId());
 			$count = SceneTimePeer::doCountForPager($this->criteria);
+			//Хватает ли элементов из i follow для вывода одной страницы?
 			if($count['count'] < 40 / 4)
 			{
+				//Не хватает
 				$categories_names = array('Dance', 'Events', 'Films & Movies', 'Fitness', 'Recipes', 'People', 'Serials', 'Style', 'Travel & Places');
 				if($this->getUser()->getProfile()->getGender())
 				{
@@ -49,9 +50,11 @@ class homeActions extends sfActions
 				$this->getUser()->setAttribute('source', 1);
 				$this->redirect($this->generateUrl('homepage'));
 				return sfView::NONE;
+				//Завершение процесса и редирект на страницу просмотра всего контента с выборкой по предустановленным категориям
 			}
 			else
 			{
+				//Хватает, обнуляем список категорий и выводим все из i follow
 				$this->getResponse()->setCookie('source', $this->source);
 				$this->getResponse()->setCookie('categories', null);
 			}
@@ -67,10 +70,7 @@ class homeActions extends sfActions
 			{
 				$this->source = $this->getUser()->getAttribute('source');
 				$this->categories = $this->getUser()->hasAttribute('categories') ? @unserialize($this->getUser()->getAttribute('categories')) : null;
-				/*if($this->categories === null)
-				{
-					$this->categories = $this->getRequest()->getCookie('categories') ? @unserialize(base64_decode($this->getRequest()->getCookie('categories'))) : null;
-				}*/
+
 				$this->getResponse()->setCookie('source', $this->source);
 				$this->getResponse()->setCookie('categories', $this->categories ? base64_encode(serialize($this->categories)) : null);
 			}
@@ -91,7 +91,7 @@ class homeActions extends sfActions
 		{
 			$this->modal = 1;
 			$this->scene_id = $request->getParameter('scene_id');
-			$this->current_url = $this->generateUrl('homepage');
+			$this->bug_current_url = $this->generateUrl('homepage');
 		}
 
 		$this->user = $this->getUser();
@@ -124,8 +124,14 @@ class homeActions extends sfActions
 		$this->new_user = false;
 		if($this->getUser()->hasAttribute('new_user'))
 		{
-			$this->new_user = $this->getUser()->getAttribute('new_user');
+			$this->new_user = (bool)$this->getUser()->getAttribute('new_user');
+			$this->getUser()->setAttribute('new_user', false);
 		}
+		else{
+			$this->new_user = true;
+			$this->getUser()->setAttribute('new_user', true);
+		}
+		$this->getUser()->setAttribute('new_user', true);
 
 		$this->categories = $this->categories ? array_flip($this->categories) : null;
 

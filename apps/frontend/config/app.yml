@@ -33,21 +33,21 @@ all:
       callback: @homepage
       scope:
         - email
-        - user_about_me
-        - user_activities
-        - user_birthday
-        - user_education_history
-        - user_events
-        - user_groups
-        - user_interests
-        - user_likes
-        - user_notes
-        - user_photos
-        - user_relationships
-        - user_status
-        - user_videos
-        - user_work_history
-        - user_location
+#        - user_about_me
+#        - user_activities
+#        - user_birthday
+#        - user_education_history
+#        - user_events
+#        - user_groups
+#        - user_interests
+#        - user_likes
+#        - user_notes
+#        - user_photos
+#        - user_relationships
+#        - user_status
+#        - user_videos
+#        - user_work_history
+#        - user_location
 #        - friends_about_me
 #        - friends_activities
 #        - friends_birthday
@@ -63,8 +63,9 @@ all:
 #        - friends_work_history
 #        - friends_location
 #        - read_friendlists
-        - read_stream
-        - publish_stream
+#        - read_stream
+#        - publish_stream
+        - publish_actions
                       #optionnal - http://developers.facebook.com/docs/authentication/permissions
                                         # needed to create an user based on his email_address
       user:

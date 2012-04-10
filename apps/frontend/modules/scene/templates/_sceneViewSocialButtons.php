@@ -50,6 +50,7 @@
 		$().ready(function(){
 			//fbHooks(<?php echo $fb_app_id?>, <?php echo sprintf('%d, %d', $scene_id, $current_user->getId()) ?>, "<?php echo url_for('@scene_change_liked_state'); ?>");
 			asyncRequestor.call('facebook', function(){
+				console.log(<?php echo $user->getId()?>);
 				function toggleFBLikeButton(scene_id, user_id, state, url) {
 					if(state)
 					{

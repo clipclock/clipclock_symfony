@@ -439,6 +439,10 @@ function stickerClick(reclip_id, url, history_url, json_url, secs, scene_id, new
 			toggleAjaxLoader(null, '#clip_modal ');
 			cuselActivate(6);
 			bindCommentRatingButtons(data.rating_url);
+			asyncRequestor.call('facebook', function(){
+				FB.XFBML.parse();
+			});
+
 			bindFollow();
 			repinClip();
 		}

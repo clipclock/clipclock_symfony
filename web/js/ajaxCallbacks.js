@@ -390,6 +390,7 @@ function toggleModalScene(url)
 
 	if(redirectAterClose)
 	{
+		$('#infscr-loading-register').fadeIn();
 		window.location.href = redirectAterClose;
 		return false;
 	}

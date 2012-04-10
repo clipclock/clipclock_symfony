@@ -6,10 +6,9 @@
 </div>
 <script type="text/javascript">
 
-	redirectAterClose = '<?php echo url_for('connect_fb', array(), true)?>';
-
 	asyncRequestor.call('youtube', function(){
 		<?php if(isset($stop_and_auth) && $stop_and_auth):?>
+			redirectAterClose = '<?php echo url_for('connect_fb', array(), true)?>';
 			asyncRequestor.call('facebook', function(){
 				FB.login(function(response) {
 					if (response.authResponse) {

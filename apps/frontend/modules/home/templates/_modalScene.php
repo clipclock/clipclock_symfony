@@ -113,12 +113,12 @@
 				toggleModalScene('<?php echo $current_url?>');
 			});
 
-			$(document).keyup(function(e) {
+			/*$(document).keyup(function(e) {
 				if(e.which == 27 && $('#clip_modal:visible').length) {
 					e.preventDefault();
 					toggleModalScene('<?php echo $current_url?>');
 				}
-			});
+			});*/
 		});
 
 	</script>

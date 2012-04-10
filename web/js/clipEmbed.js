@@ -6,8 +6,6 @@
 	tag.src = "http://www.youtube.com/player_api";
 	var firstScriptTag = document.getElementsByTagName('script')[0];
 	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-	console.log('outube loading');
 })();
 
 var ytplayer;
@@ -15,7 +13,6 @@ var youTubeApiLoaded = 0;
 var redirectAterClose;
 
 function onYouTubePlayerAPIReady() {
-	console.log('youtube loaded');
 	youTubeApiLoaded = 1;
 }
 
@@ -37,24 +34,8 @@ function preparePlayer(scene_time, video_id, source, modal, stop_and_auth)
 
 function embedClip(scene_time, video_id, source, modal, stop_and_auth)
 {
-	if(stop_and_auth)
+	if(!stop_and_auth)
 	{
-//		if(fb_already_inited)
-//		{
-//			FB.login(function(response) {
-//				if (response.authResponse) {
-//					toggleModalScene();
-//					window.location.href = redirectAterClose;
-//					return true;
-//				} else {
-//					preparePlayer(scene_time, video_id, source, modal, stop_and_auth);
-//				}
-//			}, {scope: 'publish_actions,email'});
-//		}
-	}
-	else
-	{
-		console.log(scene_time, video_id, source, modal);
 		preparePlayer(scene_time, video_id, source, modal);
 	}
 }

@@ -52,7 +52,6 @@ function fbHooks(app_id, scene_id, user_id, url, requests_url)
 			});
 
 			function fbEnsureInit(callback) {
-				console.log(fb_already_inited);
 				if(!window.fb_already_inited) {
 					setTimeout(function() {fbEnsureInit(callback);}, 50);
 				} else {

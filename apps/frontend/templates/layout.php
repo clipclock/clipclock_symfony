@@ -10,6 +10,7 @@
 	<?php include_combined_javascripts() ?>
 </head>
 <body>
+<div id="fb-root"></div>
 <script type="text/javascript">
 	var _gaq = _gaq || [];
 	_gaq.push(['_setAccount', 'UA-30664522-1']);
@@ -44,7 +45,6 @@
 <?php include_slot('category_modal') ?>
 <!-- ******************		HEAD START ****************************** -->
 <div id="head">
-	<div id="fb-root"></div>
 	<!-- header  -->
 	<div class="header">
 		<a href="<?php echo url_for('homepage')?>" class="logo"></a>

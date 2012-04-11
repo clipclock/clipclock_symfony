@@ -459,7 +459,7 @@ function stickerClick(reclip_id, url, history_url, json_url, secs, scene_id, new
 
 $('.clip_sticker a.sticker_image').live('click', function () {
 
-	var clipSticker = $(this).parents('.clip_sticker');
+	var clipSticker = $(this);
 
 	return stickerClick(
 			$(clipSticker).attr('data-reclip-id'),

@@ -1,4 +1,4 @@
-<li class="clip_sticker" data-reclip-id="<?php echo $reclip_id ?>" data-url="<?php echo url_for('scene_change', array('scene_id' => $scene_info['scene_id'], 'modal' => 1)); ?>" data-history-url="<?php echo url_for('scene', array('id' => $scene_info['scene_id'], 'board_id' => $board->getId(), 'username_slug' => $board->getSfGuardUserProfile()), true); ?>" data-secs="<?php echo $scene_info['scene_time']?>" data-scene-id="<?php echo $scene_info['scene_id']?>">
+<li class="clip_sticker">
 	<div class="inner">
 		<p class="name-of-scence"><a href="<?php echo url_for('scene', array('id' => $scene_info['scene_id'], 'board_id' => $board->getId(), 'username_slug' => $board->getSfGuardUserProfile()))?>"><?php echo truncate_text($scene_info['name'], 32, '…', true)?></a></p>
 

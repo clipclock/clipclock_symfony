@@ -88,6 +88,7 @@ class userActions extends sfActions
 				//For user who go from external ads
 				$this->redirect($this->generateUrl('homepage_modal', array('scene_id' => $this->getUser()->getAttribute('scene_id'))));
 				$this->getUser()->getAttributeHolder()->remove('scene_id');
+				return sfView::NONE;
 			}
 			else
 			{
@@ -100,10 +101,8 @@ class userActions extends sfActions
 					$this->redirect($request->getReferer());
 			}
 		}
-		else
-		{
-			$this->redirect('@homepage');
-		}
+
+		$this->redirect('@homepage');
 	}
 
 	public function executeRegister(sfWebRequest $request)

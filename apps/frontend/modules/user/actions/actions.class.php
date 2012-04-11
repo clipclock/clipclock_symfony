@@ -28,6 +28,8 @@ class userActions extends sfActions
 			$this->getUser()->setAttribute('scene_id', $request->getParameter('scene_id'));
 		}
 
+		$this->getUser()->setAttribute('auth_redirect_url', $request->getReferer());
+
 		$this->getUser()->connect('facebook');
 		return sfView::NONE;
 	}

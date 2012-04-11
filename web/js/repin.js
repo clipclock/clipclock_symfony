@@ -16,26 +16,26 @@ function newRepinContainer()
         $('#new_repin_modal .close,  #new_repin_modal .default-un-follow-btn').click(function(){
             $('#new_repin_modal').toggle();
 
-            ytplayer = document.getElementById("scene_embed_video_player");
-            if(ytplayer.getPlayerState() == 1)
+            var player = getPlayer();
+            if(player.getPlayerState() == 1)
             {
-                ytplayer.pauseVideo();
+                player.pauseVideo();
             }
             else
             {
-                ytplayer.playVideo();
+                player.playVideo();
             }
         });
 
 		$('#new_repin').click(function(){
-            ytplayer = document.getElementById("scene_embed_video_player");
-            if(ytplayer.getPlayerState() == 1)
+			var player = getPlayer();
+            if(player.getPlayerState() == 1)
             {
-                ytplayer.pauseVideo();
+                player.pauseVideo();
             }
             else
             {
-                ytplayer.playVideo();
+                player.playVideo();
             }
             newRepinModalShow();
             return false;

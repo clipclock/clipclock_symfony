@@ -95,3 +95,11 @@ function checkCurrentScene(scene_id, scene_time)
 		return false;
 	}
 }
+
+function destroyPlayer()
+{
+	if ($.browser.msie)
+		swfobject.removeSWF("scene_embed_video_player");
+
+	return true;
+}

@@ -77,7 +77,18 @@ class userActions extends sfActions
 				)
 			);
 		}
+
+		//OMG, я искал это очень долго
 		$this->getUser()->setAttribute('new_user', true);
+
+		// for users who go from homepage_modal
+		// redirect them to homepage_modal back
+		$routeData = $this->getContext()->getRouting()->findRoute(
+			str_replace($this->generateUrl('homepage', array(), true), '', $request->getReferer())
+		);
+		if ($routeData && $routeData['name'] == 'homepage_modal')
+			$this->redirect($request->getReferer());
+
 		$this->redirect('@homepage');
 	}
 
@@ -130,14 +141,6 @@ class userActions extends sfActions
 		}
 
 		FriendsMapper::mapFrom($melody, $user);
-
-		// for users who go from homepage_modal
-		// redirect them to homepage_modal back
-		$routeData = $this->getContext()->getRouting()->findRoute(
-			str_replace($this->generateUrl('homepage', array(), true), '', $request->getReferer())
-		);
-		if ($routeData && $routeData['name'] == 'homepage_modal')
-			$this->redirect($request->getReferer());
 
 		$this->redirect('@user_register_welcome');
 	}

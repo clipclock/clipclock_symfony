@@ -15,7 +15,14 @@ class homeActions extends sfActions
 	{
 		if(is_null($this->new_user))
 		{
-			$this->new_user = $this->getContext()->getRouting()->getCurrentRouteName() == 'homepage_modal' ? true : false;
+			$this->new_user =
+					$this->getContext()->getRouting()->getCurrentRouteName() == 'homepage_modal'
+					&& $this->getUser()->getAttribute('new_user') ? true : false;
+		}
+
+		if($this->getUser()->getId() && $this->getContext()->getRouting()->getCurrentRouteName() != 'homepage_modal')
+		{
+			$this->getUser()->setAttribute('new_user', false);
 		}
 
 		return $this->new_user;
@@ -132,11 +139,6 @@ class homeActions extends sfActions
 		}
 
 		$this->welcome_close = (bool)$request->getCookie('welcome-close');
-
-		//$this->getUser()->setAttribute('new_user', false);
-
-//		$this->getUser()->setAttribute('new_user', true);
-//		$this->new_user = true;
 
 		$this->categories = $this->categories ? array_flip($this->categories) : null;
 

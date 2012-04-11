@@ -23,6 +23,11 @@ class userActions extends sfActions
 
 	public function executeConnect(sfWebRequest $request)
 	{
+		if($request->getParameter('scene_id'))
+		{
+			$this->getUser()->setAttribute('scene_id', $request->getParameter('scene_id'));
+		}
+
 		$this->getUser()->connect('facebook');
 		return sfView::NONE;
 	}
@@ -57,39 +62,48 @@ class userActions extends sfActions
 
 	public function executeWelcome(sfWebRequest $request)
 	{
-		if(!$this->getUser()->getAttribute('melody'))
+		if($this->getUser()->getAttribute('melody') && $this->getUser()->getId())
+		{
+			$this->getUser()->getAttributeHolder()->remove('melody');
+			$this->getUser()->getAttributeHolder()->remove('melody_user');
+			$this->getUser()->getAttributeHolder()->remove('melody_user_profile');
+
+			if(sfConfig::get('app_registration_confirm', 'false'))
+			{
+				$mailer = new Mailer($this->getContext()->getInstance());
+				$mailer->send(
+					$this->getUser()->getEmail(),
+					Mailer::REG_USER_WELCOME,
+					array(
+						'name' => $this->getUser()->getFirstName() ? $this->getUser()->getFirstName() : $this->getUser()->getNick(),
+					)
+				);
+			}
+		}
+
+		if($this->getUser()->getId())
+		{
+			if($this->getUser()->hasAttribute('scene_id'))
+			{
+				//For user who go from external ads
+				$this->redirect($this->generateUrl('homepage_modal', array('scene_id' => $this->getUser()->getAttribute('scene_id'))));
+				$this->getUser()->getAttributeHolder()->remove('scene_id');
+			}
+			else
+			{
+				// for users who go from homepage_modal
+				// redirect them to homepage_modal back
+				$routeData = $this->getContext()->getRouting()->findRoute(
+					str_replace($this->generateUrl('homepage', array(), true), '', $request->getReferer())
+				);
+				if ($routeData && $routeData['name'] == 'homepage_modal')
+					$this->redirect($request->getReferer());
+			}
+		}
+		else
 		{
 			$this->redirect('@homepage');
 		}
-
-		$this->getUser()->getAttributeHolder()->remove('melody');
-		$this->getUser()->getAttributeHolder()->remove('melody_user');
-		$this->getUser()->getAttributeHolder()->remove('melody_user_profile');
-
-		if(sfConfig::get('app_registration_confirm', 'false'))
-		{
-			$mailer = new Mailer($this->getContext()->getInstance());
-			$mailer->send(
-				$this->getUser()->getEmail(),
-				Mailer::REG_USER_WELCOME,
-				array(
-					 'name' => $this->getUser()->getFirstName() ? $this->getUser()->getFirstName() : $this->getUser()->getNick(),
-				)
-			);
-		}
-
-		//OMG, я искал это очень долго
-		$this->getUser()->setAttribute('new_user', true);
-
-		// for users who go from homepage_modal
-		// redirect them to homepage_modal back
-		$routeData = $this->getContext()->getRouting()->findRoute(
-			str_replace($this->generateUrl('homepage', array(), true), '', $request->getReferer())
-		);
-		if ($routeData && $routeData['name'] == 'homepage_modal')
-			$this->redirect($request->getReferer());
-
-		$this->redirect('@homepage');
 	}
 
 	public function executeRegister(sfWebRequest $request)
@@ -141,6 +155,7 @@ class userActions extends sfActions
 		}
 
 		FriendsMapper::mapFrom($melody, $user);
+		$this->getUser()->setAttribute('new_user', true);
 
 		$this->redirect('@user_register_welcome');
 	}

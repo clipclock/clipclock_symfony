@@ -241,8 +241,11 @@ user_register_welcome:
 ### MELODY ROUTINE ###
 
 connect_fb:
+  url:   /connect_fb/:scene_id/*
+  param: { module: user, action: connect, scene_id: null }
+connect_fb:
   url:   /connect_fb/*
-  param: { module: user, action: connect }
+  param: { module: user, action: connect, scene_id: null }
 
 callback_fb:
   url:   /callback_fb

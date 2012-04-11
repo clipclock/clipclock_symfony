@@ -6,6 +6,8 @@
 all:
   melody:
     facebook:
+      key: 365665100128423
+      secret: 222bb675913bc944dc8a56252bc415ac
       aliases:
         nickname: 'me?fields=name'
         id: 'me?fields=id'
@@ -51,3 +53,8 @@ all:
             url:          sf_guard_permission
             image:        mediamanager.png
             credentials:  [superadmin]
+prod:
+  melody:
+    facebook:                       #http://dev.viddii.com/frontend_dev.php/access/facebook
+      key: 398827136799487
+      secret: 6db3eb2142819ee6e5f87ed9b97af946

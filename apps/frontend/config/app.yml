@@ -30,7 +30,7 @@ all:
     facebook:                       #http://viddii.dev/frontend_dev.php/access/facebook
       key: 365665100128423
       secret: 222bb675913bc944dc8a56252bc415ac
-      callback: @homepage
+      callback: @user_register_welcome
       scope:
         - email
 #        - user_about_me

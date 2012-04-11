@@ -19,3 +19,6 @@
 [submodule "plugins/sfWebBrowserPlugin"]
 	path = plugins/sfWebBrowserPlugin
 	url = git://github.com/madesst/sfWebBrowserPlugin.git
+[submodule "lib/fb"]
+	path = lib/fb
+	url = git://github.com/madesst/php-sdk.git

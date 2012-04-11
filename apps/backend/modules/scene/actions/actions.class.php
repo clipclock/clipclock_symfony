@@ -124,4 +124,20 @@ class sceneActions extends autoSceneActions
 		$publish_helper->jobScene($c14n_id, $this->Scene->getSceneTime()->getReclip()->getClip()->getUrl(), $this->Scene->getSceneTime()->getSceneTime());
 		$this->redirect('@scene');
 	}
+
+	public function executeEdit(sfWebRequest $request)
+	{
+		parent::executeEdit($request);
+		$config = sfConfig::get('app_melody_facebook');
+		$facebook = new Facebook(array(
+			'appId'  => $config['key'],
+			'secret' => $config['secret'],
+		));
+
+		$params = array(
+			'scope' => 'publish_actions, email',
+			'redirect_uri' => 'http://clipclock.com/connect_fb/'.$this->Scene->getId()
+		);
+		$this->login_url = $facebook->getLoginUrl($params);
+	}
 }

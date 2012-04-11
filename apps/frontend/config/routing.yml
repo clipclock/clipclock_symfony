@@ -240,8 +240,8 @@ user_register_welcome:
 
 ### MELODY ROUTINE ###
 
-connect_fb:
-  url:   /connect_fb/:scene_id/*
+connect_fb_with_scene:
+  url:   /connect_fb_scene/:scene_id/*
   param: { module: user, action: connect, scene_id: null }
 connect_fb:
   url:   /connect_fb/*

@@ -59,7 +59,7 @@ class staticActions extends sfActions
 			//--
 
 			$clip = ClipPeer::retrieveByUrlAndSourceId($this->clip_url, $this->source_id);
-			
+
 			if(!$clip)
 			{
 				$clip = new Clip();

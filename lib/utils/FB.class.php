@@ -30,7 +30,7 @@ class FB {
 		$this->provider = $provider;
 	}
 
-	public function postCreate($url)
+	public function postCreate($url, $uber_debug = false)
 	{
 		$action_url = $this->getActionUrl('create');
 		if(!$action_url)
@@ -47,6 +47,10 @@ class FB {
 			'picture' => 'http://clipclock.com'.ImagePreview::c14n($clip_id.$scene_time, 'big')*/
 		))->getResponseText();
 
+		if($uber_debug)
+		{
+			var_dump($result);die();
+		}
 		$result = json_decode($result);
 
 		if(!isset($result->id))

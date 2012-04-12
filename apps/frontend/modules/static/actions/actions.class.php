@@ -51,6 +51,7 @@ class staticActions extends sfActions
 				$doc = new DOMDocument;
 				$doc->load($url);
 				$this->clip_name = $doc->getElementsByTagName("title")->item(0)->nodeValue;
+				$this->clip_duration = $doc->getElementsByTagNameNS("http://gdata.youtube.com/schemas/2007", "duration")->item(0)->getAttribute('seconds');
 			}
 
 			$source = SourcePeer::retrieveByName($this->source_name);
@@ -58,12 +59,14 @@ class staticActions extends sfActions
 			//--
 
 			$clip = ClipPeer::retrieveByUrlAndSourceId($this->clip_url, $this->source_id);
+			
 			if(!$clip)
 			{
 				$clip = new Clip();
 				$clip->setUrl($this->clip_url);
 				$clip->setName($this->clip_name);
 				$clip->setSourceId($this->source_id);
+				$clip->setDuration($this->clip_duration);
 				$clip->save();
 			}
 			else

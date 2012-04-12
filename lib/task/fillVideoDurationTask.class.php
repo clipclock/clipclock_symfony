@@ -36,7 +36,8 @@ EOF;
 
 		$results = ClipQuery::create()
 				->filterByDuration(0)
-				->limit(50)
+				->filterByHide(false)
+				->where(ClipPeer::SOURCE_ID . ' = 1')
 				->find();
 
 		$doc = new DOMDocument;
@@ -48,11 +49,13 @@ EOF;
 			if (@($doc->load($url))){
 
 				$value = $doc->getElementsByTagNameNS("http://gdata.youtube.com/schemas/2007", "duration")->item(0)->getAttribute('seconds');
+
 				$r->setDuration($value);
 				$r->save();
+
 				$this->log("Saved duration for {$r->getUrl()} : $value");
 
-				sleep(1); // a little pause
+				usleep(5000); // a little pause
 
 			} else {
 

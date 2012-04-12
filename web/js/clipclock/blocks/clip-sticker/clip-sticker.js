@@ -1,4 +1,4 @@
-(function(cc){
+/*(function(cc){
 
 	var clipSticker = function(){};
 
@@ -16,4 +16,4 @@
 		}
 	});
 
-})(clipclock);
+})(clipclock);*/

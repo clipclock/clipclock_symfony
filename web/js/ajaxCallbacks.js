@@ -16,8 +16,8 @@ function stickerChange(data, clip_id, scene_id)
 	$('#image_'+clip_id).html(data.scene_image);
 	$('#comments_list_'+clip_id).html(data.scene_comments_list);
 	$('#comments_list_footer_'+clip_id).html(data.scene_footer);
-	$('#clip_control_'+clip_id+' li').removeClass('active');
-	$('#sticker_'+clip_id+'_'+scene_id).addClass('active');
+	//$('#clip_control_'+clip_id+' li').removeClass('active');
+	//$('#sticker_'+clip_id+'_'+scene_id).addClass('active');
 	toggleAjaxLoader('_'+clip_id);
 	$('#comments_list_'+clip_id+' .sticker_new_comment').removeClass('hidden');
 	$('.clip_sticker').wookmark('update');
@@ -30,6 +30,28 @@ var stickerChangeCache = {}; // will be removed then we will add namespaces
 $('.sticker-tab a').live('click', function(){
 
 	var el = this;
+
+	var tabs = $(el).parents('.tabs');
+	$(tabs).find('.sticker-tab').removeClass('active');
+	$(el).parents('.sticker-tab').addClass('active');
+
+	/**/
+	var clip_sticker = $(el).parents('.clip_sticker');
+
+	var duration = parseInt($(clip_sticker).attr('data-duration'));
+	var tab_time = parseInt($(clip_sticker).find('.sticker-tab.active a').attr('data-time'));
+
+	if (tab_time > duration)
+		tab_time = duration;
+
+	var value = Math.round(100 * tab_time / duration);
+	if (value >= 100)
+		value = 95;
+
+	$(clip_sticker).find('.marker').css({ left: value + '%' });
+	$(clip_sticker).find('.band').css({ width: value + '%' });
+	/**/
+
 
 	if (checkCurrentSticker($(el).attr('data-reclip-id'), $(el).attr('data-scene-id'))) {
 

@@ -32,12 +32,10 @@ EOF;
 		$databaseManager = new sfDatabaseManager($this->configuration);
 		$connection = $databaseManager->getDatabase($options['connection'])->getConnection();
 
-		$url = 'http://gdata.youtube.com/feeds/api/videos/ugEezy2NeRU';
-
 		$results = ClipQuery::create()
 				->filterByDuration(0)
-				->filterByHide(false)
 				->where(ClipPeer::SOURCE_ID . ' = 1')
+				->orderBy('Clip.Id', Criteria::DESC)
 				->find();
 
 		$doc = new DOMDocument;

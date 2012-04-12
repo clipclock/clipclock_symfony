@@ -85,9 +85,11 @@ class userActions extends sfActions
 
 		if($this->getUser()->hasAttribute('scene_id'))
 		{
-			//For user who go from external ads
-			$this->redirect($this->generateUrl('homepage_modal', array('scene_id' => $this->getUser()->getAttribute('scene_id'))));
+			$scene_id = $this->getUser()->getAttribute('scene_id');
 			$this->getUser()->getAttributeHolder()->remove('scene_id');
+
+			//For user who go from external ads
+			$this->redirect($this->generateUrl('homepage_modal', array('scene_id' => $scene_id)));
 			return sfView::NONE;
 		}
 

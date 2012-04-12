@@ -544,10 +544,15 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 .modal-window .arrows.next {right:0;}
 .modal-window .arrows.next span {left:440px; background-position:100% 0;}
 
-.modal-window .modal-wrap { width:707px; position:absolute; left:50%; margin-left:-290px; padding-bottom:50px; z-index:100;}
+.modal-window .modal-wrap { width:707px; position:absolute; left:50%; margin-left:-340px; padding-bottom:50px; z-index:100;}
 .modal-window .modal-wrap .close {position:absolute; top:0; right:-46px; height:23px; width:23px; background:url(../images/modal-close.png); cursor:pointer;}
-.modal-window .modal-wrap .right-mini-coll {margin:0;}
-.modal-window .modal-wrap .center-col {margin-right:110px;}
+.modal-window .modal-wrap .right-mini-coll {
+     float: left;
+     margin-top: 93px;
+}
+.modal-window .modal-wrap .center-col {
+    margin: 0 0 0 110px !important;
+}
 
 
 /* scence-autor */

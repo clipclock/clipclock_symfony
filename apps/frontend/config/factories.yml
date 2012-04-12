@@ -3,10 +3,21 @@
 
 prod:
   logger:
-    class:   sfNoLogger
+    class: sfAggregateLogger
     param:
-      level:   err
-      loggers: ~
+      level: INFO
+      loggers:
+        sf_web_debug:
+          class: sfNoLogger
+          param: ~
+        sf_file_debug:
+          class: sfNoLogger
+          param: ~
+        sf_file_err:
+          class: sfFileLogger
+          param:
+            level: INFO
+            file: %SF_LOG_DIR%/%SF_APP%_%SF_ENVIRONMENT%_info.log
   storage:
     class: sfCacheSessionStorage
     param:

@@ -396,6 +396,7 @@ function toggleModalScene(url)
 			scrollTopState = false;
 		}
 
+		destroyPlayer();
 		$('.clip_modal_fixed #scene_embed_video_player').replaceWith('<span></span>');
 	}
 

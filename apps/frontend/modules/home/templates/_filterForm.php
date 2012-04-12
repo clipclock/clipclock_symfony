@@ -22,7 +22,7 @@
 							<img src="/images/wel-list-icons/ico-2.png" alt="" width="85" height="63">
 						</div>
 						<p>
-							Pause the best video moment, make a clip, and share it in a second
+							Pause the best video moment, make a "clip", and share it in a second
 						</p>
 					</div>
 				</li>
@@ -32,7 +32,7 @@
 							<img src="/images/wel-list-icons/ico-3.png" alt="" width="85" height="63">
 						</div>
 						<p>
-							Follow your friends' clips, add yours and comment best moments
+							Your friends will see the video starting with the moment you've "clipped"
 						</p>
 						<div class="b-link close_link">
 							<a href="#">GO!</a>

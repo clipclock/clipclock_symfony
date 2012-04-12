@@ -83,28 +83,29 @@ class userActions extends sfActions
 			}
 		}
 
-		if($this->getUser()->getId())
+		if($this->getUser()->hasAttribute('scene_id'))
 		{
-			if($this->getUser()->hasAttribute('scene_id'))
-			{
-				//For user who go from external ads
-				$this->redirect($this->generateUrl('homepage_modal', array('scene_id' => $this->getUser()->getAttribute('scene_id'))));
-				$this->getUser()->getAttributeHolder()->remove('scene_id');
-				return sfView::NONE;
-			}
-			else
-			{
-				// for users who go from homepage_modal
-				// redirect them to homepage_modal back
-				$routeData = $this->getContext()->getRouting()->findRoute(
-					str_replace($this->generateUrl('homepage', array(), true), '', $request->getReferer())
-				);
-				if ($routeData && $routeData['name'] == 'homepage_modal')
-					$this->redirect($request->getReferer());
-			}
+			$scene_id = $this->getUser()->getAttribute('scene_id');
+			$this->getUser()->getAttributeHolder()->remove('scene_id');
+
+			//For user who go from external ads
+			$this->redirect($this->generateUrl('homepage_modal', array('scene_id' => $scene_id)));
+			return sfView::NONE;
+		}
+
+		// for users who go from homepage_modal
+		// redirect them to homepage_modal back
+		$routeData = $this->getContext()->getRouting()->findRoute(
+			str_replace($this->generateUrl('homepage', array(), true), '', $request->getReferer()));
+
+		if ($routeData && $routeData['name'] == 'homepage_modal')
+		{
+			$this->redirect($request->getReferer());
+			return sfView::NONE;
 		}
 
 		$this->redirect('@homepage');
+		return sfView::NONE;
 	}
 
 	public function executeRegister(sfWebRequest $request)
@@ -113,52 +114,56 @@ class userActions extends sfActions
 		$user = unserialize($this->getUser()->getAttribute('melody_user'));
 		$melody = unserialize($this->getUser()->getAttribute('melody'));
 
-		$user = ProfileMapper::mapFrom($user, $user_profile, $melody);
-
-		if(sfConfig::get('app_registration_invites', 'false'))
+		if($user->getUsername())
 		{
-			$invite = InvitesPeer::retrieveNewestByExtId(ProfileMapper::getExtId($melody));
-			if(!$invite)
+			$user = ProfileMapper::mapFrom($user, $user_profile, $melody);
+
+			if(sfConfig::get('app_registration_invites', 'false'))
 			{
-				$this->getUser()->setFlash('registration_error', 'no_invite');
-				$this->redirect($this->generateUrl('homepage'));
-				return sfView::NONE;
+				$invite = InvitesPeer::retrieveNewestByExtId(ProfileMapper::getExtId($melody));
+				if(!$invite)
+				{
+					$this->getUser()->setFlash('registration_error', 'no_invite');
+					$this->redirect($this->generateUrl('homepage'));
+					return sfView::NONE;
+				}
+
+				$user->setRefUserId($invite->getSfGuardUserProfileId());
 			}
 
-			$user->setRefUserId($invite->getSfGuardUserProfileId());
+			$user->save();
+
+			$access_token = $melody->getToken();
+			$access_token->setUserId($user->getId());
+
+			ProfileMapper::retrieveAvatarsAndPublish($user, $melody);
+
+			if(!$this->getUser()->isAuthenticated() && $user->getIsActive())
+			{
+				$this->getUser()->signin($user, sfConfig::get('app_melody_remember_user', true));
+			}
+
+			$this->getUser()->addToken($access_token);
+
+			$boards = array('Travel & Places', 'Favorite recipes', 'My style', 'Fitness');
+			if($this->getUser()->getProfile()->getGender())
+			{
+				$boards = array('Sport', 'Business', 'Cars', 'Fun');
+			}
+			foreach($boards as $name)
+			{
+				$board = new Board();
+				$board->setSfGuardUserProfileId($this->getUser()->getId());
+				$board->setName($name);
+				$board->save();
+			}
+
+			FriendsMapper::mapFrom($melody, $user);
+			$this->getUser()->setAttribute('new_user', true);
 		}
-
-		$user->save();
-
-		$access_token = $melody->getToken();
-		$access_token->setUserId($user->getId());
-
-		ProfileMapper::retrieveAvatarsAndPublish($user, $melody);
-
-		if(!$this->getUser()->isAuthenticated() && $user->getIsActive())
-		{
-			$this->getUser()->signin($user, sfConfig::get('app_melody_remember_user', true));
-		}
-
-		$this->getUser()->addToken($access_token);
-
-		$boards = array('Travel & Places', 'Favorite recipes', 'My style', 'Fitness');
-		if($this->getUser()->getProfile()->getGender())
-		{
-			$boards = array('Sport', 'Business', 'Cars', 'Fun');
-		}
-		foreach($boards as $name)
-		{
-			$board = new Board();
-			$board->setSfGuardUserProfileId($this->getUser()->getId());
-			$board->setName($name);
-			$board->save();
-		}
-
-		FriendsMapper::mapFrom($melody, $user);
-		$this->getUser()->setAttribute('new_user', true);
 
 		$this->redirect('@user_register_welcome');
+		return sfView::NONE;
 	}
 
 	/*

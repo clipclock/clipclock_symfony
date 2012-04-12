@@ -28,6 +28,7 @@ all:
     remember_user: true
     redirect_register: @user_register
     facebook:                       #http://viddii.dev/frontend_dev.php/access/facebook
+      namespace: under_dev
       key: 365665100128423
       secret: 222bb675913bc944dc8a56252bc415ac
       callback: @user_register_welcome
@@ -101,6 +102,7 @@ all:
 prod:
   melody:
     facebook:                       #http://dev.viddii.com/frontend_dev.php/access/facebook
+      namespace: clipclock
       key: 398827136799487
       secret: 6db3eb2142819ee6e5f87ed9b97af946
   kiss:

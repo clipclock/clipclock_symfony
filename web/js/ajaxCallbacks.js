@@ -112,7 +112,8 @@ function sceneChange(json_data, dont_history, url, json_url, secs, scene_id, mod
 
 	if(!dont_history)
 	{
-		history.pushState({json_url: json_url, secs: secs, scene_id: scene_id}, 'Title', url);
+		if (history.pushState != undefined)
+			history.pushState({json_url: json_url, secs: secs, scene_id: scene_id}, 'Title', url);
 	}
 
 	_kmq.push(['record', 'Viewed scene']);
@@ -157,44 +158,49 @@ function bindSceneChangeBack(json_url, secs, scene_id, current_url)
 	$().ready(function(){
 		bindSceneTextChangeHover();
 		bindClipboardCopy(current_url);
-		window.addEventListener('popstate', function(e){
-			if(e.state && e.state.json_url)
-			{
-				json_url = e.state.json_url;
-				secs = e.state.secs;
-				scene_id = e.state.scene_id;
-			}
-			else if($('#clip_modal').length && e.state)
-			{
-				toggleModalScene();
-				return true;
-			}
 
-			if(scene_id && secs && json_url)
-			{
-				if(!new_user)
+		if (!$.browser.msie){
+
+			window.addEventListener('popstate', function(e){
+				if(e.state && e.state.json_url)
 				{
-					$.ajax({
-						url: json_url,
-						beforeSend: function(){if(getPlayer()){highliteControlTab(scene_id);seekTo(secs);toggleAjaxLoader();}},
-						dataType: 'text',
-						success: function(data){
-							sceneChange(data, true);
-						}
-					});
+					json_url = e.state.json_url;
+					secs = e.state.secs;
+					scene_id = e.state.scene_id;
 				}
-			}
+				else if($('#clip_modal').length && e.state)
+				{
+					toggleModalScene();
+					return true;
+				}
 
-			if(!first_scene)
-			{
-				first_scene = {scene_id: scene_id, secs: secs, json_url: json_url};
-			}
+				if(scene_id && secs && json_url)
+				{
+					if(!new_user)
+					{
+						$.ajax({
+							url: json_url,
+							beforeSend: function(){if(getPlayer()){highliteControlTab(scene_id);seekTo(secs);toggleAjaxLoader();}},
+							dataType: 'text',
+							success: function(data){
+								sceneChange(data, true);
+							}
+						});
+					}
+				}
 
-			scene_id = null;
-			secs = null;
-			json_url = null;
+				if(!first_scene)
+				{
+					first_scene = {scene_id: scene_id, secs: secs, json_url: json_url};
+				}
 
-		}, false);
+				scene_id = null;
+				secs = null;
+				json_url = null;
+
+			}, false);
+
+		}
 	});
 }
 
@@ -258,14 +264,14 @@ function newSceneTimeModalShow(scene_time_id, scene_text_id)
 
 function new_time_scene_pause_player()
 {
-	ytplayer = getPlayer();
-	if(ytplayer.getPlayerState() == 1 && !$('#scene_add_comment').hasClass('active'))
+	var player = getPlayer();
+	if(player.getPlayerState() == 1 && !$('#scene_add_comment').hasClass('active'))
 	{
-		ytplayer.pauseVideo();
+		player.pauseVideo();
 	}
 	else if($('#scene_add_comment').hasClass('active'))
 	{
-		ytplayer.playVideo();
+		player.playVideo();
 	}
 	$('#scene_info').toggle();
 	$('#scene_add_comment').toggleClass('active');
@@ -389,11 +395,12 @@ function toggleModalScene(url)
 			$('#scroll-to-top').show();
 			scrollTopState = false;
 		}
+
+		$('.clip_modal_fixed #scene_embed_video_player').replaceWith('<span></span>');
 	}
 
-	$('.clip_modal_fixed #scene_embed_video_player').replaceWith('<span></span>');
+	//$('#clip_modal').offset({top: $(window).scrollTop()+30, left: 0});
 	$('.clip_modal_fixed').toggle();
-	$('#clip_modal').offset({top: $(window).scrollTop()+30, left: 0});
 
 	if(redirectAterClose)
 	{
@@ -405,10 +412,12 @@ function toggleModalScene(url)
 
 	if(url && url != window.location.href)
 	{
-		history.pushState({}, 'Title', url);
 		$('#clip_embed h2').html('&nbsp;');
 		$('#description .inside').html('');
 		$('#clip_controls').html('');
+
+		if (history.pushState != undefined)
+			history.pushState({}, 'Title', url);
 	}
 }
 

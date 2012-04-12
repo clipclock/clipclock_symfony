@@ -93,5 +93,6 @@ asyncRequestor.prototype = {
 
 var asyncRequestor = new asyncRequestor();
 
-asyncRequestor.call('youtube', function(){});
 asyncRequestor.call('facebook', function(){});
+if (!$.browser.msie)
+	asyncRequestor.call('youtube', function(){});

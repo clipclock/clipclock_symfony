@@ -157,9 +157,10 @@ P { padding:0 0 13px 0;}
 #interests .b-interests-list form ul li {float:left;}
 #interests .b-interests-list form ul li .rowElem {border:1px solid #d1cdcd; border-left:0; border-top:0; background:#fff; height:20px; width:163px; cursor:pointer; padding:7px; position:relative;}
 #interests .b-interests-list form ul li .rowElem .top {position:absolute; height:34px; width:177px; top:0; left:0; z-index:120;}
-#interests .b-interests-list form ul li .rowElem label {font-size:13px; font-weight:normal; color:#222; line-height:20px; position:relative; z-index:100;}
+#interests .b-interests-list form ul li .rowElem label {font-size:13px; font-weight:normal; color:#222; line-height:20px; position:relative;}
 #interests .b-interests-list form ul li .rowElem span {position:relative; z-index:100;}
 #interests .b-interests-list form ul li .rowElem.active { background:#329aea !important;}
+#interests .b-interests-list form ul li .rowElem.active .jqTransformCheckbox {background-position:0 0;}
 #interests .b-interests-list form ul li .rowElem.active label {color:#fff;}
 #interests .b-interests-list form ul li .rowElem:hover { background:#d6ebfb;}
 #interests .b-interests-list .b-btn {height:31px; margin-top:22px;}
@@ -534,7 +535,7 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 
 
 /* modal-window */
-.modal-window { position:absolute; z-index:100; width:100%; top:15px; min-width:980px; }
+.modal-window { position:absolute; z-index:100; width:100%; top:50px; min-width:980px; }
 
 .modal-window .arrows {height:330px; width:50%; position:absolute; top:134px; background:#f2f0f0; cursor:pointer; z-index:101;}
 .modal-window .arrows span {display:block; height:42px; width:24px; background:url(../images/modal-arrows.jpg) no-repeat; position:absolute; top:145px;}

@@ -120,7 +120,6 @@ $(document).ready(function(){
 
 	$('.welcome .close').click (function() {
 		closeWelcome(true);
-		console.log('closing');
 	});
 
 	$().UItoTop({ easingType: 'easeOutQuart', scrollSpeed: 200, containerID: 'scroll-to-top' });
@@ -132,8 +131,10 @@ $(document).ready(function(){
 
 	$('.b-interests-list form ul li .rowElem').click( function(){
 		$(this).toggleClass('active');
-		$(this).find('.jqTransformCheckbox').toggleClass('jqTransformChecked');
-		//$(this).find('input').toggle('checked');
+	});
+
+	$('.b-interests-list form ul li .rowElem label').click(function(){
+		$(this).parents('.rowElem').toggleClass('active');
 	});
 
 	$('.b-interests-list .b-btn #reset').click( function(){

@@ -28,6 +28,16 @@ class FB {
 		$fb = sfConfig::get('app_melody_'.$provider);
 		$this->namespace = $fb['namespace'];
 		$this->provider = $provider;
+
+		if(!isset($this->action_urls[$provider]))
+		{
+			return false;
+		}
+
+		foreach($this->action_urls[$provider] as $key => &$action_url)
+		{
+			$action_url = str_ireplace('%namespace%', $this->namespace, $action_url);
+		}
 	}
 
 	public function postCreate($url, $uber_debug = false)

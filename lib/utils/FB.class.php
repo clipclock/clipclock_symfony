@@ -40,7 +40,7 @@ class FB {
 		}
 	}
 
-	public function postCreate($url, $uber_debug = false)
+	public function postCreate($url, $logger = null)
 	{
 		$action_url = $this->getActionUrl('create');
 		if(!$action_url)
@@ -56,6 +56,13 @@ class FB {
 			'source' => 'http://www.youtube.com/v/'.$source.'?enablejsapi=1&playerapiid=ytplayer&start='.$scene_time.'&autoplay=1&version=3&feature=player_embedded&fs=1&rel=0&showsearch=0&showinfo=0',
 			'picture' => 'http://clipclock.com'.ImagePreview::c14n($clip_id.$scene_time, 'big')*/
 		))->getResponseText();
+
+		if($logger)
+		{
+			$logger->log(var_export($this->access_token, true), 0, 'warning');
+			$logger->log(var_export($url, true), 0, 'warning');
+			$logger->log(var_export($result, true), 0, 'warning');
+		}
 
 		$result = json_decode($result);
 

@@ -160,7 +160,7 @@ P { padding:0 0 13px 0;}
 #interests .b-interests-list form ul li .rowElem label {font-size:13px; font-weight:normal; color:#222; line-height:20px; position:relative;}
 #interests .b-interests-list form ul li .rowElem span {position:relative; z-index:100;}
 #interests .b-interests-list form ul li .rowElem.active { background:#329aea !important;}
-#interests .b-interests-list form ul li .rowElem.active .jqTransformCheckbox {background-position:0 0;}
+#interests .b-interests-list form ul li .rowElem.active .jqTransformCheckbox {background-position:0 0; background-position-y: 0}
 #interests .b-interests-list form ul li .rowElem.active label {color:#fff;}
 #interests .b-interests-list form ul li .rowElem:hover { background:#d6ebfb;}
 #interests .b-interests-list .b-btn {height:31px; margin-top:22px;}

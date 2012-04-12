@@ -83,7 +83,7 @@ class userActions extends sfActions
 			}
 		}
 
-		if($this->getUser()->hasAttribute('scene_id'))
+		if($this->getUser()->getAttribute('scene_id'))
 		{
 			$scene_id = $this->getUser()->getAttribute('scene_id');
 			$this->getUser()->getAttributeHolder()->remove('scene_id');

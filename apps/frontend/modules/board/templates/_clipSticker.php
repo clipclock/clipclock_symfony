@@ -1,13 +1,18 @@
-<li class="clip_sticker">
+<li class="clip_sticker" data-duration="<?php echo $scene_info['duration'] ?>">
 	<div class="inner">
 		<p class="name-of-scence"><a href="<?php echo url_for('scene', array('id' => $scene_info['scene_id'], 'board_id' => $board->getId(), 'username_slug' => $board->getSfGuardUserProfile()))?>"><?php echo truncate_text($scene_info['name'], 32, '…', true)?></a></p>
 
 		<div class="b-video">
-			<div id="image_<?php echo $reclip_id ?>">
+			<div id="image_<?php echo $reclip_id ?>" class="b-video-image">
 				<?php include_component('board', 'clipStickerSceneTimePreview', array('scene_info' => $scene_info, 'reclip_id' => $reclip_id, 'board' => $board))?>
 			</div>
+			<div class="b-band-scroll">
+				<div class="band-wrap">
+					<div class="band" style="width:25%;"></div>
+					<div class="marker" style="left:25%"></div>
+				</div>
+			</div>
 		</div>
-
 		<div class="ajax_toogle_container_<?php echo $reclip_id ?> b-tabs">
 			<?php include_component('board', 'clipStickerControl', array('board_id' => $board->getId(), 'reclip_id' => $reclip_id, 'scene_info' => $scene_info))?>
 

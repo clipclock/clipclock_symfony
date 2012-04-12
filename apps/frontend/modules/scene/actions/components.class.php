@@ -72,7 +72,7 @@ class sceneComponents extends sfComponents
 		$this->response->addMeta('og:site_name', $this->getResponse()->getTitle());
 
 		//$this->response->addMeta('og:type', 'video.other');
-		$this->response->addMeta('og:type', 'clipclock:clip');
+		$this->response->addMeta('og:type', $fb['namespace'].':clip');
 		$this->response->addMeta('og:video', 'http://www.youtube.com/v/'.$this->reclip->getClip()->getUrl().'?enablejsapi=1&playerapiid=ytplayer&start='.$this->scene_time->getSceneTime().'&autoplay=1&version=3&feature=player_embedded&fs=1&rel=0&showsearch=0&showinfo=0');
 		$this->response->addMeta('og:video:type', 'application/x-shockwave-flash');
 		$this->response->addMeta('og:video:width', '398');

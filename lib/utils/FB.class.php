@@ -57,10 +57,6 @@ class FB {
 			'picture' => 'http://clipclock.com'.ImagePreview::c14n($clip_id.$scene_time, 'big')*/
 		))->getResponseText();
 
-		if($uber_debug)
-		{
-			var_dump($result);die();
-		}
 		$result = json_decode($result);
 
 		if(!isset($result->id))

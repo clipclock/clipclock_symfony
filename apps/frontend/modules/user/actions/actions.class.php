@@ -51,6 +51,7 @@ class userActions extends sfActions
 			else
 			{
 				$amqp_publisher->jobInvites($invites_ids, $user_id, $timestamp);
+				$invites_ids = array();
 			}
 		}
 

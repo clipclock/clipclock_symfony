@@ -53,7 +53,7 @@ EOF;
 
 				$this->log("Saved duration for {$r->getUrl()} : $value");
 
-				usleep(5000); // a little pause
+				sleep(3); // a little pause
 
 			} else {
 

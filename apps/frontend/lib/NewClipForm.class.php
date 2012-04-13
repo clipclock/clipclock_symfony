@@ -33,7 +33,7 @@ class NewClipForm extends sfForm
 		));
 
 		$this->widgetSchema->setNameFormat('new_clip[%s]');
-		$this->setDefault('url', 'Paste and enter YouTube video URL');
+		$this->setDefault('url', 'Enter YouTube video link here >>');
 		$this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
 		parent::setup();

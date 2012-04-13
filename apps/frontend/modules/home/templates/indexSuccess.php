@@ -24,5 +24,6 @@
 	<?php endif ?>
 <?php if($new_user && $user->getId()): ?>
 	_kmq.push(['record', 'Signed Up']);
+	_kmq.push(['signedUp']);
 <?php endif ?>
 </script>

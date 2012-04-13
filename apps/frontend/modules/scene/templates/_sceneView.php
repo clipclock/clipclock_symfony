@@ -26,7 +26,7 @@
 		</li>
 		<script type="text/javascript">
 			bindCommentRatingButtons('<?php echo url_for('scene_post_comment_rating')?>');
-			_kmq.push(['record', 'Viewed video']);
+			_kmq.push(['record', 'Viewed video'], {'scene_id':<?php echo $scene->getId()?>});
 		</script>
 	</ul>
 </div>

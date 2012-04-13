@@ -8,7 +8,7 @@
 			<form method="get">
 				<div class="brd">
 					<span id="new_time_scene_time" style="display: none;"></span>
-					<textarea id="new_time_scene_description" defaultText='Pause the video on the moment you want to clip, enter the description text and hit the "Create Clip" button' name="" cols="" rows="">Pause the video on the moment you want to clip, enter the description text and hit the "Create Clip" button</textarea>
+					<textarea id="new_time_scene_description" defaultText='Pause the video at the moment you like, text what you liked in that moment, and click the "Create clip" button' name="" cols="" rows="">Pause the video at the moment you like, text what you liked in that moment, and click the "Create clip" button</textarea>
 				</div>
 				<div class="b-btn">
 					<input style="float: left;" id="new_time_scene_description_container_submit" class="default-follow-btn" name="" type="button" value="Create clip" />

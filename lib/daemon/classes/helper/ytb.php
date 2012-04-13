@@ -17,7 +17,7 @@ $you_tube_base_url = 'http://www.youtube.com/watch?v=';
 function is_ClipExists($filename)
 {
 	if(file_exists($filename.'.flv'))return '.flv';
-	elseif(file_exists($filename.'.mp4'))return '.mp4';
+	elseif(file_exists($filename.'.mp4') || file_exists($filename.'.video'))return '.mp4';
 	elseif(file_exists($filename.'.3gp'))return '.3gp';//will be test
 	//TODO: search file by extension or add search by other video exension
 	else return false;

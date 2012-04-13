@@ -253,7 +253,9 @@ function newSceneTimeModalShow(scene_time_id, scene_text_id)
 		});
 
 		$('#new_time_scene_description_container_submit').click(function(){
-			if($('#new_time_scene_description').val().length > 3 && $('#new_time_scene_description').val() != $('#new_time_scene_description').attr('defaulttext'))
+			if($('#new_time_scene_description').val().length > 3
+				&& $('#new_time_scene_description').val() != $('#new_time_scene_description').attr('defaulttext')
+					&& $('#new_time_scene_description').val() != $('#new_time_scene_description').attr('data-help-text'))
 			{
 				_kmq.push(['record', 'Creating clip, requesting permissions']);
 				var cb = function(response) {
@@ -297,6 +299,12 @@ function newSceneTimeModalShow(scene_time_id, scene_text_id)
 			}
 			else
 			{
+				$('#new_time_scene_description').val($('#new_time_scene_description').attr('data-help-text'));
+				$('#new_time_scene_description').css('color', '#5B5B5B');
+				$('#new_time_scene_description').css('background-color', '#ffff99');
+				$('#new_time_scene_description').animate({
+					'background-color': '#ffffff'
+				}, 3000);
 				_kmq.push(['record', 'Trying to create clip without valid content']);
 			}
 			return false;

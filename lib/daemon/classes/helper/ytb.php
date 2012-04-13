@@ -18,7 +18,7 @@ function is_ClipExists($filename)
 {
 	if(file_exists($filename.'.video'))
 	{
-		rename(file_exists($filename.'.video'), file_exists($filename.'.mp4'));
+		rename($filename.'.video', $filename.'.mp4');
 	}
 	if(file_exists($filename.'.flv'))return '.flv';
 	elseif(file_exists($filename.'.mp4'))return '.mp4';

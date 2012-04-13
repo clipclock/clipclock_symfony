@@ -1,4 +1,4 @@
-<?php if($user->getId()):?>
+
 <div class="likes">
 	<div class="rep-like">
 		<!--
@@ -13,8 +13,7 @@
 		</div>
 	</div>
 </div>
-<?php endif; ?>
-<?php if($user->getId() && $user->getId() != $current_user->getId()):?>
+<?php if($current_user->getId() && $user->getId() != $current_user->getId()):?>
 <div class="likes">
     <div class="rep-like">
         <div class="amount">
@@ -46,21 +45,20 @@
 </div>
 
 <script type="text/javascript">
-	<?php if($user->getId()):?>
 		$().ready(function(){
-			//fbHooks(<?php echo $fb_app_id?>, <?php echo sprintf('%d, %d', $scene_id, $current_user->getId()) ?>, "<?php echo url_for('@scene_change_liked_state'); ?>");
 			asyncRequestor.call('facebook', function(){
-				console.log(<?php echo $user->getId()?>);
 				function toggleFBLikeButton(scene_id, user_id, state, url) {
 					if(state)
 					{
 						_kmq.push(['record', 'Shared', {'share_type':'FB Like'}]);
 					}
+					<?php if($current_user->getId()):?>
 					$.ajax({
 						url: url,
 						type: "GET",
 						data: { user_id : user_id, scene_id : scene_id, state: state }
 					});
+					<?php endif;?>
 				}
 
 				FB.Event.subscribe('edge.create',
@@ -77,5 +75,4 @@
 				repinClip();
 			}
 		});
-    <?php endif;?>
 </script>

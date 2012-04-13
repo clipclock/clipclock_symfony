@@ -22,13 +22,11 @@
 	</div>
 	<div class="long-col-origin">
 		<div class="long-col-inside">
-			<?php if($current_user->getId()):?>
 			<div class="right-mini-coll ajax_toogle_container">
 				<div id="fun_buttons" class="ajax_toogle">
 				<?php include_component('scene', 'sceneViewSocialButtons', array('scene_id' => $current_scene->getId(), 'user' => $user, 'current_user' => $current_user))?>
 				</div>
 			</div>
-				<?php endif?>
 			<div class="center-col">
 				<div class="b-main-video">
 					<?php include_component('scene', 'sceneView', array('scene' => $current_scene, 'user' => $user, 'current_user' => $current_user))?>

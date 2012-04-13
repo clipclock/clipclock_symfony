@@ -498,6 +498,8 @@ function stickerClick(reclip_id, url, history_url, json_url, secs, scene_id, new
 			$('#new_repin_modal .modal_form').html(data.repin_form);
 			$('#new_time_scene_modal .modal_form').html(data.new_scene_form);
 
+			$('.clip_modal_fixed').animate({scrollTop:$('#scene_embed_video').offset().top - $('.clip_modal_fixed').offset().top - 5}, 600, 'easeOutQuart');
+
 			toggleAjaxLoader(null, '#clip_modal ');
 			cuselActivate(6);
 			bindCommentRatingButtons(data.rating_url);

@@ -801,3 +801,5 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
     top: 33%;
     left: 28%;
 }
+
+.clip_modal_fixed #fun_buttons {position: fixed}

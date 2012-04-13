@@ -255,29 +255,49 @@ function newSceneTimeModalShow(scene_time_id, scene_text_id)
 		$('#new_time_scene_description_container_submit').click(function(){
 			if($('#new_time_scene_description').val().length > 3 && $('#new_time_scene_description').val() != $('#new_time_scene_description').attr('defaulttext'))
 			{
-				$('body').css({
-					overflow: 'hidden'
-				});
+				_kmq.push(['record', 'Creating clip, requesting permissions']);
+				var cb = function(response) {
+					$('body').css({
+						overflow: 'hidden'
+					});
 
-				if(getPlayer())
+					if(getPlayer())
+					{
+						var player_time = getPlayer().getCurrentTime();
+						$('#new_time_scene_modal #'+scene_time_id).val(player_time);
+						var label_time = secondsToTime(player_time);
+						$('#label_time').html(label_time.m+':'+label_time.s);
+					}
+
+					$('#new_time_scene_modal').toggle();
+					$('#new_time_scene_modal').offset({top: $(window).scrollTop()+80});
+
+					$('body').append('<div class="shadow scene-time-modal-shadow" style="display: none"></div>');
+					$('.scene-time-modal-shadow')
+							.css({'z-index': $('#new_time_scene_modal').css('z-index') - 1})
+							.show()
+							.click(newSceneTimeModalHide);
+
+					$('#new_time_scene_modal #scene_time_post_facebook').val($('#facebook_checkbox input').is(':checked'));
+					$('#new_time_scene_modal #'+scene_text_id).val($('#new_time_scene_description').val());
+				};
+
+				if(!$('#facebook_checkbox input').attr('checked'))
 				{
-					var player_time = getPlayer().getCurrentTime();
-					$('#new_time_scene_modal #'+scene_time_id).val(player_time);
-					var label_time = secondsToTime(player_time);
-					$('#label_time').html(label_time.m+':'+label_time.s);
+					cb();
 				}
-
-				$('#new_time_scene_modal').toggle();
-				$('#new_time_scene_modal').offset({top: $(window).scrollTop()+80});
-
-				$('body').append('<div class="shadow scene-time-modal-shadow" style="display: none"></div>');
-				$('.scene-time-modal-shadow')
-						.css({'z-index': $('#new_time_scene_modal').css('z-index') - 1})
-						.show()
-						.click(newSceneTimeModalHide);
-
-				$('#new_time_scene_modal #scene_time_post_facebook').val($('#facebook_checkbox input').is(':checked'));
-				$('#new_time_scene_modal #'+scene_text_id).val($('#new_time_scene_description').val());
+				else
+				{
+					asyncRequestor.call('facebook', function(){
+						FB.login(cb, {
+							scope: 'publish_stream'
+						});
+					});
+				}
+			}
+			else
+			{
+				_kmq.push(['record', 'Trying to create clip without valid content']);
 			}
 			return false;
 		});
@@ -289,12 +309,18 @@ function new_time_scene_pause_player()
 	var player = getPlayer();
 	if(player.getPlayerState() == 1 && !$('#scene_add_comment').hasClass('active'))
 	{
+		_kmq.push(['record', 'Creating clip, hit new clip button']);
 		player.pauseVideo();
 	}
 	else if($('#scene_add_comment').hasClass('active'))
 	{
 		player.playVideo();
 	}
+	else if(!$('#scene_add_comment').hasClass('active'))
+	{
+		_kmq.push(['record', 'Creating clip, hit new clip button']);
+	}
+
 	$('#scene_info').toggle();
 	$('#scene_add_comment').toggleClass('active');
 }

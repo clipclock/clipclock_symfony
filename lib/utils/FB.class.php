@@ -12,57 +12,26 @@ class FB {
 	protected $browser = null;
 	protected $access_token = '';
 
-	protected $namespace = '';
-	protected $provider = '';
-
-	protected $action_urls = array(
+	protected $urls = array(
 		'facebook' => array(
-			'create' => 'https://graph.facebook.com/me/%namespace%:create'
+				'post' => 'https://graph.facebook.com/me/links'
 		)
 	);
 
-	public function __construct($user, $provider) {
+	public function __construct($user) {
 		$this->browser = new sfWebBrowser();
-		$this->access_token = $user->getMelody($provider)->getToken($provider)->getTokenKey();
-
-		$fb = sfConfig::get('app_melody_'.$provider);
-		$this->namespace = $fb['namespace'];
-		$this->provider = $provider;
-
-		if(!isset($this->action_urls[$provider]))
-		{
-			return false;
-		}
-
-		foreach($this->action_urls[$provider] as $key => &$action_url)
-		{
-			$action_url = str_ireplace('%namespace%', $this->namespace, $action_url);
-		}
+		$this->access_token = $user->getMelody('facebook')->getToken('facebook')->getTokenKey();
 	}
 
-	public function postCreate($url, $logger = null)
+	public function postLink($url, $name, $source, $scene_time, $clip_id)
 	{
-		$action_url = $this->getActionUrl('create');
-		if(!$action_url)
-		{
-			return false;
-		}
-
-		$result = $this->browser->post($action_url, array(
+		$result = $this->browser->post($this->urls['facebook']['post'], array(
 			'access_token' => $this->access_token,
-			'clip' => $url//'http://www.youtube.com/v/'.$source.'?enablejsapi=1&playerapiid=ytplayer&start='.$scene_time.'&autoplay=1&version=3&feature=player_embedded&fs=1&rel=0&showsearch=0&showinfo=0'
-			/*'link' => $url,
+			'link' => $url,
 			'name' => $name,
 			'source' => 'http://www.youtube.com/v/'.$source.'?enablejsapi=1&playerapiid=ytplayer&start='.$scene_time.'&autoplay=1&version=3&feature=player_embedded&fs=1&rel=0&showsearch=0&showinfo=0',
-			'picture' => 'http://clipclock.com'.ImagePreview::c14n($clip_id.$scene_time, 'big')*/
+			'picture' => 'http://clipclock.com'.ImagePreview::c14n($clip_id.$scene_time, 'big')
 		))->getResponseText();
-
-		if($logger)
-		{
-			$logger->log(var_export($this->access_token, true), 0, 'warning');
-			$logger->log(var_export($url, true), 0, 'warning');
-			$logger->log(var_export($result, true), 0, 'warning');
-		}
 
 		$result = json_decode($result);
 
@@ -72,11 +41,6 @@ class FB {
 		}
 
 		return $result->id;
-	}
-
-	protected function getActionUrl($action)
-	{
-		return isset($this->action_urls[$this->provider][$action]) ? $this->action_urls[$this->provider][$action] : false;
 	}
 
 }

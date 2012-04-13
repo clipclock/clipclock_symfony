@@ -123,12 +123,12 @@ class sceneActions extends sfActions
 
 		if($binded_values['post_facebook'])
 		{
-			$fb_helper = new FB($this->getUser(), 'facebook');
-			$ext_id = $fb_helper->postCreate($this->generateUrl('scene', array(
+			$fb_helper = new FB($this->getUser());
+			$ext_id = $fb_helper->postLink($this->generateUrl('scene', array(
 				'username_slug' => $this->getUser()->getNick(),
 				'board_id' => $scene->getBoardId(),
 				'id' => $scene->getId()
-			), true), $this->getContext()->getLogger());
+			), true), $scene->getText(), $scene->getSceneTime()->getReclip()->getClip()->getUrl(), $scene->getSceneTime()->getSceneTime(), $scene->getSceneTime()->getReclip()->getClipId());
 
 			if($ext_id)
 			{

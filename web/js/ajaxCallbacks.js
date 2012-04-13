@@ -480,7 +480,7 @@ function stickerClick(reclip_id, url, history_url, json_url, secs, scene_id, new
 			toggleModalScene(history_url);
 			toggleAjaxLoader(null, '#clip_modal ');
 			//history.pushState({json_url:json_url, secs:secs, scene_id:scene_id}, 'Title', history_url);
-			_kmq.push(['record', 'Viewed video']);
+			_kmq.push(['record', 'Viewed video', {'scene_id':scene_id}]);
 		},
 		success:function (data) {
 

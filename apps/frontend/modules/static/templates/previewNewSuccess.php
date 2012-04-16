@@ -14,12 +14,9 @@
 						</div>
 					</div>
 					<script type="text/javascript">
-						function onYouTubePlayerAPIReady() {
+						asyncRequestor.call('youtube', function(){
 							embedClip(0, '<?php echo $clip_url?>', '<?php echo $source_name?>', 'true');
-						}
-						if (youTubeApiLoaded == 1){
-							embedClip(0, '<?php echo $clip_url?>', '<?php echo $source_name?>', 'true');
-						}
+						});
 					</script>
 
 					<?php slot('scene_modal') ?>

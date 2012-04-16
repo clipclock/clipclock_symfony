@@ -100,7 +100,6 @@ class sceneActions extends sfActions
 
 	public function executePostScene(sfWebRequest $request)
 	{
-		$this->getLogger()->debug('!!!!_POST!');
 		$this->scene_time_form = new SceneTimeForm(null, array(
 			'created_at' => time(),
 			'sf_guard_user_profile_id' => $this->getUser()->getId(),

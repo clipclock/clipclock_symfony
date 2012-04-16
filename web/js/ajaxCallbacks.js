@@ -515,7 +515,7 @@ function stickerClick(reclip_id, url, history_url, json_url, secs, scene_id, new
 			$('.clip_modal_fixed').animate({scrollTop:$('#scene_embed_video').offset().top - $('.clip_modal_fixed').offset().top - 5}, 600, 'easeOutQuart');
 
 			toggleAjaxLoader(null, '#clip_modal ');
-			cuselActivate(6);
+			cuselActivate(6, null, false);
 			bindCommentRatingButtons(data.rating_url);
 			asyncRequestor.call('facebook', function(){
 				FB.XFBML.parse();

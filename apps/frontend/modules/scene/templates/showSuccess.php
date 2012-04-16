@@ -37,5 +37,5 @@
 </div>
 
 <script type="text/javascript">
-	cuselActivate(6);
+	cuselActivate(6, null, false);
 </script>

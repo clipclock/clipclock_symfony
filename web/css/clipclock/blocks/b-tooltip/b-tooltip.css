@@ -1,0 +1,106 @@
+.radius4
+{
+    border-radius:4px;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    -khtml-border-radius:4px;
+    behavior: url(/js/PIE.htc);
+}
+
+.radius3
+{
+    border-radius:3px;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    -khtml-border-radius:3px;
+
+}
+
+/* b-tooltip */
+
+.b-tooltip
+{
+    background-color: #faffbd;
+    max-width: 200px;
+    padding: 15px 15px 10px;
+    font-weight: bold;
+    font-size: 13px;
+    position: absolute;
+    box-shadow: 1px 2px 6px #444;
+    behavior: url(/js/PIE.htc);
+    z-index: 9999;
+}
+
+.b-tooltip .wrap
+{
+    overflow: hidden;
+}
+
+.b-tooltip p
+{
+    padding-bottom: 15px;
+}
+
+.b-tooltip .ok
+{
+    cursor: pointer;
+    border: 1px solid #ac1010;
+    float: left;
+    padding: 5px 15px;
+    background-color: #ea5164;
+    color: #fff;
+    text-shadow: 0 -1px #444;
+    font-weight: normal;
+
+    background-image: linear-gradient(#ee7584, #d7393d 50%);
+    background-image: -o-linear-gradient(#ee7584, #d7393d 50%);
+    background-image: -ms-linear-gradient(#ee7584, #d7393d 50%);
+    background-image: -moz-linear-gradient(#ee7584, #d7393d 50%);
+    background-image: -webkit-linear-gradient(#ee7584, #d7393d 50%);
+}
+
+.b-tooltip .ok:hover
+{
+    background-image: linear-gradient(#ee7584, #e34956 50%);
+    background-image: -o-linear-gradient(#ee7584, #e34956 50%);
+    background-image: -ms-linear-gradient(#ee7584, #e34956 50%);
+    background-image: -moz-linear-gradient(#ee7584, #e34956 50%);
+    background-image: -webkit-linear-gradient(#ee7584, #e34956 50%);
+}
+
+.b-tooltip .pointer
+{
+    position: absolute;
+    top: -14px;
+    left: 35px;
+    width: 14px;
+    height: 14px;
+    background: url(../../../../images/b-tooltip/pointer.png) no-repeat;
+}
+
+.b-tooltip.top-right .pointer
+{
+    background: url(../../../../images/b-tooltip/pointer-top-left.png) no-repeat;
+    right: 35px;
+    left: auto;
+}
+
+.b-tooltip.bottom-left .pointer
+{
+    background: url(../../../../images/b-tooltip/pointer-bottom-left.png) no-repeat;
+    width: 16px;
+    height: 16px;
+    bottom: -16px;
+    top:auto;
+}
+
+.b-tooltip.bottom-right .pointer
+{
+    background: url(../../../../images/b-tooltip/pointer-bottom-right.png) no-repeat;
+    width: 16px;
+    height: 16px;
+    bottom: -16px;
+    left:auto;
+    right: 35px;
+    top:auto;
+}

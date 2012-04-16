@@ -107,6 +107,7 @@ class sceneActions extends sfActions
 
 		$this->scene_time_form->bind($request->getParameter($this->scene_time_form->getName()));
 
+		//Логгировать причину невалидности
 		$this->forward404Unless($this->scene_time_form->isValid());
 
 		$binded_values = $this->scene_time_form->getValues();
@@ -137,11 +138,14 @@ class sceneActions extends sfActions
 			}
 		}
 
-		$this->redirect($this->generateUrl('scene', array(
+		$url = $this->generateUrl('scene', array(
 			'username_slug' => $this->getUser()->getNick(),
 			'board_id' => $scene->getBoardId(),
 			'id' => $scene->getId()
-		)));
+		));
+		$this->getLogger()->debug('!!!!_'.$url);
+		$this->redirect($url);
+		return sfView::NONE;
 	}
 
 	public function executePostComment(sfWebRequest $request)

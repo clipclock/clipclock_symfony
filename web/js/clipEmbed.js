@@ -66,10 +66,13 @@ function getPlayer()
 function seekTo(scene_time)
 {
 	var player = getPlayer();
-	player.seekTo(scene_time);
-	if (player.getPlayerState() == 1)
-		player.playVideo();
-	player = null;
+	if(player && typeof player.seekTo == 'function')
+	{
+		player.seekTo(scene_time);
+		if (player.getPlayerState() == 1)
+			player.playVideo();
+		player = null;
+	}
 }
 
 function checkCurrentScene(scene_id, scene_time)

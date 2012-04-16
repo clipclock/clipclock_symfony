@@ -202,7 +202,13 @@ function bindSceneChangeBack(json_url, secs, scene_id, current_url)
 					{
 						$.ajax({
 							url: json_url,
-							beforeSend: function(){if(getPlayer()){highliteControlTab(scene_id);seekTo(secs);toggleAjaxLoader();}},
+							beforeSend: function(){
+								asyncRequestor.call('youtube', function(){
+										highliteControlTab(scene_id);
+										seekTo(secs);
+										toggleAjaxLoader();
+								});
+							},
 							dataType: 'text',
 							success: function(data){
 								sceneChange(data, true);
@@ -258,7 +264,7 @@ function newSceneTimeModalShow(scene_time_id, scene_text_id)
 					&& $('#new_time_scene_description').val() != $('#new_time_scene_description').attr('data-help-text'))
 			{
 				_kmq.push(['record', 'Creating clip, requesting permissions']);
-				var cb = function(response) {
+				var cb = function() {
 					$('body').css({
 						overflow: 'hidden'
 					});
@@ -509,7 +515,7 @@ function stickerClick(reclip_id, url, history_url, json_url, secs, scene_id, new
 			$('.clip_modal_fixed').animate({scrollTop:$('#scene_embed_video').offset().top - $('.clip_modal_fixed').offset().top - 5}, 600, 'easeOutQuart');
 
 			toggleAjaxLoader(null, '#clip_modal ');
-			cuselActivate(6);
+			cuselActivate(6, null, false);
 			bindCommentRatingButtons(data.rating_url);
 			asyncRequestor.call('facebook', function(){
 				FB.XFBML.parse();

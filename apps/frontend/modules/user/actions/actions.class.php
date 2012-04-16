@@ -93,7 +93,6 @@ class userActions extends sfActions
 			$this->redirect($this->generateUrl('homepage_modal', array('scene_id' => $scene_id)));
 			return sfView::NONE;
 		}
-
 		// for users who go from homepage_modal
 		// redirect them to homepage_modal back
 		$routeData = $this->getContext()->getRouting()->findRoute(
@@ -163,7 +162,7 @@ class userActions extends sfActions
 			$this->getUser()->setAttribute('new_user', true);
 		}
 
-		$this->redirect('@user_register_welcome');
+		$this->forward('user', 'welcome');
 		return sfView::NONE;
 	}
 

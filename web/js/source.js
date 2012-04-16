@@ -152,16 +152,23 @@ $(document).ready(function(){
 	});
 });
 
-function cuselActivate(visRows, elems)
+function cuselActivate(visRows, elems, autoSubmit)
 {
 	if(!elems)
 	{
 		elems = ".line-form select";
 	}
+
+	if(typeof autoSubmit == 'undefined')
+	{
+		autoSubmit = true;
+	}
 	$().ready(function(){
-		$(elems).change(function(){
-			$(this).parents('form').submit();
-		});
+		if(autoSubmit){
+			$(elems).change(function(){
+				$(this).parents('form').submit();
+			});
+		}
 		jQuery(".cusel").each(
 				function(){
 					var w = parseInt(jQuery(this).width()),

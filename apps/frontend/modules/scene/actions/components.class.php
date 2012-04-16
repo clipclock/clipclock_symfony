@@ -65,6 +65,19 @@ class sceneComponents extends sfComponents
 
 		$this->post_facebook = $this->getRequest()->getCookie('post_facebook', true);
 
+		$title = $this->scene->getText();
+		$len = mb_strlen($title);
+		if($len <= 210)
+		{
+			$title = truncate_text($title.', '.$this->reclip->getClip()->getName(), 249, '…', true).', #cc';
+		}
+		else
+		{
+			$title = truncate_text($this->scene->getText(), 249, '…', true).', #cc';
+		}
+
+		$this->response->setTitle($title);
+
 		$this->response->addMeta('og:url', $this->generateUrl('scene', array('username_slug' => $this->user, 'board_id' => $this->scene->getBoardId(), 'id' => $this->scene->getId()), true));
 		$this->response->addMeta('og:title', truncate_text($this->scene->getText(), 140, '…', true).' | Clip your great moments here>>');
 		$this->response->addMeta('og:image', $this->generateUrl('homepage', array(), true).substr(ImagePreview::c14n($this->reclip->getClip()->getId().$this->scene_time->getSceneTime(), 'big'), 1));

@@ -58,13 +58,13 @@
 			<label>Show me</label>
 			<div class="line-form">
 				<?php echo $form->renderHiddenFields()?>
-				<?php echo $form['source']->render(array('class' => 'size164'))?>
+				<?php echo $form['source']->render(array('class' => 'size164', 'id' => 'filter-categories'))?>
 			</div>
 		</div>
 		<div id="categories_selected" class="col">
 			<label>Interest</label>
 			<div class="line-form">
-				<div class="cusel size289" id="cuselFrame-home_filter_source" style="width:164px" tabindex="0"><div class="cuselFrameRight"></div>
+				<div class="cusel size289" id="filter-interests" style="width:164px" tabindex="0"><div class="cuselFrameRight"></div>
 					<div class="cuselText"><?php echo $categories_selected_text?></div></div>
 			</div>
 		</div>

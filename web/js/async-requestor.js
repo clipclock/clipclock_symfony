@@ -26,9 +26,18 @@ asyncRequestor.prototype = {
 
 		var obj = this;
 
-		if (this.loaded[type] != undefined){
+		if (this.loaded[type] != undefined || $.browser.msie){
 
-			callback();
+			if($.browser.msie)
+			{
+				setTimeout(function(){
+					callback();
+				}, 700);
+			}
+			else
+			{
+				callback();
+			}
 
 		} else {
 

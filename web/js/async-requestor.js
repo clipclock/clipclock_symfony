@@ -26,7 +26,7 @@ asyncRequestor.prototype = {
 
 		var obj = this;
 
-		if (this.loaded[type] != undefined || $.browser.msie){
+		if (this.loaded[type] != undefined || ($.browser.msie && type != 'facebook')){
 
 			if($.browser.msie)
 			{

@@ -138,6 +138,8 @@ class homeActions extends sfActions
 			$this->error = $this->getUser()->getFlash('registration_error');
 		}
 
+		$this->i_follow = $this->getUser()->getId() && $this->source == HomeFilterForm::I_FOLLOW_ID ? true : false;
+
 		$this->welcome_close = (bool)$request->getCookie('welcome-close');
 
 		$this->categories = $this->categories ? array_flip($this->categories) : null;

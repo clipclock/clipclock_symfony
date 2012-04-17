@@ -20,6 +20,11 @@ class sceneActions extends sfActions
 		$this->forward('default', 'module');
 	}
 
+	public function executeShowFbSceneAjax(sfWebRequest $request)
+	{
+		return sfView::NONE;
+	}
+
 	public function executeShow(sfWebRequest $request)
 	{
 		$this->current_scene = $this->getRoute()->getObject();

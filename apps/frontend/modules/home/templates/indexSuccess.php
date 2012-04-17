@@ -16,7 +16,14 @@ $(function(){
 	_kmq.push(['record', 'Viewed Homepage']);
 	layoutAndScroll('<?php echo $next_url ?>');
 <?php if ($modal): ?>
-		stickerClick(0, '<?php echo url_for('scene_change', array('scene_id' => $scene_id, 'modal' => 1)) ?>', '<?php echo $current_url ?>', '<?php echo url_for('scene_change', array('scene_id' => $scene_id, 'modal' => 1)) ?>', 0, '<?php echo $scene_id ?>', '<?php echo $new_user?>');
+
+		if ($.browser.msie){
+			alert("<?php echo url_for('scene', array('id' => $scene_id, 'board_id' => 123, 'username_slug' => 1234)) ?>");
+		} else {
+			stickerClick(0, '<?php echo url_for('scene_change', array('scene_id' => $scene_id, 'modal' => 1)) ?>', '<?php echo $current_url ?>', '<?php echo url_for('scene_change', array('scene_id' => $scene_id, 'modal' => 1)) ?>', 0, '<?php echo $scene_id ?>', '<?php echo $new_user?>');
+		}
+
+
 	<?php elseif($new_user && $user->getId()): ?>
 			categoryMultiSelectorModalToggle();
 <?php endif ?>

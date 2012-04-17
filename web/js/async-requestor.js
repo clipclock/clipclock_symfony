@@ -57,7 +57,6 @@ asyncRequestor.prototype = {
 						window.fb_already_loaded = false;
 
 						window.fbAsyncInit = function() {
-
 							FB.init({
 								appId      : $('#site-data').attr('data-fb-app-id'),
 								channelUrl : '//clipclock.com/channel.html',
@@ -102,6 +101,8 @@ asyncRequestor.prototype = {
 
 var asyncRequestor = new asyncRequestor();
 
-asyncRequestor.call('facebook', function(){});
-if (!$.browser.msie)
-	asyncRequestor.call('youtube', function(){});
+$().ready(function(){
+	asyncRequestor.call('facebook', function(){});
+	if (!$.browser.msie)
+		asyncRequestor.call('youtube', function(){});
+});

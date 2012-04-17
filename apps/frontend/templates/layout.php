@@ -10,6 +10,7 @@
 	<?php include_combined_javascripts() ?>
 </head>
 <body>
+<?php include_component('static', 'fbAppId', array('sf_cache_key' => 42))?>
 <div id="fb-root"></div>
 <script type="text/javascript">
 	var _kmq = _kmq || [];
@@ -76,12 +77,5 @@
 		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	})();
 </script>
-
-<?php
-	$dd = sfConfig::get('app_melody_facebook');
-	$fb_app_key = $dd['key'];
-?>
-
-<div id="site-data" data-fb-app-id="<?php echo $fb_app_key ?>" style="display: none;"></div>
 </body>
 </html>

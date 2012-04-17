@@ -1,0 +1,1 @@
+<div id="site-data" data-fb-app-id="<?php echo $fb_app_key ?>" style="display: none;"></div>

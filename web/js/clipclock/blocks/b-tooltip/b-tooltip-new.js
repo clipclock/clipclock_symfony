@@ -35,8 +35,8 @@ $(function(){
 	var ToolTipper = function(){
 
 		var context = this,
-				showTimer = 0,
-				hideTimer = 0;
+		showTimer = 0,
+		hideTimer = 0;
 
 		var tooltips = [];
 		var hiddenTooltips = [];
@@ -131,8 +131,8 @@ $(function(){
 			$(tooltip).live('mouseenter', function(){
 				clearTimeout(hideTimer); hideTimer = 0;
 			}).live('mouseleave', function(){
-						hideTooltip();
-					});
+				hideTooltip();
+			});
 
 			$(tooltip).find('.ok').click(function(){
 
@@ -178,9 +178,9 @@ $(function(){
 								}.bind(this), 250);
 							}
 						}).live('mouseleave', function(){
-									clearTimeout(showTimer); showTimer = 0;
-									hideTooltip();
-								});
+							clearTimeout(showTimer); showTimer = 0;
+							hideTooltip();
+						});
 
 					}.bind(context))();
 				}
@@ -233,3 +233,4 @@ $(function(){
 
 	tooltipper.init();
 });
+

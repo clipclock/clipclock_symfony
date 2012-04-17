@@ -12,17 +12,16 @@
 <?php include_partial('home/modalScene', array('current_user' => $user, 'current_url' => isset($bug_current_url) ? $bug_current_url : $current_url , 'post_facebook' => $post_facebook));?>
 
 <script type="text/javascript">
+
+	if ($.browser.msie)
+		window.location.href = "<?php echo url_for('redirect_to_scene', array('scene_id' => $scene_id)) ?>";
+
 $(function(){
 	_kmq.push(['record', 'Viewed Homepage']);
 	layoutAndScroll('<?php echo $next_url ?>');
 <?php if ($modal): ?>
 
-		if ($.browser.msie){
-			alert("<?php echo url_for('scene', array('id' => $scene_id, 'board_id' => 123, 'username_slug' => 1234)) ?>");
-		} else {
-			stickerClick(0, '<?php echo url_for('scene_change', array('scene_id' => $scene_id, 'modal' => 1)) ?>', '<?php echo $current_url ?>', '<?php echo url_for('scene_change', array('scene_id' => $scene_id, 'modal' => 1)) ?>', 0, '<?php echo $scene_id ?>', '<?php echo $new_user?>');
-		}
-
+	stickerClick(0, '<?php echo url_for('scene_change', array('scene_id' => $scene_id, 'modal' => 1)) ?>', '<?php echo $current_url ?>', '<?php echo url_for('scene_change', array('scene_id' => $scene_id, 'modal' => 1)) ?>', 0, '<?php echo $scene_id ?>', '<?php echo $new_user?>');
 
 	<?php elseif($new_user && $user->getId()): ?>
 			categoryMultiSelectorModalToggle();

@@ -90,20 +90,17 @@ function boardCategoryChange()
 
 function checkCurrentSticker(clip_id, scene_id)
 {
-	toggleAjaxLoader('_'+clip_id);
-
+	toggleAjaxLoader('_' + clip_id);
 	return true;
 }
 
 function toggleAjaxLoader(elem_id, pre_elem)
 {
 	if(!elem_id)
-	{
 		elem_id = '';
-	}
 
-	$((pre_elem ? pre_elem : '') + '.ajax_toogle'+elem_id).toggleClass('ajax_hider');
-	$((pre_elem ? pre_elem : '') + '.ajax_toogle_container'+elem_id).toggleClass('ajax_loader');
+	$((pre_elem ? pre_elem : '') + '.ajax_toogle' + elem_id).toggleClass('ajax_hider');
+	$((pre_elem ? pre_elem : '') + '.ajax_toogle_container' + elem_id).toggleClass('ajax_loader');
 }
 
 function sceneChange(json_data, dont_history, url, json_url, secs, scene_id, modal)
@@ -155,18 +152,14 @@ function bindSceneTextChangeHover()
 	$('#scene_controls li').hover(function(){
 
 		if(!elems_scenes_ids[$(this).attr('id')])
-		{
 			elems_scenes_ids[$(this).attr('id')] = $(this).attr('id').replace('scene_', '');
-		}
 
 		showSceneDescription(elems_scenes_ids[$(this).attr('id')]);
-	}, function(e){
+
+	},
+	function(e){
 		if($(e.relatedTarget).attr('id') != 'scene_controls')
-		{
-			showSceneDescription(
-					$('#scene_controls li.active').attr('id').replace('scene_', '')
-			);
-		}
+			showSceneDescription($('#scene_controls li.active').attr('id').replace('scene_', ''));
 	});
 
 	$('#scene_controls').hover(function(){}, function(){
@@ -321,18 +314,20 @@ function newSceneTimeModalShow(scene_time_id, scene_text_id)
 function new_time_scene_pause_player()
 {
 	var player = getPlayer();
-	if(player.getPlayerState() == 1 && !$('#scene_add_comment').hasClass('active'))
-	{
+
+	if(player.getPlayerState() == 1 && !$('#scene_add_comment').hasClass('active')){
+
 		_kmq.push(['record', 'Creating clip, hit new clip button']);
 		player.pauseVideo();
-	}
-	else if($('#scene_add_comment').hasClass('active'))
-	{
+
+	} else if($('#scene_add_comment').hasClass('active')){
+
 		player.playVideo();
-	}
-	else if(!$('#scene_add_comment').hasClass('active'))
-	{
+
+	} else if(!$('#scene_add_comment').hasClass('active')){
+
 		_kmq.push(['record', 'Creating clip, hit new clip button']);
+
 	}
 
 	$('#scene_info').toggle();
@@ -359,25 +354,38 @@ function secondsToTime(secs)
 
 function newSceneTimeDescriptionContainer()
 {
-	$().ready(function(){
+	$(function(){
 		if(!$('#clip_modal:visible').length)
-		{
 			newSceneTimeModalShow('scene_time_scene_time', 'scene_time_scene_text');
-		}
 
 		$('#new_time_scene').click(function(){
-			new_time_scene_pause_player()
+			new_time_scene_pause_player();
+			// $('#scene_controls li').removeClass('active');
 			return false;
 		});
+
+		/*$('#new_time_scene').hover(
+			function(){
+				$('#scene_info').css({
+					'visibility': 'hidden'
+				});
+				$('#scene_add_comment').toggleClass('active');
+			},
+			function(){
+				$('#scene_info').css({
+					'visibility': 'visible'
+				});
+				$('#scene_add_comment').toggleClass('active');
+			}
+		);*/
+
 	});
 }
 
 function checkCommentForm(elem)
 {
-	if(!elem)
-	{
-		elem = 'comment_form';
-	}
+	elem = elem || 'comment_form';
+
 	return $('#'+elem+' form textarea').val() ? true : false;
 }
 
@@ -485,11 +493,6 @@ function toggleModalScene(url)
 }
 
 function stickerClick(reclip_id, url, history_url, json_url, secs, scene_id, new_user) {
-
-	if ($.browser.msie){
-		window.location.href = history_url;
-		return true;
-	}
 
 	window.new_user = new_user;
 	$.ajax({

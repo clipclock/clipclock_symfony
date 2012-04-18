@@ -13,16 +13,15 @@
 
 <script type="text/javascript">
 
-	if ($.browser.msie)
-		window.location.href = "<?php echo url_for('redirect_to_scene', array('scene_id' => $scene_id)) ?>";
-
 $(function(){
 	_kmq.push(['record', 'Viewed Homepage']);
 	layoutAndScroll('<?php echo $next_url ?>');
 <?php if ($modal): ?>
-
-	stickerClick(0, '<?php echo url_for('scene_change', array('scene_id' => $scene_id, 'modal' => 1)) ?>', '<?php echo $current_url ?>', '<?php echo url_for('scene_change', array('scene_id' => $scene_id, 'modal' => 1)) ?>', 0, '<?php echo $scene_id ?>', '<?php echo $new_user?>');
-
+	if ($.browser.msie){
+		window.location.href = "<?php echo url_for('redirect_to_scene', array('scene_id' => $scene_id)) ?>";
+	} else {
+		stickerClick(0, '<?php echo url_for('scene_change', array('scene_id' => $scene_id, 'modal' => 1)) ?>', '<?php echo $current_url ?>', '<?php echo url_for('scene_change', array('scene_id' => $scene_id, 'modal' => 1)) ?>', 0, '<?php echo $scene_id ?>', '<?php echo $new_user?>');
+	}
 	<?php elseif($new_user && $user->getId()): ?>
 			categoryMultiSelectorModalToggle();
 <?php endif ?>

@@ -24,6 +24,12 @@ homepage_modal:
   requirements:
     scene_id: \d+
 
+redirect_to_scene:
+  url: /redirect/scene/:scene_id
+  param: { module: home, action: redirectToScene }
+  requirements:
+    scene_id: \d+
+
 ### HOMEPAGE AJAX ###
 
 homepage_page:

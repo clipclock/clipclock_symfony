@@ -486,6 +486,11 @@ function toggleModalScene(url)
 
 function stickerClick(reclip_id, url, history_url, json_url, secs, scene_id, new_user) {
 
+	if ($.browser.msie){
+		window.location.href = history_url;
+		return true;
+	}
+
 	window.new_user = new_user;
 	$.ajax({
 		url:url,

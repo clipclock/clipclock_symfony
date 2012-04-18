@@ -25,8 +25,9 @@ $(function(){
 			console.log(ajax_data);
 			$.ajax({
 				url:ajax_url,
-				data: {youtube_keys: ajax_data},
+				data: {clip_keys: ajax_data},
 				success:function(response) {
+					console.log(response);
 					$(elem).prepend('<li>123</li>');
 				}
 			});

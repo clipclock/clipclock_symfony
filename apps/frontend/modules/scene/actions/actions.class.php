@@ -22,7 +22,21 @@ class sceneActions extends sfActions
 
 	public function executeShowFbSceneAjax(sfWebRequest $request)
 	{
-		return sfView::NONE;
+		$clip_keys = $request->getParameter('clip_keys');
+		$this->forward404Unless($clip_keys && is_array($clip_keys) && $this->getUser()->getId());
+
+		$result = array();
+
+		foreach($clip_keys as $clip_key)
+		{
+			$sticker_html = $this->getComponent('board', 'clipStickerFromFb', array('current_user' => $this->getUser(), 'clip_key' => $clip_key, 'sf_cache_key' => $clip_key.$this->getUser()->getId()));
+			if($sticker_html)
+			{
+				$result[] = $sticker_html;
+			}
+		}
+
+		return $this->returnJSON($result);
 	}
 
 	public function executeShow(sfWebRequest $request)

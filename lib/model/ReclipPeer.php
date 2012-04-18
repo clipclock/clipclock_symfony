@@ -52,6 +52,21 @@ class ReclipPeer extends BaseReclipPeer {
 		return current(self::doSelectJoinClip($c));
 	}
 
+	public static function retrieveByClipKey($clip_key, $clip_source_id)
+	{
+		$c = new Criteria();
+
+		$c->clearSelectColumns();
+		$c->addSelectColumn(ReclipPeer::ID);
+
+		$c->addJoin(ReclipPeer::CLIP_ID, ClipPeer::ID, Criteria::INNER_JOIN);
+		$c->add(ClipPeer::URL, $clip_key);
+		$c->add(ClipPeer::SOURCE_ID, $clip_source_id);
+		$c->setLimit(1);
+
+		return BasePeer::doSelect($c)->fetch(PDO::FETCH_ASSOC);
+	}
+
 	public static function repinReclipBySceneIdUserId($scene_time_id, $user_id)
 	{
 		$c = new Criteria();

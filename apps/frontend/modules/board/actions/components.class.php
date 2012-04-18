@@ -88,6 +88,21 @@ class boardComponents extends sfComponents
 		$this->getContext()->getConfiguration()->loadHelpers(array('Comment'));
 	}
 
+	public function executeClipStickerFromFb()
+	{
+		$this->clip_key = $this->getVar('clip_key');
+		$this->current_user = $this->getVar('current_user');
+
+		$source = SourcePeer::retrieveByName('youtube');
+		$this->source_id = $source['id'];
+
+		$reclip_id = ReclipPeer::retrieveByClipKey($this->clip_key, $this->source_id);
+		if(!$reclip_id)
+		{
+			$reclip_id = ReclipPeer::retrieveByClipKey($this->clip_key, $this->source_id);
+		}
+	}
+
 	public function executeClipSticker()
 	{
 		$this->reclip_id = $this->getVar('reclip_id');

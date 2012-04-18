@@ -70,8 +70,9 @@
 
 .b-tooltip .hide-all
 {
-    float: right;
-    padding-top: 3px;
+    float: left;
+    margin-left: 35px;
+    padding-top: 12px;
 }
 
 .b-tooltip .hide-all a

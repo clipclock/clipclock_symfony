@@ -27,86 +27,83 @@ class staticActions extends sfActions
 
 	public function executePreviewNew(sfWebRequest $request)
 	{
-		$this->form = new NewClipForm();
-
-		$this->form->bind($request->getParameter($this->form->getName()));
-		if($this->form->isValid() && $this->getUser()->getId())
+		$clip = null;
+		if($request->getParameter('clip_id'))
 		{
-			$this->source_name = 'youtube';
-			//Into util or helper
-			$url = parse_url($this->form->getValue('url'));
-			foreach(explode('&', $url['query']) as $params)
-			{
-				$values = explode('v=', $params);
-				if(count($values) > 1)
-				{
-					$this->clip_url = $values[1];
-					break;
-				}
-			}
-
-			if($this->clip_url)
-			{
-				$url = "http://gdata.youtube.com/feeds/api/videos/". $this->clip_url;
-				$doc = new DOMDocument;
-				$doc->load($url);
-				$this->clip_name = $doc->getElementsByTagName("title")->item(0)->nodeValue;
-				$this->clip_duration = $doc->getElementsByTagNameNS("http://gdata.youtube.com/schemas/2007", "duration")->item(0)->getAttribute('seconds');
-			}
-
-			$source = SourcePeer::retrieveByName($this->source_name);
-			$this->source_id = $source['id'];
-			//--
-
-			$clip = ClipPeer::retrieveByUrlAndSourceId($this->clip_url, $this->source_id);
-
-			if(!$clip)
-			{
-				$clip = new Clip();
-				$clip->setUrl($this->clip_url);
-				$clip->setName($this->clip_name);
-				$clip->setSourceId($this->source_id);
-				$clip->setDuration($this->clip_duration);
-				$clip->save();
-			}
-			else
-			{
-				$scene = ScenePeer::retrieveYoungestByClipId($clip->getId());
-				if($scene)
-				{
-					$this->redirect($this->generateUrl('scene', array(
-						'username_slug' => $scene->getSfGuardUserProfile()->getNick(),
-						'board_id' => $scene->getBoardId(),
-						'id' => $scene->getId()
-					)));
-					return sfView::NONE;
-				}
-			}
-			$this->clip = $clip;
-
-			$reclip = ReclipPeer::retrieveByClipIdUserId($clip->getId(), $this->getUser()->getId());
-			if(!$reclip)
-			{
-				$reclip = new Reclip();
-				$reclip->setClipId($this->clip->getId());
-				$reclip->setSfGuardUserProfileId($this->getUser()->getId());
-				$reclip->save();
-			}
-			$this->reclip = $reclip;
-
-			$this->post_facebook = $this->getRequest()->getCookie('post_facebook', true);
-			$this->form = new SceneTimeForm(null, array('reclip_id' => $this->reclip->getId(), 'sf_guard_user_profile_id' => $this->getUser()->getId()));
+			$clip = ClipPeer::retrieveByPK($request->getParameter('clip_id'));
 		}
-		elseif(!$this->getUser()->getId())
+
+		if($clip)
 		{
-			$this->getUser()->setFlash('new_clip_form', 'Please login to the service!');
-			$this->redirect($request->getReferer());
+			$this->clipRoutine($clip);
 		}
 		else
 		{
-			$this->getUser()->setFlash('new_clip_form', 'Bad URL!');
-			$this->redirect($request->getReferer());
+			$this->form = new NewClipForm();
+
+			$this->form->bind($request->getParameter($this->form->getName()));
+			if($this->form->isValid() && $this->getUser()->getId())
+			{
+				$this->source_name = 'youtube';
+				//Into util or helper
+				$url = parse_url($this->form->getValue('url'));
+				foreach(explode('&', $url['query']) as $params)
+				{
+					$values = explode('v=', $params);
+					if(count($values) > 1)
+					{
+						$this->clip_url = $values[1];
+						break;
+					}
+				}
+
+				$clip = ClipSaver::saveClip($this->clip_url, $this->source_name);
+
+				$this->clipRoutine($clip);
+			}
+			elseif(!$this->getUser()->getId())
+			{
+				$this->getUser()->setFlash('new_clip_form', 'Please login to the service!');
+				$this->redirect($request->getReferer());
+			}
+			else
+			{
+				$this->getUser()->setFlash('new_clip_form', 'Bad URL!');
+				$this->redirect($request->getReferer());
+			}
 		}
+	}
+
+	protected function clipRoutine($clip)
+	{
+		$this->source_name = 'youtube';
+		$this->clip_url = $clip->getUrl();
+		$this->clip_name = $clip->getName();
+		$scene = ScenePeer::retrieveYoungestByClipId($clip->getId());
+		if($scene)
+		{
+			$this->redirect($this->generateUrl('scene', array(
+				'username_slug' => $scene->getSfGuardUserProfile()->getNick(),
+				'board_id' => $scene->getBoardId(),
+				'id' => $scene->getId()
+			)));
+			return sfView::NONE;
+		}
+
+		$this->clip = $clip;
+
+		$reclip = ReclipPeer::retrieveByClipIdUserId($clip->getId(), $this->getUser()->getId());
+		if(!$reclip)
+		{
+			$reclip = new Reclip();
+			$reclip->setClipId($this->clip->getId());
+			$reclip->setSfGuardUserProfileId($this->getUser()->getId());
+			$reclip->save();
+		}
+		$this->reclip = $reclip;
+
+		$this->post_facebook = $this->getRequest()->getCookie('post_facebook', true);
+		$this->form = new SceneTimeForm(null, array('reclip_id' => $this->reclip->getId(), 'sf_guard_user_profile_id' => $this->getUser()->getId()));
 	}
 
 	public function executeFacebookCanvas(sfWebRequest $request)

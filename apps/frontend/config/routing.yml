@@ -52,6 +52,10 @@ sticker_scene_change:
   requirements:
     scene_id: \d+
 
+sticker_from_fb:
+  url: /scene/fb_load
+  param: { module: scene, action: showFbSceneAjax }
+
 ### FOLLOW ###
 
 follow_user:
@@ -267,6 +271,10 @@ preview_new_clip:
   url:  /preview
   param: { module: static, action: previewNew}
 
+preview_new_clip_with_clip_id:
+  url:  /preview/:clip_id
+  param: { module: static, action: previewNew}
+
 new_clip_scene_post:
   url:  /preview/create
   param: { module: static, action: newClipPostScene}
@@ -274,6 +282,7 @@ new_clip_scene_post:
 facebook_canvas:
   url:   /canvas/facebook/*
   param: { module: static, action: facebookCanvas }
+
 
 
 ### BOARD ###

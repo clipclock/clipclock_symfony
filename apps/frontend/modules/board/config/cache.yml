@@ -6,5 +6,7 @@ default:
   lifetime:    86400
 _clipSticker:
   enabled: true
+_clipStickerLogic:
+  enabled: true
 _boardSticker:
   enabled: true

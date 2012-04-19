@@ -88,6 +88,101 @@ class boardComponents extends sfComponents
 		$this->getContext()->getConfiguration()->loadHelpers(array('Comment'));
 	}
 
+	public function executeClipStickerFromFb()
+	{
+		$this->reclip_id = $this->getVar('reclip_id');
+		$this->reclip = ReclipQuery::create()->joinClip()->findOneById($this->reclip_id);
+	}
+
+	public function executeClipStickerLogic()
+	{
+		$this->friended_video = false;
+		$this->sticker_type = null;
+
+		$this->reclip_id = $this->getVar('reclip_id');
+
+		$this->current_user = $this->getVar('current_user');
+		$this->social_info = $this->getVar('social_info');
+		$this->clip_social_info_id = $this->getVar('clip_social_info_id');
+
+		if($this->social_info || $this->clip_social_info_id)
+		{//Неразмеченное видео
+			if($this->reclip_id && $this->clip_social_info_id)//Из базы
+			{
+				$this->sticker_type = 'new';
+				if(ScenePeer::retrieveFirstSceneTimeIdByClipIdBoardId($this->reclip_id, $this->current_user->getId()))
+				{
+					$this->sticker_type = 'typical';
+				}
+			}
+			else//Из FB
+			{
+				$this->clip_url = $this->social_info['clip_url'];
+				$this->source = $this->social_info['source'];
+				$this->clip = ClipSaver::saveClip($this->clip_url, $this->source, $this->social_info);
+
+				//Существует ли это видео со сценами у нас?
+				$reclip = ReclipPeer::retrieveByClipIdFromFriends($this->clip->getId(), $this->current_user->getId());
+				if($reclip && $reclip['friended_video'])
+				{
+					$this->sticker_type = null;
+					//Существует, если оно от внутрисистемных друзей, то показывать не надо
+					//$this->reclip_id = $reclip['id'];
+					//$this->friended_video = $reclip['friended_video'];
+				}
+				else
+				{
+					$this->sticker_type = 'new';
+					//Не существует, новое видео, надо сохранить
+					$this->reclip_id = ClipSaver::saveReclip($this->clip, $this->current_user->getId(), $this->social_info)->getId();
+					if($cache = $this->getContext()->getViewCacheManager())
+					{
+						$cache->remove('@sf_cache_partial?module=board&action=_clipStickerLogic&sf_cache_key='.$this->clip->getUrl().'*');
+					}
+				}
+				//Сброс кэша для этого компонента
+			}
+		}
+		else
+		{
+			$this->sticker_type = 'typical';
+		}
+/*
+		die();
+
+		if($this->getVar('fb_user_id'))
+		{
+			$this->fb_user_id = $this->getVar('fb_user_id');
+
+			if($this->getVar('clip_key'))
+			{
+				$this->clip_key = $this->getVar('clip_key');
+				$this->fb_desc = $this->getVar('fb_desc');
+				$this->fb_created_at = $this->getVar('fb_created_at');
+				$this->fb_post_id = $this->getVar('fb_post_id');
+
+				$source = SourcePeer::retrieveByName('youtube');
+				$this->source_id = $source['id'];
+
+				$this->clip = ClipSaver::saveClip($this->clip_key, $this->source_name, $this->source_id);
+
+				//Существует ли это видео со сценами у нас?
+				$reclip = ReclipPeer::retrieveByClipIdFromFriends($this->clip->getId(), $this->current_user->getId());
+				if($reclip)
+				{
+					//Существует, если оно от друзей, то показывать не надо
+					$this->reclip_id = $reclip['id'];
+					$this->friended_video = $reclip['friended_video'];
+				}
+				else
+				{
+					//Не существует, новое видео, надо сохранить
+					ClipSaver::saveReclip($this->clip->getId(), $this->current_user->getId(), $this->fb_user['id'], $this->fb_post_id);
+				}
+			}
+		}*/
+	}
+
 	public function executeClipSticker()
 	{
 		$this->reclip_id = $this->getVar('reclip_id');

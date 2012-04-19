@@ -198,6 +198,8 @@ class sceneActions extends sfActions
 		{
 			$cache->remove('@sf_cache_partial?module=board&action=_clipSticker&sf_cache_key='.$this->scene_time_form->getObject()->getReclipId().'*');
 			$cache->remove('@sf_cache_partial?module=board&action=_boardSticker&sf_cache_key='.$this->scene_time_form->getEmbeddedForm('scene')->getObject()->getBoardId().'*');
+			$cache->remove('@sf_cache_partial?module=board&action=_clipStickerLogic&sf_cache_key='.$this->scene_time_form->getObject()->getReclip()->getClip()->getUrl().'*');
+			$cache->remove('@sf_cache_partial?module=board&action=_clipStickerLogic&sf_cache_key='.$this->scene_time_form->getObject()->getReclipId().'*');
 		}
 
 		$scene = $this->scene_time_form->getEmbeddedForm('scene')->getObject();
@@ -223,7 +225,6 @@ class sceneActions extends sfActions
 			'board_id' => $scene->getBoardId(),
 			'id' => $scene->getId()
 		));
-		$this->getLogger()->debug('!!!!_'.$url);
 		$this->redirect($url);
 		return sfView::NONE;
 	}

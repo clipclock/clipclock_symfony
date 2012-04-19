@@ -118,12 +118,11 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		$c->addDescendingOrderByColumn('max('.self::CREATED_AT.')');
 		$c->addDescendingOrderByColumn(ReclipPeer::ID);
 
-		//$c->add(ScenePeer::REPIN_ORIGIN_SCENE_ID, null, Criteria::ISNULL);
 		$c->add(ClipPeer::HIDE, false);
+		$c->add(ScenePeer::SCENE_TIME_ID, null, Criteria::ISNOTNULL);
 		if($user_id)
 		{
 			$c->addOr(ScenePeer::SF_GUARD_USER_PROFILE_ID, $user_id);
-			$c->addOr(ReclipPeer::SF_GUARD_USER_PROFILE_ID, $user_id);
 		}
 
 		$c->addGroupByColumn(ReclipPeer::ID);
@@ -224,11 +223,13 @@ class SceneTimePeer extends BaseSceneTimePeer {
 			}
 		}
 		//$final_criterion->addOr($criteria->getNewCriterion(ScenePeer::SF_GUARD_USER_PROFILE_ID, $user_id));
+
 		$c->addAnd($final_criterion);
 		if($with_my_scenes)
 		{
 			$c->addOr($c->getNewCriterion(ScenePeer::SF_GUARD_USER_PROFILE_ID, $user_id));
 		}
+		$c->addOr(ScenePeer::SCENE_TIME_ID, null, Criteria::ISNULL);
 
 		return $c;
 	}

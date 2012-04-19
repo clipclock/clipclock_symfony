@@ -135,10 +135,6 @@ class boardComponents extends sfComponents
 					$this->sticker_type = 'new';
 					//Не существует, новое видео, надо сохранить
 					$this->reclip_id = ClipSaver::saveReclip($this->clip, $this->current_user->getId(), $this->social_info)->getId();
-					if($cache = $this->getContext()->getViewCacheManager())
-					{
-						$cache->remove('@sf_cache_partial?module=board&action=_clipStickerLogic&sf_cache_key='.$this->clip->getUrl().'*');
-					}
 				}
 				//Сброс кэша для этого компонента
 			}

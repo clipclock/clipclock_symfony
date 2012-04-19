@@ -1,149 +1,235 @@
-window.tooltipTimer = 0;
-window.tooltipShowTimer = 0;
+/* smart tooltips */
 
 $(function(){
 
-	var tooltipsCollection = {
-		/* screen 1*/
-		'1|#new_repin': 'Copy this clip to one of your own channels.',
-		'2|#d_clip_container': "Click to copy the link for commenting with the clip somebody's full length video post on Facebook.",
-		'3|#scene_controls li': 'Click the tab to jump to another clip of this video.',
-		'4|#scene_controls li.active': 'It is the active clip you are watching.',
-		'5|#scene_controls li#new_time_scene': 'Click here to create your new clip to some great moment of this video. For anyone you share the clip video will start from the moment you clipped.',
-		'6|#submit_comment': 'Add your comment to the current active clip.',
-		/* screen 2*/
-		'7|.head-search .inside': "Enter here YouTube video URL you'd like to clip with great moments.",
-		'8|.b-search': "Search the clips and videos available on the ClipClock.com",
-		/* for stickers */
-		'9|.sticker-tab': 'Click this tab to see another clip preview - screenshot and comments.',
-		'10|.sticker-tab.active': "This is the current active clip preview - screenshot and comments.",
-		'11|.clip_sticker .b-video-image': "It's the screenshot of the selected video moment.",
-		'12|.management-sticker li': 'Check the people who made Reclips, Comments and Likes to this clip.',
-		'13|.name-of-scence a': "It's the title of the video. The sticker area is all about this single video.",
-		/* screen 3*/
-		'14|.social .item2 a': 'Visit the person’s Facebook account.',
-		'15|.board_sticker .inner h4 a': 'Title of the thematic channel where person saved some of his clips.',
-		'16|#scroll-to-top': 'Fly back to the page top',
-		'17|#cuselFrame-filter-categories': 'Select seeing all clips on the main page or only clips created by the people you follow.',
-		'18|#filter-interests': 'Select your set of interests for the main page.',
-		'19|.b-follow.following': 'People you follow.',
-		'20|.b-follow.followers': 'People who follow you.'
-	};
+	// helpers
 
-	var getCookie = function(name) {
-		var cookie = " " + document.cookie;
-		var search = " " + name + "=";
-		var setStr = null;
-		var offset = 0;
-		var end = 0;
-		if (cookie.length > 0) {
-			offset = cookie.indexOf(search);
-			if (offset != -1) {
-				offset += search.length;
-				end = cookie.indexOf(";", offset)
-				if (end == -1) {
-					end = cookie.length;
-				}
-				setStr = unescape(cookie.substring(offset, end));
-			}
-		}
-		return(setStr);
+	var setTooltipCookie = function(value){
+		setCookie('tooltips', value, "Mon, 01-Jan-2037 00:00:00 GMT", "/");
+		setCookie('tooltips-changed', '1', "Mon, 01-Jan-2037 00:00:00 GMT", "/");
 	}
 
-	var showTooltip = function(obj, key)
-	{
-		window.tooltipTimer = clearTimeout(window.tooltipTimer);
-		window.tooltipTimer = 0;
+	var getCookie = function(key){
 
+		var cookie = '' + document.cookie;
+		var findme = '' + key + '=';
+
+		if (cookie.length > 0){
+
+			var offset = cookie.indexOf(findme);
+
+			if (offset != -1){
+				offset += findme.length;
+
+				var end = cookie.indexOf(';', offset);
+				if (end == -1)
+					end = cookie.length;
+
+				return unescape(cookie.substring(offset, end));
+			}
+		}
+
+		return null;
+	}
+
+	var ToolTipper = function(){
+
+		var context = this,
+				showTimer = 0,
+				hideTimer = 0;
+
+		var tooltips = [];
+		var hiddenTooltips = [];
+
+		// build b-tooltip
 		var tooltip = $('.b-tooltip').hide();
-
-		if (!tooltip.length){
-			$('body').append('<div class="b-tooltip radius4"><div class="wrap"><p></p><div class="ok radius3">Ok</div></div><div class="pointer"></div></div>');
+		if (!$(tooltip).length){
+			$('body').append('<div class="b-tooltip radius4" style="display:none;"><div class="wrap"><p></p><div class="ok radius3">Ok</div><div class="hide-all"><a href="">Hide all hints</a></div></div><div class="pointer"></div></div>');
 			tooltip = $('.b-tooltip');
 		}
 
-		$(tooltip).find('p').html(tooltipsCollection[key]);
-		$(tooltip).attr('data-key', 'tt' + key.split('|')[0]);
+		// get hidden tooltips from cookies
+		var cookieTooltips = getCookie('tooltips');
+		if (cookieTooltips != null)
+			hiddenTooltips = cookieTooltips.split(',');
 
-		$(tooltip).removeClass('top-right')
-				.removeClass('bottom-left')
-				.removeClass('bottom-right');
+		var showTooltip = function(obj, index)
+		{
+			clearTimeout(hideTimer); hideTimer = 0;
 
-		$(tooltip).show(0, function(){
+			$(tooltip).removeClass('top-right')
+					.removeClass('bottom-left')
+					.removeClass('bottom-right');
 
-			// positions
-			var ol = $(obj).offset().left;
-			var ot = $(obj).offset().top;
-			var x = ol - 20;
-			var y = ot + 25;
+			$(tooltip).find('p').html(tooltips[index].msg);
+			$(tooltip).attr('data-tooltip-index', index);
 
-			if (ol > $(document).width()/2 + $(tooltip).outerWidth() + 25){
+			$(tooltip).show(0, function(){
 
-				x = x - $(tooltip).width() + 25 + $(obj).width() / 2;
+				// calculate positions
 
-				if (ot > $(window).height() + $(document).scrollTop() - $(tooltip).outerHeight() - 50){
-					$(tooltip).addClass('bottom-right');
-					y = y - $(tooltip).outerHeight() - 25;
+				var ol = $(obj).offset().left;
+				var ot = $(obj).offset().top;
+				var x = ol - 20;
+				var y = ot + 25;
+
+				if (ol > $(document).width()/2 + $(tooltip).outerWidth() + 25){
+
+					x = x - $(tooltip).width() + 25 + $(obj).width() / 2;
+
+					if (ot > $(window).height() + $(document).scrollTop() - $(tooltip).outerHeight() - 50){
+						$(tooltip).addClass('bottom-right');
+						y = y - $(tooltip).outerHeight() - 25;
+					} else {
+						$(tooltip).addClass('top-right');
+					}
+
 				} else {
-					$(tooltip).addClass('top-right');
+					if (ot > $(window).height() + $(document).scrollTop() - $(tooltip).outerHeight() - 50){
+						$(tooltip).addClass('bottom-left');
+						y = y - $(tooltip).outerHeight() - 25;
+					}
 				}
+
+				// custom align for image ((
+				if (tooltips[index].sel == '.clip_sticker .b-video-image' && !$(tooltip).hasClass('bottom-right') && !$(tooltip).hasClass('bottom-left')){
+					y = y + 50;
+					if (!$(tooltip).hasClass('top-right')){
+						x = x + 60;
+					}
+				}
+
+				$(tooltip).css({
+					left: x,
+					top: y
+				});
+
+			});
+		}
+
+		var hideTooltip = function(force)
+		{
+			if (!force){
+
+				if (!hideTimer){
+					hideTimer = setTimeout(function(){
+						hideTooltip(true);
+					}, 150);
+				}
+
 			} else {
-				if (ot > $(window).height() + $(document).scrollTop() - $(tooltip).outerHeight() - 50){
-					$(tooltip).addClass('bottom-left');
-					y = y - $(tooltip).outerHeight() - 25;
+				$(tooltip).hide();
+			}
+		}
+
+		var bindEvents = function()
+		{
+			// more performance
+			if (hiddenTooltips.length == tooltips.length)
+				return true;
+
+			$(tooltip).live('mouseenter', function(){
+				clearTimeout(hideTimer); hideTimer = 0;
+			}).live('mouseleave', function(){
+						hideTooltip();
+					});
+
+			$(tooltip).find('.ok').click(function(){
+
+				var index = $(tooltip).attr('data-tooltip-index');
+				$(tooltips[index].sel).die('mouseenter').die('mouseleave');
+
+				hiddenTooltips.push(index);
+				setTooltipCookie(hiddenTooltips.join(','));
+
+				hideTooltip(true);
+
+			});
+
+			$(tooltip).find('.hide-all a').click(function(){
+
+				hiddenTooltips = [];
+				for(key in tooltips){
+					hiddenTooltips.push(key);
+					$(tooltips[key].sel).die('mouseenter').die('mouseleave');
+				}
+
+				setTooltipCookie(hiddenTooltips.join(','));
+				hideTooltip(true);
+
+				return false;
+			});
+
+			var hiddenTooltipsMap = {};
+			for (key in hiddenTooltips)
+				hiddenTooltipsMap[hiddenTooltips[key]] = true;
+
+			for (key in tooltips){
+				// don't bind hidden tooltips
+				if (!hiddenTooltipsMap[key]){
+					(function(){
+
+						var index = key;
+
+						$(tooltips[key].sel).live('mouseenter', function(){
+							if (!showTimer){
+								showTimer = setTimeout(function(){
+									showTooltip(this, index);
+								}.bind(this), 250);
+							}
+						}).live('mouseleave', function(){
+									clearTimeout(showTimer); showTimer = 0;
+									hideTooltip();
+								});
+
+					}.bind(context))();
 				}
 			}
-
-			$(tooltip).css({
-				left: x,
-				top: y
-			});
-		});
-	}
-
-	var hideTooltip = function(force)
-	{
-		if (force){
-			$('.b-tooltip').hide();
-		} else {
-			if (window.tooltipTimer == 0)
-				window.tooltipTimer = setTimeout(function(){
-					$('.b-tooltip').hide();
-				}, 500);
 		}
-	}
 
-	// bindings
-	$('.b-tooltip').live('mouseenter', function(){
-		clearTimeout(window.tooltipTimer);
-		window.tooltipTimer = 0;
-	});
+		return {
+			// sel = selector
+			addTooltip: function(sel, msg){
+				tooltips.push({
+					sel: sel,
+					msg: msg
+				});
+			},
+			init: function(){
+				bindEvents();
+			}
+		};
+	};
 
-	$('.b-tooltip').live('mouseleave', function(){
-		hideTooltip();
-	});
+	var tooltipper = new ToolTipper();
 
-	$('.b-tooltip .ok').live('click', function(){
-		hideTooltip(true);
-		setCookie($('.b-tooltip').attr('data-key'), "1", "Mon, 01-Jan-2037 00:00:00 GMT", "/");
-	});
+	// screen 1
+	tooltipper.addTooltip('#new_repin', "Copy the clip to one of your channels.");
+	tooltipper.addTooltip('#d_clip_container', "Copy link to the clip. Use it for commenting somebody's full length video post on Facebook.");
+	tooltipper.addTooltip('#scene_controls li:not(.active):not(#new_time_scene)', 'Click the tab to watch the video starting with the clipped moment.');
+	tooltipper.addTooltip('#scene_controls li.active', 'It is the active clip you are watching.');
+	tooltipper.addTooltip('#scene_controls li#new_time_scene', 'Click here to create your clip for some great moment of this video. For anyone you share the clip video will start from the moment you clipped.');
+	tooltipper.addTooltip('#submit_comment', 'Add your comment to the selected clip.');
 
-	// bindings for tooltip collection's elements
-	for(key in tooltipsCollection){
-		(function(){
-			var _key = key;
+	// screen 2
+	tooltipper.addTooltip('.head-search .inside', "Enter YouTube video link/URL you'd like to clip.");
+	tooltipper.addTooltip('.b-search', "Search the clips and videos available on the ClipClock.com");
+	tooltipper.addTooltip('.b-search', "Search the clips and videos available on the ClipClock.com");
+	// stickers
+	tooltipper.addTooltip('.sticker-tab:not(.active)', 'Click the tab to see another clip preview - screenshot and comments.');
+	tooltipper.addTooltip('.sticker-tab.active', "This is the current active clip preview - screenshot and comments.");
+	tooltipper.addTooltip('.clip_sticker .b-video-image', "It's the screenshot of the selected video moment.");
+	tooltipper.addTooltip('.management-sticker li', "Check the people who made Reclips, Comments and Likes to this clip.");
+	tooltipper.addTooltip('.name-of-scence a', "It's the video title. The sticker area is all about this single video.");
 
-			$(_key.split('|')[1]).live('mouseenter', function(){
-				if (!window.tooltipShowTimer)
-					window.tooltipShowTimer = setTimeout(function(){
-						if (getCookie('tt' + _key.split('|')[0]) == null)
-							showTooltip(this, _key);
-					}.bind(this), 500);
-			}).live('mouseleave', function(){
-				clearTimeout(window.tooltipShowTimer);
-				window.tooltipShowTimer = 0;
-				hideTooltip();
-			});
-		})();
-	}
+	// screen 3
+	tooltipper.addTooltip('.social .item2 a', "Visit the person’s Facebook account.");
+	tooltipper.addTooltip('.board_sticker .inner h4 a', "Title of the thematic channel where person saved some of his clips.");
+	tooltipper.addTooltip('#scroll-to-top', "Fly back to the page top");
+	tooltipper.addTooltip('#cuselFrame-filter-categories', "Select all clips for the main page or only clips created by the people you follow.");
+	tooltipper.addTooltip('#filter-interests', "Select your set of interests for the main page.");
+	tooltipper.addTooltip('.b-follow.following', "People you follow.");
+	tooltipper.addTooltip('.b-follow.followers', "People who follow you.");
+
+	tooltipper.init();
 });

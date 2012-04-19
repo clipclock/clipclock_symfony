@@ -201,6 +201,26 @@ class homeActions extends sfActions
 		return sfView::NONE;
 	}
 
+	public function executeRedirectToScene(sfWebRequest $request)
+	{
+		// we use this action just for IE redirect from homepage_modal
+
+		$scene = SceneQuery::create()
+				->joinWith('SfGuardUserProfile')
+				->filterById($request->getParameter('scene_id'))
+				->findOne();
+
+		$this->forward404Unless($scene);
+
+		$this->redirect(
+			$this->generateUrl('scene', array(
+				'username_slug' => $scene->getSfGuardUserProfile()->getNick(),
+				'board_id' => $scene->getBoardId(),
+				'id' => $scene->getId()
+			))
+		);
+	}
+
 
 	public function returnJSON($data)
 	{

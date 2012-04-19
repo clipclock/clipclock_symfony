@@ -21,7 +21,7 @@
 .b-tooltip
 {
     background-color: #faffbd;
-    max-width: 200px;
+    width: 200px;
     padding: 15px 15px 10px;
     font-weight: bold;
     font-size: 13px;
@@ -66,6 +66,21 @@
     background-image: -ms-linear-gradient(#ee7584, #e34956 50%);
     background-image: -moz-linear-gradient(#ee7584, #e34956 50%);
     background-image: -webkit-linear-gradient(#ee7584, #e34956 50%);
+}
+
+.b-tooltip .hide-all
+{
+    float: left;
+    margin-left: 35px;
+    padding-top: 12px;
+}
+
+.b-tooltip .hide-all a
+{
+    font-size: 11px;
+    font-weight: normal;
+    color: #666;
+    text-decoration: underline;
 }
 
 .b-tooltip .pointer

@@ -11,13 +11,14 @@ $(function(){
 			var ajax_data = [];
 			response.data.forEach(function(object)
 			{
+				//console.log(object);
 				if(object.type == 'video' && object.source.match(youtube_expr) && !object.link.match(clipclock_expr) && object.link)
 				{
 
 					var expr_result = youtube_replace_expr.exec(object.link);
 					if(expr_result)
 					{
-						ajax_data.push(expr_result[1]);
+						ajax_data.push(new Array(expr_result[1], object.from, object.created_time, object.message ? object.message : '' ));
 					}
 				}
 			});
@@ -28,7 +29,10 @@ $(function(){
 				data: {clip_keys: ajax_data},
 				success:function(response) {
 					console.log(response);
-					$(elem).prepend('<li>123</li>');
+					$(response).each(function(i, new_elem){
+						$(elem).prepend(new_elem);
+					});
+					$('.clip_sticker').wookmark();
 				}
 			});
 		});

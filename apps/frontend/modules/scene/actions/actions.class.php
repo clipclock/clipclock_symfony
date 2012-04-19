@@ -27,9 +27,13 @@ class sceneActions extends sfActions
 
 		$result = array();
 
-		foreach($clip_keys as $clip_key)
+		foreach($clip_keys as $clip_info)
 		{
-			$sticker_html = $this->getComponent('board', 'clipStickerFromFb', array('current_user' => $this->getUser(), 'clip_key' => $clip_key, 'sf_cache_key' => $clip_key.$this->getUser()->getId()));
+			$clip_key = $clip_info[0];
+			$fb_user = $clip_info[1];
+			$fb_created_at = $clip_info[2];
+			$fb_desc = $clip_info[3];
+			$sticker_html = $this->getComponent('board', 'clipStickerFromFb', array('current_user' => $this->getUser(), 'clip_key' => $clip_key, 'fb_user' => $fb_user, 'fb_created_at' => $fb_created_at, 'fb_desc' => $fb_desc, 'sf_cache_key' => $clip_key.$this->getUser()->getId()));
 			if($sticker_html)
 			{
 				$result[] = $sticker_html;

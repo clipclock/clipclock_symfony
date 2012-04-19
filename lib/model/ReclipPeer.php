@@ -52,16 +52,31 @@ class ReclipPeer extends BaseReclipPeer {
 		return current(self::doSelectJoinClip($c));
 	}
 
-	public static function retrieveByClipKey($clip_key, $clip_source_id)
+	public static function retrieveByClipKeyFromFriends($clip_key, $clip_source_id, $user_id)
 	{
 		$c = new Criteria();
 
 		$c->clearSelectColumns();
 		$c->addSelectColumn(ReclipPeer::ID);
+		$c->addSelectColumn('COALESCE(
+			('.UserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID .'='. $user_id.'),
+			('.BoardFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID .'='. $user_id.'),
+			('.ClipFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID .'='. $user_id.'),
+			('.ReclipPeer::SF_GUARD_USER_PROFILE_ID .'='. $user_id.'),
+			false
+		) as friended_video');
 
 		$c->addJoin(ReclipPeer::CLIP_ID, ClipPeer::ID, Criteria::INNER_JOIN);
 		$c->add(ClipPeer::URL, $clip_key);
 		$c->add(ClipPeer::SOURCE_ID, $clip_source_id);
+
+		$c->addJoin(ReclipPeer::ID, SceneTimePeer::RECLIP_ID, Criteria::LEFT_JOIN);
+		$c->addJoin(SceneTimePeer::ID, ScenePeer::SCENE_TIME_ID, Criteria::LEFT_JOIN);
+
+		$c->addJoin(ReclipPeer::SF_GUARD_USER_PROFILE_ID, UserFollowerPeer::FOLLOWING_SF_GUARD_USER_PROFILE_ID, Criteria::LEFT_JOIN);
+		$c->addJoin(ScenePeer::BOARD_ID, BoardFollowerPeer::BOARD_ID, Criteria::LEFT_JOIN);
+		$c->addJoin(ClipPeer::ID, ClipFollowerPeer::CLIP_ID, Criteria::LEFT_JOIN);
+
 		$c->setLimit(1);
 
 		return BasePeer::doSelect($c)->fetch(PDO::FETCH_ASSOC);

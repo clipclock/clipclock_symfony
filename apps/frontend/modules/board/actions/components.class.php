@@ -93,13 +93,19 @@ class boardComponents extends sfComponents
 		$this->clip_key = $this->getVar('clip_key');
 		$this->current_user = $this->getVar('current_user');
 
+		$this->fb_desc = $this->getVar('fb_desc');
+		$this->fb_created_at = $this->getVar('fb_created_at');
+		$this->fb_user = $this->getVar('fb_user');
+
 		$source = SourcePeer::retrieveByName('youtube');
 		$this->source_id = $source['id'];
 
-		$reclip_id = ReclipPeer::retrieveByClipKey($this->clip_key, $this->source_id);
-		if(!$reclip_id)
+		$this->reclip_id = null;
+		$reclip = ReclipPeer::retrieveByClipKeyFromFriends($this->clip_key, $this->source_id, $this->current_user->getId());
+		if($reclip)
 		{
-			$reclip_id = ReclipPeer::retrieveByClipKey($this->clip_key, $this->source_id);
+			$this->reclip_id = $reclip['id'];
+			$this->friended_video = $reclip['friended_video'];
 		}
 	}
 

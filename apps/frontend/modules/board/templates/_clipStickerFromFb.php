@@ -17,7 +17,7 @@
 		<div class="b-video">
 			<div class="b-video-image" id="image_1404">
 				<a href="<?php echo url_for('preview_new_clip_with_clip_id', array('clip_id' => $reclip->getClipId()))?>">
-					<img width="192" height="144" alt="" src="http://viddii.dev/uploads/scenes/192/6b/f4/74/43/d0/37/ee/a5/f2/c9/a5/25/c0/c4/9c/e1/6bf47443d037eea5f2c9a525c0c49ce1.jpg" />
+					<img width="192" height="144" alt="" src="http://img.youtube.com/vi/<?php echo $reclip->getClip()->getUrl()?>/0.jpg" />
 					<div class="arrow"></div>
 				</a>
 			</div>

@@ -32,8 +32,17 @@ class sceneActions extends sfActions
 			'secret' => $config['secret'],
 		));
 
-		$feed_result = $facebook->api('me/home?limit=250');
+		$feed_result = array();
 		$html_result = array();
+		try
+		{
+			$feed_result = $facebook->api('me/home?limit=250');
+		}
+		catch(Exception $e)
+		{
+			$feed_result['data'] = array();
+		}
+
 		foreach($feed_result['data'] as $feed_item)
 		{
 			if($feed_item['type'] == 'video' && $feed_item['link'])
@@ -47,10 +56,10 @@ class sceneActions extends sfActions
 						preg_match('/v=(\w+)/i', $feed_item['link'], $clip_key_matches);
 						if($clip_key_matches)
 						{
-							$clip_key = $clip_key_matches[1];
+							$clip_url = $clip_key_matches[1];
 							$html_result[] = $this->getComponent('board', 'clipStickerLogic', array('current_user' => $this->getUser(),
 							'social_info' => array(
-								'clip_url' => $clip_key,
+								'clip_url' => $clip_url,
 								'created_at' => $feed_item['created_time'],
 								'ext_user_id' => $feed_item['from']['id'],
 								'ext_user_nick' => $feed_item['from']['name'],
@@ -59,7 +68,7 @@ class sceneActions extends sfActions
 								'post_id' => str_replace($feed_item['from']['id'].'_', '', $feed_item['id']),
 								'description' => isset($feed_item['description']) ? $feed_item['description'] : '',
 							),
-							'sf_cache_key' => $clip_key.$this->getUser()->getId()));
+							'sf_cache_key' => $clip_url.$this->getUser()->getId()));
 						}
 					}
 				}

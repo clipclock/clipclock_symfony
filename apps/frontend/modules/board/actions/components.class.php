@@ -97,8 +97,9 @@ class boardComponents extends sfComponents
 	public function executeClipStickerLogic()
 	{
 		$this->friended_video = false;
-		$this->reclip_id = $this->getVar('reclip_id');
 		$this->sticker_type = null;
+
+		$this->reclip_id = $this->getVar('reclip_id');
 
 		$this->current_user = $this->getVar('current_user');
 		$this->social_info = $this->getVar('social_info');
@@ -109,12 +110,17 @@ class boardComponents extends sfComponents
 			if($this->reclip_id && $this->clip_social_info_id)//Из базы
 			{
 				$this->sticker_type = 'new';
+				if(ScenePeer::retrieveFirstSceneTimeIdByClipIdBoardId($this->reclip_id, $this->current_user->getId()))
+				{
+					$this->sticker_type = 'typical';
+				}
 			}
 			else//Из FB
 			{
 				$this->clip_url = $this->social_info['clip_url'];
 				$this->source = $this->social_info['source'];
 				$this->clip = ClipSaver::saveClip($this->clip_url, $this->source, $this->social_info);
+
 				//Существует ли это видео со сценами у нас?
 				$reclip = ReclipPeer::retrieveByClipIdFromFriends($this->clip->getId(), $this->current_user->getId());
 				if($reclip && $reclip['friended_video'])
@@ -129,6 +135,10 @@ class boardComponents extends sfComponents
 					$this->sticker_type = 'new';
 					//Не существует, новое видео, надо сохранить
 					$this->reclip_id = ClipSaver::saveReclip($this->clip, $this->current_user->getId(), $this->social_info)->getId();
+					if($cache = $this->getContext()->getViewCacheManager())
+					{
+						$cache->remove('@sf_cache_partial?module=board&action=_clipStickerLogic&sf_cache_key='.$this->clip->getUrl().'*');
+					}
 				}
 				//Сброс кэша для этого компонента
 			}

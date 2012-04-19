@@ -65,7 +65,7 @@ all:
 #        - friends_location
 #        - read_friendlists
 #        - publish_stream
-#        - read_stream
+        - read_stream
         - publish_actions
                       #optionnal - http://developers.facebook.com/docs/authentication/permissions
                                         # needed to create an user based on his email_address

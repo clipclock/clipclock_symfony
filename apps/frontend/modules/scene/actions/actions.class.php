@@ -200,6 +200,7 @@ class sceneActions extends sfActions
 			$cache->remove('@sf_cache_partial?module=board&action=_boardSticker&sf_cache_key='.$this->scene_time_form->getEmbeddedForm('scene')->getObject()->getBoardId().'*');
 			$cache->remove('@sf_cache_partial?module=board&action=_clipStickerLogic&sf_cache_key='.$this->scene_time_form->getObject()->getReclip()->getClip()->getUrl().'*');
 			$cache->remove('@sf_cache_partial?module=board&action=_clipStickerLogic&sf_cache_key='.$this->scene_time_form->getObject()->getReclipId().'*');
+			$cache->remove('@sf_cache_partial?module=home&action=_clipList&sf_cache_key='.$this->current_user->getId().'*');
 		}
 
 		$scene = $this->scene_time_form->getEmbeddedForm('scene')->getObject();

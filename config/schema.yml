@@ -58,6 +58,7 @@ propel:
     clip_id: { type: INTEGER, required: true, foreignTable: clip, foreignReference: id }
     _uniques:
       reclip_id_key: [id]
+      reclip_content_key: [sf_guard_user_profile_id, clip_id]
 
   board_refs_category:
     board_id:  { type: INTEGER, required: true, foreignTable: board, primaryKey: true, foreignReference: id }

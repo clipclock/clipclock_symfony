@@ -90,14 +90,55 @@ class boardComponents extends sfComponents
 
 	public function executeClipStickerFromFb()
 	{
-
+		$this->reclip_id = $this->getVar('reclip_id');
+		$this->reclip = ReclipQuery::create()->joinClip()->findOneById($this->reclip_id);
 	}
 
 	public function executeClipStickerLogic()
 	{
-		$this->current_user = $this->getVar('current_user');
 		$this->friended_video = false;
 		$this->reclip_id = $this->getVar('reclip_id');
+		$this->sticker_type = null;
+
+		$this->current_user = $this->getVar('current_user');
+		$this->social_info = $this->getVar('social_info');
+		$this->clip_social_info_id = $this->getVar('clip_social_info_id');
+
+		if($this->social_info || $this->clip_social_info_id)
+		{//Неразмеченное видео
+			if($this->reclip_id && $this->clip_social_info_id)//Из базы
+			{
+				$this->sticker_type = 'new';
+			}
+			else//Из FB
+			{
+				$this->clip_url = $this->social_info['clip_url'];
+				$this->source = $this->social_info['source'];
+				$this->clip = ClipSaver::saveClip($this->clip_url, $this->source, $this->social_info);
+				//Существует ли это видео со сценами у нас?
+				$reclip = ReclipPeer::retrieveByClipIdFromFriends($this->clip->getId(), $this->current_user->getId());
+				if($reclip && $reclip['friended_video'])
+				{
+					$this->sticker_type = null;
+					//Существует, если оно от внутрисистемных друзей, то показывать не надо
+					//$this->reclip_id = $reclip['id'];
+					//$this->friended_video = $reclip['friended_video'];
+				}
+				else
+				{
+					$this->sticker_type = 'new';
+					//Не существует, новое видео, надо сохранить
+					$this->reclip_id = ClipSaver::saveReclip($this->clip, $this->current_user->getId(), $this->social_info)->getId();
+				}
+				//Сброс кэша для этого компонента
+			}
+		}
+		else
+		{
+			$this->sticker_type = 'typical';
+		}
+/*
+		die();
 
 		if($this->getVar('fb_user_id'))
 		{
@@ -129,7 +170,7 @@ class boardComponents extends sfComponents
 					ClipSaver::saveReclip($this->clip->getId(), $this->current_user->getId(), $this->fb_user['id'], $this->fb_post_id);
 				}
 			}
-		}
+		}*/
 	}
 
 	public function executeClipSticker()

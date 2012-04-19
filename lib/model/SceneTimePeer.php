@@ -95,11 +95,11 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		$c->setPrimaryTableName(ReclipPeer::TABLE_NAME);
 		$c->clearSelectColumns();
 		$c->addSelectColumn(ReclipPeer::ID.' as reclip_id');
-		$c->addSelectColumn('max('. ReclipPeer::FB_USER_ID .') as fb_user_id');
-		$c->addSelectColumn('max('. ReclipPeer::FB_POST_ID .') as fb_post_id');
+		$c->addSelectColumn('max('. ClipSocialInfoPeer::ID .') as clip_social_info_id');
 		$c->addJoin(ReclipPeer::ID, SceneTimePeer::RECLIP_ID, Criteria::LEFT_JOIN);
 		$c->addJoin(SceneTimePeer::ID, ScenePeer::SCENE_TIME_ID, Criteria::LEFT_JOIN);
 		$c->addJoin(ReclipPeer::CLIP_ID, ClipPeer::ID, Criteria::LEFT_JOIN);
+		$c->addJoin(ClipPeer::CLIP_SOCIAL_INFO_ID, ClipSocialInfoPeer::ID, Criteria::LEFT_JOIN);
 		$c->addJoin(ScenePeer::ID, SceneLikePeer::SCENE_ID, Criteria::LEFT_JOIN);
 
 		$c->addAlias('repin_scene', ScenePeer::TABLE_NAME);
@@ -204,12 +204,12 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		$criterions[] = $c->getNewCriterion(ClipFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, null, Criteria::ISNOTNULL);
 
 		$c->addMultipleJoin(array(
-			array(ReclipPeer::FB_USER_ID, FbUserFollowerPeer::FOLLOWING_FB_USER_ID),
-			array(FbUserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, $user_id),
+			array(ClipSocialInfoPeer::EXT_USER_ID, ExtUserFollowerPeer::FOLLOWING_EXT_USER_ID),
+			array(ExtUserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, $user_id),
 			//array(ScenePeer::CREATED_AT, ClipFollowerPeer::CREATED_AT, Criteria::GREATER_EQUAL)
 		), Criteria::LEFT_JOIN);
 
-		$criterions[] = $c->getNewCriterion(FbUserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, null, Criteria::ISNOTNULL);
+		$criterions[] = $c->getNewCriterion(ExtUserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, null, Criteria::ISNOTNULL);
 
 		$final_criterion = null;
 		foreach($criterions as $criterion)

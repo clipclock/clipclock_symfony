@@ -26,26 +26,69 @@ class sceneActions extends sfActions
 		$this->setTemplate(false);
 		sfConfig::set('sf_web_debug', false);
 
-		$clip_keys = $request->getParameter('clip_keys');
-		$this->forward404Unless($clip_keys && is_array($clip_keys) && $this->getUser()->getId());
-		$result = array();
+		$config = sfConfig::get('app_melody_facebook');
+		$facebook = new Facebook(array(
+			'appId'  => $config['key'],
+			'secret' => $config['secret'],
+		));
 
-		foreach($clip_keys as $clip_info)
+		$feed_result = $facebook->api('me/home?limit=250');
+		$html_result = array();
+		foreach($feed_result['data'] as $feed_item)
 		{
-			$clip_key = $clip_info[0];
-			$fb_user = $clip_info[1];
-			$fb_created_at = $clip_info[2];
-			$fb_desc = $clip_info[3];
-			$fb_post_id = $clip_info[4];
-
-			$sticker_html = $this->getComponent('board', 'clipStickerLogic', array('current_user' => $this->getUser(), 'clip_key' => $clip_key, 'fb_user_id' => $fb_user['id'], 'fb_created_at' => $fb_created_at, 'fb_desc' => $fb_desc, 'fb_post_id' => $fb_post_id, 'sf_cache_key' => $clip_key.$this->getUser()->getId()));
-			if($sticker_html)
+			if($feed_item['type'] == 'video' && $feed_item['link'])
 			{
-				$result[] = $sticker_html;
+				preg_match('/http\:\/\/(www.)?youtube\.com*/i', $feed_item['source'], $youtube_matches);
+				if($youtube_matches)
+				{
+					preg_match('/http\:\/\/(www.)?clipclock\.com*/i', $feed_item['link'], $clipclock_matches);
+					if(!$clipclock_matches)
+					{
+						preg_match('/v=(\w+)/i', $feed_item['link'], $clip_key_matches);
+						if($clip_key_matches)
+						{
+							$clip_key = $clip_key_matches[1];
+							$html_result[] = $this->getComponent('board', 'clipStickerLogic', array('current_user' => $this->getUser(),
+							'social_info' => array(
+								'clip_url' => $clip_key,
+								'created_at' => $feed_item['created_time'],
+								'ext_user_id' => $feed_item['from']['id'],
+								'ext_user_nick' => $feed_item['from']['name'],
+								'provider' => 'facebook',
+								'source' => 'youtube',
+								'post_id' => str_replace($feed_item['from']['id'].'_', '', $feed_item['id']),
+								'description' => isset($feed_item['description']) ? $feed_item['description'] : '',
+							),
+							'sf_cache_key' => $clip_key.$this->getUser()->getId()));
+						}
+					}
+				}
 			}
 		}
+//
+//
+//		var_dump($html_result);
+//		die();
+//
+//		$this->forward404Unless($clip_keys && is_array($clip_keys) && $this->getUser()->getId());
+//		$result = array();
+//
+//		foreach($clip_keys as $clip_info)
+//		{
+//			$clip_key = $clip_info[0];
+//			$fb_user = $clip_info[1];
+//			$fb_created_at = $clip_info[2];
+//			$fb_desc = $clip_info[3];
+//			$fb_post_id = $clip_info[4];
+//
+//			$sticker_html = $this->getComponent('board', 'clipStickerLogic', array('current_user' => $this->getUser(), 'clip_key' => $clip_key, 'fb_user_id' => $fb_user['id'], 'fb_created_at' => $fb_created_at, 'fb_desc' => $fb_desc, 'fb_post_id' => $fb_post_id, 'sf_cache_key' => $clip_key.$this->getUser()->getId()));
+//			if($sticker_html)
+//			{
+//				$result[] = $sticker_html;
+//			}
+//		}
 
-		return $this->returnJSON($result);
+		return $this->returnJSON($html_result);
 	}
 
 	public function executeShow(sfWebRequest $request)

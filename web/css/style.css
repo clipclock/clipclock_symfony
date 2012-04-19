@@ -101,7 +101,7 @@ P { padding:0 0 13px 0;}
 .stickers-list li .inner .management-sticker li.like a { background:url(../images/management-sticker-like-ico.jpg) no-repeat 1px 0;}
 .stickers-list li .inner .management-sticker li.like a:hover { background-position:1px -15px;}
 
-/* clip_stickers  */
+/* clip_stickers  without scenes */
 
 .stickers-list li .inner .top
 {
@@ -120,11 +120,9 @@ P { padding:0 0 13px 0;}
 
 .stickers-list li .inner .top p
 {
-    font-size: 11px;
 }
 
-.stickers-list li .inner .top p,
-.stickers-list li .inner .msg p
+.stickers-list li .inner .top p
 {
     margin-left: 40px;
     padding: 0;
@@ -189,6 +187,7 @@ P { padding:0 0 13px 0;}
 .stickers-list li .inner .msg p
 {
     font-weight: bold;
+    padding: 0;
 }
 
 /* b-band-scroll */

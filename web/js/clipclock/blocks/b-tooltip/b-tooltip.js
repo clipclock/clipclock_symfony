@@ -182,7 +182,7 @@ $(function(){
 									hideTooltip();
 								});
 
-					}.bind(context))();
+					})();
 				}
 			}
 		}

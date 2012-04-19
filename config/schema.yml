@@ -51,6 +51,10 @@ propel:
     following_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     follower_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
+  fb_user_follower:
+    following_fb_user_id: { type: VARCHAR, required: true, primaryKey: true }
+    follower_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
+    created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
   scene:
     _propel_behaviors:
       archivable: {archive_on_delete: true, log_archived_at: true}
@@ -77,7 +81,8 @@ propel:
       archivable: {archive_on_delete: true, log_archived_at: true}
     id: ~
     sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
-    facebook_id: { type: VARCHAR, required: false }
+    fb_user_id: { type: VARCHAR, required: false }
+    fb_post_id: { type: VARCHAR, required: false }
     clip_id: { type: INTEGER, required: true, foreignTable: clip, foreignReference: id }
     _uniques:
       reclip_id_key: [id]

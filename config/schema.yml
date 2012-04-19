@@ -10,6 +10,7 @@ propel:
     city: { type: VARCHAR, size: '64', required: false }
     country: { type: VARCHAR, size: '64', required: false }
     gender: { type: BOOLEAN, required: true, default: true }
+    tooltips: {type: VARCHAR, size: '255', required: false }
   ext_profile:
     id: ~
     created_at: { type: timestamp, required: true, defaultExpr: 'now()'}

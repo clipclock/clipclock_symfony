@@ -52,7 +52,7 @@ class ReclipPeer extends BaseReclipPeer {
 		return current(self::doSelectJoinClip($c));
 	}
 
-	public static function retrieveByClipKeyFromFriends($clip_key, $clip_source_id, $user_id)
+	public static function retrieveByClipIdFromFriends($clip_id, $user_id)
 	{
 		$c = new Criteria();
 
@@ -66,16 +66,14 @@ class ReclipPeer extends BaseReclipPeer {
 			false
 		) as friended_video');
 
-		$c->addJoin(ReclipPeer::CLIP_ID, ClipPeer::ID, Criteria::INNER_JOIN);
-		$c->add(ClipPeer::URL, $clip_key);
-		$c->add(ClipPeer::SOURCE_ID, $clip_source_id);
+		$c->add(ReclipPeer::CLIP_ID, $clip_id);
 
 		$c->addJoin(ReclipPeer::ID, SceneTimePeer::RECLIP_ID, Criteria::LEFT_JOIN);
 		$c->addJoin(SceneTimePeer::ID, ScenePeer::SCENE_TIME_ID, Criteria::LEFT_JOIN);
 
 		$c->addJoin(ReclipPeer::SF_GUARD_USER_PROFILE_ID, UserFollowerPeer::FOLLOWING_SF_GUARD_USER_PROFILE_ID, Criteria::LEFT_JOIN);
 		$c->addJoin(ScenePeer::BOARD_ID, BoardFollowerPeer::BOARD_ID, Criteria::LEFT_JOIN);
-		$c->addJoin(ClipPeer::ID, ClipFollowerPeer::CLIP_ID, Criteria::LEFT_JOIN);
+		$c->addJoin($clip_id, ClipFollowerPeer::CLIP_ID, Criteria::LEFT_JOIN);
 
 		$c->setLimit(1);
 

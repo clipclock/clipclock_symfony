@@ -18,21 +18,20 @@ $(function(){
 					var expr_result = youtube_replace_expr.exec(object.link);
 					if(expr_result)
 					{
-						ajax_data.push(new Array(expr_result[1], object.from, object.created_time, object.message ? object.message : '' ));
+						var post_id = object.id.replace(object.from.id+'_', '');//facebook page id trick (id=userId_postId)
+						ajax_data.push(new Array(expr_result[1], object.from, object.created_time, object.message ? object.message : '', post_id));
 					}
 				}
 			});
 
-			console.log(ajax_data);
 			$.ajax({
 				url:ajax_url,
 				data: {clip_keys: ajax_data},
 				success:function(response) {
-					console.log(response);
 					$(response).each(function(i, new_elem){
 						$(elem).prepend(new_elem);
 					});
-					$('.clip_sticker').wookmark();
+					$('.clip_sticker').wookmark('update');
 				}
 			});
 		});

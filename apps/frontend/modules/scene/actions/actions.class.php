@@ -22,9 +22,12 @@ class sceneActions extends sfActions
 
 	public function executeShowFbSceneAjax(sfWebRequest $request)
 	{
+		$this->setLayout(false);
+		$this->setTemplate(false);
+		sfConfig::set('sf_web_debug', false);
+
 		$clip_keys = $request->getParameter('clip_keys');
 		$this->forward404Unless($clip_keys && is_array($clip_keys) && $this->getUser()->getId());
-
 		$result = array();
 
 		foreach($clip_keys as $clip_info)
@@ -33,7 +36,9 @@ class sceneActions extends sfActions
 			$fb_user = $clip_info[1];
 			$fb_created_at = $clip_info[2];
 			$fb_desc = $clip_info[3];
-			$sticker_html = $this->getComponent('board', 'clipStickerFromFb', array('current_user' => $this->getUser(), 'clip_key' => $clip_key, 'fb_user' => $fb_user, 'fb_created_at' => $fb_created_at, 'fb_desc' => $fb_desc, 'sf_cache_key' => $clip_key.$this->getUser()->getId()));
+			$fb_post_id = $clip_info[4];
+
+			$sticker_html = $this->getComponent('board', 'clipStickerLogic', array('current_user' => $this->getUser(), 'clip_key' => $clip_key, 'fb_user_id' => $fb_user['id'], 'fb_created_at' => $fb_created_at, 'fb_desc' => $fb_desc, 'fb_post_id' => $fb_post_id, 'sf_cache_key' => $clip_key.$this->getUser()->getId()));
 			if($sticker_html)
 			{
 				$result[] = $sticker_html;

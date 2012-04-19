@@ -92,12 +92,14 @@ class SceneTimePeer extends BaseSceneTimePeer {
 	{
 		$c = !$c ? new Criteria() : $c;
 
-		$c->setPrimaryTableName(SceneTimePeer::TABLE_NAME);
+		$c->setPrimaryTableName(ReclipPeer::TABLE_NAME);
 		$c->clearSelectColumns();
-		$c->addSelectColumn(SceneTimePeer::RECLIP_ID);
-		$c->addJoin(SceneTimePeer::ID, ScenePeer::SCENE_TIME_ID, Criteria::INNER_JOIN);
-		$c->addJoin(SceneTimePeer::RECLIP_ID, ReclipPeer::ID, Criteria::INNER_JOIN);
-		$c->addJoin(ReclipPeer::CLIP_ID, ClipPeer::ID, Criteria::INNER_JOIN);
+		$c->addSelectColumn(ReclipPeer::ID.' as reclip_id');
+		$c->addSelectColumn('max('. ReclipPeer::FB_USER_ID .') as fb_user_id');
+		$c->addSelectColumn('max('. ReclipPeer::FB_POST_ID .') as fb_post_id');
+		$c->addJoin(ReclipPeer::ID, SceneTimePeer::RECLIP_ID, Criteria::LEFT_JOIN);
+		$c->addJoin(SceneTimePeer::ID, ScenePeer::SCENE_TIME_ID, Criteria::LEFT_JOIN);
+		$c->addJoin(ReclipPeer::CLIP_ID, ClipPeer::ID, Criteria::LEFT_JOIN);
 		$c->addJoin(ScenePeer::ID, SceneLikePeer::SCENE_ID, Criteria::LEFT_JOIN);
 
 		$c->addAlias('repin_scene', ScenePeer::TABLE_NAME);
@@ -105,7 +107,7 @@ class SceneTimePeer extends BaseSceneTimePeer {
 
 		if($categories_id)
 		{
-			$c->addJoin(ScenePeer::BOARD_ID, BoardRefsCategoryPeer::BOARD_ID, Criteria::INNER_JOIN);
+			$c->addJoin(ScenePeer::BOARD_ID, BoardRefsCategoryPeer::BOARD_ID, Criteria::LEFT_JOIN);
 			$c->add(BoardRefsCategoryPeer::CATEGORY_ID, $categories_id, Criteria::IN);
 			$c->addDescendingOrderByColumn('avg('. BoardRefsCategoryPeer::VOTES.')/avg(avg('. BoardRefsCategoryPeer::VOTES.')) OVER (order by max('.ScenePeer::BOARD_ID.') ASC)');
 		}
@@ -114,16 +116,17 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		$c->addDescendingOrderByColumn('max('.self::UNIQUE_COMMENTS_COUNT.')');
 		$c->addDescendingOrderByColumn('count('.SceneTimePeer::ID.')');
 		$c->addDescendingOrderByColumn('max('.self::CREATED_AT.')');
-		$c->addDescendingOrderByColumn(SceneTimePeer::RECLIP_ID);
+		$c->addDescendingOrderByColumn(ReclipPeer::ID);
 
-		$c->add(ScenePeer::REPIN_ORIGIN_SCENE_ID, null, Criteria::ISNULL);
+		//$c->add(ScenePeer::REPIN_ORIGIN_SCENE_ID, null, Criteria::ISNULL);
 		$c->add(ClipPeer::HIDE, false);
 		if($user_id)
 		{
 			$c->addOr(ScenePeer::SF_GUARD_USER_PROFILE_ID, $user_id);
+			$c->addOr(ReclipPeer::SF_GUARD_USER_PROFILE_ID, $user_id);
 		}
 
-		$c->addGroupByColumn(SceneTimePeer::RECLIP_ID);
+		$c->addGroupByColumn(ReclipPeer::ID);
 		return $c;
 	}
 
@@ -191,7 +194,7 @@ class SceneTimePeer extends BaseSceneTimePeer {
 
 		$criterions[] = $c->getNewCriterion(BoardFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, null, Criteria::ISNOTNULL);
 
-		$c->addJoin(SceneTimePeer::RECLIP_ID, ReclipPeer::ID, Criteria::INNER_JOIN);
+		//$c->addJoin(SceneTimePeer::RECLIP_ID, ReclipPeer::ID, Criteria::INNER_JOIN);
 		$c->addMultipleJoin(array(
 			array(ReclipPeer::CLIP_ID, ClipFollowerPeer::CLIP_ID),
 			array(ClipFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, $user_id),
@@ -199,6 +202,14 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		), Criteria::LEFT_JOIN);
 
 		$criterions[] = $c->getNewCriterion(ClipFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, null, Criteria::ISNOTNULL);
+
+		$c->addMultipleJoin(array(
+			array(ReclipPeer::FB_USER_ID, FbUserFollowerPeer::FOLLOWING_FB_USER_ID),
+			array(FbUserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, $user_id),
+			//array(ScenePeer::CREATED_AT, ClipFollowerPeer::CREATED_AT, Criteria::GREATER_EQUAL)
+		), Criteria::LEFT_JOIN);
+
+		$criterions[] = $c->getNewCriterion(FbUserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, null, Criteria::ISNOTNULL);
 
 		$final_criterion = null;
 		foreach($criterions as $criterion)

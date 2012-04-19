@@ -90,22 +90,45 @@ class boardComponents extends sfComponents
 
 	public function executeClipStickerFromFb()
 	{
-		$this->clip_key = $this->getVar('clip_key');
+
+	}
+
+	public function executeClipStickerLogic()
+	{
 		$this->current_user = $this->getVar('current_user');
+		$this->friended_video = false;
+		$this->reclip_id = $this->getVar('reclip_id');
 
-		$this->fb_desc = $this->getVar('fb_desc');
-		$this->fb_created_at = $this->getVar('fb_created_at');
-		$this->fb_user = $this->getVar('fb_user');
-
-		$source = SourcePeer::retrieveByName('youtube');
-		$this->source_id = $source['id'];
-
-		$this->reclip_id = null;
-		$reclip = ReclipPeer::retrieveByClipKeyFromFriends($this->clip_key, $this->source_id, $this->current_user->getId());
-		if($reclip)
+		if($this->getVar('fb_user_id'))
 		{
-			$this->reclip_id = $reclip['id'];
-			$this->friended_video = $reclip['friended_video'];
+			$this->fb_user_id = $this->getVar('fb_user_id');
+
+			if($this->getVar('clip_key'))
+			{
+				$this->clip_key = $this->getVar('clip_key');
+				$this->fb_desc = $this->getVar('fb_desc');
+				$this->fb_created_at = $this->getVar('fb_created_at');
+				$this->fb_post_id = $this->getVar('fb_post_id');
+
+				$source = SourcePeer::retrieveByName('youtube');
+				$this->source_id = $source['id'];
+
+				$this->clip = ClipSaver::saveClip($this->clip_key, $this->source_name, $this->source_id);
+
+				//Существует ли это видео со сценами у нас?
+				$reclip = ReclipPeer::retrieveByClipIdFromFriends($this->clip->getId(), $this->current_user->getId());
+				if($reclip)
+				{
+					//Существует, если оно от друзей, то показывать не надо
+					$this->reclip_id = $reclip['id'];
+					$this->friended_video = $reclip['friended_video'];
+				}
+				else
+				{
+					//Не существует, новое видео, надо сохранить
+					ClipSaver::saveReclip($this->clip->getId(), $this->current_user->getId(), $this->fb_user['id'], $this->fb_post_id);
+				}
+			}
 		}
 	}
 

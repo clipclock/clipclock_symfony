@@ -45,43 +45,19 @@ class staticActions extends sfActions
 				}
 			}
 
-			if($this->clip_url)
+			$clip = ClipSaver::saveClip($this->clip_url, $this->source_name);
+
+			$scene = ScenePeer::retrieveYoungestByClipId($clip->getId());
+			if($scene)
 			{
-				$url = "http://gdata.youtube.com/feeds/api/videos/". $this->clip_url;
-				$doc = new DOMDocument;
-				$doc->load($url);
-				$this->clip_name = $doc->getElementsByTagName("title")->item(0)->nodeValue;
-				$this->clip_duration = $doc->getElementsByTagNameNS("http://gdata.youtube.com/schemas/2007", "duration")->item(0)->getAttribute('seconds');
+				$this->redirect($this->generateUrl('scene', array(
+					'username_slug' => $scene->getSfGuardUserProfile()->getNick(),
+					'board_id' => $scene->getBoardId(),
+					'id' => $scene->getId()
+				)));
+				return sfView::NONE;
 			}
 
-			$source = SourcePeer::retrieveByName($this->source_name);
-			$this->source_id = $source['id'];
-			//--
-
-			$clip = ClipPeer::retrieveByUrlAndSourceId($this->clip_url, $this->source_id);
-
-			if(!$clip)
-			{
-				$clip = new Clip();
-				$clip->setUrl($this->clip_url);
-				$clip->setName($this->clip_name);
-				$clip->setSourceId($this->source_id);
-				$clip->setDuration($this->clip_duration);
-				$clip->save();
-			}
-			else
-			{
-				$scene = ScenePeer::retrieveYoungestByClipId($clip->getId());
-				if($scene)
-				{
-					$this->redirect($this->generateUrl('scene', array(
-						'username_slug' => $scene->getSfGuardUserProfile()->getNick(),
-						'board_id' => $scene->getBoardId(),
-						'id' => $scene->getId()
-					)));
-					return sfView::NONE;
-				}
-			}
 			$this->clip = $clip;
 
 			$reclip = ReclipPeer::retrieveByClipIdUserId($clip->getId(), $this->getUser()->getId());

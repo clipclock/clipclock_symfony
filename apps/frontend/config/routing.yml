@@ -271,6 +271,10 @@ preview_new_clip:
   url:  /preview
   param: { module: static, action: previewNew}
 
+preview_new_clip_with_clip_id:
+  url:  /preview/:clip_id
+  param: { module: static, action: previewNew}
+
 new_clip_scene_post:
   url:  /preview/create
   param: { module: static, action: newClipPostScene}

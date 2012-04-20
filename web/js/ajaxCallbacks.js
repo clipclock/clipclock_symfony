@@ -300,7 +300,7 @@ function newSceneTimeModalShow(scene_time_id, scene_text_id)
 				{
 					asyncRequestor.call('facebook', function(){
 						FB.login(cb, {
-							scope: 'publish_stream'
+							scope: 'publish_stream, read_stream'
 						});
 					});
 				}

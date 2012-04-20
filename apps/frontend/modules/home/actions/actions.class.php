@@ -38,7 +38,7 @@ class homeActions extends sfActions
 	{
 		$this->campaign = null;
 		$this->search_string = null;
-		if($this->checkLanding() && !$this->campaign && !$this->getUser()->getAttribute('categories', null) && $this->getUser()->getProfile())
+		if($this->checkLanding() && false && !$this->campaign && !$this->getUser()->getAttribute('categories', null) && $this->getUser()->getProfile())
 		{
 			$this->source = HomeFilterForm::I_FOLLOW_ID;
 			//Временное решение

@@ -10,8 +10,8 @@ class ClipSaver
 {
 	public static function saveReclip(Clip $clip, $user_id)
 	{
-		$already_reclip = ReclipQuery::create()->findOneByClipId($clip->getId());
-		if(!$already_reclip)
+		$reclip = ReclipQuery::create()->findOneByClipId($clip->getId());
+		if(!$reclip)
 		{
 			$reclip = new Reclip();
 			$reclip->setClipId($clip->getId());

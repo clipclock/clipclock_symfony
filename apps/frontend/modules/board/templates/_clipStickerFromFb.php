@@ -20,7 +20,7 @@
 			</div>
 		</div>
 		<div class="b-btn">
-			<a href="<?php echo url_for('preview_new_clip_with_clip_id', array('clip_id' => $reclip->getClipId()))?>">Find and Share</a>
+			<a href="<?php echo url_for('preview_new_clip_with_clip_id', array('clip_id' => $reclip->getClipId()))?>">Highlight!</a>
 		</div>
 	</div>
 </li>

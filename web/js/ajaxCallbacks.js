@@ -163,9 +163,7 @@ function bindSceneTextChangeHover()
 	}, function(e){
 		if($(e.relatedTarget).attr('id') != 'scene_controls')
 		{
-			showSceneDescription(
-					$('#scene_controls li.active').attr('id').replace('scene_', '')
-			);
+			showSceneDescription($('#scene_controls li.active').attr('id').replace('scene_', ''));
 		}
 	});
 
@@ -324,6 +322,7 @@ function newSceneTimeModalShow(scene_time_id, scene_text_id)
 function new_time_scene_pause_player()
 {
 	var player = getPlayer();
+
 	if(player.getPlayerState() == 1 && !$('#scene_add_comment').hasClass('active'))
 	{
 		_kmq.push(['record', 'Creating clip, hit new clip button']);
@@ -332,6 +331,7 @@ function new_time_scene_pause_player()
 	else if($('#scene_add_comment').hasClass('active'))
 	{
 		player.playVideo();
+		$('#new_time_scene').html('New clip');
 	}
 	else if(!$('#scene_add_comment').hasClass('active'))
 	{
@@ -364,25 +364,23 @@ function newSceneTimeDescriptionContainer()
 {
 	$(function(){
 
-		var oldActiveTabId;
-
 		if(!$('#clip_modal:visible').length)
 			newSceneTimeModalShow('scene_time_scene_time', 'scene_time_scene_text');
 
 		$('#new_time_scene').click(function(){
 
 			if (!$('#scene_add_comment:visible').length){
-
-				oldActiveTabId = $('#scene_controls li.active').attr('id');
-				$('#scene_controls li').removeClass('active');
-
+				$('#scene_controls li.active').addClass('hidden-active');
 			} else {
-
-				$('#' + oldActiveTabId).addClass('active');
-
+				$('#scene_controls li.active').removeClass('hidden-active');
 			}
 
 			new_time_scene_pause_player();
+			return false;
+		});
+
+		$('#scene_controls li a').click(function(){
+			$('#scene_controls li').removeClass('hidden-active');
 			return false;
 		});
 

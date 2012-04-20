@@ -111,7 +111,7 @@ $(document).ready(function(){
 			helpText = helpText.replace('<br />', '');
 
 		if (value.length)
-			value =  value.replace('/\n/g', '');
+			value =  value.replace(/\n/g, '');
 
 		if(value == defaultText || value == helpText)
 			$(this).addClass('typing').val('');

@@ -44,7 +44,7 @@ class sceneActions extends sfActions
 					preg_match('/http\:\/\/(www.)?clipclock\.com*/i', $feed_item['link'], $clipclock_matches);
 					if(!$clipclock_matches)
 					{
-						preg_match('/v=([A-z\-0-9]+)/i', 'http://www.youtube.com/watch?v=r-4-kHix0V4&rewef=dsfs', $clip_key_matches);
+						preg_match('/v=([A-z\-0-9]+)/i', $feed_item['link'], $clip_key_matches);
 						preg_match('/\.be\/([A-z\-0-9]+)/i', $feed_item['link'], $alter_clip_key_matches);
 						if($clip_key_matches || $alter_clip_key_matches)
 						{

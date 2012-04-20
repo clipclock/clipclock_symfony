@@ -154,7 +154,7 @@ function bindSceneTextChangeHover()
 {
 	$('#scene_controls li').hover(function(){
 
-		if(!elems_scenes_ids[$(this).attr('id')])
+		if(!elems_scenes_ids[$(this).attr('id')] && $(this).attr('id'))
 		{
 			elems_scenes_ids[$(this).attr('id')] = $(this).attr('id').replace('scene_', '');
 		}

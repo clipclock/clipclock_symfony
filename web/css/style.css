@@ -304,7 +304,7 @@ P { padding:0 0 13px 0;}
 .brd input,.brd textarea{width:100%;padding:0;border:none;background:none;line-height:18px}
 .brd input{height:20px;}
 .brd textarea{height:39px; resize:none; font:14px Arial; color:#bdbdbd; overflow:auto; background:#fff;}
-#clip_modal .brd textarea {height: 70px;}
+#clip_modal .brd textarea {height: 55px;}
 
 
 select {width:100%; border:0;}
@@ -629,7 +629,7 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 .stickers-list li .inner .b-tabs .tabs li.arrow.prev {left:15px;  background-position:5px 5px;}
 .stickers-list li .inner .b-tabs .tabs li.arrow.next {right:15px; background-position:-10px 5px;}
 
-.header .head-menu .autorized li.invite {border:1px solid #0f2752; background-position:0 100%; width:135px;}
+.header .head-menu .autorized li.invite {border:1px solid #0f2752; background-position:0 -62px; width:135px;}
 .header .head-menu .autorized li.invite a {text-shadow:0 -1px 1px #666; background:url(../images/login-face.jpg) no-repeat 0 0; padding-left:40px; color:#fff;}
 .header .head-menu .autorizing li.login {border:1px solid #0f2752; background-position:0 100%;}
 .header .head-menu .autorizing li.login a {text-shadow:0 -1px 1px #666; background:url(../images/login-face.jpg) no-repeat 0 0; padding-left:40px; color:#fff;}

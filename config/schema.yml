@@ -13,6 +13,7 @@ propel:
     ext_user_id: { type: INTEGER, required: false, foreignTable: ext_user, foreignReference: id }
     last_feed_update_at: { type: timestamp, defaultExpr: "now()-interval'3 day'", required: true }
     last_feed_update_depth: { type: INTEGER, required: true, default: '0' }
+    tooltips: {type: VARCHAR, size: '255', required: false }
   # DEPRECATED TABLE #
   ext_profile:
     id: ~

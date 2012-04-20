@@ -7,6 +7,8 @@ remember_me:
 security:  ~
 
 # insert your own filters here
+myTooltipStoreFilter:
+  class: myTooltipStoreFilter
 
 cache:     ~
 execution: ~

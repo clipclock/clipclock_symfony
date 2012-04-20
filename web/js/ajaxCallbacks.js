@@ -238,10 +238,11 @@ function highliteControlTab(scene_id)
 
 function newSceneTimeModalHide()
 {
-	$('body').css({overflow: 'auto'});
+	if (!$('.clip_modal_fixed:visible').length)
+		$('body').css({overflow: 'auto'});
+
 	$('.scene-time-modal-shadow').remove();
 	$('#new_time_scene_modal').toggle();
-	new_time_scene_pause_player();
 }
 
 function newSceneTimeModalShow(scene_time_id, scene_text_id)
@@ -466,6 +467,9 @@ function toggleModalScene(url)
 		overflow: overflowValue
 	});
 
+	if ($('#scene_add_comment:visible').length)
+		$('#new_time_scene').click();
+
 	if (!$('.clip_modal_fixed:visible').length)
 	{
 		scrollTopState = $('#scroll-to-top').css('display');
@@ -482,11 +486,10 @@ function toggleModalScene(url)
 			scrollTopState = false;
 		}
 
-		destroyPlayer();
+		//destroyPlayer();
 		$('.clip_modal_fixed #scene_embed_video_player').replaceWith('<span></span>');
 	}
 
-	//$('#clip_modal').offset({top: $(window).scrollTop()+30, left: 0});
 	$('.clip_modal_fixed').toggle();
 
 	if(redirectAterClose)

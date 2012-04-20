@@ -10,9 +10,14 @@ class ClipSaver
 {
 	public static function saveReclip(Clip $clip, $user_id)
 	{
-		$reclip = new Reclip();
-		$reclip->setClipId($clip->getId());
-		$reclip->setSfGuardUserProfileId($user_id);
+		$already_reclip = ReclipQuery::create()->filterByClipId($clip->getId())->findOneBySfGuardUserProfileId($user_id);
+		if(!$already_reclip)
+		{
+			$reclip = new Reclip();
+			$reclip->setClipId($clip->getId());
+			$reclip->setSfGuardUserProfileId($user_id);
+			$reclip->save();
+		}
 
 		if($clip->getClipSocialInfo())
 		{
@@ -27,7 +32,6 @@ class ClipSaver
 				//Фолловер уже есть
 			}
 		}
-		$reclip->save();
 
 		return $reclip;
 	}

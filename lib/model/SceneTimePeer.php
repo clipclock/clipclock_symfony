@@ -140,8 +140,8 @@ class SceneTimePeer extends BaseSceneTimePeer {
 			$c->addOr($criterion);
 		}
 
-		$c->addGroupByColumn(ReclipPeer::ID);
 		$c->addGroupByColumn(ReclipPeer::CLIP_ID);
+		$c->addGroupByColumn(ReclipPeer::ID);
 		return $c;
 	}
 

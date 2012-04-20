@@ -238,10 +238,11 @@ function highliteControlTab(scene_id)
 
 function newSceneTimeModalHide()
 {
-	$('body').css({overflow: 'auto'});
+	if (!$('.clip_modal_fixed:visible').length)
+		$('body').css({overflow: 'auto'});
+
 	$('.scene-time-modal-shadow').remove();
 	$('#new_time_scene_modal').toggle();
-	new_time_scene_pause_player();
 }
 
 function newSceneTimeModalShow(scene_time_id, scene_text_id)

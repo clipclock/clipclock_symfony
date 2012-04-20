@@ -19,6 +19,18 @@
  */
 class BoardRefsCategoryPeer extends BaseBoardRefsCategoryPeer {
 
+	public static function retrieveCategoriesIdsBySceneId($scene_id)
+	{
+		$c = new Criteria();
+		$c->addJoin(self::BOARD_ID, ScenePeer::BOARD_ID, Criteria::INNER_JOIN);
+		$c->add(ScenePeer::ID, $scene_id);
+		$c->clearSelectColumns();
+		$c->addSelectColumn(self::CATEGORY_ID);
+		$c->addGroupByColumn(self::CATEGORY_ID);
+
+		return BasePeer::doSelect($c)->fetchAll(PDO::FETCH_ASSOC);
+	}
+
 	public static function getVotesCount($board_id, $category_id)
 	{
 		$c = new Criteria();

@@ -38,8 +38,7 @@ class homeActions extends sfActions
 	{
 		$this->campaign = null;
 		$this->search_string = null;
-		$this->checkLanding();
-		if(false)
+		if($this->checkLanding() && !$this->campaign && !$this->getUser()->getAttribute('categories', null) && $this->getUser()->getProfile())
 		{
 			$this->source = HomeFilterForm::I_FOLLOW_ID;
 			//Временное решение
@@ -115,6 +114,18 @@ class homeActions extends sfActions
 			$this->modal = 1;
 			$this->scene_id = $request->getParameter('scene_id');
 			$this->bug_current_url = $this->generateUrl('homepage');
+
+			if($this->campaign)
+			{
+				$category_array = array();
+				$categories = BoardRefsCategoryPeer::retrieveCategoriesIdsBySceneId($this->scene_id);
+				foreach($categories as $category)
+				{
+					$category_array[] = $category['category_id'];
+				}
+				$this->categories = $category_array;
+				$this->getUser()->setAttribute('categories', serialize($category_array));
+			}
 		}
 
 		$this->user = $this->getUser();

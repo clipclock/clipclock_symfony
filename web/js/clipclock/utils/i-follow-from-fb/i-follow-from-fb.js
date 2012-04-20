@@ -10,7 +10,12 @@ $(function(){
 				$(response).each(function(i, new_elem){
 					$(elem).prepend(new_elem);
 				});
-				$('.clip_sticker').wookmark('update');
+				$('.clip_sticker').wookmark({
+					container: $('#container'),
+					offset: 12,
+					itemWidth: 223,
+					autoResize: true
+				});
 
 				if($(response).length)
 				{

@@ -130,7 +130,7 @@ class boardComponents extends sfComponents
 					//$this->reclip_id = $reclip['id'];
 					//$this->friended_video = $reclip['friended_video'];
 				}
-				else
+				elseif(!$reclip)
 				{
 					$this->sticker_type = 'new';
 					//Не существует, новое видео, надо сохранить

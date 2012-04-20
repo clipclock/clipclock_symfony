@@ -154,7 +154,7 @@ function bindSceneTextChangeHover()
 {
 	$('#scene_controls li').hover(function(){
 
-		if(!elems_scenes_ids[$(this).attr('id')])
+		if(!elems_scenes_ids[$(this).attr('id')] && $(this).attr('id'))
 		{
 			elems_scenes_ids[$(this).attr('id')] = $(this).attr('id').replace('scene_', '');
 		}
@@ -163,9 +163,7 @@ function bindSceneTextChangeHover()
 	}, function(e){
 		if($(e.relatedTarget).attr('id') != 'scene_controls')
 		{
-			showSceneDescription(
-					$('#scene_controls li.active').attr('id').replace('scene_', '')
-			);
+			showSceneDescription($('#scene_controls li.active').attr('id').replace('scene_', ''));
 		}
 	});
 
@@ -248,7 +246,7 @@ function newSceneTimeModalHide()
 
 function newSceneTimeModalShow(scene_time_id, scene_text_id)
 {
-	$().ready(function(){
+	$(function(){
 
 		$('#new_time_scene_modal input[type=reset]').click(function(){
 			newSceneTimeModalHide();
@@ -259,9 +257,12 @@ function newSceneTimeModalShow(scene_time_id, scene_text_id)
 		});
 
 		$('#new_time_scene_description_container_submit').click(function(){
-			if($('#new_time_scene_description').val().length > 3
-				&& $('#new_time_scene_description').val() != $('#new_time_scene_description').attr('defaulttext')
-					&& $('#new_time_scene_description').val() != $('#new_time_scene_description').attr('data-help-text'))
+
+			var defaultText = $('#new_time_scene_description').attr('defaultText').replace('<br />', '');
+			var helpText = $('#new_time_scene_description').attr('defaultText').replace('<br />', '');
+			var value = $('#new_time_scene_description').val().replace(/\n/g, '');
+
+			if (value.length > 3 && value != defaultText && value != helpText)
 			{
 				_kmq.push(['record', 'Creating clip, requesting permissions']);
 				var cb = function() {
@@ -306,7 +307,7 @@ function newSceneTimeModalShow(scene_time_id, scene_text_id)
 			else
 			{
 				$('#new_time_scene_description').val($('#new_time_scene_description').attr('data-help-text'));
-				$('#new_time_scene_description').css('color', '#5B5B5B');
+				$('#new_time_scene_description').addClass('typing');
 				$('#new_time_scene_description').css('background-color', '#ffff99');
 				$('#new_time_scene_description').animate({
 					'background-color': '#ffffff'
@@ -321,6 +322,7 @@ function newSceneTimeModalShow(scene_time_id, scene_text_id)
 function new_time_scene_pause_player()
 {
 	var player = getPlayer();
+
 	if(player.getPlayerState() == 1 && !$('#scene_add_comment').hasClass('active'))
 	{
 		_kmq.push(['record', 'Creating clip, hit new clip button']);
@@ -329,6 +331,7 @@ function new_time_scene_pause_player()
 	else if($('#scene_add_comment').hasClass('active'))
 	{
 		player.playVideo();
+		$('#new_time_scene').html('New clip');
 	}
 	else if(!$('#scene_add_comment').hasClass('active'))
 	{
@@ -359,16 +362,37 @@ function secondsToTime(secs)
 
 function newSceneTimeDescriptionContainer()
 {
-	$().ready(function(){
+	$(function(){
+
 		if(!$('#clip_modal:visible').length)
-		{
 			newSceneTimeModalShow('scene_time_scene_time', 'scene_time_scene_text');
-		}
 
 		$('#new_time_scene').click(function(){
-			new_time_scene_pause_player()
+
+			if (!$('#scene_add_comment:visible').length){
+				$('#scene_controls li.active').addClass('hidden-active');
+			} else {
+				$('#scene_controls li.active').removeClass('hidden-active');
+			}
+
+			new_time_scene_pause_player();
 			return false;
 		});
+
+		$('#scene_controls li a').click(function(){
+			$('#scene_controls li').removeClass('hidden-active');
+			return false;
+		});
+
+		$('#new_time_scene').hover(
+			function(){
+				$(this).addClass('hover');
+			},
+			function(){
+				$(this).removeClass('hover');
+			}
+		);
+
 	});
 }
 

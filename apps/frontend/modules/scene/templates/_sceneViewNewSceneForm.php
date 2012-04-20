@@ -8,7 +8,8 @@
 			<form method="get">
 				<div class="brd">
 					<span id="new_time_scene_time" style="display: none;"></span>
-					<textarea id="new_time_scene_description" data-help-text="Please enter a bit more words.. with some meaning. Your friends will appreciate that!" defaultText='Pause the video at the moment you like, text what you liked in that moment, and click the "Create clip" button' name="" cols="" rows="">Pause the video at the moment you like, text what you liked in that moment, and click the "Create clip" button</textarea>
+					<textarea id="new_time_scene_description" data-help-text="Please enter a bit more words.. with some meaning. Your friends will appreciate that!" defaultText='Pause the video at the best moment you want to highlight, enter your comment, and hit "Create clip" button.<br />Your friends will see the video starting at the highlighted moment with your comment!' name="" cols="" rows="">Pause the video at the best moment you want to highlight, enter your comment, and hit "Create clip" button.
+Your friends will see the video starting at the highlighted moment with your comment!</textarea>
 				</div>
 				<div class="b-btn">
 					<input style="float: left;" id="new_time_scene_description_container_submit" class="default-follow-btn" name="" type="button" value="Create clip" />

@@ -26,7 +26,7 @@ asyncRequestor.prototype = {
 
 		var obj = this;
 
-		if (this.loaded[type] != undefined || ($.browser.msie && type != 'facebook')){
+		if (this.loaded[type] != undefined){
 
 			if($.browser.msie)
 			{
@@ -101,8 +101,7 @@ asyncRequestor.prototype = {
 
 var asyncRequestor = new asyncRequestor();
 
-$().ready(function(){
+$(function(){
 	asyncRequestor.call('facebook', function(){});
-	if (!$.browser.msie)
-		asyncRequestor.call('youtube', function(){});
+	asyncRequestor.call('youtube', function(){});
 });

@@ -99,16 +99,28 @@ $(document).ready(function(){
 	});
 
 	$('textarea').focus(function(){
-		if($(this).attr('defaultText') == $(this).html())
-		{
-			$(this).addClass('typing');
-			$(this).html('');
-		}
+
+		var defaultText = $(this).attr('defaultText');
+		var helpText = $(this).attr('data-help-text');
+		var value = $(this).val();
+
+		if (defaultText.length)
+			defaultText = defaultText.replace('<br />', '');
+
+		if (helpText.length)
+			helpText = helpText.replace('<br />', '');
+
+		if (value.length)
+			value =  value.replace(/\n/g, '');
+
+		if(value == defaultText || value == helpText)
+			$(this).addClass('typing').val('');
 	});
+
 	$('textarea').blur(function(){
 		if(!$(this).val().length)
 		{
-			$(this).html($(this).attr('defaultText'));
+			$(this).val($(this).attr('defaultText').replace('<br />', "\n"));
 			$(this).removeClass('typing');
 		}
 	});

@@ -137,20 +137,19 @@ P { padding:0 0 13px 0;}
 .stickers-list li .inner .b-btn
 {
     overflow: hidden;
-    padding: 10px 0 10px 62px;
+    padding: 10px 0 10px 67px;
 }
 
 .stickers-list li .inner .b-btn a
 {
-    background: url(../images/head-menu-list-bg.jpg) repeat-x;
-    border: 1px solid #ac1010;
+    background: url(../images/head-menu-list-bg.jpg) repeat-x scroll 0 -93px;
+    border: 1px solid #00450a;
     border-radius: 3px;
     display: block;
     color: #fff;
-    text-shadow: 0 0 1px #555;
-    padding: 4px 10px;
+    text-shadow: 0 0 1px #333;
+    padding: 4px 20px;
     float: left;
-    font-size: 11px;
 }
 
 .stickers-list li .inner .msg
@@ -305,6 +304,8 @@ P { padding:0 0 13px 0;}
 .brd input,.brd textarea{width:100%;padding:0;border:none;background:none;line-height:18px}
 .brd input{height:20px;}
 .brd textarea{height:39px; resize:none; font:14px Arial; color:#bdbdbd; overflow:auto; background:#fff;}
+#clip_modal .brd textarea {height: 70px;}
+
 
 select {width:100%; border:0;}
 label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:block; line-height:28px; padding-right:10px;} /* + */
@@ -516,6 +517,8 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 .b-tabs .tabs {height:30px; padding:0 175px 0 28px; position:relative; z-index:1; overflow:hidden;}
 .b-tabs .tabs li {height:17px; float:left; width:auto; padding:5px 0 3px; width:60px; text-align:center;  border:1px solid #dbdbdb; cursor:pointer; border-bottom:0; background:#fff; margin:3px 4px 0 0; line-height:18px; border-radius:2px 2px 0 0; -moz-border-radius:2px 2px 0 0; -webkit-border-radius:2px 2px 0 0; -khtml-border-radius:2px 2px 0 0; behavior: url(js/PIE.htc);}
 .b-tabs .tabs li.active {font-weight:bold; margin:0 4px 0 0; padding:8px 0 3px; text-shadow:0 1px 1px #fff; background:#F4F0F1; border:1px solid #dbdbdb; border-bottom:0; height:19px; box-shadow:0 -1px 3px #f2f2f2; -moz-box-shadow:0 -1px 3px #f2f2f2; -webkit-box-shadow:0 -1px 3px #f2f2f2; -khtml-box-shadow:0 -1px 3px #f2f2f2;}
+.b-tabs .tabs li.active.hidden-active {font-weight:normal; background:#fff; padding:5px 0 3px; margin:3px 4px 0 0; height: 17px; box-shadow: none; -moz-box-shadow:0; -webkit-box-shadow:0; -khtml-box-shadow:0;}
+
 .b-tabs .tabs li.green {border-color:#aad094; background:#def9cd;}
 .b-tabs .tabs li.new-tag { position:absolute; right:25px; color:#fff; text-shadow:0 -1px 1px #000; font-weight:bold; border-color:#ac1010; margin:2px 3px 0 0; background:#F00;  padding:6px 0 3px; width:92px; text-align:center;}
 .b-tabs .tabs li.new-tag.active { margin:2px 4px 0 0; border-color:#dbdbdb; background:#f6f5f5; font-weight:bold; text-shadow:0 1px 1px #fff; color:#5b5b5b; padding:6px 0 3px; width:92px; text-align:center; }

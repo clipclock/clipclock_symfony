@@ -35,7 +35,7 @@ propel:
     description: { type: VARCHAR }
     ext_user_id: { type: INTEGER, required: false, foreignTable: ext_user, foreignReference: id }
     _uniques:
-      clip_social_info_post_id_key: [post_id]
+      clip_social_info_post_id_key: [post_id,ext_user_id]
   provider:
     id: ~
     name: { type: VARCHAR, size: '64', required: true }

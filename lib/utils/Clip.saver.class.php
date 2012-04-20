@@ -62,23 +62,33 @@ class ClipSaver
 				if(is_array($social_info))
 				{
 					$provider = ProviderQuery::create()->findOneByName($social_info['provider']);
-					$clip_social = new ClipSocialInfo();
-					$clip_social->setCreatedAt($social_info['created_at']);
-					$clip_social->setDescription($social_info['description']);
-					$clip_social->setPostId($social_info['post_id']);
-
 					$ext_user = ExtUserQuery::create()->filterByProvider($provider)->findOneByExtId($social_info['ext_user_id']);
-					if(!$ext_user)
+					$clip_social = null;
+
+					if($ext_user)
 					{
-						$ext_user = new ExtUser();
-						$ext_user->setProvider($provider);
-						$ext_user->setNick($social_info['ext_user_nick']);
-						$ext_user->setExtId($social_info['ext_user_id']);
-						$ext_user->save();
+						$clip_social = ClipSocialInfoQuery::create()->filterByPostId($social_info['post_id'])->findOneByExtUserId($ext_user->getId());
 					}
 
-					$clip_social->setExtUserId($ext_user->getId());
-					$clip_social->save();
+					if(!$clip_social)
+					{
+						$clip_social = new ClipSocialInfo();
+						$clip_social->setCreatedAt($social_info['created_at']);
+						$clip_social->setDescription($social_info['description']);
+						$clip_social->setPostId($social_info['post_id']);
+
+						if(!$ext_user)
+						{
+							$ext_user = new ExtUser();
+							$ext_user->setProvider($provider);
+							$ext_user->setNick($social_info['ext_user_nick']);
+							$ext_user->setExtId($social_info['ext_user_id']);
+							$ext_user->save();
+						}
+
+						$clip_social->setExtUserId($ext_user->getId());
+						$clip_social->save();
+					}
 					$clip->setClipSocialInfo($clip_social);
 				}
 				$clip->save();

@@ -198,6 +198,17 @@ function cuselActivate(visRows, elems, autoSubmit)
 			scrollArrows: true
 		}
 		cuSel(params);
+
+		// автоматическое открытие списка "show me" при наведении
+
+		$('#cuselFrame-filter-categories').mouseenter(function(){
+			$(this).click();
+		});
+
+		$('#cuselFrame-filter-categories').mouseleave(function(){
+			$(this).find('.cusel-scroll-wrap').hide();
+		});
+
 	});
 }
 

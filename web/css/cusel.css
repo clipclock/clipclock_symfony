@@ -47,7 +47,7 @@
 
 .cusel span:hover,
 .cusel .cuselOptHover { /* реакция оптиона на наведение */
-    background:#f2f0f0;
+    background:#e8e8e8;
 }
 .cusel .cuselActive { /* оформление активного оптиона в списке */
     background:#f2f0f0;

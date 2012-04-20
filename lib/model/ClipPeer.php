@@ -23,6 +23,7 @@ class ClipPeer extends BaseClipPeer {
 	{
 		$c = new Criteria();
 
+		$c->addSelectColumn(self::ID);
 		$c->clearSelectColumns();
 		$c->add(self::URL, $url);
 		$c->add(self::SOURCE_ID, $source_id);

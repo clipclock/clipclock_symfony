@@ -14,7 +14,11 @@
 <script type="text/javascript">
 
 $(function(){
+	<?php if($search_string):?>
+	_kmq.push(['record', 'Viewed search', {'Search string': '<?php $search_string?>'}]);
+	<?php else:?>
 	_kmq.push(['record', 'Viewed Homepage']);
+	<?php endif?>
 	layoutAndScroll('<?php echo $next_url ?>');
 <?php if ($modal): ?>
 	if ($.browser.msie){

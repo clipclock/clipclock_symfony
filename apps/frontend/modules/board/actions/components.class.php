@@ -139,7 +139,12 @@ class boardComponents extends sfComponents
 
 		$this->current_user = $this->getVar('current_user');
 		$this->social_info = $this->getVar('social_info');
-		$this->clip_social_info_id = $this->getVar('clip_social_info_id');
+
+		$this->clip_social_info_id = null;
+		if($this->reclip_id)
+		{
+			$this->clip_social_info_id = ReclipQuery::create()->findOneById($this->reclip_id)->getClip()->getClipSocialInfoId();
+		}
 
 		if($this->social_info || $this->clip_social_info_id)
 		{//Неразмеченное видео

@@ -95,7 +95,6 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		$c->setPrimaryTableName(ReclipPeer::TABLE_NAME);
 		$c->clearSelectColumns();
 		$c->addSelectColumn(ReclipPeer::ID.' as reclip_id');
-		$c->addSelectColumn('max('. ClipSocialInfoPeer::ID .') as clip_social_info_id');
 		$c->addJoin(ReclipPeer::ID, SceneTimePeer::RECLIP_ID, Criteria::LEFT_JOIN);
 		$c->addJoin(SceneTimePeer::ID, ScenePeer::SCENE_TIME_ID, Criteria::LEFT_JOIN);
 		$c->addJoin(ReclipPeer::CLIP_ID, ClipPeer::ID, Criteria::LEFT_JOIN);

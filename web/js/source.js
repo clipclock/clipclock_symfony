@@ -100,9 +100,18 @@ $(document).ready(function(){
 
 	$('textarea').focus(function(){
 
-		var defaultText = $(this).attr('defaultText').replace('<br />', '');
-		var helpText = $(this).attr('data-help-text').replace('<br />', '');
-		var value = $(this).val().replace(/\n/g, '');
+		var defaultText = $(this).attr('defaultText');
+		var helpText = $(this).attr('data-help-text');
+		var value = $(this).val();
+
+		if (defaultText.length)
+			defaultText = defaultText.replace('<br />', '');
+
+		if (helpText.length)
+			helpText = helpText.replace('<br />', '');
+
+		if (value.length)
+			value =  value.replace('/\n/g', '');
 
 		if(value == defaultText || value == helpText)
 			$(this).addClass('typing').val('');

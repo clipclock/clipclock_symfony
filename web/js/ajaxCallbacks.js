@@ -362,16 +362,39 @@ function secondsToTime(secs)
 
 function newSceneTimeDescriptionContainer()
 {
-	$().ready(function(){
+	$(function(){
+
+		var oldActiveTabId;
+
 		if(!$('#clip_modal:visible').length)
-		{
 			newSceneTimeModalShow('scene_time_scene_time', 'scene_time_scene_text');
-		}
 
 		$('#new_time_scene').click(function(){
-			new_time_scene_pause_player()
+
+			if (!$('#scene_add_comment:visible').length){
+
+				oldActiveTabId = $('#scene_controls li.active').attr('id');
+				$('#scene_controls li').removeClass('active');
+
+			} else {
+
+				$('#' + oldActiveTabId).addClass('active');
+
+			}
+
+			new_time_scene_pause_player();
 			return false;
 		});
+
+		$('#new_time_scene').hover(
+			function(){
+				$(this).addClass('hover');
+			},
+			function(){
+				$(this).removeClass('hover');
+			}
+		);
+
 	});
 }
 

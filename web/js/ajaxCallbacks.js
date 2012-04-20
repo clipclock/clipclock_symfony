@@ -309,7 +309,7 @@ function newSceneTimeModalShow(scene_time_id, scene_text_id)
 			else
 			{
 				$('#new_time_scene_description').val($('#new_time_scene_description').attr('data-help-text'));
-				$('#new_	time_scene_description').addClass('typing');
+				$('#new_time_scene_description').addClass('typing');
 				$('#new_time_scene_description').css('background-color', '#ffff99');
 				$('#new_time_scene_description').animate({
 					'background-color': '#ffffff'

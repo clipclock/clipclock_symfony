@@ -248,7 +248,7 @@ function newSceneTimeModalHide()
 
 function newSceneTimeModalShow(scene_time_id, scene_text_id)
 {
-	$().ready(function(){
+	$(function(){
 
 		$('#new_time_scene_modal input[type=reset]').click(function(){
 			newSceneTimeModalHide();
@@ -259,9 +259,12 @@ function newSceneTimeModalShow(scene_time_id, scene_text_id)
 		});
 
 		$('#new_time_scene_description_container_submit').click(function(){
-			if($('#new_time_scene_description').val().length > 3
-				&& $('#new_time_scene_description').val() != $('#new_time_scene_description').attr('defaulttext')
-					&& $('#new_time_scene_description').val() != $('#new_time_scene_description').attr('data-help-text'))
+
+			var defaultText = $('#new_time_scene_description').attr('defaultText').replace('<br />', '');
+			var helpText = $('#new_time_scene_description').attr('defaultText').replace('<br />', '');
+			var value = $('#new_time_scene_description').val().replace(/\n/g, '');
+
+			if (value.length > 3 && value != defaultText && value != helpText)
 			{
 				_kmq.push(['record', 'Creating clip, requesting permissions']);
 				var cb = function() {
@@ -306,7 +309,7 @@ function newSceneTimeModalShow(scene_time_id, scene_text_id)
 			else
 			{
 				$('#new_time_scene_description').val($('#new_time_scene_description').attr('data-help-text'));
-				$('#new_time_scene_description').css('color', '#5B5B5B');
+				$('#new_	time_scene_description').addClass('typing');
 				$('#new_time_scene_description').css('background-color', '#ffff99');
 				$('#new_time_scene_description').animate({
 					'background-color': '#ffffff'

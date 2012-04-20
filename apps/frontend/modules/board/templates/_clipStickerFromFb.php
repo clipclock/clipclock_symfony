@@ -16,7 +16,7 @@
 			<div class="line1px"></div>
 			<div class="pointer"></div>
 			<div class="box">
-				<p>What is the best moment of this video?</p>
+				<p><?php echo $texts[rand(0, count($texts)-1)]?></p>
 			</div>
 		</div>
 		<div class="b-btn">

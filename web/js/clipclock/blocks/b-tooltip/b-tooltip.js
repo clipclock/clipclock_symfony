@@ -230,6 +230,7 @@ $(function(){
 	tooltipper.addTooltip('#filter-interests', "Select your set of interests for the main page.");
 	tooltipper.addTooltip('.b-follow.following', "People you follow.");
 	tooltipper.addTooltip('.b-follow.followers', "People who follow you.");
+	tooltipper.addTooltip('.clip_sticker .b-btn a', "Highlight the best moment of this video and share it with friend who posted the video.");
 
 	tooltipper.init();
 });

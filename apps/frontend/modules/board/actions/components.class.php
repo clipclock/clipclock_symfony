@@ -92,6 +92,19 @@ class boardComponents extends sfComponents
 	{
 		$this->reclip_id = $this->getVar('reclip_id');
 		$this->reclip = ReclipQuery::create()->joinClip()->findOneById($this->reclip_id);
+
+		$this->texts = array(
+			'What is your favorite moment in this video?',
+			'Could you now highlight the best moment?',
+			'Where is the key point of the video?',
+			'Get the meat out of the video! ))',
+			'Hinge the stream at the right second!',
+			'Mark and feedback the key playback time!',
+			'Show the core point you see in this story.',
+			'What you believe is the main episode here?',
+			'Can you highlight the most interesting moment?',
+			'Set the right moment for best watching this video.'
+		);
 	}
 
 	public function executeClipStickerTop()

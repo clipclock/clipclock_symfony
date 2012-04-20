@@ -27,7 +27,7 @@ $(function(){
 <?php endif ?>
 
 <?php if($new_user && $user->getId()): ?>
-	_kmq.push(['record', 'Signed Up']);
+	_kmq.push(['record', 'Signed Up', {'Coupon Code': '<?php echo $campaign?>'}]);
 <?php endif ?>
 });
 </script>

@@ -161,8 +161,8 @@ class boardComponents extends sfComponents
 					if($cache = $this->getContext()->getViewCacheManager())
 					{
 						$cache->remove('@sf_cache_partial?module=home&action=_clipList&sf_cache_key='.$this->current_user->getId().'*');
-						$cache->remove('@sf_cache_partial?module=board&action=_clipStickerLogic&sf_cache_key='.$this->clip_url.'*');
-						$cache->remove('@sf_cache_partial?module=board&action=_clipStickerLogic&sf_cache_key='.$this->reclip_id.'*');
+						$cache->remove('@sf_cache_partial?module=board&action=_clipStickerLogic&sf_cache_key=*');
+						$cache->remove('@sf_cache_partial?module=board&action=_clipStickerLogic&sf_cache_key=*');
 					}
 				}
 				//Сброс кэша для этого компонента

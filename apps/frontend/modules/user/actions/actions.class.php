@@ -25,6 +25,10 @@ class userActions extends sfActions
 	{
 		if($request->getParameter('scene_id'))
 		{
+			if($request->getParameter('campaign'))
+			{
+				$this->getUser()->setAttribute('campaign', $request->getParameter('campaign'));
+			}
 			$this->getUser()->setAttribute('scene_id', $request->getParameter('scene_id'));
 		}
 
@@ -87,10 +91,11 @@ class userActions extends sfActions
 		if($this->getUser()->getAttribute('scene_id'))
 		{
 			$scene_id = $this->getUser()->getAttribute('scene_id');
+			$campaign = $this->getUser()->getAttribute('campaign');
 			$this->getUser()->getAttributeHolder()->remove('scene_id');
 
 			//For user who go from external ads
-			$this->redirect($this->generateUrl('homepage_modal', array('scene_id' => $scene_id)));
+			$this->redirect($this->generateUrl('homepage_modal', array('scene_id' => $scene_id, 'campaign' => $campaign)));
 			return sfView::NONE;
 		}
 		// for users who go from homepage_modal

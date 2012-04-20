@@ -22,6 +22,8 @@ class homeActions extends sfActions
 
 		if($this->getUser()->getId() && $this->getContext()->getRouting()->getCurrentRouteName() != 'homepage_modal')
 		{
+			$this->campaign = $this->getUser()->getAttribute('campaign');
+			$this->getUser()->setAttribute('campaign', false);
 			$this->getUser()->setAttribute('new_user', false);
 		}
 
@@ -34,6 +36,7 @@ class homeActions extends sfActions
 	 */
 	public function executeIndex(sfWebRequest $request)
 	{
+		$this->campaign = null;
 		$this->search_string = null;
 		$this->checkLanding();
 		if(false)

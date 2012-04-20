@@ -20,7 +20,7 @@ homepage_search:
 
 homepage_modal:
   url:   /scene/:scene_id
-  param: { module: home, action: index, modal: true }
+  param: { module: home, action: index, modal: true, campaign: null }
   requirements:
     scene_id: \d+
 
@@ -251,8 +251,8 @@ user_register_welcome:
 ### MELODY ROUTINE ###
 
 connect_fb_with_scene:
-  url:   /connect_fb_scene/:scene_id/*
-  param: { module: user, action: connect, scene_id: null }
+  url:   /connect_fb_scene/:scene_id/:campaign/*
+  param: { module: user, action: connect, scene_id: null, campaign: null }
 connect_fb:
   url:   /connect_fb/*
   param: { module: user, action: connect, scene_id: null }

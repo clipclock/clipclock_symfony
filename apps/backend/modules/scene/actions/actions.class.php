@@ -138,6 +138,6 @@ class sceneActions extends autoSceneActions
 			'scope' => 'publish_actions, email',
 			'redirect_uri' => 'http://clipclock.com/connect_fb_scene/'.$this->Scene->getId()
 		);
-		$this->login_url = 'http://clipclock.com/connect_fb_scene/'.$this->Scene->getId();//$facebook->getLoginUrl($params);
+		$this->login_url = 'http://clipclock.com/connect_fb_scene/'.$this->Scene->getId().'/facebook';//$facebook->getLoginUrl($params);
 	}
 }

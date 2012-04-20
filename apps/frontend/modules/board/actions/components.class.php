@@ -148,10 +148,8 @@ class boardComponents extends sfComponents
 				$reclip = ReclipPeer::retrieveByClipIdFromFriends($this->clip->getId(), $this->current_user->getId());
 				if($reclip && $reclip['friended_video'])
 				{
-					$this->sticker_type = null;
 					//Существует, если оно от внутрисистемных друзей, то показывать не надо
-					//$this->reclip_id = $reclip['id'];
-					//$this->friended_video = $reclip['friended_video'];
+					$this->sticker_type = null;
 				}
 				elseif(!$reclip)
 				{

@@ -6,7 +6,7 @@ $(function(){
 		$.ajax({
 			url:ajax_url,
 			success:function(response) {
-				console.log(response);
+
 				$(response).each(function(i, new_elem){
 					$(elem).prepend(new_elem);
 				});

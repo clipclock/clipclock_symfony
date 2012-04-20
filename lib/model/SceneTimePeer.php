@@ -105,6 +105,11 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		$c->addAlias('repin_scene', ScenePeer::TABLE_NAME);
 		$c->addJoin(ScenePeer::ID, ScenePeer::alias('repin_scene', ScenePeer::REPIN_ORIGIN_SCENE_ID), Criteria::LEFT_JOIN);
 
+		$c->addMultipleJoin(array(
+			array(ClipSocialInfoPeer::EXT_USER_ID, ExtUserFollowerPeer::FOLLOWING_EXT_USER_ID),
+			array(ExtUserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, $user_id)
+		), Criteria::LEFT_JOIN);
+
 		if($categories_id)
 		{
 			$c->addJoin(ScenePeer::BOARD_ID, BoardRefsCategoryPeer::BOARD_ID, Criteria::LEFT_JOIN);
@@ -113,7 +118,7 @@ class SceneTimePeer extends BaseSceneTimePeer {
 			{
 				$criterion = $c->getNewCriterion(ClipPeer::CLIP_SOCIAL_INFO_ID, null, Criteria::ISNOTNULL);
 				$criterion->addAnd($c->getNewCriterion(SceneTimePeer::RECLIP_ID, null, Criteria::ISNULL));
-				$criterion->addAnd($c->getNewCriterion(ReclipPeer::SF_GUARD_USER_PROFILE_ID, $user_id));
+				$criterion->addAnd($c->getNewCriterion(ExtUserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, null, Criteria::ISNOTNULL));
 				$c->addOr($criterion);
 			}
 			$c->addDescendingOrderByColumn('avg('. BoardRefsCategoryPeer::VOTES.')/avg(avg('. BoardRefsCategoryPeer::VOTES.')) OVER (order by max('.ScenePeer::BOARD_ID.') ASC)');
@@ -132,7 +137,7 @@ class SceneTimePeer extends BaseSceneTimePeer {
 			$c->addOr(ScenePeer::SF_GUARD_USER_PROFILE_ID, $user_id);
 			$criterion = $c->getNewCriterion(ClipPeer::CLIP_SOCIAL_INFO_ID, null, Criteria::ISNOTNULL);
 			$criterion->addAnd($c->getNewCriterion(SceneTimePeer::RECLIP_ID, null, Criteria::ISNULL));
-			$criterion->addAnd($c->getNewCriterion(ReclipPeer::SF_GUARD_USER_PROFILE_ID, $user_id));
+			$criterion->addAnd($c->getNewCriterion(ExtUserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, null, Criteria::ISNOTNULL));
 			$c->addOr($criterion);
 		}
 
@@ -212,11 +217,6 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		), Criteria::LEFT_JOIN);
 
 		$criterions[] = $c->getNewCriterion(ClipFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, null, Criteria::ISNOTNULL);
-
-		$c->addMultipleJoin(array(
-			array(ClipSocialInfoPeer::EXT_USER_ID, ExtUserFollowerPeer::FOLLOWING_EXT_USER_ID),
-			array(ExtUserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, $user_id)
-		), Criteria::LEFT_JOIN);
 
 		//$c->addOr(ExtUserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, null, Criteria::ISNOTNULL);
 

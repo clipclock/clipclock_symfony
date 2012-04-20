@@ -53,6 +53,8 @@ propel:
     hide: { type: BOOLEAN, required: true, default: 'false' }
     duration: {type: INTEGER, required: true, default: '0'}
     clip_social_info_id: { type: INTEGER, required: false, foreignTable: clip_social_info, foreignReference: id }
+    _uniques:
+      clip_unique_key: [url, source_id]
   reclip:
     _propel_behaviors:
       archivable: {archive_on_delete: true, log_archived_at: true}

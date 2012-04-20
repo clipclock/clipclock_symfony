@@ -216,8 +216,8 @@ $(function(){
 	tooltipper.addTooltip('.b-search', "Search the clips and videos available on the ClipClock.com");
 	tooltipper.addTooltip('.b-search', "Search the clips and videos available on the ClipClock.com");
 	// stickers
-	tooltipper.addTooltip('.sticker-tab:not(.active)', 'Click the tab to see another clip preview - screenshot and comments.');
-	tooltipper.addTooltip('.sticker-tab.active', "This is the current active clip preview - screenshot and comments.");
+	tooltipper.addTooltip('.sticker-tab:not(.active)', 'Click to see next clip preview.');
+	tooltipper.addTooltip('.sticker-tab.active', "Clip starts at the pointed time of video.");
 	tooltipper.addTooltip('.clip_sticker .b-video-image', "It's the screenshot of the selected video moment.");
 	tooltipper.addTooltip('.management-sticker li', "Check the people who made Reclips, Comments and Likes to this clip.");
 	tooltipper.addTooltip('.name-of-scence a', "It's the video title. The sticker area is all about this single video.");

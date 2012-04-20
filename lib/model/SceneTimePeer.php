@@ -141,6 +141,7 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		}
 
 		$c->addGroupByColumn(ReclipPeer::ID);
+		$c->addGroupByColumn(ReclipPeer::CLIP_ID);
 		return $c;
 	}
 

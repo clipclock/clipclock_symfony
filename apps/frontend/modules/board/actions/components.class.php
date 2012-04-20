@@ -94,6 +94,29 @@ class boardComponents extends sfComponents
 		$this->reclip = ReclipQuery::create()->joinClip()->findOneById($this->reclip_id);
 	}
 
+	public function executeClipStickerTop()
+	{
+		$reclip_id = $this->getVar('reclip_id');
+		$clip_social_info = ClipSocialInfoPeer::retrieveByReclipId($reclip_id);
+		if($clip_social_info)
+		{
+			$this->created_at = $clip_social_info->getCreatedAt();
+			$this->user_link = 'http://facebook.com/'.$clip_social_info->getExtUser()->getExtId();
+			$this->user_image = 'http://graph.facebook.com/'.$clip_social_info->getExtUser()->getExtId().'/picture?type=small';
+			$this->user_nick = $clip_social_info->getExtUser()->getNick();
+			$this->provider_name = ucfirst($clip_social_info->getExtUser()->getProvider()->getName());
+		}
+		else
+		{
+			$reclip = ReclipQuery::create()->findOneById($reclip_id);
+			$this->created_at = $reclip->getCreatedAt();
+			$this->user_link = $this->generateUrl('user', array('nick' => $reclip->getSfGuardUserProfile()->getNick()));
+			$this->user_image = ImagePreview::c14n($reclip->getSfGuardUserProfileId(), 'small', 'avatar') ;
+			$this->user_nick = $reclip->getSfGuardUserProfile()->getFullName();
+			$this->provider_name = 'ClipClock';
+		}
+	}
+
 	public function executeClipStickerLogic()
 	{
 		$this->friended_video = false;
@@ -149,40 +172,6 @@ class boardComponents extends sfComponents
 		{
 			$this->sticker_type = 'typical';
 		}
-/*
-		die();
-
-		if($this->getVar('fb_user_id'))
-		{
-			$this->fb_user_id = $this->getVar('fb_user_id');
-
-			if($this->getVar('clip_key'))
-			{
-				$this->clip_key = $this->getVar('clip_key');
-				$this->fb_desc = $this->getVar('fb_desc');
-				$this->fb_created_at = $this->getVar('fb_created_at');
-				$this->fb_post_id = $this->getVar('fb_post_id');
-
-				$source = SourcePeer::retrieveByName('youtube');
-				$this->source_id = $source['id'];
-
-				$this->clip = ClipSaver::saveClip($this->clip_key, $this->source_name, $this->source_id);
-
-				//Существует ли это видео со сценами у нас?
-				$reclip = ReclipPeer::retrieveByClipIdFromFriends($this->clip->getId(), $this->current_user->getId());
-				if($reclip)
-				{
-					//Существует, если оно от друзей, то показывать не надо
-					$this->reclip_id = $reclip['id'];
-					$this->friended_video = $reclip['friended_video'];
-				}
-				else
-				{
-					//Не существует, новое видео, надо сохранить
-					ClipSaver::saveReclip($this->clip->getId(), $this->current_user->getId(), $this->fb_user['id'], $this->fb_post_id);
-				}
-			}
-		}*/
 	}
 
 	public function executeClipSticker()

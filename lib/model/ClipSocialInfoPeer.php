@@ -19,4 +19,15 @@
  */
 class ClipSocialInfoPeer extends BaseClipSocialInfoPeer {
 
+	public static function retrieveByReclipId($reclip_id)
+	{
+		$c = new Criteria();
+
+		$c->addJoin(self::ID, ClipPeer::CLIP_SOCIAL_INFO_ID, Criteria::INNER_JOIN);
+		$c->addJoin(ClipPeer::ID, ReclipPeer::CLIP_ID, Criteria::INNER_JOIN);
+		$c->add(ReclipPeer::ID, $reclip_id);
+		$c->setLimit(1);
+
+		return current(self::doSelectJoinExtUser($c));
+	}
 } // ClipSocialInfoPeer

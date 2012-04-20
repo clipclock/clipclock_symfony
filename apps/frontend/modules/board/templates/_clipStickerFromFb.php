@@ -1,16 +1,6 @@
 <li class="clip_sticker">
 	<div class="inner">
-		<div class="top">
-			<div class="ph">
-				<a href="http://facebook.com/<?php echo $reclip->getClip()->getClipSocialInfo()->getExtUser()->getExtId()?>" target="_blank">
-					<img width="30" height="30" alt="" src="http://graph.facebook.com/<?php echo $reclip->getClip()->getClipSocialInfo()->getExtUser()->getExtId()?>/picture?type=small" />
-				</a>
-			</div>
-			<p>
-				<a href="http://facebook.com/<?php echo $reclip->getClip()->getClipSocialInfo()->getExtUser()->getExtId()?>" target="_blank"><?php echo $reclip->getClip()->getClipSocialInfo()->getExtUser()->getNick()?></a>
-				<?php echo $reclip->getClip()->getClipSocialInfo()->getCreatedAt()?>
-			</p>
-		</div>
+		<?php include_component('board', 'clipStickerTop', array('reclip_id' => $reclip->getId(), 'sf_cache_key' => $reclip->getId()))?>
 		<p class="name-of-scence">
 			<?php echo $reclip->getClip()->getClipSocialInfo()->getDescription()?>
 		</p>

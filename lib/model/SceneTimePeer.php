@@ -109,6 +109,13 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		{
 			$c->addJoin(ScenePeer::BOARD_ID, BoardRefsCategoryPeer::BOARD_ID, Criteria::LEFT_JOIN);
 			$c->add(BoardRefsCategoryPeer::CATEGORY_ID, $categories_id, Criteria::IN);
+			if($user_id)
+			{
+				$criterion = $c->getNewCriterion(ClipPeer::CLIP_SOCIAL_INFO_ID, null, Criteria::ISNOTNULL);
+				$criterion->addAnd($c->getNewCriterion(SceneTimePeer::RECLIP_ID, null, Criteria::ISNULL));
+				$criterion->addAnd($c->getNewCriterion(ReclipPeer::SF_GUARD_USER_PROFILE_ID, $user_id));
+				$c->addOr($criterion);
+			}
 			$c->addDescendingOrderByColumn('avg('. BoardRefsCategoryPeer::VOTES.')/avg(avg('. BoardRefsCategoryPeer::VOTES.')) OVER (order by max('.ScenePeer::BOARD_ID.') ASC)');
 		}
 		$c->addDescendingOrderByColumn('date_trunc(\'day\', coalesce(max('.ScenePeer::alias('repin_scene', ScenePeer::CREATED_AT).'), max('.self::CREATED_AT.')))');
@@ -123,6 +130,10 @@ class SceneTimePeer extends BaseSceneTimePeer {
 		if($user_id)
 		{
 			$c->addOr(ScenePeer::SF_GUARD_USER_PROFILE_ID, $user_id);
+			$criterion = $c->getNewCriterion(ClipPeer::CLIP_SOCIAL_INFO_ID, null, Criteria::ISNOTNULL);
+			$criterion->addAnd($c->getNewCriterion(SceneTimePeer::RECLIP_ID, null, Criteria::ISNULL));
+			$criterion->addAnd($c->getNewCriterion(ReclipPeer::SF_GUARD_USER_PROFILE_ID, $user_id));
+			$c->addOr($criterion);
 		}
 
 		$c->addGroupByColumn(ReclipPeer::ID);
@@ -204,11 +215,10 @@ class SceneTimePeer extends BaseSceneTimePeer {
 
 		$c->addMultipleJoin(array(
 			array(ClipSocialInfoPeer::EXT_USER_ID, ExtUserFollowerPeer::FOLLOWING_EXT_USER_ID),
-			array(ExtUserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, $user_id),
-			//array(ScenePeer::CREATED_AT, ClipFollowerPeer::CREATED_AT, Criteria::GREATER_EQUAL)
+			array(ExtUserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, $user_id)
 		), Criteria::LEFT_JOIN);
 
-		$criterions[] = $c->getNewCriterion(ExtUserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, null, Criteria::ISNOTNULL);
+		//$c->addOr(ExtUserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, null, Criteria::ISNOTNULL);
 
 		$final_criterion = null;
 		foreach($criterions as $criterion)
@@ -222,6 +232,7 @@ class SceneTimePeer extends BaseSceneTimePeer {
 				$final_criterion->addOr($criterion);
 			}
 		}
+		$final_criterion->addOr($c->getNewCriterion(ExtUserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID, null, Criteria::ISNOTNULL));
 		//$final_criterion->addOr($criteria->getNewCriterion(ScenePeer::SF_GUARD_USER_PROFILE_ID, $user_id));
 
 		$c->addAnd($final_criterion);

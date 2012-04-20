@@ -11,6 +11,8 @@ propel:
     country: { type: VARCHAR, size: '64', required: false }
     gender: { type: BOOLEAN, required: true, default: true }
     ext_user_id: { type: INTEGER, required: false, foreignTable: ext_user, foreignReference: id }
+    last_feed_update_at: { type: timestamp, defaultExpr: "now()-interval'3 day'", required: true }
+    last_feed_update_depth: { type: INTEGER, required: true, default: '0' }
   # DEPRECATED TABLE #
   ext_profile:
     id: ~
@@ -54,6 +56,7 @@ propel:
     _propel_behaviors:
       archivable: {archive_on_delete: true, log_archived_at: true}
     id: ~
+    created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
     sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     clip_id: { type: INTEGER, required: true, foreignTable: clip, foreignReference: id }
     _uniques:

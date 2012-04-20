@@ -6,10 +6,16 @@ $(function(){
 		$.ajax({
 			url:ajax_url,
 			success:function(response) {
+				console.log(response);
 				$(response).each(function(i, new_elem){
 					$(elem).prepend(new_elem);
 				});
 				$('.clip_sticker').wookmark('update');
+
+				if($(response).length)
+				{
+					appendFromFB(elem, $(elem).attr('data-i-follow-from-fb'));
+				}
 			}
 		});
 	};

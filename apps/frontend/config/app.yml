@@ -4,6 +4,11 @@
 # default values
 #all:
 all:
+  feed_update:
+    max_depth: 2
+    interval: <?php echo 3600*3;?>
+
+    per_page: 125
   facebook:
     page: 'http://www.facebook.com/pages/ClipClockcom/286585384701717'
   sfCombinePlugin:

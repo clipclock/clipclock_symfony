@@ -88,6 +88,92 @@ class boardComponents extends sfComponents
 		$this->getContext()->getConfiguration()->loadHelpers(array('Comment'));
 	}
 
+	public function executeClipStickerFromFb()
+	{
+		$this->reclip_id = $this->getVar('reclip_id');
+		$this->reclip = ReclipQuery::create()->joinClip()->findOneById($this->reclip_id);
+	}
+
+	public function executeClipStickerTop()
+	{
+		$reclip_id = $this->getVar('reclip_id');
+		$clip_social_info = ClipSocialInfoPeer::retrieveByReclipId($reclip_id);
+		if($clip_social_info)
+		{
+			$this->created_at = $clip_social_info->getCreatedAt();
+			$this->user_link = 'http://facebook.com/'.$clip_social_info->getExtUser()->getExtId();
+			$this->user_image = 'http://graph.facebook.com/'.$clip_social_info->getExtUser()->getExtId().'/picture?type=small';
+			$this->user_nick = $clip_social_info->getExtUser()->getNick();
+			$this->provider_name = ucfirst($clip_social_info->getExtUser()->getProvider()->getName());
+		}
+		else
+		{
+			$reclip = ReclipQuery::create()->findOneById($reclip_id);
+			$this->created_at = $reclip->getCreatedAt();
+			$this->user_link = $this->generateUrl('user', array('nick' => $reclip->getSfGuardUserProfile()->getNick()));
+			$this->user_image = ImagePreview::c14n($reclip->getSfGuardUserProfileId(), 'small', 'avatar') ;
+			$this->user_nick = $reclip->getSfGuardUserProfile()->getFullName();
+			$this->provider_name = 'ClipClock';
+		}
+	}
+
+	public function executeClipStickerLogic()
+	{
+		$this->friended_video = false;
+		$this->sticker_type = null;
+
+		$this->reclip_id = $this->getVar('reclip_id');
+
+		$this->current_user = $this->getVar('current_user');
+		$this->social_info = $this->getVar('social_info');
+		$this->clip_social_info_id = $this->getVar('clip_social_info_id');
+
+		if($this->social_info || $this->clip_social_info_id)
+		{//Неразмеченное видео
+			if($this->reclip_id && $this->clip_social_info_id)//Из базы
+			{
+				$this->sticker_type = 'new';
+				if(ScenePeer::retrieveFirstSceneTimeIdByClipIdBoardId($this->reclip_id, $this->current_user->getId()))
+				{
+					$this->sticker_type = 'typical';
+				}
+			}
+			else//Из FB
+			{
+				$this->clip_url = $this->social_info['clip_url'];
+				$this->source = $this->social_info['source'];
+				$this->clip = ClipSaver::saveClip($this->clip_url, $this->source, $this->social_info);
+
+				//Существует ли это видео со сценами у нас?
+				$reclip = ReclipPeer::retrieveByClipIdFromFriends($this->clip->getId(), $this->current_user->getId());
+				if($reclip && $reclip['friended_video'])
+				{
+					$this->sticker_type = null;
+					//Существует, если оно от внутрисистемных друзей, то показывать не надо
+					//$this->reclip_id = $reclip['id'];
+					//$this->friended_video = $reclip['friended_video'];
+				}
+				elseif(!$reclip)
+				{
+					$this->sticker_type = 'new';
+					//Не существует, новое видео, надо сохранить
+					$this->reclip_id = ClipSaver::saveReclip($this->clip, $this->current_user->getId(), $this->social_info)->getId();
+					if($cache = $this->getContext()->getViewCacheManager())
+					{
+						$cache->remove('@sf_cache_partial?module=home&action=_clipList&sf_cache_key='.$this->current_user->getId().'*');
+						$cache->remove('@sf_cache_partial?module=board&action=_clipStickerLogic&sf_cache_key='.$this->clip_url.'*');
+						$cache->remove('@sf_cache_partial?module=board&action=_clipStickerLogic&sf_cache_key='.$this->reclip_id.'*');
+					}
+				}
+				//Сброс кэша для этого компонента
+			}
+		}
+		else
+		{
+			$this->sticker_type = 'typical';
+		}
+	}
+
 	public function executeClipSticker()
 	{
 		$this->reclip_id = $this->getVar('reclip_id');

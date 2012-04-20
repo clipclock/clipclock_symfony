@@ -4,7 +4,7 @@
 	'sf_cache_key' => $user->getId().$source.md5(serialize($categories)).($welcome_close ? '1' : '0').$error.md5($search_string)))?>
 <?php end_slot()?>
 <div class="video-stickers">
-	<ul id="container" class="stickers-list" style="position: relative;">
+	<ul id="container"<?php if($load_from_fb):?> data-i-follow-from-fb="<?php echo url_for('sticker_from_fb')?>"<?php endif;?> class="stickers-list" style="position: relative;">
 		<?php include_component('home', 'clipList', array('criteria' => $criteria, 'next_url' => $next_url, 'page' => $page, 'current_user' => $user, 'source' => $source, 'sf_cache_key' => $user->getId().$page.md5($criteria->toString())))?>
 	</ul>
 </div>

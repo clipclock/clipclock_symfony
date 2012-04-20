@@ -20,6 +20,107 @@ class sceneActions extends sfActions
 		$this->forward('default', 'module');
 	}
 
+	protected function readFeed($facebook, $provider_name, $depth, $per_page = 50)
+	{
+		$html_result = array();
+
+		try
+		{
+			$offset = $per_page * $depth;
+			$feed_result = $facebook->api('me/home?limit='.$per_page.'&offset='.$offset.'&fields=type,from,source,link,created_time,description');
+		}
+		catch(Exception $e)
+		{
+			$feed_result['data'] = array();
+		}
+
+		foreach($feed_result['data'] as $feed_item)
+		{
+			if($feed_item['type'] == 'video' && $feed_item['link'])
+			{
+				preg_match('/http\:\/\/(www.)?youtube\.com*/i', $feed_item['source'], $youtube_matches);
+				if($youtube_matches)
+				{
+					preg_match('/http\:\/\/(www.)?clipclock\.com*/i', $feed_item['link'], $clipclock_matches);
+					if(!$clipclock_matches)
+					{
+						preg_match('/v=([A-z\-0-9]+)/i', 'http://www.youtube.com/watch?v=r-4-kHix0V4&rewef=dsfs', $clip_key_matches);
+						preg_match('/\.be\/([A-z\-0-9]+)/i', $feed_item['link'], $alter_clip_key_matches);
+						if($clip_key_matches || $alter_clip_key_matches)
+						{
+							if(!$clip_key_matches)
+							{
+								$clip_url = $alter_clip_key_matches[1];
+							}
+							else
+							{
+								$clip_url = $clip_key_matches[1];
+							}
+							$html_result[] = $this->getComponent('board', 'clipStickerLogic', array('current_user' => $this->getUser(),
+								'social_info' => array(
+									'clip_url' => $clip_url,
+									'created_at' => $feed_item['created_time'],
+									'ext_user_id' => $feed_item['from']['id'],
+									'ext_user_nick' => $feed_item['from']['name'],
+									'provider' => $provider_name,
+									'source' => 'youtube',
+									'post_id' => str_replace($feed_item['from']['id'].'_', '', $feed_item['id']),
+									'description' => isset($feed_item['description']) ? $feed_item['description'] : '',
+								),
+								'sf_cache_key' => $clip_url.$this->getUser()->getId()));
+						}
+					}
+				}
+			}
+		}
+
+		if(!count($html_result))
+		{
+			$html_result[] = '<!--1-->';
+		}
+
+		return $html_result;
+	}
+
+	public function executeShowFbSceneAjax(sfWebRequest $request)
+	{
+		$this->setLayout(false);
+		$this->setTemplate(false);
+		sfConfig::set('sf_web_debug', false);
+
+		$config = sfConfig::get('app_melody_facebook');
+		$facebook = new Facebook(array(
+			'appId'  => $config['key'],
+			'secret' => $config['secret'],
+		));
+
+		$max_feed_update_depth = sfConfig::get('app_feed_update_max_depth');
+		$feed_update_interval = sfConfig::get('app_feed_update_interval');
+
+		$feed_result = array();
+		$html_result = array();
+
+		$last_feed_update_at = $this->getUser()->getProfile()->getLastFeedUpdateAt();
+		$last_feed_update_depth = $this->getUser()->getProfile()->getLastFeedUpdateDepth();
+
+		if(strtotime($last_feed_update_at) + $feed_update_interval < time())
+		{
+			$html_result = $this->readFeed($facebook, 'facebook', $last_feed_update_depth, sfConfig::get('app_feed_update_per_page'));
+
+			$this->getUser()->getProfile()->setLastFeedUpdateDepth(++$last_feed_update_depth);
+
+			if($last_feed_update_depth >= $max_feed_update_depth)
+			{
+				$this->getUser()->getProfile()->setLastFeedUpdateAt(time());
+				$this->getUser()->getProfile()->setLastFeedUpdateDepth(0);
+			}
+
+			$this->getUser()->getProfile()->save();
+		}
+
+		return $this->returnJSON($html_result);
+	}
+
 	public function executeShow(sfWebRequest $request)
 	{
 		$this->current_scene = $this->getRoute()->getObject();
@@ -118,6 +219,9 @@ class sceneActions extends sfActions
 		{
 			$cache->remove('@sf_cache_partial?module=board&action=_clipSticker&sf_cache_key='.$this->scene_time_form->getObject()->getReclipId().'*');
 			$cache->remove('@sf_cache_partial?module=board&action=_boardSticker&sf_cache_key='.$this->scene_time_form->getEmbeddedForm('scene')->getObject()->getBoardId().'*');
+			$cache->remove('@sf_cache_partial?module=board&action=_clipStickerLogic&sf_cache_key='.$this->scene_time_form->getObject()->getReclip()->getClip()->getUrl().'*');
+			$cache->remove('@sf_cache_partial?module=board&action=_clipStickerLogic&sf_cache_key='.$this->scene_time_form->getObject()->getReclipId().'*');
+			$cache->remove('@sf_cache_partial?module=home&action=_clipList&sf_cache_key='.$this->getUser()->getId().'*');
 		}
 
 		$scene = $this->scene_time_form->getEmbeddedForm('scene')->getObject();
@@ -143,7 +247,6 @@ class sceneActions extends sfActions
 			'board_id' => $scene->getBoardId(),
 			'id' => $scene->getId()
 		));
-		$this->getLogger()->debug('!!!!_'.$url);
 		$this->redirect($url);
 		return sfView::NONE;
 	}

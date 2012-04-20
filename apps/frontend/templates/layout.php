@@ -6,6 +6,7 @@
 	<?php include_metas() ?>
 	<?php include_title() ?>
 	<link rel="shortcut icon" href="/favicon.ico" />
+	<meta property="fb:page_id" content="286585384701717" />
 	<?php include_combined_stylesheets() ?>
 	<?php include_combined_javascripts() ?>
 </head>

@@ -35,7 +35,8 @@ class homeActions extends sfActions
 	public function executeIndex(sfWebRequest $request)
 	{
 		$this->search_string = null;
-		if($this->checkLanding() && !$this->getUser()->getAttribute('categories', null) && $this->getUser()->getProfile())
+		$this->checkLanding();
+		if(false)
 		{
 			$this->source = HomeFilterForm::I_FOLLOW_ID;
 			//Временное решение
@@ -136,6 +137,14 @@ class homeActions extends sfActions
 		if($this->getUser()->getFlash('registration_error'))
 		{
 			$this->error = $this->getUser()->getFlash('registration_error');
+		}
+
+		$this->i_follow = $this->getUser()->getId() && $this->source == HomeFilterForm::I_FOLLOW_ID ? true : false;
+
+		$this->load_from_fb = false;
+		if($this->getUser()->getId())
+		{
+			$this->load_from_fb = strtotime($this->getUser()->getProfile()->getLastFeedUpdateAt()) + sfConfig::get('app_feed_update_interval') < time();
 		}
 
 		$this->welcome_close = (bool)$request->getCookie('welcome-close');

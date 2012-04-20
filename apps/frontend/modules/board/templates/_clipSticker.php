@@ -1,5 +1,6 @@
 <li class="clip_sticker" data-duration="<?php echo $scene_info['duration'] ?>">
 	<div class="inner">
+		<?php include_component('board', 'clipStickerTop', array('reclip_id' => $reclip_id, 'sf_cache_key' => $reclip_id))?>
 		<p class="name-of-scence"><a href="<?php echo url_for('scene', array('id' => $scene_info['scene_id'], 'board_id' => $board->getId(), 'username_slug' => $board->getSfGuardUserProfile()))?>"><?php echo truncate_text($scene_info['name'], 32, '…', true)?></a></p>
 
 		<div class="b-video">

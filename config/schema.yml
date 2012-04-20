@@ -10,6 +10,10 @@ propel:
     city: { type: VARCHAR, size: '64', required: false }
     country: { type: VARCHAR, size: '64', required: false }
     gender: { type: BOOLEAN, required: true, default: true }
+    ext_user_id: { type: INTEGER, required: false, foreignTable: ext_user, foreignReference: id }
+    last_feed_update_at: { type: timestamp, defaultExpr: "now()-interval'3 day'", required: true }
+    last_feed_update_depth: { type: INTEGER, required: true, default: '0' }
+  # DEPRECATED TABLE #
   ext_profile:
     id: ~
     created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
@@ -17,6 +21,48 @@ propel:
     ext_id: { type: VARCHAR, size: '64', required: true }
     ext_link: { type: VARCHAR, size: '128', required: true }
     provider: {type: INTEGER, required: true}
+  #####
+  ext_user:
+    id: ~
+    created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
+    ext_id: { type: VARCHAR, size: '64', required: true }
+    nick: { type: VARCHAR, required: true }
+    provider_id: { type: INTEGER, required: true, foreignTable: provider, foreignReference: id }
+  clip_social_info:
+    id: ~
+    post_id: { type: VARCHAR, required: true }
+    created_at: { type: timestamp, required: true}
+    description: { type: VARCHAR }
+    ext_user_id: { type: INTEGER, required: false, foreignTable: ext_user, foreignReference: id }
+    _uniques:
+      clip_social_info_post_id_key: [post_id]
+  provider:
+    id: ~
+    name: { type: VARCHAR, size: '64', required: true }
+    _uniques:
+      provider_name_key: [name]
+
+  clip:
+    _propel_behaviors:
+      archivable: {archive_on_delete: true, log_archived_at: true}
+    id: ~
+    source_id: { type: INTEGER, required: true, foreignTable: source, foreignReference: id }
+    name: { type: VARCHAR, size: '128', required: true }
+    url: { type: VARCHAR, required: true }
+    hide: { type: BOOLEAN, required: true, default: 'false' }
+    duration: {type: INTEGER, required: true, default: '0'}
+    clip_social_info_id: { type: INTEGER, required: false, foreignTable: clip_social_info, foreignReference: id }
+  reclip:
+    _propel_behaviors:
+      archivable: {archive_on_delete: true, log_archived_at: true}
+    id: ~
+    created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
+    sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
+    clip_id: { type: INTEGER, required: true, foreignTable: clip, foreignReference: id }
+    _uniques:
+      reclip_id_key: [id]
+      reclip_content_key: [sf_guard_user_profile_id, clip_id]
+
   board_refs_category:
     board_id:  { type: INTEGER, required: true, foreignTable: board, primaryKey: true, foreignReference: id }
     category_id: { type: INTEGER, required: true, foreignTable: category, primaryKey: true, foreignReference: id }
@@ -38,21 +84,12 @@ propel:
   category:
     id: ~
     name: { type: VARCHAR, size: '128', required: true }
-  clip:
-    _propel_behaviors:
-      archivable: {archive_on_delete: true, log_archived_at: true}
-    id: ~
-    source_id: { type: INTEGER, required: true, foreignTable: source, foreignReference: id }
-    name: { type: VARCHAR, size: '128', required: true }
-    url: { type: VARCHAR, required: true }
-    hide: { type: BOOLEAN, required: true, default: 'false' }
-    duration: {type: INTEGER, required: true, default: '0'}
   user_follower:
     following_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     follower_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
-  fb_user_follower:
-    following_fb_user_id: { type: VARCHAR, required: true, primaryKey: true }
+  ext_user_follower:
+    following_ext_user_id: { type: INTEGER, required: true, primaryKey: true , foreignTable: ext_user, foreignReference: id }
     follower_sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
     created_at: { type: timestamp, required: true, defaultExpr: 'now()'}
   scene:
@@ -76,16 +113,7 @@ propel:
     unique_comments_count: { type: INTEGER, required: true, default: '0' }
     _uniques:
       scene_time_id_key: [reclip_id, scene_time]
-  reclip:
-    _propel_behaviors:
-      archivable: {archive_on_delete: true, log_archived_at: true}
-    id: ~
-    sf_guard_user_profile_id: { type: INTEGER, primaryKey: true, required: true, foreignTable: sf_guard_user_profile, foreignReference: sf_guard_user_id }
-    fb_user_id: { type: VARCHAR, required: false }
-    fb_post_id: { type: VARCHAR, required: false }
-    clip_id: { type: INTEGER, required: true, foreignTable: clip, foreignReference: id }
-    _uniques:
-      reclip_id_key: [id]
+
   scene_like:
     _propel_behaviors:
       archivable: {archive_on_delete: true, log_archived_at: true}

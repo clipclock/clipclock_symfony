@@ -101,6 +101,95 @@ P { padding:0 0 13px 0;}
 .stickers-list li .inner .management-sticker li.like a { background:url(../images/management-sticker-like-ico.jpg) no-repeat 1px 0;}
 .stickers-list li .inner .management-sticker li.like a:hover { background-position:1px -15px;}
 
+/* clip_stickers  without scenes */
+
+.stickers-list li .inner .top
+{
+    overflow: hidden;
+    text-align: left;
+    padding: 0 15px 5px;
+    border-bottom: 1px solid #dbdbdb;
+    margin-bottom: 10px;
+}
+
+.stickers-list li .inner .top .ph,
+.stickers-list li .inner .msg .ph
+{
+    float: left;
+}
+
+.stickers-list li .inner .top p
+{
+}
+
+.stickers-list li .inner .top p
+{
+    margin-left: 40px;
+    padding: 0;
+}
+
+.stickers-list li .inner .top p a
+{
+    display: block;
+    font-weight: bold;
+}
+
+.stickers-list li .inner .b-btn
+{
+    overflow: hidden;
+    padding: 10px 0 10px 62px;
+}
+
+.stickers-list li .inner .b-btn a
+{
+    background: url(../images/head-menu-list-bg.jpg) repeat-x;
+    border: 1px solid #ac1010;
+    border-radius: 3px;
+    display: block;
+    color: #fff;
+    text-shadow: 0 0 1px #555;
+    padding: 4px 10px;
+    float: left;
+    font-size: 11px;
+}
+
+.stickers-list li .inner .msg
+{
+    background: #f2f0f0;
+    text-align: left;
+    margin-top: 15px;
+    border-top: 1px solid #dbdbdb;
+    border-bottom: 1px solid #dbdbdb;
+    position: relative;
+}
+
+.stickers-list li .inner .msg .pointer
+{
+    position: absolute;
+    left: 105px;
+    width: 15px;
+    height: 10px;
+    background: url(../images/msg-pointer.png) no-repeat;
+    top: -9px;
+}
+
+.stickers-list li .inner .msg .line1px
+{
+    height: 1px;
+    background: #fff;
+}
+
+.stickers-list li .inner .msg .box
+{
+    padding: 10px 15px;
+}
+
+.stickers-list li .inner .msg p
+{
+    font-weight: bold;
+    padding: 0;
+}
+
 /* b-band-scroll */
 
 .b-band-scroll,
@@ -807,3 +896,9 @@ label {font-size:16px; font-weight:bold; color:#5b5b5b; float:left; display:bloc
 }
 
 .clip_modal_fixed #fun_buttons {position: fixed}
+
+.clip_sticker .top .time
+{
+    color: #A7A7A7;
+    font-size: 11px;
+}

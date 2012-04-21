@@ -20,10 +20,14 @@ class homeActions extends sfActions
 					&& $this->getUser()->getAttribute('new_user') ? true : false;
 		}
 
-		if($this->getUser()->getId() && $this->getContext()->getRouting()->getCurrentRouteName() != 'homepage_modal')
+		if($this->new_user)
 		{
 			$this->campaign = $this->getUser()->getAttribute('campaign');
 			$this->getUser()->setAttribute('campaign', false);
+		}
+
+		if($this->getUser()->getId() && $this->getContext()->getRouting()->getCurrentRouteName() != 'homepage_modal')
+		{
 			$this->getUser()->setAttribute('new_user', false);
 		}
 
@@ -38,7 +42,7 @@ class homeActions extends sfActions
 	{
 		$this->campaign = null;
 		$this->search_string = null;
-		if($this->checkLanding() && false && !$this->campaign && !$this->getUser()->getAttribute('categories', null) && $this->getUser()->getProfile())
+		if($this->checkLanding() && !$request->getParameter('modal') && !$this->getUser()->getAttribute('categories', null) && $this->getUser()->getProfile())
 		{
 			$this->source = HomeFilterForm::I_FOLLOW_ID;
 			//Временное решение

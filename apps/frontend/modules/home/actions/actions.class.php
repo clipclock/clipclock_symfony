@@ -119,7 +119,7 @@ class homeActions extends sfActions
 			$this->scene_id = $request->getParameter('scene_id');
 			$this->bug_current_url = $this->generateUrl('homepage');
 
-			if($this->campaign)
+			if(!$this->categories)
 			{
 				$category_array = array();
 				$categories = BoardRefsCategoryPeer::retrieveCategoriesIdsBySceneId($this->scene_id);

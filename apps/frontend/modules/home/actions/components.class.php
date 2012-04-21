@@ -38,7 +38,7 @@ class homeComponents extends sfComponents
 		}
 		else
 		{
-			$this->categories_selected_text = CategoryQuery::create()->findOneById(current($this->categories))->getName();
+			$this->categories_selected_text = CategoryQuery::create()->findOneById(current(array_flip($this->categories)))->getName();
 		}
 
 		$this->form = new HomeFilterForm(null, array('user' => $this->user));

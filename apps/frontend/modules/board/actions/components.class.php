@@ -115,7 +115,7 @@ class boardComponents extends sfComponents
 		{
 			$this->created_at = $clip_social_info->getCreatedAt();
 			$this->user_link = 'http://facebook.com/'.$clip_social_info->getExtUser()->getExtId();
-			$this->user_image = 'http://graph.facebook.com/'.$clip_social_info->getExtUser()->getExtId().'/picture?type=small';
+			$this->user_image = 'http://graph.facebook.com/'.$clip_social_info->getExtUser()->getExtId().'/picture?type=square';
 			$this->user_nick = $clip_social_info->getExtUser()->getNick();
 			$this->provider_name = ucfirst($clip_social_info->getExtUser()->getProvider()->getName());
 		}

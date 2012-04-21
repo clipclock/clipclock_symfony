@@ -20,18 +20,33 @@ class sceneActions extends sfActions
 		$this->forward('default', 'module');
 	}
 
+
+	protected static function object2array($object) {
+		$array = array();
+		if (is_object($object) || is_array($object)) {
+			foreach ($object as $key => $value) {
+				$array[$key] = self::object2array($value);
+			}
+		}else {
+			$array = $object;
+		}
+		return $array;
+	}
+
 	protected function readFeed($facebook, $provider_name, $depth, $per_page = 50)
 	{
 		$html_result = array();
+		$feed_result['data'] = array();
 
 		try
 		{
 			$offset = $per_page * $depth;
-			$feed_result = $facebook->api('me/home?limit='.$per_page.'&offset='.$offset.'&fields=type,from,source,link,created_time,description');
+
+			$feed_result = $this->getUser()->getMelody('facebook')->get('me/home?limit='.$per_page.'&offset='.$offset.'&fields=type,from,source,link,created_time,description');
+			$feed_result = self::object2array($feed_result);
 		}
 		catch(Exception $e)
 		{
-			$feed_result['data'] = array();
 		}
 
 		foreach($feed_result['data'] as $feed_item)
@@ -72,11 +87,15 @@ class sceneActions extends sfActions
 					}
 				}
 			}
+
+			unset($feed_item);
+			unset($youtube_matches);
+			unset($clipclock_matches);
 		}
 
-		if(!count($html_result))
+		if(count($feed_result['data']) && !count($html_result))
 		{
-			$html_result[] = '<!--1-->';
+			$html_result[] = '<!--no-videos-->';
 		}
 
 		return $html_result;
@@ -94,10 +113,9 @@ class sceneActions extends sfActions
 			'secret' => $config['secret'],
 		));
 
-		$max_feed_update_depth = sfConfig::get('app_feed_update_max_depth');
-		$feed_update_interval = sfConfig::get('app_feed_update_interval');
+		$max_feed_update_depth = sfConfig::get('app_feed_pages');
+		$feed_update_interval = sfConfig::get('app_feed_interval');
 
-		$feed_result = array();
 		$html_result = array();
 
 		$last_feed_update_at = $this->getUser()->getProfile()->getLastFeedUpdateAt();
@@ -105,17 +123,23 @@ class sceneActions extends sfActions
 
 		if(strtotime($last_feed_update_at) + $feed_update_interval < time())
 		{
-			$html_result = $this->readFeed($facebook, 'facebook', $last_feed_update_depth, sfConfig::get('app_feed_update_per_page'));
-
-			$this->getUser()->getProfile()->setLastFeedUpdateDepth(++$last_feed_update_depth);
-
-			if($last_feed_update_depth >= $max_feed_update_depth)
+			$html_result = $this->readFeed($facebook, 'facebook', $last_feed_update_depth, sfConfig::get('app_feed_limit'));
+			if(!count($html_result) && $last_feed_update_depth + 1 < $max_feed_update_depth)
 			{
-				$this->getUser()->getProfile()->setLastFeedUpdateAt(time());
-				$this->getUser()->getProfile()->setLastFeedUpdateDepth(0);
+				$html_result[] = '<!--nulled-->';
 			}
+			else
+			{
+				$this->getUser()->getProfile()->setLastFeedUpdateDepth(++$last_feed_update_depth);
 
-			$this->getUser()->getProfile()->save();
+				if($last_feed_update_depth >= $max_feed_update_depth)
+				{
+					$this->getUser()->getProfile()->setLastFeedUpdateAt(time());
+					$this->getUser()->getProfile()->setLastFeedUpdateDepth(0);
+				}
+
+				$this->getUser()->getProfile()->save();
+			}
 		}
 
 		return $this->returnJSON($html_result);

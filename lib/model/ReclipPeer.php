@@ -62,7 +62,7 @@ class ReclipPeer extends BaseReclipPeer {
 			('.UserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID .'='. $user_id.'),
 			('.BoardFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID .'='. $user_id.'),
 			('.ClipFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID .'='. $user_id.'),
-			('.ReclipPeer::SF_GUARD_USER_PROFILE_ID .'='. $user_id.'),
+			('.ExtUserFollowerPeer::FOLLOWER_SF_GUARD_USER_PROFILE_ID . ' = '. $user_id.'),
 			false
 		) as friended_video');
 
@@ -70,10 +70,16 @@ class ReclipPeer extends BaseReclipPeer {
 
 		$c->addJoin(ReclipPeer::ID, SceneTimePeer::RECLIP_ID, Criteria::LEFT_JOIN);
 		$c->addJoin(SceneTimePeer::ID, ScenePeer::SCENE_TIME_ID, Criteria::LEFT_JOIN);
+		$c->addJoin(ReclipPeer::CLIP_ID, ClipPeer::ID, Criteria::LEFT_JOIN);
+		$c->addJoin(ClipPeer::CLIP_SOCIAL_INFO_ID, ClipSocialInfoPeer::ID, Criteria::LEFT_JOIN);
 
 		$c->addJoin(ReclipPeer::SF_GUARD_USER_PROFILE_ID, UserFollowerPeer::FOLLOWING_SF_GUARD_USER_PROFILE_ID, Criteria::LEFT_JOIN);
 		$c->addJoin(ScenePeer::BOARD_ID, BoardFollowerPeer::BOARD_ID, Criteria::LEFT_JOIN);
 		$c->addJoin($clip_id, ClipFollowerPeer::CLIP_ID, Criteria::LEFT_JOIN);
+
+		$c->addMultipleJoin(array(
+			array(ClipSocialInfoPeer::EXT_USER_ID, ExtUserFollowerPeer::FOLLOWING_EXT_USER_ID),
+		), Criteria::LEFT_JOIN);
 
 		$c->setLimit(1);
 

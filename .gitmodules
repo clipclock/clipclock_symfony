@@ -22,3 +22,9 @@
 [submodule "lib/fb"]
 	path = lib/fb
 	url = git://github.com/madesst/php-sdk.git
+[submodule "plugins/sfOauthServerPlugin"]
+	path = plugins/sfOauthServerPlugin
+	url = git://github.com/Lordartis/sfOauthServerPlugin.git
+[submodule "plugins/sfOauthPropelServerPlugin"]
+	path = plugins/sfOauthPropelServerPlugin
+	url = https://github.com/lmaxim/cc_oauthplugin

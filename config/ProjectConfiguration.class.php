@@ -17,5 +17,6 @@ class ProjectConfiguration extends sfProjectConfiguration
     $this->enablePlugins('sfFormExtraPlugin');
     $this->enablePlugins('sfCombinePlugin');
     $this->enablePlugins('sfWebBrowserPlugin');
+    $this->enablePlugins('sfOauthPropelServerPlugin');
   }
 }

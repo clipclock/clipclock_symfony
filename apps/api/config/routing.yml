@@ -7,6 +7,12 @@ sf_oauth_server_consumer:
     column:               id
     with_wildcard_routes: true
 
+clip:
+  url: /clip/:action.:sf_format/*
+  param: { module: clip }
+  requirements:
+    sf_format: (?:json|xml)
+
 # You can find more information about this file on the symfony website:
 # http://www.symfony-project.org/reference/1_4/en/10-Routing
 

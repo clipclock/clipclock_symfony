@@ -3,7 +3,9 @@
 
 rendering: ~
 security:  ~
-oauth:
+oauth_plugin:
+  param:
+    type: oauth
   class: sfOauthFilter
 
 # insert your own filters here

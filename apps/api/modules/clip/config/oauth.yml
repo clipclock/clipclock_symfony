@@ -1,4 +1,4 @@
 all:
-  is_secure: true
-default:
+  is_secure: false
+upload:
   is_secure: true

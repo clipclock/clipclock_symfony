@@ -20,18 +20,14 @@ class clipActions extends sfActions
     $this->forward('default', 'module');
   }
 
-  public function executeUpload(sfWebRequest $request)
+  public function executeGet(sfWebRequest $request)
   {
-    echo "token";
-
-    #$oauth = new sfOAuth2Server()
-
     $this->setTemplate('index');
   }
 
-  public function executeIsAccessKeyValid(sfWebRequest $request)
+  public function executeUpload(sfWebRequest $request)
   {
-    echo "valid";
-    return sfView::NONE;
+    $this->setTemplate('index');
   }
+
 }

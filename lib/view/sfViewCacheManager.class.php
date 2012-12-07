@@ -62,7 +62,9 @@ class sfViewCacheManager
 
 	if(sfConfig::get('app_cache_pushing_on'))
 	{
-		if($this->request->getHttpHeader('SF_IGNORE_CACHE') && $this->request->getHttpHeader('SF_IGNORE_CACHE') == md5(sfConfig::get('app_cache_pushing_key')))
+		if($this->request->getHttpHeader('SF_IGNORE_CACHE_SIGN') &&
+			$this->request->getHttpHeader('SF_IGNORE_CACHE_USER') != null &&
+			$this->request->getHttpHeader('SF_IGNORE_CACHE_SIGN') == md5(sfConfig::get('app_cache_pushing_key').$this->request->getHttpHeader('SF_IGNORE_CACHE_USER')))
 		{
 			$this->cachePush = true;
 		}

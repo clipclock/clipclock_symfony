@@ -32,6 +32,7 @@ class sfViewCacheManager
     $request     = null,
     $loaded      = array();
 
+	protected $cachePush = false;
   /**
    * Class constructor.
    *
@@ -58,6 +59,14 @@ class sfViewCacheManager
         'cache_key_use_vary_headers' => true,
         'cache_key_use_host_name'    => true,
       ), $options);
+
+	if(sfConfig::get('app_cache_pushing_on'))
+	{
+		if($this->request->getHttpHeader('SF_IGNORE_CACHE') && $this->request->getHttpHeader('SF_IGNORE_CACHE') == md5(sfConfig::get('app_cache_pushing_key')))
+		{
+			$this->cachePush = true;
+		}
+	}
 
     if (sfConfig::get('sf_web_debug'))
     {
@@ -554,7 +563,7 @@ class sfViewCacheManager
   protected function ignore()
   {
     // ignore cache parameter? (only available in debug mode)
-    if (sfConfig::get('sf_debug') && $this->context->getRequest()->getAttribute('sf_ignore_cache'))
+    if ((sfConfig::get('sf_debug') && $this->context->getRequest()->getAttribute('sf_ignore_cache')) || $this->cachePush)
     {
       if (sfConfig::get('sf_logging_enabled'))
       {
